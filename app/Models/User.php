@@ -40,4 +40,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function channels()
+    {
+        $this->hasMany(Channel::class);
+    }
+    public function suscribed()
+    {
+        return $this->belonsToMnany(Channel::class);
+    }
 }

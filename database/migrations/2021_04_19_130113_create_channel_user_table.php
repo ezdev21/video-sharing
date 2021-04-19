@@ -15,6 +15,8 @@ class CreateChannelUserTable extends Migration
     {
         Schema::create('channel_user', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('channel_id');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }

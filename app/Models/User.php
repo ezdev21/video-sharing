@@ -48,4 +48,5 @@ class User extends Authenticatable
     {
         return $this->belonsToMnany(Channel::class);
     }
+    
 }

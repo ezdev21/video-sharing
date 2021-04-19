@@ -48,5 +48,12 @@ class User extends Authenticatable
     {
         return $this->belonsToMnany(Channel::class);
     }
-    
+    public function videoLikes()
+    {
+        return $this->belongsToMany(Video::class);
+    }
+    public function commentLikes()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

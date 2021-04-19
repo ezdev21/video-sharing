@@ -5,19 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Video extends Model
+class Comment extends Model
 {
     use HasFactory;
-
-    public function channel()
+    public function commentedBy()
     {
-        return $this->belongsTo(Channel::class);
+        return $this->belongsTo(User::class);
     }
-    public function comments()
+    public function video()
     {
-        return $this->hasMany(Comment::class);
+        return $this->belonsTo(Video::class);
     }
-    public function likedBy()
+    public function liked()
     {
         return $this->belongsToMany(User::class);
     }

@@ -19,6 +19,6 @@ class Channel extends Model
     }
     public function videos()
     {
-
+      return $this->hasMany(Video::class);
     }
 }

@@ -11,14 +11,20 @@ export default {
         }
     },
     mounted(){
-      axios.get('api/')
+       axios.get('api/channelId/userId')
+      .then(res=>{
+          subscribed=res.data.subscribed;
+      })
+      .catch(err=>{
+          console.log('error fetching data');
+      });
     },
     methods:{
         subscribe(){
             axios.post('/api/suscribe',{this.userId,this.channelId})
             .then(res=>{
              if(subscribed){
-              this.buttonText='un'.this.buttonText;
+              this.buttonText=this.buttonText+'id';
              }   
              this.subscribed=!this.subscribed;
             })

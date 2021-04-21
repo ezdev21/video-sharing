@@ -24,3 +24,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('search',[VideoController::class,'search'])->name('search.video');
 Route::get('/videos',[VideoController::class,'index'])->name('video.index');
 Route::get('watch/{videoId}',[VideoController::class,'show'])->name('video.watch');
+Route::get('upload',[VideoController::class,'create'])->name('video.create');
+Route::post('upload',[VideoController::class,'store'])->name('video.store');

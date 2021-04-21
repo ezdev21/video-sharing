@@ -1,19 +1,18 @@
 <template>
-<button @click="suscribe" class="[bg-yellow-700,bg-gray-300 : subscribed]">{{button}}</button>
+<button @click="disLike" class="[bg-yellow-700,bg-gray-300 : liked]">dislike</button>
 </template>
 <script>
 export default {
-    props:['userId','channelId'],
+    props:['userId','videolId'],
     data(){
         return{
-          button:'dislike',
-          subscribed:false
+          disliked:false
         }
     },
     mounted(){
-       axios.get('api/videoId/userId')
+      axios.get('api/dislike/videoId/userId',{this.videoId,this.userId})
       .then(res=>{
-          liked=res.data.disliked;
+          disliked=res.data.disliked;
       })
       .catch(err=>{
           console.log('error fetching data');
@@ -21,12 +20,9 @@ export default {
     },
     methods:{
         subscribe(){
-            axios.post('/api/suscribe',{this.userId,this.channelId})
-            .then(res=>{
-             if(disliked){
-              this.buttonText=this.buttonText+'id';
-             }   
-             this.subscribed=!this.subscribed;
+            axios.post('/api/like/videoId/userId',{this.userId,this.channelId})
+            .then(res=>{ 
+             this.disliked=!this.disliked;
             })
         }
     }

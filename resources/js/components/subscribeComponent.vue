@@ -1,5 +1,7 @@
 <template>
-<button @click="suscribe" class="[bg-yellow-700,bg-gray-300 : subscribed]">{{button}}</button>
+<button @click="subscribe" 
+class="[bg-yellow-700 text-xl-white bg-gray-300 : subscribed]"
+>{{button}}</button>
 </template>
 <script>
 export default {
@@ -11,7 +13,7 @@ export default {
         }
     },
     mounted(){
-       axios.get('api/channelId/userId')
+       axios.get('api/subscribe/channelId/userId')
       .then(res=>{
           subscribed=res.data.subscribed;
       })
@@ -21,13 +23,16 @@ export default {
     },
     methods:{
         subscribe(){
-            axios.post('/api/suscribe',{this.userId,this.channelId})
+            axios.post('/api/suscribe/userId/channelId',{this.userId,this.channelId})
             .then(res=>{
              if(subscribed){
-              this.buttonText=this.buttonText+'id';
+              this.buttonText='un'+this.buttonText;
              }   
              this.subscribed=!this.subscribed;
             })
+            .catch(err=>{
+              console.log('error in sending post subscribe');
+            });
         }
     }
 

@@ -1,17 +1,16 @@
 <template>
-<button @click="like" class="[bg-yellow-700,bg-gray-300 : liked]">{{button}}</button>
+<button @click="like" class="[bg-yellow-700,bg-gray-300 : liked]">like</button>
 </template>
 <script>
 export default {
     props:['userId','videolId'],
     data(){
         return{
-          button:'like',
           liked:false
         }
     },
     mounted(){
-      axios.get('api/videoId/userId')
+      axios.get('api/like/videoId/userId',{this.videoId,this.userId})
       .then(res=>{
           liked=res.data.liked;
       })
@@ -21,12 +20,9 @@ export default {
     },
     methods:{
         subscribe(){
-            axios.post('/api/suscribe',{this.userId,this.channelId})
-            .then(res=>{
-             if(subscribed){
-              this.buttonText=this.buttonText+'id';
-             }   
-             this.subscribed=!this.subscribed;
+            axios.post('/api/like/videoId/userId',{this.userId,this.channelId})
+            .then(res=>{ 
+             this.liked=!this.liked;
             })
         }
     }

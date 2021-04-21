@@ -14,7 +14,8 @@ class VideoController extends Controller
      */
     public function index()
     {
-        //
+       $videos=Video::laxtest()->inRandomOrder()->get();
+       return view('index',['videos'=>$videos]);
     }
 
     /**
@@ -44,9 +45,10 @@ class VideoController extends Controller
      * @param  \App\Models\Video  $video
      * @return \Illuminate\Http\Response
      */
-    public function show(Video $video)
+    public function show($id)
     {
-        //
+        $video=Video::findOrFail($id);
+        return view('watch',['video'=>$video]);
     }
 
     /**

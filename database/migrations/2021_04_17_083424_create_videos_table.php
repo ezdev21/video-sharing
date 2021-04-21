@@ -18,6 +18,7 @@ class CreateVideosTable extends Migration
             $table->string('title');
             $table->string('avator');
             $table->foreignId('channel_id');
+            $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
         });
     }

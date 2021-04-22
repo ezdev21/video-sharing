@@ -23,6 +23,13 @@
         </div>
         <div>
             <p>{{$video->comments->count()}} comments</p>
+            <div>
+                <form method="post" action="{{route('comment.create')}}">
+                  @csrf
+                  <textarea name="body" id="" cols="30" rows="10"></textarea>
+                  <input type="submit" value="comment">
+                </form>
+            </div>
             @foreach ($video->comments as $item)
                 <div>
                     <img src="users/''.{{$comment->commentedBy->avatar}}" alt="" width="25px">

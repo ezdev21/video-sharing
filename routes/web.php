@@ -26,4 +26,6 @@ Route::get('/videos',[VideoController::class,'index'])->name('video.index');
 Route::get('watch/{videoId}',[VideoController::class,'show'])->name('video.watch');
 Route::get('upload',[VideoController::class,'create'])->name('video.create');
 Route::post('upload',[VideoController::class,'store'])->name('video.store');
-//comment delete edit
+Route::get('comment/commentId/edit',[CommentController::class,'edit'])->name('comment.edit');
+Route::patch('comment/update',[CommentController::class,'update'])->name('comment.update');
+Route::delete('comment/delete',[CommentController::class,'deklete'])->name('comment.delete');

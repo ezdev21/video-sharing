@@ -13,7 +13,7 @@ class VideoFormRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,22 @@ class VideoFormRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title'=>['required','string','min:3','max:50'],
+            'cover'=>['required','image'],
+            'video'=>['required','video']
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'title.required'=>'video title is required',
+            'title.string'=>'video title should be string',
+            'title.min'=>'video title should be minimum of 3 characters',
+            'title.max'=>'video title should be maximum of 50 characters',
+            'cover.required'=>'video cover is required',
+            'cover.image'=>'video cover should be an image',
+            'video.required'=>'video file is required',
+            'video.video'=>'only videom file should be uploaded'
         ];
     }
 }

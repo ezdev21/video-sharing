@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\VideoFormRequest;
 use App\Models\Video;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class VideoController extends Controller
 {
     /**
@@ -15,8 +15,8 @@ class VideoController extends Controller
      */
     public function search(Request $request)
     {
-        $query=$request->search;
-        $videos=Video::where('name','like',$query);
+        dd($request->search);
+        $videos=Video::where('title','like',$query);
         return view('video.search',['videos'=>$videos,'query'=>$query]);
     }
     public function index()
@@ -32,7 +32,10 @@ class VideoController extends Controller
      */
     public function create()
     {
-        return view('video.upload');
+        if(Auth::user()){
+            return view('video.upload');
+        }
+        return redirect()->route('login');
     }
 
     /**
@@ -43,7 +46,14 @@ class VideoController extends Controller
      */
     public function store(VideoFormRequest $request)
     {
-        Video::create($request);
+         $video=new Video;
+         $video->title=$request->title;
+         $video->description=$request->description;
+         $video->channel_id=$request->userId;
+         $video->save();
+         $request->cover->storeAS('covers',$video->id.'.jpg','public');
+         $request->video->storeAs('videos',$video->id.'.mp4','public');
+         return redirect()->route('video.index');
     }
 
     /**
@@ -53,9 +63,10 @@ class VideoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
+    { 
+        $recommendedVideos=Video::latest()->get();
         $video=Video::findOrFail($id);
-        return view('watch',['video'=>$video]);
+        return view('video.watch',['video'=>$video,'recommendedVideos'=>$recommendedVideos]);
     }
 
     /**

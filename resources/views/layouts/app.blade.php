@@ -25,10 +25,10 @@
                 <a class="text-xl mr-10" href="{{ url('/') }}">
                     Home
                 </a>
-                    <form action="{{route('search.video')}}" method="post">
+                    <form action="{{route('video.search')}}" method="post">
                         @csrf
                         <input type="text" name="search" placeholder="search" required
-                        class=" h-8 mr-0 placeholder-xl">
+                        class=" h-8 my-1 text-xl placeholder-xl text-bold text-green-900">
                         <input type="submit" value="search"
                         class=" text-xl text-white bg-blue-900">
                       </form>

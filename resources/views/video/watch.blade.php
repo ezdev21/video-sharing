@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('content')
     <div>
-        <video src="'videos/'.{{$video->id}}"></video>
+        <div>
+            <video src="'videos/'.{{$video->id.'mp4'}}"></video>
+        </div>
         <div>
             video controll
         </div>
@@ -10,24 +12,24 @@
            <p>
                <span>{{$video->views}}</span>
                <span>{{$video->created_at}}</span>
-                <likeComponent videoId="{{$video->id}}" userId="{{$Auth->user()->id}}"/>
+               @if (Auth::check())
+               <likeComponent videoId="{{$video->id}}" userId="{{Auth::user()->id}}"/>
+               @endif
                <span>{{$video->like}}</span>
-               <dislikeComponent videoId="{{$video->id}}" userId="{{$Auth->user()->id}}"/>
+               @if (Auth::check())
+               <<dislikeComponent videoId="{{$video->id}}" userId="{{Auth::user()->id}}"/>
+               @endif
                <span>{{$video->dislike}}</span>
            </p>
         </div>
-        <div>
-           <img src="'channels/'.{{$channel->avatar}}" alt="" width="50px">
-           <span>{{$video->channel->subscribers->count()}} subscribers</span>
-           <subscribeComponent />
-        </div>
+        
         <div>
             <p>{{$video->comments->count()}} comments</p>
             <div>
-                <form method="post" action="{{route('comment.create')}}">
+                <form method="post" action="{{route('comment.store')}}">
                   @csrf
-                  <textarea name="body" id="" cols="30" rows="10"></textarea>
-                  <input type="submit" value="comment">
+                  <textarea name="body" id="" cols="60" rows="10" class="block border-10 border-red-50"></textarea>
+                  <input type="submit" value="comment" class="px-3 bg-blue-900 text-xl text-white">
                 </form>
             </div>
             @foreach ($video->comments as $item)

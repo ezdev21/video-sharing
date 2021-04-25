@@ -2,11 +2,11 @@
 @section('content')
     <div class="flex flex-wrap">
       @forelse ($videos as $video)
-        <a href="{{route('watch.video',$video->id)}}">
+        <a href="{{route('video.watch',$video->id)}}">
           <div class="m-5 p-5 ">
-              <img src="'public/'.{{$video->id}}" alt="">
+              <img src="/covers/2.jpg" alt="image not found">
               <p>{{$video->title}}</p>
-              <p>{{$video->views}}</p>
+              <p>{{$video->views}} views</p>
               <p>{{$video->channel}}</p>
           </div>
         </a>

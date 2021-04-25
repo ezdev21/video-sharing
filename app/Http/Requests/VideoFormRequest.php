@@ -26,7 +26,7 @@ class VideoFormRequest extends FormRequest
         return [
             'title'=>['required','string','min:3','max:50'],
             'cover'=>['required','image'],
-            'video'=>['required','video']
+            'video'=>['required']
         ];
     }
     public function messages()
@@ -39,7 +39,6 @@ class VideoFormRequest extends FormRequest
             'cover.required'=>'video cover is required',
             'cover.image'=>'video cover should be an image',
             'video.required'=>'video file is required',
-            'video.video'=>'only videom file should be uploaded'
         ];
     }
 }

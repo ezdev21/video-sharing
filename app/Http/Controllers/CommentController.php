@@ -35,7 +35,12 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $comment=new Comment;
+        $comment->body=$request->body;
+        $comment->user_id=$request->user;
+        $comment->video_id=$request->video;
+        $comment->save();
+        return redirect()->back();
     }
 
     /**

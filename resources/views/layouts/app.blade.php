@@ -21,27 +21,24 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-blue-900 shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+        <nav class="bg-blue-900 text-white shadow-sm block flex">
+                <a class="text-xl mr-10" href="{{ url('/') }}">
+                    Home
                 </a>
-                <form action="{{route('search.video')}}" method="post">
-                  @csrf
-                  <input type="text" name="search" placeholder="search">
-                  <input type="submit" value="search">
-                </form>
+                    <form action="{{route('search.video')}}" method="post">
+                        @csrf
+                        <input type="text" name="search" placeholder="search" required
+                        class=" h-8 mr-0 placeholder-xl">
+                        <input type="submit" value="search"
+                        class=" text-xl text-white bg-blue-900">
+                      </form>
+                      <a href="{{route('video.create')}}"
+                      class="no-underline text-xl mr-10 ml-10">upload video</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
@@ -76,7 +73,6 @@
                             </li>
                         @endguest
                     </ul>
-                </div>
             </div>
         </nav>
         <main class="py-4">

@@ -13,10 +13,16 @@ class VideoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function search(Request $request)
+    {
+        $query=$request->search;
+        $videos=Video::where('name','like',$query);
+        return view('video.search',['videos'=>$videos,'query'=>$query]);
+    }
     public function index()
     {
-       $videos=Video::latest()->inRandomOrder()->get();
-       return view('index',['videos'=>$videos]);
+       $videos=Video::latest()->take(100)->inRandomOrder()->get();
+       return view('video.index',['videos'=>$videos]);
     }
 
     /**
@@ -26,7 +32,7 @@ class VideoController extends Controller
      */
     public function create()
     {
-        return view('book.upload');
+        return view('video.upload');
     }
 
     /**
@@ -37,7 +43,7 @@ class VideoController extends Controller
      */
     public function store(VideoFormRequest $request)
     {
-        
+        Video::create($request);
     }
 
     /**

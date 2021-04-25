@@ -15,9 +15,9 @@ class VideoController extends Controller
      */
     public function search(Request $request)
     {
-        dd($request->search);
-        $videos=Video::where('title','like',$query);
-        return view('video.search',['videos'=>$videos,'query'=>$query]);
+        $searchQuery=$request->searchQuery;
+        $videos=Video::where('title',$searchQuery);
+        return view('video.search',['videos'=>$videos,'searchQuery'=>$searchQuery]);
     }
     public function index()
     {

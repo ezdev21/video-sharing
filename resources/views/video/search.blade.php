@@ -11,7 +11,7 @@
       </div>
     </a>
  @empty
-  <p>oops no video was found like {{$query}}</p> 
+  <p>oops no video was found like {{$searchQuery}}</p> 
  @endforelse    
  <div>
 @endsection

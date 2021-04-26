@@ -14,13 +14,21 @@
                    <span class="m-2">{{$video->views}} views</span>
                    <span class="m-2">{{$video->created_at}}</span>
                    @if (Auth::check())
-                   <likeComponent videoId="{{$video->id}}" userId="{{Auth::user()->id}}"/>
+                   <like-component videoId="{{$video->id}}" userId="{{Auth::user()->id}}"/>
                    @endif
                    <span>{{$video->like}}</span>
                    @if (Auth::check())
-                   <dislikeComponent videoId="{{$video->id}}" userId="{{Auth::user()->id}}"/>
+                   <dislike-component videoId="{{$video->id}}" userId="{{Auth::user()->id}}"/>
                    @endif
                    <span>{{$video->dislike}}</span>
+               </p>
+               <p>
+                 <a href="{{route('channel.show',$video->channel()->id)}}">
+                    <img src="/storage/channelCover/{{$video->channel()->cover}}" alt=""
+                    class="w-50 rounded-full">
+                    <p class="text-xl font-bold">{{$video->channel()->name}}</p>
+                    <p>{{$video->description}}</p>
+                </a>
                </p>
             </div>
             

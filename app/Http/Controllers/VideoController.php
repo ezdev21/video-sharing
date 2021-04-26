@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\VideoFormRequest;
 use App\Models\Video;
+use App\Models\Channel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class VideoController extends Controller
@@ -16,8 +17,9 @@ class VideoController extends Controller
     public function search(Request $request)
     {
         $searchQuery=$request->searchQuery;
-        $videos=Video::where('title',$searchQuery);
-        return view('video.search',['videos'=>$videos,'searchQuery'=>$searchQuery]);
+        $channels=Channel::where('name','like',$searchQuery);
+        $videos=Video::where('title','like',$searchQuery);
+        return view('video.search',['videos'=>$videos,'channels'=>$channels,'searchQuery'=>$searchQuery]);
     }
     public function index()
     {

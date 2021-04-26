@@ -45,9 +45,10 @@ class ChannelController extends Controller
      * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function show(Channel $channel)
+    public function show($id)
     {
-        //
+        $channel=Channel::findOrFail($id);
+        return view('channel.show',$channel);
     }
 
     /**

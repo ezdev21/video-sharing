@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Channel;
 use Illuminate\Http\Request;
+use App\Http\Requests\ChannelFormRequest;
 
 class ChannelController extends Controller
 {
@@ -24,7 +25,7 @@ class ChannelController extends Controller
      */
     public function create()
     {
-        //
+        return view('channel');
     }
 
     /**
@@ -33,9 +34,9 @@ class ChannelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ChannelFormRequest $request)
     {
-        //
+        Channel::create($request);
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
@@ -28,3 +29,5 @@ Route::post('comment/create',[CommentController::class,'store'])->name('comment.
 Route::get('comment/commentId/edit',[CommentController::class,'edit'])->name('comment.edit');
 Route::patch('comment/update',[CommentController::class,'update'])->name('comment.update');
 Route::delete('comment/delete',[CommentController::class,'deklete'])->name('comment.delete');
+Route::get('channel',[ChannelController::class,'create'])->name('channel.create');
+Route::post('channel',[ChannelController::class,'store'])->name('channel.store');

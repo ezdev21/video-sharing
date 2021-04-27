@@ -1,11 +1,11 @@
 <template>
-<button @click="subscribe" id="subscribe" 
-class="[bg-yellow-700 text-xl-white,bg-gray-300 text-xl-black: subscribed,]"
->{{button}}</button>
+ <button @click="subscribe" id="subscribe" 
+ class="[bg-yellow-700 text-xl-white,bg-gray-300 text-xl-black: subscribed,]"
+ >{{button}}</button>
 </template>
 <script>
 export default {
-    props:['userId','channelId'],
+    props:['userid','channelid'],
     data(){
         return{
           button:'subscribe',
@@ -26,7 +26,7 @@ export default {
     },
     methods:{
         subscribe(){
-            axios.post('/api/suscribe/userId/channelId',{this.userId,this.channelId})
+            axios.post('/api/suscribe/userId/channelId',{this.userid,this.channelid})
             .then(res=>{
              if(subscribed){
               this.buttonText='un'+this.buttonText;

@@ -3,14 +3,14 @@
 </template>
 <script>
 export default {
-    props:['userId','videolId'],
+    props:['userid','videoid'],
     data(){
         return{
           liked:false
         }
     },
     mounted(){
-      axios.get('api/like/videoId/userId',{this.videoId,this.userId})
+      axios.get('api/like/videoId/userId',{this.videoid,this.userid})
       .then(res=>{
           liked=res.data.liked;
       })

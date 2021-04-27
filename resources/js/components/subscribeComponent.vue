@@ -1,6 +1,6 @@
 <template>
-<button @click="subscribe" 
-class="[bg-yellow-700 text-xl-white bg-gray-300 : subscribed]"
+<button @click="subscribe" id="subscribe" 
+class="[bg-yellow-700 text-xl-white,bg-gray-300 text-xl-black: subscribed,]"
 >{{button}}</button>
 </template>
 <script>
@@ -16,6 +16,9 @@ export default {
        axios.get('api/subscribe/channelId/userId')
       .then(res=>{
           subscribed=res.data.subscribed;
+          if(this.subscribed){
+             this.button='unsubscribe';
+          }
       })
       .catch(err=>{
           console.log('error fetching data');

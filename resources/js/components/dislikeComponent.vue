@@ -1,20 +1,22 @@
 <template>
-<button @click="dislike" id="like" class="[bg-yellow-700,bg-gray-300 : liked]">like</button>
+<button @click="disLike" class="[bg-red-700 text-xl px-2,text-white]" :style="[liked? 'text-grey-900 text-grey-900':'']">
+  {{disLikeText}}</button>
 </template>
 <script>
 export default {
     props:['userid','videoid'],
     data(){
         return{
-          liked:false
+          disLiked:false,
+          disLikeText:null
         }
     },
     mounted(){
-      axios.get('api/like/videoId/userId',{this.videoid,this.userid})
+      axios.get('api/disLike/videoId/userId',{videoId:this.videoid,userId:this.userid})
       .then(res=>{
-          liked=res.data.liked;
-          if(this.liked){
-            
+          this.disLiked=res.data.liked;
+          if(this.disliked){
+            this.disLikeText='disliked'
           }
       })
       .catch(err=>{
@@ -22,10 +24,16 @@ export default {
       });
     },
     methods:{
-        dislike(){
-            axios.post('/api/dislike/videoId/userId',{this.userid,this.channelid})
+         disLike(){
+            axios.post('/api/like/videoId/userId',{VideoId:this.userid,channelId:this.channelid})
             .then(res=>{ 
-             this.liked=!this.liked;
+             this.disLiked=!this.disLiked;
+             if(this.disLiked){
+               this.disLikeText='disliked';
+             }
+            })
+            .catch(err=>{
+              console.log('error in posting data to like');
             })
         }
     }

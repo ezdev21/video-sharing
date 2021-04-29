@@ -1,23 +1,24 @@
 <template>
- <button @click="subscribe" id="subscribe" 
- class="[bg-yellow-700 text-xl-white,bg-gray-300 text-xl-black: subscribed,]"
- >{{button}}</button>
+ <button @click="subscribe" class="bg-yellow-700 text-xl text-white"
+ :style="[subscribed? 'bg-gray-300 text-xl-black':'']"
+ >{{buttonText}}</button>
 </template>
 <script>
 export default {
-    props:['userid','channelid'],
     data(){
         return{
-          button:'subscribe',
-          subscribed:false
+          buttonText:'subscribe',
+          subscribed:false,
+          channelId:null,
+          userId:null
         }
     },
     mounted(){
        axios.get('api/subscribe/channelId/userId')
       .then(res=>{
-          subscribed=res.data.subscribed;
+          this.subscribed=res.data.subscribed;
           if(this.subscribed){
-             this.button='unsubscribe';
+             this.buttonText='unsubscribe';
           }
       })
       .catch(err=>{
@@ -26,12 +27,12 @@ export default {
     },
     methods:{
         subscribe(){
-            axios.post('/api/suscribe/userId/channelId',{this.userid,this.channelid})
+            axios.post('/api/suscribe/channelId/userId',{userId:this.userId,channelId:this.channelId})
             .then(res=>{
-             if(subscribed){
-              this.buttonText='un'+this.buttonText;
-             }   
-             this.subscribed=!this.subscribed;
+             this.subscribed=!this.subscribed; 
+             if(this.subscribed){
+                 this.buttontext='unsubscribe';
+             }
             })
             .catch(err=>{
               console.log('error in sending post subscribe');

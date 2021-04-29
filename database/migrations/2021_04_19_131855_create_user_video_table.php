@@ -17,6 +17,7 @@ class CreateUserVideoTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('video_id');
+            $table->string('type');
             $table->timestamps();
         });
     }

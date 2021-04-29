@@ -104,4 +104,12 @@ class VideoController extends Controller
     {
         //
     }
+    public function like($videoId,$userId)
+    {
+       DB::table('user_video')->insert("['videoId'=$videoId,'userId'=>$userId]");
+    }
+    public function disLike()
+    {
+      DB::table('user_video')->insert("['videoId'=$videoId,'userId'=>$userId]");
+    }
 }

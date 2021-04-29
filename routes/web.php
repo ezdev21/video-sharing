@@ -31,3 +31,6 @@ Route::patch('comment/update',[CommentController::class,'update'])->name('commen
 Route::delete('comment/delete',[CommentController::class,'deklete'])->name('comment.delete');
 Route::get('channel',[ChannelController::class,'create'])->name('channel.create');
 Route::post('channel',[ChannelController::class,'store'])->name('channel.store');
+Route::post('subscribe/{channelIdId}/{userId:',[channelController::class,'subscribe']);
+Route::post('like/{videoId}/{userId}',[VideoController::class,'like']);
+Route::post('disLike/{videoId}/{userId}',[VideoController::class,'disLike']);

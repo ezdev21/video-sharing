@@ -8,7 +8,7 @@ export default {
     data(){
         return{
           disLiked:false,
-          disLikeText:null
+          disLikeText:'dislike'
         }
     },
     mounted(){

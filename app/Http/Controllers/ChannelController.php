@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Channel;
 use Illuminate\Http\Request;
 use App\Http\Requests\ChannelFormRequest;
+use Illuminate\Support\Facades\DB;
 
 class ChannelController extends Controller
 {
@@ -83,5 +84,9 @@ class ChannelController extends Controller
     public function destroy(Channel $channel)
     {
         //
+    }
+    public function subscribe($channelId,$userId)
+    {
+       DB::table('channel_user')->insert(['channel_id'=>$channelId,'user_id'=>$userId]);
     }
 }

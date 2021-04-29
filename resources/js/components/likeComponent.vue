@@ -8,7 +8,7 @@ export default {
     data(){
         return{
           liked:false,
-          likeText:null
+          likeText:'like'
         }
     },
     mounted(){

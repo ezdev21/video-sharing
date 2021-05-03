@@ -19,6 +19,7 @@ class CreateVideosTable extends Migration
             $table->Longtext('description')->nullable();
             $table->foreignId('channel_id');
             $table->unsignedBigInteger('views')->default(0);
+            $table->string('cover');
             $table->timestamps();
         });
     }

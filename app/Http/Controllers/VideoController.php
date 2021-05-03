@@ -53,7 +53,8 @@ class VideoController extends Controller
          $video->description=$request->description;
          $video->channel_id=$request->userId;
          $video->save();
-         $request->cover->storeAS('covers',$video->id.'.jpg','public');
+         $videoCoverName=$video->id.$request->cover->getClientMimeType();
+         $request->cover->storeAS('covers',$videoCoverName,'public');
          $request->video->storeAs('videos',$video->id.'.mp4','public');
          return redirect()->route('video.index');
     }

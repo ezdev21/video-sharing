@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="bg-gray-400 p-3">
+    <div class="bg-gray-400 -mt-6 p-3">
         <form method="post" action="{{route('video.store')}}" enctype="multipart/form-data">
           @csrf
           {{--<input type="hidden" name="userId" value="{{Auth::user()->id}}">--}}

@@ -1,18 +1,21 @@
 @extends('layouts.app')
 @section('content')
     <div class="flex">
-        <div class="w-2/3">
+        <div class="flex-auto w-2/3 m-2">
             <div class="block w-full">
-                <video src="'videos/'.{{$video->id.'mp4'}}"></video>
+                <video controls class="w-full">
+                    <source  src="storage/videos/1.mp4" type="video/mp4">
+                        your browser does not support html5 video
+                </video>
             </div>
             <div class="block w-full">
                 video controll
             </div>
             <div class="block w-full">
-               <p>{{$video->title}}</p>
+               <p class="text-xl text-center">{{$video->title}}</p>
                <p class="divide-x divide-gray-500">
-                   <span class="m-2">{{$video->views}} views</span>
-                   <span class="m-2">{{$video->created_at}}</span>
+                   <span class="m-2 text-xl">{{$video->views}} views</span>
+                   <span class="m-2 text-xl">{{$video->created_at}}</span>
                    @if (Auth::check())
                    <like-component videoId="{{$video->id}}" userId="{{Auth::user()->id}}"/>
                    @endif
@@ -23,10 +26,10 @@
                    <span>{{$video->dislike}}</span>
                </p>
                <p>
-                 <a href="{{route('channel.show',$video->channel->id)}}">
-                    <img src="/storage/channelCover/{{$video->channel->cover}}" alt=""
+                 {{--<a href="{{route('channel.show',$video->channel->id)}}">
+                 <img src="/storage/channelCover/{{$video->channel->cover}}" alt=""
                     class="w-50 rounded-full">
-                    <p class="text-xl font-bold">{{$video->channel->name}}</p>
+                    <p class="text-xl font-bold">{{$video->channel->name}}</p>--}]
                     <p>{{$video->description}}</p>
                 </a>
                </p>
@@ -35,10 +38,11 @@
             <div class="block w-full">
                 <p>{{$video->comments->count()}} comments</p>
                 <div>
+                    <p class="text-2xl text-center">add your comment</p>
                     <form method="post" action="{{route('comment.store')}}">
                       @csrf
                       <input type="hidden" name="video" value="{{$video->id}}">
-                      <input type="hidden" name="user" value="{{Auth::user()->id}}">
+                      <input type="hidden" name="user" value="{{Auth::user()->id}}">--}}
                       <textarea name="body" id="" cols="60" rows="10" class="block border-10 border-red-50"></textarea>
                       <input type="submit" value="comment" class="px-3 bg-blue-900 text-xl text-white">
                     </form>
@@ -65,11 +69,11 @@
                 @endforeach
             </div>
         </div>
-        <div class="">
+        <div class="flex-auto">
           <p>recommended videos</p>
             @forelse ($recommendedVideos as $video)
                 <div>
-                    <img src="'cover/'.{{$video->id}}" alt="">
+                    <img src="/storage/covers/{{$video->cover}}" alt="">
                     <p>{{$video->title}}</p>
                     <span>{{$video->channel}}</span>
                     <span>{{$video->views}}</span>

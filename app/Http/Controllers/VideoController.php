@@ -36,10 +36,11 @@ class VideoController extends Controller
      */
     public function create()
     {
-        // if(Auth::user()){
+        // if(Auth::user()->channel){
         //     return view('video.upload');
         // }
         //return redirect()->route('login');
+        //return redirect()->route('channel.create');
         return view('video.upload');
     }
 
@@ -56,10 +57,10 @@ class VideoController extends Controller
          $video->description=$request->description;
          $video->channel_id=$request->userId;
          $video->save();
-         $videoCoverName=$video->id.$request->cover->getClientMimeType();
+         $video->cover=$video->id.''.$request->cover->getClientMimeType();
          $video->save();
-         $request->cover->storeAS('covers',$videoCoverName,'public');
-         $request->video->storeAs('videos',$video->id.'.mp4','public');
+         $request->cover->storeAS('covers',$video->cover);
+         $request->video->storeAs('videos',$video->id.'.mp4');
          return redirect()->route('video.index');
     }
 

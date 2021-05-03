@@ -19,7 +19,7 @@
       </div>
     </a>
  @empty
-  <p>oops no video was found like {{$searchQuery}}</p> 
+  <p class="text-3xl text-red-600 text-bold text-center">oops no video was found like {{$searchQuery}}</p> 
  @endforelse    
  <div>
 @endsection

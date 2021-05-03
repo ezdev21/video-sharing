@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
-    <div class="flex flex-wrap">
+    <div class="flex flex-wrap p-0">
       @forelse ($videos as $video)
         <a href="{{route('video.watch',$video->id)}}">
-          <div class="m-5 p-5 ">
+          <div class="p-1">
               <img src="storage/covers/{{$video->cover}}" alt="image not found">
               <p>{{$video->title}}</p>
               <p>{{$video->views}} views</p>

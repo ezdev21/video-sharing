@@ -4,7 +4,7 @@
         <div class="flex-auto w-2/3 m-2">
             <div class="block w-full">
                 <video controls class="w-full">
-                    <source  src="storage/videos/1.mp4" type="video/mp4">
+                    <source  src="storage/videos/1.mp4" type="video/mp4"/>
                         your browser does not support html5 video
                 </video>
             </div>

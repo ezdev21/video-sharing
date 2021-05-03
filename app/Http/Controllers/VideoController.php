@@ -19,8 +19,8 @@ class VideoController extends Controller
     public function search(Request $request)
     {
         $searchQuery=$request->searchQuery;
-        $channels=Channel::where('name','like',$searchQuery);
-        $videos=Video::where('title','like',$searchQuery);
+        $channels=Channel::where('name','like',"%${searchQuery}%")->get();
+        $videos=Video::where('title','like',"%${searchQuery}%")->get();
         return view('video.search',['videos'=>$videos,'channels'=>$channels,'searchQuery'=>$searchQuery]);
     }
     public function index()
@@ -57,7 +57,8 @@ class VideoController extends Controller
          $video->description=$request->description;
          $video->channel_id=$request->userId;
          $video->save();
-         $video->cover=$video->id.''.$request->cover->getClientMimeType();
+         $extension=$request->cover->extension();
+         $video->cover=$video->id.''.$extension;
          $video->save();
          $request->cover->storeAS('covers',$video->cover);
          $request->video->storeAs('videos',$video->id.'.mp4');

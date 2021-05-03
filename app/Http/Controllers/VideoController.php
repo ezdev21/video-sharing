@@ -60,8 +60,8 @@ class VideoController extends Controller
          $extension=$request->cover->extension();
          $video->cover=$video->id.''.$extension;
          $video->save();
-         $request->cover->storeAS('covers',$video->cover);
-         $request->video->storeAs('videos',$video->id.'.mp4');
+         $request->cover->storeAS('covers',$video->cover,'public');
+         $request->video->storeAs('videos',$video->id.'.mp4','public');
          return redirect()->route('video.index');
     }
 

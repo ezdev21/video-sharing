@@ -36,10 +36,11 @@ class VideoController extends Controller
      */
     public function create()
     {
-        if(Auth::user()){
-            return view('video.upload');
-        }
-        return redirect()->route('login');
+        // if(Auth::user()){
+        //     return view('video.upload');
+        // }
+        //return redirect()->route('login');
+        return view('video.upload');
     }
 
     /**

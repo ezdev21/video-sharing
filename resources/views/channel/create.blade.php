@@ -2,7 +2,8 @@
 @section('content')
     <div  class="bg-gray-300 -m-5 p-2">
       <p class="text-3xl mt-5 ml-10 text-green-800 text-bold">create your channel</p>
-        <form method="post" action="{{route('channel.store')}}">
+        <form method="POST" action="{{route('channel.store')}}">
+          {{csrf_field()}}
           <input type="hidden" name="user" value="{{Auth::user()}}">
           <input type="text" name="name" placeholder="channel name" required
           class="m-3 block w-50 h-10 text-xl">

@@ -21,7 +21,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="bg-blue-900 text-white shadow-sm block flex">
+        <nav class="bg-red-700 text-white shadow-sm block flex p-1">
                 <a class="text-xl mr-10" href="{{ url('/') }}">
                     Home
                 </a>
@@ -30,10 +30,10 @@
                         <input type="text" name="searchQuery" placeholder="search" required
                         class=" h-8 my-1 text-xl placeholder-xl text-bold text-green-900">
                         <input type="submit" value="search"
-                        class=" text-xl text-white bg-blue-900">
+                        class=" text-xl text-white bg-red-700">
                       </form>
                       <a href="{{route('video.create')}}"
-                      class="no-underline text-xl mr-10 ml-10">upload video</a>
+                      class="no-underline text-xl mr-10 ml-10 hover:text-2xl hover:no-underline">upload video</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>

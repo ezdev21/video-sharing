@@ -11,7 +11,7 @@
           </div>
         </a>
       @empty
-        <p class="text-red-900 text-4xl text-center w-full">oops error in loading videos</p>
+        <p class="text-red-600 text-4xl text-center w-full">oops error in loading videos</p>
       @endforelse
     </div>
 @endsection

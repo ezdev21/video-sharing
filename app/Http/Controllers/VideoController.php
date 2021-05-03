@@ -7,6 +7,8 @@ use App\Models\Video;
 use App\Models\Channel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 class VideoController extends Controller
 {
     /**
@@ -54,6 +56,7 @@ class VideoController extends Controller
          $video->channel_id=$request->userId;
          $video->save();
          $videoCoverName=$video->id.$request->cover->getClientMimeType();
+         $video->save();
          $request->cover->storeAS('covers',$videoCoverName,'public');
          $request->video->storeAs('videos',$video->id.'.mp4','public');
          return redirect()->route('video.index');
@@ -107,10 +110,10 @@ class VideoController extends Controller
     }
     public function like($videoId,$userId)
     {
-       DB::table('user_video')->insert("['videoId'=$videoId,'userId'=>$userId]");
+       DB::table('user_video')->insert(['videoId'=>$videoId,'userId'=>$userId]);
     }
-    public function disLike()
+    public function disLike($videoId,$userId)
     {
-      DB::table('user_video')->insert("['videoId'=$videoId,'userId'=>$userId]");
+      DB::table('user_video')->insert(['videoId'=>$videoId,'userId'=>$userId]);
     }
 }

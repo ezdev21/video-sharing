@@ -58,7 +58,7 @@ class VideoController extends Controller
          $video->channel_id=$request->userId;
          $video->save();
          $extension=$request->cover->extension();
-         $video->cover=$video->id.''.$extension;
+         $video->cover=$video->id.'.'.$extension;
          $video->save();
          $request->cover->storeAS('covers',$video->cover,'public');
          $request->video->storeAs('videos',$video->id.'.mp4','public');

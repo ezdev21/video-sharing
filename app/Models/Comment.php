@@ -14,7 +14,7 @@ class Comment extends Model
     }
     public function video()
     {
-        return $this->belonsTo(Video::class);
+        return $this->belongsTo(Video::class);
     }
     public function liked()
     {

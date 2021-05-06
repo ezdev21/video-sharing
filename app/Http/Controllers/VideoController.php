@@ -8,6 +8,7 @@ use App\Models\Channel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class VideoController extends Controller
 {
@@ -55,7 +56,9 @@ class VideoController extends Controller
          $video=new Video;
          $video->title=$request->title;
          $video->description=$request->description;
-         $video->channel_id=$request->userId;
+         $id=$request->userId;
+         //$channel=User::find($id);
+         $video->channel_id=1;
          $video->save();
          $extension=$request->cover->extension();
          $video->cover=$video->id.'.'.$extension;

@@ -31,16 +31,16 @@
                         class=" h-8 my-1 text-xl placeholder-xl text-bold text-green-900">
                         <input type="submit" value="search"
                         class=" text-xl text-white bg-red-700 -pt-1">
-                      </form>
+                    </form>
                       <a href="{{route('video.create')}}"
                       class="no-underline text-xl mr-10 ml-10 hover:text-green-500 hover:no-underline">upload video
                     </a>
                       <a href="{{route('channel.create')}}"
                       class="no-underline text-xl mr-10 ml-10 hover:text-green-500 hover:no-underline">create channel
                     </a>
-                <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
-                </button>-->
+                </button>
                 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
@@ -54,7 +54,7 @@
                             
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else

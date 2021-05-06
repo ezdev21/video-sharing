@@ -9,16 +9,11 @@
                 </video>
             </div>
             <div class="w-full">
-                video controll
-            </div>
-            <div class="w-full">
-               <p class="text-xl text-center">{{$video->title}}</p>
-               <p class="divide-x divide-gray-500">
+               <p class="ml-2 text-xl">{{$video->title}}</p>
+               <p class="">
                    <span class="m-2 text-xl">{{$video->views}} views</span>
                    <span class="m-2 text-xl">{{$video->created_at}}</span>
-                   @if (Auth::check())
                    <like-component videoId="{{$video->id}}" userId="{{Auth::user()->id}}"/>
-                   @endif
                    <span>{{$video->like}}</span>
                    @if (Auth::check())
                    <dislike-component videoId="{{$video->id}}" userId="{{Auth::user()->id}}"/>
@@ -27,18 +22,18 @@
                </p>
                <p>
                  <a href="{{route('channel.show',$video->channel->id)}}">
-                 <img src="/storage/channelCover/{{$video->channel->cover}}" alt=""
+                 <img src="/storage/channelCovers/{{$video->channel->cover}}" alt=""
                     class="w-50 rounded-full">
-                    <p class="text-xl font-bold">{{$video->channel->name}}</p>--}]
+                    <p class="text-xl font-bold">{{$video->channel->name}}</p>
                     <p>{{$video->description}}</p>
                 </a>
                </p>
             </div>
             
-            <div class="block w-full">
+            <div class="block w-full bg-gray-300">
                 <p>{{$video->comments->count()}} comments</p>
                 <div>
-                    <p class="text-2xl text-center">add your comment</p>
+                    <p class="text-2xl">add your comment</p>
                     <form method="post" action="{{route('comment.store')}}">
                       @csrf
                       <input type="hidden" name="video" value="{{$video->id}}">
@@ -69,16 +64,18 @@
                 @endforeach
             </div>
         </div>
-        <div class="flex-auto">
-          <p>recommended videos</p>
-            @forelse ($recommendedVideos as $video)
-                <div>
-                    <img src="/storage/covers/{{$video->cover}}" alt="" width="100px">
-                    <p>{{$video->title}}</p>
-                    <span>{{$video->channel}}</span>
-                    <span>{{$video->views}}</span>
-                    <span>{{$video->updated_at}}</span>
-                </div>
+        <div class="flex-auto justify-center">
+          <p class="text-2xl m-3 text-bold">Recommended videos</p>
+                @forelse ($recommendedVideos as $video)
+                <a href="{{route('video.watch',$video->id)}}">
+                    <div class="flex-auto mx-3">
+                        <img src="/storage/videoCovers/{{$video->cover}}" alt="" width="250px">
+                        <p>{{$video->title}}</p>
+                        <span>{{$video->channel->name}}</span>
+                        <span>{{$video->views}}</span>
+                        <span>{{$video->updated_at}}</span>
+                    </div>
+                </a>
             @empty
               no recommended videos  
             @endforelse

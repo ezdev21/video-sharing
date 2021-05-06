@@ -38,13 +38,13 @@
                       @csrf
                       <input type="hidden" name="video" value="{{$video->id}}">
                       <input type="hidden" name="user" value="{{Auth::user()->id}}">
-                      <textarea name="body" id="" cols="60" rows="10" class="block border-10 border-red-50"></textarea>
+                      <textarea name="body" id="" cols="60" rows="10" class="block m-2"></textarea>
                       <input type="submit" value="comment" class="px-3 bg-red-600 text-xl text-white">
                     </form>
                 </div>
                 @foreach ($video->comments as $comment)
                     <div>
-                        <img src="'users/'.{{$comment->commentedBy}}" alt="" width="25px">
+                        <img src="users/{{$comment->commentedBy}}" alt="" width="25px">
                         <p>
                          <span>{{$comment->commentedBy}}</span>
                          <span>{{$comment->updated_at}}</span>

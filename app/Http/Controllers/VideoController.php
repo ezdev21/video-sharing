@@ -114,12 +114,24 @@ class VideoController extends Controller
     {
         //
     }
-    public function like($videoId,$userId)
+    public function getLike($videoId,$userId)
     {
-       DB::table('user_video')->insert(['videoId'=>$videoId,'userId'=>$userId]);
+       $liked=DB::table('user_video')->where('video_id',$videoId)
+       ->where('user_id',$userId)->where('type','like')->get();
+       return response()->json($liked);
     }
-    public function disLike($videoId,$userId)
+    public function postLike($videoId,$userId)
     {
-      DB::table('user_video')->insert(['videoId'=>$videoId,'userId'=>$userId]);
+       DB::table('user_video')->insert(['type'=>'like','videoId'=>$videoId,'userId'=>$userId]);
+    }
+    public function getDislike($videoId,$userId)
+    {
+       $liked=DB::table('user_video')->where('video_id',$videoId)
+       ->where('user_id',$userId)->where('type','dislike')->get();
+       return response()->json($liked);
+    }
+    public function postDislike($videoId,$userId)
+    {
+       DB::table('user_video')->insert(['type'=>'dislike','videoId'=>$videoId,'userId'=>$userId]);
     }
 }

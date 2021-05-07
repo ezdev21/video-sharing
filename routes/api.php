@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::get('/api/subscribe/channelId/userId',[ChannelController::class,'getSubscribe']);
 Route::post('/api/subscribe/channelId/userId',[ChannelController::class,'postSubscribe']);
-Route::get('/api/like/channelId/userId',[ChannelController::class,'getLike']);
-Route::post('/api/like/channelId/userId',[ChannelController::class,'postLike']);
-Route::get('/api/dislike/channelId/userId',[ChannelController::class,'getdisLike']);
-Route::post('/api/dislike/channelId/userId',[ChannelController::class,'postdisLike']);
+Route::get('/api/like/videoId/userId',[VideoController::class,'getLike']);
+Route::post('/api/like/videoId/userId',[VideoController::class,'postLike']);
+Route::get('/api/dislike/videoId/userId',[VideoController::class,'getDislike']);
+Route::post('/api/dislike/videoId/userId',[VideoController::class,'postDislike']);

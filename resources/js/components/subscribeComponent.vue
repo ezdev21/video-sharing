@@ -22,7 +22,7 @@ export default {
           }
       })
       .catch(err=>{
-          console.log('error fetching data');
+          console.log('error fetching subscribe data');
       });
     },
     methods:{

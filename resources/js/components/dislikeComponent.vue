@@ -1,6 +1,9 @@
 <template>
-<button @click="disLike" class="[bg-red-700 text-xl px-2,text-white]" :style="[liked? 'text-grey-900 text-grey-900':'']">
+<div>
+<button @click="disLike" class="bg-red-700 text-xl px-2 text-white" :style="[liked? 'text-grey-900 text-grey-900':'']">
   {{disLikeText}}</button>
+  <p>hey</p>
+</div>
 </template>
 <script>
 export default {
@@ -12,7 +15,7 @@ export default {
         }
     },
     mounted(){
-      axios.get('api/disLike/videoId/userId',{videoId:this.videoid,userId:this.userid})
+      axios.get('api/dislike/videoId/userId',{videoId:this.videoid,userId:this.userid})
       .then(res=>{
           this.disLiked=res.data.liked;
           if(this.disliked){
@@ -20,12 +23,12 @@ export default {
           }
       })
       .catch(err=>{
-          console.log('error fetching data');
+          console.log('error fetching dislike data');
       });
     },
     methods:{
          disLike(){
-            axios.post('/api/like/videoId/userId',{VideoId:this.userid,channelId:this.channelid})
+            axios.post('/api/dislike/videoId/userId',{VideoId:this.userid,channelId:this.channelid})
             .then(res=>{ 
              this.disLiked=!this.disLiked;
              if(this.disLiked){

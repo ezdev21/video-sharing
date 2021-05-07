@@ -1,5 +1,5 @@
 <template>
-<button @click="like" class="[bg-red-700 text-xl px-2,text-white]" :style="[liked? 'text-grey-900 text-grey-900':'']">
+<button @click="like" class="bg-green-700 text-xl py-1 px-4 text-white" :style="[liked? 'text-grey-900 text-grey-900':'']">
   {{likeText}}</button>
 </template>
 <script>
@@ -16,11 +16,11 @@ export default {
       .then(res=>{
           this.liked=res.data.liked;
           if(this.liked){
-            this.likeText='liked'
+            this.likeText='disliked'
           }
       })
       .catch(err=>{
-          console.log('error fetching data');
+          console.log('error fetching dislike data');
       });
     },
     methods:{

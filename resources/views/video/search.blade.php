@@ -5,21 +5,23 @@
       <a href="{{route('channel.show',$channel->id)}}">
       <div>
         <img src="/storage/channelCover/{{$channel->cover}}">
-        
+        <p>{{$channel->name}}</p>
       </div>
       </a> 
   @endforeach
- @forelse ($videos as $video)
+  </div>
+  <div class="flex flex-wrap">
+    @forelse ($videos as $video)
     <a href="{{route('video.watch',$video->id)}}">
-      <div class="m-5 p-5">
+      <div class="flex-auto">
         <img src="/storage/videoCover/{{$video->cover}}">
         <p>{{$video->title}}</p>
         <p>{{$video->views}}</p>
-        <p>{{$video->channel}}</p>
+        <p>{{$video->channel->name}}</p>
       </div>
     </a>
- @empty
+   @empty
   <p class="text-3xl text-red-600 text-bold text-center">oops no video was found like {{$searchQuery}}</p> 
- @endforelse    
- <div>
+ @endforelse  
+  </div>
 @endsection

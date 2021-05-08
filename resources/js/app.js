@@ -19,7 +19,9 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('like-component', require('./components/likeComponent.vue'));
+Vue.component('dislike-component', require('./components/dislikeComponent.vue'));
+Vue.component('subscribe-component', require('./components/subscribeComponent.vue'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

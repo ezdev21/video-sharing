@@ -17,20 +17,36 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/',[VideoController::class,'index']);
+
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::post('search',[VideoController::class,'search'])->name('video.search');
 Route::get('/videos',[VideoController::class,'index'])->name('video.index');
-Route::get('watch/{videoId}',[VideoController::class,'show'])->name('video.watch');
-Route::get('upload',[VideoController::class,'create'])->name('video.create');
-Route::post('upload',[VideoController::class,'store'])->name('video.store');
-Route::post('comment/create',[CommentController::class,'store'])->name('comment.store');
-Route::get('comment/commentId/edit',[CommentController::class,'edit'])->name('comment.edit');
-Route::patch('comment/update',[CommentController::class,'update'])->name('comment.update');
-Route::delete('comment/delete',[CommentController::class,'deklete'])->name('comment.delete');
-Route::get('channel',[ChannelController::class,'create'])->name('channel.create');
-Route::post('channel',[ChannelController::class,'store'])->name('channel.store');
-Route::post('subscribe/{channelIdId}/{userId:',[channelController::class,'subscribe']);
-Route::post('like/{videoId}/{userId}',[VideoController::class,'like']);
-Route::post('disLike/{videoId}/{userId}',[VideoController::class,'disLike']);
+
+Route::prefix('video')->group(function(){
+  Route::get('upload',[VideoController::class,'create'])->name('video.create');
+  Route::post('upload',[VideoController::class,'store'])->name('video.store');
+  Route::get('watch/{videoId}',[VideoController::class,'show'])->name('video.watch');
+  Route::get('like/videoId/userId',[VideoController::class,'getLike']);
+  Route::post('like/videoId/userId',[VideoController::class,'postLike']);
+  Route::get('dislike/videoId/userId',[VideoController::class,'getDislike']);
+  Route::post('dislike/videoId/userId',[VideoController::class,'postDislike']);
+});
+Route::prefix('comment')->group(function(){
+  Route::post('create',[CommentController::class,'store'])->name('comment.store');
+  Route::get('commentId/edit',[CommentController::class,'edit'])->name('comment.edit');
+  Route::patch('update',[CommentController::class,'update'])->name('comment.update');
+  Route::delete('delete',[CommentController::class,'deklete'])->name('comment.delete');
+  Route::get('like/commentId/userId',[CommentController::class,'getLike']);
+  Route::post('like/commentId/userId',[CommentController::class,'postLike']);
+  Route::get('dislike/commentId/userId',[CommentController::class,'getDislike']);
+  Route::post('dislike/commentId/userId',[CommentController::class,'postDislike']);
+});
+Route::prefix('channel')->group(function(){
+  Route::get('create',[ChannelController::class,'create'])->name('channel.create');
+  Route::post('create',[ChannelController::class,'store'])->name('channel.store');
+  Route::get('show/{id}',[ChannelController::class,'show'])->name('channel.show');
+  Route::get('subscribe/channelId/userId',[ChannelController::class,'getSubscribe']);
+  Route::post('subscribe/channelId/userId',[ChannelController::class,'postSubscribe']);
+});

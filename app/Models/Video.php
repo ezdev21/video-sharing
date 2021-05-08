@@ -19,7 +19,7 @@ class Video extends Model
     {
         return $this->hasMany(Comment::class);
     }
-    public function likedBy()
+    public function likes()
     {
         return $this->belongsToMany(User::class);
     }

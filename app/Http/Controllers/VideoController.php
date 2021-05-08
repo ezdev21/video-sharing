@@ -7,6 +7,9 @@ use App\Models\Video;
 use App\Models\Channel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
+
 class VideoController extends Controller
 {
     /**
@@ -17,8 +20,8 @@ class VideoController extends Controller
     public function search(Request $request)
     {
         $searchQuery=$request->searchQuery;
-        $channels=Channel::where('name','like',$searchQuery);
-        $videos=Video::where('title','like',$searchQuery);
+        $channels=Channel::where('name','like',"%${searchQuery}%")->get();
+        $videos=Video::where('title','like',"%${searchQuery}%")->get();
         return view('video.search',['videos'=>$videos,'channels'=>$channels,'searchQuery'=>$searchQuery]);
     }
     public function index()
@@ -34,10 +37,12 @@ class VideoController extends Controller
      */
     public function create()
     {
-        if(Auth::user()){
-            return view('video.upload');
-        }
-        return redirect()->route('login');
+        // if(Auth::user()->channel){
+        //     return view('video.upload');
+        // }
+        //return redirect()->route('login');
+        //return redirect()->route('channel.create');
+        return view('video.upload');
     }
 
     /**
@@ -51,9 +56,14 @@ class VideoController extends Controller
          $video=new Video;
          $video->title=$request->title;
          $video->description=$request->description;
-         $video->channel_id=$request->userId;
+         $id=$request->userId;
+         //$channel=User::find($id);
+         $video->channel_id=1;
          $video->save();
-         $request->cover->storeAS('covers',$video->id.'.jpg','public');
+         $extension=$request->cover->extension();
+         $video->cover=$video->id.'.'.$extension;
+         $video->save();
+         $request->cover->storeAS('covers',$video->cover,'public');
          $request->video->storeAs('videos',$video->id.'.mp4','public');
          return redirect()->route('video.index');
     }
@@ -104,12 +114,24 @@ class VideoController extends Controller
     {
         //
     }
-    public function like($videoId,$userId)
+    public function getLike($videoId,$userId)
     {
-       DB::table('user_video')->insert("['videoId'=$videoId,'userId'=>$userId]");
+       $liked=DB::table('user_video')->where('video_id',$videoId)
+       ->where('user_id',$userId)->where('type','like')->get();
+       return response()->json($liked);
     }
-    public function disLike()
+    public function postLike($videoId,$userId)
     {
-      DB::table('user_video')->insert("['videoId'=$videoId,'userId'=>$userId]");
+       DB::table('user_video')->insert(['type'=>'like','videoId'=>$videoId,'userId'=>$userId]);
+    }
+    public function getDislike($videoId,$userId)
+    {
+       $liked=DB::table('user_video')->where('video_id',$videoId)
+       ->where('user_id',$userId)->where('type','dislike')->get();
+       return response()->json($liked);
+    }
+    public function postDislike($videoId,$userId)
+    {
+       DB::table('user_video')->insert(['type'=>'dislike','videoId'=>$videoId,'userId'=>$userId]);
     }
 }

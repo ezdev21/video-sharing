@@ -18,9 +18,3 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/api/subscribe/channelId/userId',[ChannelController::class,'getSubscribe']);
-Route::post('/api/subscribe/channelId/userId',[ChannelController::class,'postSubscribe']);
-Route::get('/api/like/channelId/userId',[ChannelController::class,'getLike']);
-Route::post('/api/like/channelId/userId',[ChannelController::class,'postLike']);
-Route::get('/api/dislike/channelId/userId',[ChannelController::class,'getdisLike']);
-Route::post('/api/dislike/channelId/userId',[ChannelController::class,'postdisLike']);

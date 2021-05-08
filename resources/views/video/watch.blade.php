@@ -1,80 +1,91 @@
 @extends('layouts.app')
 @section('content')
     <div class="flex">
-        <div class="w-2/3">
-            <div class="block w-full">
-                <video src="'videos/'.{{$video->id.'mp4'}}"></video>
+        <div class="flex-auto w-2/3 m-2">
+            <div class="w-full">
+                <video controls class="w-full">
+                    <source  src="storage/videos/{{$video->id}}.mp4" type="video/mp4"/>
+                        your browser does not support html5 video
+                </video>
             </div>
-            <div class="block w-full">
-                video controll
-            </div>
-            <div class="block w-full">
-               <p>{{$video->title}}</p>
-               <p class="divide-x divide-gray-500">
-                   <span class="m-2">{{$video->views}} views</span>
-                   <span class="m-2">{{$video->created_at}}</span>
+            <div class="w-full">
+               <p class="ml-2 text-xl">{{$video->title}}</p>
+               <p class="">
+                   <span class="m-2 text-xl">{{$video->views}} views</span>
+                   <span class="m-2 text-xl">{{$video->created_at}}</span>
                    @if (Auth::check())
-                   <like-component videoId="{{$video->id}}" userId="{{Auth::user()->id}}"/>
+                   <like-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
                    @endif
-                   <span>{{$video->like}}</span>
+                   <span>{{$video->like->count()}}</span>
                    @if (Auth::check())
-                   <dislike-component videoId="{{$video->id}}" userId="{{Auth::user()->id}}"/>
+                   <dislike-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
                    @endif
-                   <span>{{$video->dislike}}</span>
+                   <span>{{$video->dislike->count()}}</span>
                </p>
                <p>
-                 <a href="{{route('channel.show',$video->channel()->id)}}">
-                    <img src="/storage/channelCover/{{$video->channel()->cover}}" alt=""
-                    class="w-50 rounded-full">
-                    <p class="text-xl font-bold">{{$video->channel()->name}}</p>
+                 <a href="{{route('channel.show',$video->channel->id)}}">
+                 <img src="/storage/covers/{{$video->channel->cover}}" alt=""
+                    class="w-50 rounded-full"> </a>
+                    <p class="text-xl font-bold">{{$video->channel->name}}</p>
+                    <span>
+                        @if (Auth::check())
+                        <subscribe-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
+                        @endif
+                    </span>
+                    <span>{{$video->subscribers}}</span>
                     <p>{{$video->description}}</p>
-                </a>
                </p>
             </div>
-            
-            <div class="block w-full">
+            <div class="block w-full bg-gray-300">
                 <p>{{$video->comments->count()}} comments</p>
                 <div>
+                    <p class="text-2xl">comment as {{Auth::user()->name}}</p>
+                    @if (Auth::check())
                     <form method="post" action="{{route('comment.store')}}">
-                      @csrf
-                      <input type="hidden" name="video" value="{{$video->id}}">
-                      <input type="hidden" name="user" value="{{Auth::user()->id}}">
-                      <textarea name="body" id="" cols="60" rows="10" class="block border-10 border-red-50"></textarea>
-                      <input type="submit" value="comment" class="px-3 bg-blue-900 text-xl text-white">
-                    </form>
+                        @csrf
+                        <input type="hidden" name="video" value="{{$video->id}}">
+                        <input type="hidden" name="user" value="{{Auth::user()->id}}">
+                        <textarea name="body" id="" cols="60" rows="10" class="block m-2"></textarea>
+                        <input type="submit" value="comment" class="px-3 bg-red-600 text-xl text-white">
+                      </form>
+                    @endif
                 </div>
                 @foreach ($video->comments as $comment)
                     <div>
-                        <img src="'users/'.{{$comment->commentedBy}}" alt="" width="25px">
+                        <img src="avatars/{{$comment->user->id}}" alt="" width="25px">
                         <p>
-                         <span>{{$comment->commentedBy}}</span>
+                         <span>{{$comment->user->name}}</span>
                          <span>{{$comment->updated_at}}</span>
                          </p>
                          <p>{{$comment->body}}</p>
                          <p>
-                         <span>{{$comment->liked}}</span>
-                         <span>{{$comment->disliked}}</span>
+                         <span>{{$comment->likes->count()}}</span>
+                         <span>{{$comment->dislikes->count()}}</span>
                         </p>
-                        @can('edit',Auth::user())
+                        @if(Auth::user()->id===$comment->user->id)
                             <a href="{{route('comment.edit')}}">edit</a>
-                        @endcan
-                        @can('delete',Auth::user())
-                            <a href="{{route('comment.delete')}}">edit</a>
-                        @endcan
+                        @endif
+                        @if(Auth::user()->id===$comment->user->id)
+                            <a href="{{route('comment.delete')}}">delete</a>
+                        @endif
                     </div>
                 @endforeach
             </div>
         </div>
-        <div class="">
-          <p>recommended videos</p>
-            @forelse ($recommendedVideos as $video)
-                <div>
-                    <img src="'cover/'.{{$video->id}}" alt="">
-                    <p>{{$video->title}}</p>
-                    <span>{{$video->channel}}</span>
-                    <span>{{$video->views}}</span>
-                    <span>{{$video->updated_at}}</span>
-                </div>
+        <div class="flex-auto justify-center">
+          <p class="text-2xl m-3 text-bold">Recommended videos</p>
+                @forelse ($recommendedVideos as $video)
+                <a href="{{route('video.watch',$video->id)}}">
+                    <div class="flex-auto mx-3">
+                        <img src="/storage/videoCovers/{{$video->cover}}" alt="" width="250px">
+                        <p>{{$video->title}}</p>
+                        <p>{{$video->channel->name}}</p>
+                        <p>
+                           <span>{{$video->views}} views</span>.
+                           <span>{{$video->updated_at}}</span>
+                        </p>
+                    </div>
+                </a>
             @empty
               no recommended videos  
             @endforelse

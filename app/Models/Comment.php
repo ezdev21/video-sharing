@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasFactory;
-    public function commentedBy()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
@@ -16,7 +16,7 @@ class Comment extends Model
     {
         return $this->belongsTo(Video::class);
     }
-    public function liked()
+    public function likes()
     {
         return $this->belongsToMany(User::class);
     }

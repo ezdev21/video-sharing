@@ -9,11 +9,11 @@ class Channel extends Model
 {
     use HasFactory;
 
-    public function owner()
+    public function user()
     {
         return $this->hasOne(User::class);
     }
-    public function subscribers()
+    public function subscribes()
     {
         return $this->belongsToMany(User::class);
     }

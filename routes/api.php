@@ -18,9 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/api/subscribe/channelId/userId',[ChannelController::class,'getSubscribe']);
-Route::post('/api/subscribe/channelId/userId',[ChannelController::class,'postSubscribe']);
-Route::get('/api/like/videoId/userId',[VideoController::class,'getLike']);
-Route::post('/api/like/videoId/userId',[VideoController::class,'postLike']);
-Route::get('/api/dislike/videoId/userId',[VideoController::class,'getDislike']);
-Route::post('/api/dislike/videoId/userId',[VideoController::class,'postDislike']);
+// Route::get('/api/subscribe/channelId/userId',[ChannelController::class,'getSubscribe']);
+// Route::post('/api/subscribe/channelId/userId',[ChannelController::class,'postSubscribe']);
+// Route::get('/api/like/videoId/userId',[VideoController::class,'getLike']);
+// Route::post('/api/like/videoId/userId',[VideoController::class,'postLike']);
+// Route::get('/api/dislike/videoId/userId',[VideoController::class,'getDislike']);
+// Route::post('/api/dislike/videoId/userId',[VideoController::class,'postDislike']);
+

@@ -12,20 +12,20 @@ export default {
         }
     },
     mounted(){
-      axios.get('api/like/videoId/userId',{videoId:this.videoid,userId:this.userid})
+      axios.get('video/like/videoId/userId',{videoId:this.videoid,userId:this.userid})
       .then(res=>{
           this.liked=res.data.liked;
           if(this.liked){
-            this.likeText='disliked'
+            this.likeText='liked'
           }
       })
       .catch(err=>{
-          console.log('error fetching dislike data');
+          console.log('error fetching like data');
       });
     },
     methods:{
         like(){
-            axios.post('/api/like/videoId/userId',{VideoId:this.userid,channelId:this.channelid})
+            axios.post('video/like/videoId/userId',{VideoId:this.userid,channelId:this.channelid})
             .then(res=>{ 
              this.liked=!this.liked;
              if(this.liked){

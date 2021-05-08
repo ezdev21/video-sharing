@@ -44,11 +44,11 @@ class User extends Authenticatable
     {
         $this->hasMany(Channel::class);
     }
-    public function suscribed()
+    public function suscribes()
     {
-        return $this->belonsToMnany(Channel::class);
+        return $this->belonsToMany(Channel::class);
     }
-    public function videoLikes()
+    public function likes()
     {
         return $this->belongsToMany(Video::class);
     }

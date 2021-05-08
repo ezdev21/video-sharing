@@ -28,19 +28,25 @@ Route::prefix('video')->group(function(){
   Route::get('upload',[VideoController::class,'create'])->name('video.create');
   Route::post('upload',[VideoController::class,'store'])->name('video.store');
   Route::get('watch/{videoId}',[VideoController::class,'show'])->name('video.watch');
-  Route::post('like/{videoId}/{userId}',[VideoController::class,'like']);
-  Route::post('disLike/{videoId}/{userId}',[VideoController::class,'disLike']);
+  Route::get('like/videoId/userId',[VideoController::class,'getLike']);
+  Route::post('like/videoId/userId',[VideoController::class,'postLike']);
+  Route::get('dislike/videoId/userId',[VideoController::class,'getDislike']);
+  Route::post('dislike/videoId/userId',[VideoController::class,'postDislike']);
 });
 Route::prefix('comment')->group(function(){
   Route::post('create',[CommentController::class,'store'])->name('comment.store');
   Route::get('commentId/edit',[CommentController::class,'edit'])->name('comment.edit');
   Route::patch('update',[CommentController::class,'update'])->name('comment.update');
   Route::delete('delete',[CommentController::class,'deklete'])->name('comment.delete');
+  Route::get('like/commentId/userId',[CommentController::class,'getLike']);
+  Route::post('like/commentId/userId',[CommentController::class,'postLike']);
+  Route::get('dislike/commentId/userId',[CommentController::class,'getDislike']);
+  Route::post('dislike/commentId/userId',[CommentController::class,'postDislike']);
 });
-
 Route::prefix('channel')->group(function(){
   Route::get('create',[ChannelController::class,'create'])->name('channel.create');
   Route::post('create',[ChannelController::class,'store'])->name('channel.store');
   Route::get('show/{id}',[ChannelController::class,'show'])->name('channel.show');
-  Route::post('subscribe/{channelIdId}/{userId:',[channelController::class,'subscribe']);
+  Route::get('subscribe/channelId/userId',[ChannelController::class,'getSubscribe']);
+  Route::post('subscribe/channelId/userId',[ChannelController::class,'postSubscribe']);
 });

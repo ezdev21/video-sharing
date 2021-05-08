@@ -4,7 +4,7 @@
         <div class="flex-auto w-2/3 m-2">
             <div class="w-full">
                 <video controls class="w-full">
-                    <source  src="storage/videos/1.mp4" type="video/mp4"/>
+                    <source  src="storage/videos/{{$video->id}}.mp4" type="video/mp4"/>
                         your browser does not support html5 video
                 </video>
             </div>
@@ -13,14 +13,14 @@
                <p class="">
                    <span class="m-2 text-xl">{{$video->views}} views</span>
                    <span class="m-2 text-xl">{{$video->created_at}}</span>
-                   @if (Auth::check())
-                   <like-component videoId="{{$video->id}}" userId="{{Auth::user()->id}}"/>
-                   @endif
-                   <span>{{$video->like}}</span>
-                   @if (Auth::check())
-                   <dislike-component videoId="{{$video->id}}" userId="{{Auth::user()->id}}"/>
-                   @endif
-                   <span>{{$video->dislike}}</span>
+                   @auth
+                   <like-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
+                   @endauth
+                   <span>{{$video->likes->count()}}</span>
+                   @auth
+                   <dislike-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
+                   @endauth
+                   <span>{{$video->likes->count()}}</span>
                </p>
                <p>
                  <a href="{{route('channel.show',$video->channel->id)}}">
@@ -28,17 +28,16 @@
                     class="w-50 rounded-full"> </a>
                     <p class="text-xl font-bold">{{$video->channel->name}}</p>
                     <span>
-                        @if (Auth::check())
-                        <subscribe-component videoId="{{$video->id}}" userId="{{Auth::user()->id}}"/>
-                        @endif
+                        @auth
+                        <subscribe-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
+                        @endauth
                     </span>
                     <span>{{$video->subscribers}}</span>
                     <p>{{$video->description}}</p>
                </p>
             </div>
-            
-            <div class="block w-full bg-gray-300">
-                <p>{{$video->comments->count()}} comments</p>
+            <div class="block w-full p-2">
+                <p class="text-xl">{{$video->comments->count()}} comments</p>
                 <div>
                     <p class="text-2xl">comment as {{Auth::user()->name}}</p>
                     @if (Auth::check())
@@ -46,29 +45,29 @@
                         @csrf
                         <input type="hidden" name="video" value="{{$video->id}}">
                         <input type="hidden" name="user" value="{{Auth::user()->id}}">
-                        <textarea name="body" id="" cols="60" rows="10" class="block m-2"></textarea>
-                        <input type="submit" value="comment" class="px-3 bg-red-600 text-xl text-white">
+                        <textarea name="body" id="" cols="60" rows="10" class="block m-2 text-xl rounded-lg"></textarea>
+                        <input type="submit" value="comment" class="m-2 py-1 rounded px-3 bg-red-600 text-xl text-white">
                       </form>
                     @endif
                 </div>
                 @foreach ($video->comments as $comment)
-                    <div>
-                        <img src="users/{{$comment->commentedBy}}" alt="" width="25px">
+                    <div class="rounded-md bg-blue-100 w-max p-2 m-2">
+                        <img src="avatars/{{$comment->user->id}}" alt="" width="25px">
                         <p>
-                         <span>{{$comment->commentedBy}}</span>
+                         <span class="text-lg font-bold">{{$comment->user->name}}</span>
                          <span>{{$comment->updated_at}}</span>
                          </p>
                          <p>{{$comment->body}}</p>
                          <p>
-                         <span>{{$comment->liked}}</span>
-                         <span>{{$comment->disliked}}</span>
+                         <span>{{$comment->likes->count()}}</span>
+                         <span>{{$comment->likes->count()}}</span>
                         </p>
-                        @can('edit',Auth::user())
+                        @if(Auth::user()->id===$comment->user->id)
                             <a href="{{route('comment.edit')}}">edit</a>
-                        @endcan
-                        @can('delete',Auth::user())
-                            <a href="{{route('comment.delete')}}">edit</a>
-                        @endcan
+                        @endif
+                        @if(Auth::user()->id===$comment->user->id)
+                            <a href="{{route('comment.delete')}}">delete</a>
+                        @endif
                     </div>
                 @endforeach
             </div>
@@ -82,7 +81,7 @@
                         <p>{{$video->title}}</p>
                         <p>{{$video->channel->name}}</p>
                         <p>
-                           <span>{{$video->views}} views</span>
+                           <span>{{$video->views}} views</span>.
                            <span>{{$video->updated_at}}</span>
                         </p>
                     </div>

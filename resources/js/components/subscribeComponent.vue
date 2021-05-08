@@ -1,7 +1,14 @@
 <template>
- <button @click="subscribe" class="bg-yellow-700 text-xl text-white"
- :style="[subscribed? 'bg-gray-300 text-xl-black':'']"
- >{{buttonText}}</button>
+ <div>
+  <button @click="subscribe" class="bg-red-600 text-xl text-white py-1 px-2 rounded"
+  :class="subscribed? 'bg-gray-300 text-xl-black':''"
+  >{{buttonText}}</button>
+  <div>
+   <p class="text-xl">want to subscribe to this channel?</p>
+   <p>sign in to subscribe this channel</p>
+   <a href="/login" class="uppercase text-xl m-2 text-green-600">sign in</a>   
+  </div>   
+ </div>
 </template>
 <script>
 export default {

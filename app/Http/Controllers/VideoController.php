@@ -128,8 +128,13 @@ class VideoController extends Controller
     }
     public function postLike($videoId,$userId)
     {
-       DB::table('user_video')->insert(['type'=>'like','video_id'=>$videoId,'user_id'=>$userId]);
-       return response()->json('ok');
+       if(DB::table('user_video')->insert(['type'=>'like','video_id'=>$videoId,'user_id'=>$userId])){
+           $status=true;
+       }
+       else{
+           $status=false;
+       }
+       return response()->json([$status]);
     }
     public function getDislike($videoId,$userId)
     {

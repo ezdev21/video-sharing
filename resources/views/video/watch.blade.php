@@ -24,7 +24,7 @@
                     @endauth
                 </p>  
              </div>
-              <div class="bg-green-500 relative ">
+              <div class="relative ">
                 <p>
                     <a href="{{route('channel.show',$video->channel->id)}}">
                     <img src="/storage/channelCover/{{$video->channel->cover}}" alt=""
@@ -32,7 +32,7 @@
                        <p class="text-xl font-bold">{{$video->channel->name}}</p>
                        <span>
                            @auth
-                           <subscribe-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
+                           <subscribe-component channelid="{{$video->channel->id}}" userid="{{Auth::user()->id}}"/>
                            @endauth
                        </span>
                        <span>{{$video->subscribers}}</span>

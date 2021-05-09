@@ -16,7 +16,7 @@ export default {
         }
     },
     mounted(){
-       axios.get('channel/subscribe/channelId/userId')
+       axios.get('/channel/subscribe/',{userId:this.userid,channelId:this.channelid})
       .then(res=>{
           this.subscribed=res.data.subscribed;
           if(this.subscribed){
@@ -25,11 +25,12 @@ export default {
       })
       .catch(err=>{
           console.log('error fetching subscribe data');
+          console.log('channel id '+this.channelid+' user id '+this.userid);
       });
     },
     methods:{
         subscribe(){
-            axios.post('/api/suscribe/channelId/userId',{userId:this.userid,channelId:this.channelid})
+            axios.post('channel/subscribe',{userId:this.userid,channelId:this.channelid})
             .then(res=>{
              this.subscribed=!this.subscribed; 
              if(this.subscribed){

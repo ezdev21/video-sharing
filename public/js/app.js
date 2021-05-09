@@ -1850,9 +1850,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['userid', 'channelid'],
   data: function data() {
     return {
       buttonText: 'subscribe',
@@ -1865,7 +1864,10 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('api/subscribe/channelId/userId').then(function (res) {
+    axios.get('/channel/subscribe/', {
+      userId: this.userid,
+      channelId: this.channelid
+    }).then(function (res) {
       _this.subscribed = res.data.subscribed;
 
       if (_this.subscribed) {
@@ -1873,15 +1875,16 @@ __webpack_require__.r(__webpack_exports__);
       }
     })["catch"](function (err) {
       console.log('error fetching subscribe data');
+      console.log('channel id ' + _this.channelid + ' user id ' + _this.userid);
     });
   },
   methods: {
     subscribe: function subscribe() {
       var _this2 = this;
 
-      axios.post('/api/suscribe/channelId/userId', {
-        userId: this.userId,
-        channelId: this.channelId
+      axios.post('channel/subscribe', {
+        userId: this.userid,
+        channelId: this.channelid
       }).then(function (res) {
         _this2.subscribed = !_this2.subscribed;
 
@@ -1889,7 +1892,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2.buttontext = 'unsubscribe';
         }
       })["catch"](function (err) {
-        console.log('error in sending post subscribe');
+        console.log(err);
       });
     }
   }
@@ -1984,35 +1987,28 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('video/like/videoId/userId', {
-      videoId: this.videoid,
-      userId: this.userid
-    }).then(function (res) {
+    axios.get('/video/like/' + this.videoid + '/' + this.userid).then(function (res) {
       _this.liked = res.data.liked;
 
       if (_this.liked) {
         _this.likeText = 'liked';
       }
     })["catch"](function (err) {
-      console.log(err);
+      console.log('error fetching like data');
     });
   },
   methods: {
-    // like(){
-    //     axios.post('video/like/videoId/userId',{VideoId:this.videois,userId:this.userid})
-    //     .then(res=>{ 
-    //      this.liked=!this.liked;
-    //      if(this.liked){
-    //        this.likeText='liked';
-    //      }
-    //     })
-    //     .catch(err=>{
-    //       console.log(err);
-    //     })
-    // }
     like: function like() {
-      this.liked = !this.liked;
-      this.likeText == 'like' ? this.likeText = 'liked' : this.likeText = 'like';
+      var _this2 = this;
+
+      axios.post('video/like/' + this.videoid + '/' + this.userid).then(function (res) {
+        _this2.liked = !_this2.liked;
+        _this2.likeText == 'like' ? _this2.likeText = 'liked' : _this2.likeText = 'like';
+        console.log(res.data);
+      })["catch"](function (err) {
+        console.log('error in posting data to like');
+        console.log(err);
+      });
     }
   }
 });
@@ -2033,9 +2029,9 @@ __webpack_require__.r(__webpack_exports__);
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //window.Vue = require('vue').default;
 
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js").default;
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -37735,19 +37731,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { attrs: { clasdabsolute: "", "right-0": "", "top-0": "" } },
-    [
-      _c(
-        "button",
-        {
-          staticClass: "bg-red-600 text-xl text-white py-1 px-2 rounded",
-          class: _vm.subscribed ? "bg-gray-300 text-xl-black" : "",
-          on: { click: _vm.subscribe }
-        },
-        [_vm._v(_vm._s(_vm.buttonText))]
-      )
-    ]
+    "button",
+    {
+      staticClass:
+        "absolute top-0 right-0 bg-red-600 text-xl text-white py-1 px-2 rounded",
+      class: _vm.subscribed ? "bg-gray-300 text-xl-black" : "",
+      on: { click: _vm.subscribe }
+    },
+    [_vm._v(_vm._s(_vm.buttonText))]
   )
 }
 var staticRenderFns = []
@@ -37810,7 +37801,7 @@ var render = function() {
     "button",
     {
       staticClass: "bg-green-700 text-xl py-1 px-4 text-white",
-      class: _vm.liked ? "text-grey-900 text-grey-900" : "",
+      style: _vm.liked ? "text-grey-900 text-grey-900" : "",
       on: { click: _vm.like }
     },
     [_vm._v("\r\n  " + _vm._s(_vm.likeText))]

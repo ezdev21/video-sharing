@@ -28,10 +28,10 @@ Route::prefix('video')->group(function(){
   Route::get('upload',[VideoController::class,'create'])->name('video.create');
   Route::post('upload',[VideoController::class,'store'])->name('video.store');
   Route::get('watch/{videoId}',[VideoController::class,'show'])->name('video.watch');
-  Route::get('like/videoId/userId',[VideoController::class,'getLike']);
-  Route::post('like/videoId/userId',[VideoController::class,'postLike']);
-  Route::get('dislike/videoId/userId',[VideoController::class,'getDislike']);
-  Route::post('dislike/videoId/userId',[VideoController::class,'postDislike']);
+  Route::get('like/{videoId}/{userId}',[VideoController::class,'getLike']);
+  Route::post('like/{videoId}/{userId}',[VideoController::class,'postLike']);
+  Route::get('dislike/{videoId}/{userId}',[VideoController::class,'getDislike']);
+  Route::post('dislike/{videoId}/{userId}',[VideoController::class,'postDislike']);
 });
 Route::prefix('comment')->group(function(){
   Route::post('create',[CommentController::class,'store'])->name('comment.store');
@@ -47,6 +47,6 @@ Route::prefix('channel')->group(function(){
   Route::get('create',[ChannelController::class,'create'])->name('channel.create');
   Route::post('create',[ChannelController::class,'store'])->name('channel.store');
   Route::get('show/{id}',[ChannelController::class,'show'])->name('channel.show');
-  Route::get('subscribe/channelId/userId',[ChannelController::class,'getSubscribe']);
-  Route::post('subscribe/channelId/userId',[ChannelController::class,'postSubscribe']);
+  Route::get('subscribe',[ChannelController::class,'getSubscribe']);
+  Route::post('subscribe',[ChannelController::class,'postSubscribe']);
 });

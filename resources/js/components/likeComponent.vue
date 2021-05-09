@@ -12,7 +12,7 @@ export default {
         }
     },
     mounted(){
-      axios.get('video/like/videoId/userId',{videoId:this.videoid,userId:this.userid})
+      axios.get('/video/like/'+this.videoid+'/'+this.userid)
       .then(res=>{
           this.liked=res.data.liked;
           if(this.liked){
@@ -20,12 +20,12 @@ export default {
           }
       })
       .catch(err=>{
-          console.log('error in fe5trching like data');
+        console.log('error fetching like data');
       });
     },
     methods:{
         like(){
-            axios.post('/video/like/videoId/userId',{VideoId:this.videoid,userId:this.userid})
+            axios.post('video/like/'+this.videoid+'/'+this.userid)
             .then(res=>{ 
              this.liked=!this.liked;
                this.likeText=='like' ? this.likeText='liked' : this.likeText='like';
@@ -33,6 +33,7 @@ export default {
             })
             .catch(err=>{
               console.log('error in posting data to like');
+              console.log(err);
             })
         }
     }

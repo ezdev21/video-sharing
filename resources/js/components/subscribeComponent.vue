@@ -16,7 +16,7 @@ export default {
         }
     },
     mounted(){
-       axios.get('/channel/subscribe/',{userId:this.userid,channelId:this.channelid})
+       axios.get('/channel/subscribe/',{params:{userId:this.userid,channelId:this.channelid}})
       .then(res=>{
           this.subscribed=res.data.subscribed;
           if(this.subscribed){
@@ -30,7 +30,7 @@ export default {
     },
     methods:{
         subscribe(){
-            axios.post('channel/subscribe',{userId:this.userid,channelId:this.channelid})
+            axios.post('channel/subscribe',{params:{userId:this.userid,channelId:this.channelid}})
             .then(res=>{
              this.subscribed=!this.subscribed; 
              if(this.subscribed){

@@ -28,8 +28,8 @@ Route::prefix('video')->group(function(){
   Route::get('upload',[VideoController::class,'create'])->name('video.create');
   Route::post('upload',[VideoController::class,'store'])->name('video.store');
   Route::get('watch/{videoId}',[VideoController::class,'show'])->name('video.watch');
-  Route::get('like/{videoId}/{userId}',[VideoController::class,'getLike']);
-  Route::post('like/{videoId}/{userId}',[VideoController::class,'postLike']);
+  Route::get('like',[VideoController::class,'getLike']);
+  Route::post('like',[VideoController::class,'postLike']);
   Route::get('dislike/{videoId}/{userId}',[VideoController::class,'getDislike']);
   Route::post('dislike/{videoId}/{userId}',[VideoController::class,'postDislike']);
 });

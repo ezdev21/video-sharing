@@ -12,12 +12,13 @@ export default {
         }
     },
     mounted(){
-      axios.get('/video/like/'+this.videoid+'/'+this.userid)
+      axios.get('/video/like/',{params:{videoId:this.videoid,userId:this.userid}})
       .then(res=>{
           this.liked=res.data.liked;
           if(this.liked){
             this.likeText='liked'
           }
+          console.log(res.data);
       })
       .catch(err=>{
         console.log('error fetching like data');
@@ -25,7 +26,7 @@ export default {
     },
     methods:{
         like(){
-            axios.post('video/like/'+this.videoid+'/'+this.userid)
+            axios.post('video/like',{params:{videoId:this.videoid,userId:this.userid}})
             .then(res=>{ 
              this.liked=!this.liked;
                this.likeText=='like' ? this.likeText='liked' : this.likeText='like';

@@ -114,21 +114,21 @@ class VideoController extends Controller
     {
         //
     }
-    public function getLike($videoId,$userId)
+    public function getLike(Request $request)
     {
       if(DB::table('user_video')->
-       where([['video_id',$videoId],['user_id',$userId],['type','like']])
+       where([['video_id',$request->videoId],['user_id',$request->userId],['type','like']])
        ->exists()){
            $liked=true;
        }
        else{
            $liked=false;
        }
-       return response()->json([$liked]);
+       return response()->json(['liked'=>$liked]);
     }
-    public function postLike($videoId,$userId)
+    public function postLike(Request $request)
     {
-       if(DB::table('user_video')->insert(['type'=>'like','video_id'=>$videoId,'user_id'=>$userId])){
+       if(DB::table('user_video')->insert(['type'=>'like','video_id'=>$request->videoId,'user_id'=>$request->userId])){
            $status=true;
        }
        else{

@@ -99,8 +99,19 @@ class ChannelController extends Controller
     {
         //
     }
-    public function subscribe($channelId,$userId)
+    public function getSubscribe(Request $request)
     {
-       DB::table('channel_user')->insert(['channel_id'=>$channelId,'user_id'=>$userId]);
+       if(DB::table('channel_user')->where([['channel_id',$request->channelId],['user_id',$request->userId]])->exists())
+       {
+           $subscribed=true;
+       }
+       else{
+           $subscribed=false;
+       }
+       return response()->json(['subscribed'=>$subscribed]);
+    }
+    public function postSubscribe()
+    {
+
     }
 }

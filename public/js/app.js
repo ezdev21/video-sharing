@@ -1865,8 +1865,10 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/channel/subscribe/', {
-      userId: this.userid,
-      channelId: this.channelid
+      params: {
+        userId: this.userid,
+        channelId: this.channelid
+      }
     }).then(function (res) {
       _this.subscribed = res.data.subscribed;
 
@@ -1883,8 +1885,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.post('channel/subscribe', {
-        userId: this.userid,
-        channelId: this.channelid
+        data: {
+          userId: this.userid,
+          channelId: this.channelid
+        }
       }).then(function (res) {
         _this2.subscribed = !_this2.subscribed;
 
@@ -1987,12 +1991,19 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('/video/like/' + this.videoid + '/' + this.userid).then(function (res) {
+    axios.get('/video/like/', {
+      params: {
+        videoId: this.videoid,
+        userId: this.userid
+      }
+    }).then(function (res) {
       _this.liked = res.data.liked;
 
       if (_this.liked) {
         _this.likeText = 'liked';
       }
+
+      console.log(res.data);
     })["catch"](function (err) {
       console.log('error fetching like data');
     });
@@ -2001,7 +2012,12 @@ __webpack_require__.r(__webpack_exports__);
     like: function like() {
       var _this2 = this;
 
-      axios.post('video/like/' + this.videoid + '/' + this.userid).then(function (res) {
+      axios.post('video/like', {
+        params: {
+          videoId: this.videoid,
+          userId: this.userid
+        }
+      }).then(function (res) {
         _this2.liked = !_this2.liked;
         _this2.likeText == 'like' ? _this2.likeText = 'liked' : _this2.likeText = 'like';
         console.log(res.data);

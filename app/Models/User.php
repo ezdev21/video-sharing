@@ -40,9 +40,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function channels()
+    public function channel()
     {
-        $this->hasMany(Channel::class);
+        return $this->hasOne(Channel::class);
     }
     public function suscribes()
     {

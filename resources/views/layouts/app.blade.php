@@ -39,6 +39,9 @@
                           <a href="{{route('channel.create')}}"
                           class="no-underline text-xl mr-10 ml-10 hover:text-green-500 hover:no-underline">create channel
                         </a>
+                        @auth
+                        <span class="text-xl">notifications</span>   
+                        @endauth
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
                     </button>

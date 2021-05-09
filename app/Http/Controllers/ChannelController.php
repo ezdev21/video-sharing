@@ -41,7 +41,17 @@ class ChannelController extends Controller
      */
     public function store(ChannelFormRequest $request)
     {
-        Channel::create($request);
+        $channel=new Channel;
+        $channel->name=$request->name;
+        $channel->description=$request->description;
+        $channel->user_id=$request->user;
+        $channel->cover='icon.png';
+        $channel->save();
+        $extension=$request->cover->extension();
+        $channel->cover=$channel->id.'.'.$extension;
+        $channel->save();
+        $request->cover->storeAs('channelCover',$channel->cover,'public');
+        return redirect()->route('video.index');
     }
 
     /**

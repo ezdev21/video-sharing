@@ -2,39 +2,43 @@
 @section('content')
     <div class="flex">
         <div class="flex-auto w-2/3 m-2">
-            <div class="w-full">
+            <div class="w-full m-2">
                 <video controls class="w-full">
-                    <source  src="storage/videos/{{$video->id}}.mp4" type="video/mp4"/>
+                    <source  src="storage/video/{{$video->id}}.mp4" type="video/mp4"/>
                         your browser does not support html5 video
                 </video>
             </div>
             <div class="w-full">
-               <p class="ml-2 text-xl">{{$video->title}}</p>
-               <p class="">
-                   <span class="m-2 text-xl">{{$video->views}} views</span>
-                   <span class="m-2 text-xl">{{$video->created_at}}</span>
-                   @auth
-                   <like-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
-                   @endauth
-                   <span>{{$video->likes->count()}}</span>
-                   @auth
-                   <dislike-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
-                   @endauth
-                   <span>{{$video->likes->count()}}</span>
-               </p>
-               <p>
-                 <a href="{{route('channel.show',$video->channel->id)}}">
-                 <img src="/storage/covers/{{$video->channel->cover}}" alt=""
-                    class="w-50 rounded-full"> </a>
-                    <p class="text-xl font-bold">{{$video->channel->name}}</p>
-                    <span>
-                        @auth
-                        <subscribe-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
-                        @endauth
-                    </span>
-                    <span>{{$video->subscribers}}</span>
-                    <p>{{$video->description}}</p>
-               </p>
+             <div>
+                <p class="ml-2 text-xl">{{$video->title}}</p>
+                <p class="">
+                    <span class="m-2 text-xl">{{$video->views}} views</span>
+                    <span class="m-2 text-xl">{{$video->created_at->toDateString()}}</span>
+                    <span class="text-xl m-1">{{$video->likes->count()}}</span>
+                    @auth
+                    <like-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
+                    @endauth
+                    <span>{{$video->likes->count()}}</span>
+                    @auth
+                    <dislike-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
+                    @endauth
+                </p>  
+             </div>
+              <div class="bg-green-500 relative ">
+                <p>
+                    <a href="{{route('channel.show',$video->channel->id)}}">
+                    <img src="/storage/channelCover/{{$video->channel->cover}}" alt=""
+                       class="w-12 h-12 rounded-full inline"> </a>
+                       <p class="text-xl font-bold">{{$video->channel->name}}</p>
+                       <span>
+                           @auth
+                           <subscribe-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
+                           @endauth
+                       </span>
+                       <span>{{$video->subscribers}}</span>
+                       <p>{{$video->description}}</p>
+                  </p>    
+              </div> 
             </div>
             <div class="block w-full p-2">
                 <p class="text-xl">{{$video->comments->count()}} comments</p>
@@ -52,7 +56,7 @@
                 </div>
                 @foreach ($video->comments as $comment)
                     <div class="rounded-md bg-blue-100 w-max p-2 m-2">
-                        <img src="avatars/{{$comment->user->id}}" alt="" width="25px">
+                        <img src="avatar/{{$comment->user->id}}" alt="" width="25px">
                         <p>
                          <span class="text-lg font-bold">{{$comment->user->name}}</span>
                          <span>{{$comment->updated_at}}</span>
@@ -76,14 +80,16 @@
           <p class="text-2xl m-3 text-bold">Recommended videos</p>
                 @forelse ($recommendedVideos as $video)
                 <a href="{{route('video.watch',$video->id)}}">
-                    <div class="flex-auto mx-3">
-                        <img src="/storage/videoCovers/{{$video->cover}}" alt="" width="250px">
-                        <p>{{$video->title}}</p>
-                        <p>{{$video->channel->name}}</p>
-                        <p>
+                    <div class="flex flex-auto mx-3">
+                        <img src="/storage/videoCover/{{$video->cover}}" width="100px" alt="">
+                        <div class="m-2 p-1">
+                          <p class="text-xl">{{$video->title}}</p>
+                          <p class="text-xl">{{$video->channel->name}}</p>
+                          <p>
                            <span>{{$video->views}} views</span>.
-                           <span>{{$video->updated_at}}</span>
-                        </p>
+                           <span>{{$video->updated_at->format('d/m/Y')}}</span>
+                          </p>
+                         </div>
                     </div>
                 </a>
             @empty

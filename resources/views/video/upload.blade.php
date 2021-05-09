@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('content')
  @guest
- <a href="{{route('login')}}">Login first to create channel</a>
+ <a href="{{route('login')}}" class="text-xl no-undeline"
+ >Login first and create channel to upload video</a>
  @else
  @if (Auth::user()->channel)
  <div class="bg-gray-100 -mt-6 p-3">
@@ -32,7 +33,8 @@
        </form>
    </div>  
  @else
-   <a href="{{route('channel.create',Auth::user()->id)}}">create channel</a>  
+   <a href="{{route('channel.create',Auth::user()->id)}}"
+    class="text-2xl no-undeline">create channel first</a>  
  @endif    
  @endguest   
 @endsection

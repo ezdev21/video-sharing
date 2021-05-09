@@ -1,27 +1,22 @@
 <template>
- <div>
-  <button @click="subscribe" class="bg-red-600 text-xl text-white py-1 px-2 rounded"
+  <button @click="subscribe" class="absolute top-0 right-0 bg-red-600 text-xl text-white py-1 px-2 rounded"
   :class="subscribed? 'bg-gray-300 text-xl-black':''"
   >{{buttonText}}</button>
-  <div>
-   <p class="text-xl">want to subscribe to this channel?</p>
-   <p>sign in to subscribe this channel</p>
-   <a href="/login" class="uppercase text-xl m-2 text-green-600">sign in</a>   
-  </div>   
- </div>
 </template>
 <script>
 export default {
+    props:['userid','channelid'],
     data(){
         return{
           buttonText:'subscribe',
           subscribed:false,
           channelId:null,
-          userId:null
+          userId:null,
+          loggedin:true
         }
     },
     mounted(){
-       axios.get('api/subscribe/channelId/userId')
+       axios.get('channel/subscribe/channelId/userId')
       .then(res=>{
           this.subscribed=res.data.subscribed;
           if(this.subscribed){
@@ -34,7 +29,7 @@ export default {
     },
     methods:{
         subscribe(){
-            axios.post('/api/suscribe/channelId/userId',{userId:this.userId,channelId:this.channelId})
+            axios.post('/api/suscribe/channelId/userId',{userId:this.userid,channelId:this.channelid})
             .then(res=>{
              this.subscribed=!this.subscribed; 
              if(this.subscribed){
@@ -42,7 +37,7 @@ export default {
              }
             })
             .catch(err=>{
-              console.log('error in sending post subscribe');
+              console.log(err);
             });
         }
     }

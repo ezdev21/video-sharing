@@ -25,7 +25,7 @@ class ChannelFormRequest extends FormRequest
     {
         return [
             'name'=>['required','string','min:5','max:20'],
-            'profile-picture'=>['required','image'],
+            'cover'=>['required','image'],
             'description'=>['string','max:300']
         ];
     }
@@ -36,10 +36,10 @@ class ChannelFormRequest extends FormRequest
             'name.string'=>'channel name should be string',
             'name.min'=>'channel name should be minimum of 5 characters',
             'name.max'=>'channel name should be maximum of 20 characters',
-            'profile-picture.required'=>'channel name is required',
-            'profile-picture.image'=>'channel profile picture should be image',
+            'cover.required'=>'channel name is required',
+            'cover.image'=>'channel profile picture should be image',
             'description.string'=>'description should be string',
-            'description'=>'description should be maximum of 300 characters'
+            'description.max'=>'description should be maximum of 300 characters'
         ];
     }
 }

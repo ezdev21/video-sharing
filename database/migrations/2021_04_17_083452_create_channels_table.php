@@ -17,7 +17,7 @@ class CreateChannelsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->string('profile-picture');
+            $table->string('cover');
             $table->foreignId('user_id');
             $table->timestamps();
         });

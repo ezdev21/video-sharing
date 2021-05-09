@@ -1,5 +1,5 @@
 <template>
-<button @click="like" class="bg-green-700 text-xl py-1 px-4 text-white" :style="[liked? 'text-grey-900 text-grey-900':'']">
+<button @click="like" class="bg-green-700 text-xl py-1 px-4 text-white" :style="liked? 'text-grey-900 text-grey-900' :''">
   {{likeText}}</button>
 </template>
 <script>
@@ -20,17 +20,16 @@ export default {
           }
       })
       .catch(err=>{
-          console.log('error fetching like data');
+          console.log('error in fe5trching like data');
       });
     },
     methods:{
         like(){
-            axios.post('video/like/videoId/userId',{VideoId:this.userid,channelId:this.channelid})
+            axios.post('/video/like/videoId/userId',{VideoId:this.videoid,userId:this.userid})
             .then(res=>{ 
              this.liked=!this.liked;
-             if(this.liked){
-               this.likeText='liked';
-             }
+               this.likeText=='like' ? this.likeText='liked' : this.likeText='like';
+               console.log(res.data);
             })
             .catch(err=>{
               console.log('error in posting data to like');

@@ -108,10 +108,10 @@ class ChannelController extends Controller
        else{
            $subscribed=false;
        }
-       return response()->json(['subscribed'=>$subscribed]);
+       return response()->json(['subscribed'=>$subscribed,'message'=>'successfull']);
     }
     public function postSubscribe(Request $request)
     {
-      return response()->json(['message'=>'subscribed']);
+      DB::table('channel_user')->insert(['channel_id'=>$request->channelId,'user_id'=>$request->userId]);
     }
 }

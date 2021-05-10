@@ -20,7 +20,7 @@ export default {
           if(this.subscribed){
              this.subscribeText='unsubscribe';
           }
-          console.log('get subscribe successful');
+          console.log('get subscribe data');
       })
       .catch(err=>{
         console.log('err in fetching subscribe data');
@@ -32,6 +32,8 @@ export default {
             .then(res=>{
              this.subscribed=!this.subscribed; 
              this.subscribeText=='subscribe' ? this.subscribeText='unsubscribe' : this.subscribeText='subscribe';
+             console.log('post subscribe data');
+             console.log(res.data);
             })
             .catch(err=>{
               console.log('error in posting subscribe data');

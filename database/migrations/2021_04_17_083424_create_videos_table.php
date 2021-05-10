@@ -19,7 +19,8 @@ class CreateVideosTable extends Migration
             $table->Longtext('description')->nullable();
             $table->foreignId('channel_id');
             $table->unsignedBigInteger('views')->default(0);
-            $table->string('cover')->default('videoIcon.jpg');
+            $table->string('cover')->default('icon.jpg');
+            $table->string('source')->default('source.mp4');
             $table->timestamps();
         });
     }

@@ -1,15 +1,15 @@
 @extends('layouts.app')
 @section('content')
-    <div class="flex xs:block sm:block">
-        <div class="flex-auto w-2/3 m-2 md:w-full xs:w-full sm:w-full">
+    <div class="flex">
+        <div class="flex-auto w-2/3 m-2">
             <div class="w-full m-2">
                 <video controls class="w-full">
-                    <source  src="/storage/video/{{$video->id}}.mp4" type="video/mp4"/>
+                    <source  src="/storage/video/{{$video->source}}" type="video/mp4"/>
                         your browser does not support html5 video
                 </video>
             </div>
             <div class="w-full">
-             <div>
+             <div class="border-b-2 m-2 p-2 border-gray-300">
                 <p class="ml-2 text-xl">{{$video->title}}</p>
                 <p class="">
                     <span class="m-2 text-xl">{{$video->views}} views</span>
@@ -17,10 +17,6 @@
                     <span class="text-xl m-1">{{$video->likes->count()}}</span>
                     @auth
                     <like-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
-                    @endauth
-                    <span>{{$video->likes->count()}}</span>
-                    @auth
-                    <dislike-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
                     @endauth
                 </p>  
              </div>

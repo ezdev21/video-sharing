@@ -1,6 +1,10 @@
 <template>
-<button @click="like" class="bg-green-700 text-xl py-1 px-4 text-white" :style="liked? 'text-grey-900 text-grey-900' :''">
+<div class="inline">
+ <button @click="like" class="bg-green-700 text-xl py-1 px-4 text-white" :style="liked? 'text-grey-900 text-grey-900' :''">
   {{likeText}}</button>
+  <button @click="dislike" class="bg-yellow-500 text-xl py-1 px-4 text-white" :style="liked? 'text-grey-900 text-grey-900' :''">
+  {{dislikeText}}</button>
+</div>
 </template>
 <script>
 export default {
@@ -8,7 +12,8 @@ export default {
     data(){
         return{
           liked:false,
-          likeText:'like'
+          likeText:'like',
+          dislikeText:'dislike'
         }
     },
     mounted(){

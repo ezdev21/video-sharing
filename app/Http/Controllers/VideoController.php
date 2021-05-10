@@ -52,19 +52,22 @@ class VideoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(VideoFormRequest $request)
-    {
+    { 
          $video=new Video;
          $video->title=$request->title;
          $video->description=$request->description;
          $id=$request->userId;
-         //$channel=User::find($id);
-         $video->channel_id=1;
+         $user=User::findOrfail($id);
+         $video->channel_id=$user->channel->id;
+         $video->channel_id=$request->channelId;
          $video->save();
-         $extension=$request->cover->extension();
-         $video->cover=$video->id.'.'.$extension;
+         $imageExtension=$request->cover->extension();
+         $video->cover=$video->id.'.'.$imageExtension;
+         $videoExtension=$request->video->extension();
+         $video->source=$video->id.'.'.$videoExtension;
          $video->save();
          $request->cover->storeAS('videoCover',$video->cover,'public');
-         $request->video->storeAs('video',$video->id.'.mp4','public');
+         $request->video->storeAs('video',$video->source,'public');
          return redirect()->route('video.index');
     }
 

@@ -1919,6 +1919,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['userid', 'videoid'],
   data: function data() {
@@ -1958,6 +1960,20 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         _this2.liked = !_this2.liked;
         _this2.likeText == 'like' ? _this2.likeText = 'liked' : _this2.likeText = 'like';
+        console.log('post like data successful');
+      })["catch"](function (err) {
+        console.log('error in post like data');
+      });
+    },
+    dislike: function dislike() {
+      var _this3 = this;
+
+      axios.post('/video/like', {
+        videoId: this.videoid,
+        userId: this.userid
+      }).then(function (res) {
+        _this3.liked = !_this3.liked;
+        _this3.likeText == 'like' ? _this3.likeText = 'liked' : _this3.likeText = 'like';
         console.log('post like data successful');
       })["catch"](function (err) {
         console.log('error in post like data');
@@ -37644,21 +37660,25 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "inline" }, [
+  return _c("div", { staticClass: "inline mx-4" }, [
+    _c("span", { staticClass: "text-xl" }, [_vm._v("0")]),
+    _vm._v(" "),
     _c(
       "button",
       {
-        staticClass: "bg-green-700 text-xl py-1 px-4 text-white",
-        style: _vm.liked ? "text-grey-900 text-grey-900" : "",
+        staticClass: "bg-primary text-xl py-1 px-4 text-white",
+        class: { "bg-gray-90": _vm.liked },
         on: { click: _vm.like }
       },
       [_vm._v("\r\n  " + _vm._s(_vm.likeText))]
     ),
     _vm._v(" "),
+    _c("span", { staticClass: "text-xl" }, [_vm._v("0")]),
+    _vm._v(" "),
     _c(
       "button",
       {
-        staticClass: "bg-yellow-500 text-xl py-1 px-4 text-white",
+        staticClass: "bg-red-500 text-xl py-1 px-4 text-white",
         style: _vm.liked ? "text-grey-900 text-grey-900" : "",
         on: { click: _vm.dislike }
       },

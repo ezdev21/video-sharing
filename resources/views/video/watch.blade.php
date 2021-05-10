@@ -14,7 +14,6 @@
                 <p class="">
                     <span class="m-2 text-xl">{{$video->views}} views</span>
                     <span class="m-2 text-xl">{{$video->created_at->toDateString()}}</span>
-                    <span class="text-xl m-1">{{$video->likes->count()}}</span>
                     @auth
                     <like-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
                     @endauth

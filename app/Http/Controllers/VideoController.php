@@ -134,7 +134,7 @@ class VideoController extends Controller
        else{
            $status=false;
        }
-       return response()->json([$status]);
+       return response()->json(['status'=>$status]);
     }
     public function getDislike($videoId,$userId)
     {

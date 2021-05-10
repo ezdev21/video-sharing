@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/',[VideoController::class,'index']);
-
+Route::post('/',function(){
+  return response()->json(['message'=>'success']);
+});
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -30,8 +32,6 @@ Route::prefix('video')->group(function(){
   Route::get('watch/{videoId}',[VideoController::class,'show'])->name('video.watch');
   Route::get('like',[VideoController::class,'getLike']);
   Route::post('like',[VideoController::class,'postLike']);
-  Route::get('dislike/{videoId}/{userId}',[VideoController::class,'getDislike']);
-  Route::post('dislike/{videoId}/{userId}',[VideoController::class,'postDislike']);
 });
 Route::prefix('comment')->group(function(){
   Route::post('create',[CommentController::class,'store'])->name('comment.store');

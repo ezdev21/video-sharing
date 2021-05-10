@@ -1856,8 +1856,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       buttonText: 'subscribe',
       subscribed: false,
-      channelId: null,
-      userId: null,
       loggedin: true
     };
   },
@@ -1865,10 +1863,8 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/channel/subscribe/', {
-      params: {
-        userId: this.userid,
-        channelId: this.channelid
-      }
+      userId: this.userid,
+      channelId: this.channelid
     }).then(function (res) {
       _this.subscribed = res.data.subscribed;
 
@@ -1876,19 +1872,16 @@ __webpack_require__.r(__webpack_exports__);
         _this.buttonText = 'unsubscribe';
       }
     })["catch"](function (err) {
-      console.log('error fetching subscribe data');
-      console.log('channel id ' + _this.channelid + ' user id ' + _this.userid);
+      console.log(err);
     });
   },
   methods: {
     subscribe: function subscribe() {
       var _this2 = this;
 
-      axios.post('channel/subscribe', {
-        data: {
-          userId: this.userid,
-          channelId: this.channelid
-        }
+      axios.post('video/like', {
+        userId: this.userid,
+        channelId: this.channelid
       }).then(function (res) {
         _this2.subscribed = !_this2.subscribed;
 
@@ -1991,7 +1984,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('/video/like/', {
+    axios.get('/video/like', {
       params: {
         videoId: this.videoid,
         userId: this.userid
@@ -2003,27 +1996,24 @@ __webpack_require__.r(__webpack_exports__);
         _this.likeText = 'liked';
       }
 
-      console.log(res.data);
+      console.log('get like data succesfull');
     })["catch"](function (err) {
-      console.log('error fetching like data');
+      console.log('error in fetching like data');
     });
   },
   methods: {
     like: function like() {
       var _this2 = this;
 
-      axios.post('video/like', {
-        params: {
-          videoId: this.videoid,
-          userId: this.userid
-        }
+      axios.post('/video/like', {
+        videoId: this.videoid,
+        userId: this.userid
       }).then(function (res) {
         _this2.liked = !_this2.liked;
         _this2.likeText == 'like' ? _this2.likeText = 'liked' : _this2.likeText = 'like';
-        console.log(res.data);
+        console.log('post like data successful');
       })["catch"](function (err) {
-        console.log('error in posting data to like');
-        console.log(err);
+        console.log('error in post like data');
       });
     }
   }

@@ -110,8 +110,8 @@ class ChannelController extends Controller
        }
        return response()->json(['subscribed'=>$subscribed]);
     }
-    public function postSubscribe()
+    public function postSubscribe(Request $request)
     {
-
+      return response()->json(['message'=>'subscribed']);
     }
 }

@@ -120,8 +120,10 @@ class VideoController extends Controller
     }
     public function getLike(Request $request)
     { 
-      $totalLikes=DB::table('user_video')->where('type','like')->count(); 
-      $totalDislikes=DB::table('user_video')->where('type','dislike')->count();
+      $totalLikes=DB::table('user_video')->
+      where([['user_id',$request->userId],['video_id',$request->videoId],['type','like']])->count(); 
+      $totalDislikes=DB::table('user_video')->
+      where([['user_id',$request->userId],['video_id',$request->videoId],['type','dislike']])->count();
       if(DB::table('user_video')->
        where([['video_id',$request->videoId],['user_id',$request->userId],['type','like']])
        ->exists()){

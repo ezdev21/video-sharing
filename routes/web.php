@@ -44,9 +44,12 @@ Route::prefix('comment')->group(function(){
   Route::post('dislike/commentId/userId',[CommentController::class,'postDislike']);
 });
 Route::prefix('channel')->group(function(){
+  Route::get('{id}/edit',[ChannelController::class,'edit'])->name('channel.edit');
+  Route::post('/update',[ChannelController::class,'update'])->name('channel.update');
   Route::get('create',[ChannelController::class,'create'])->name('channel.create');
   Route::post('create',[ChannelController::class,'store'])->name('channel.store');
   Route::get('show/{id}',[ChannelController::class,'show'])->name('channel.show');
   Route::get('subscribe',[ChannelController::class,'getSubscribe']);
   Route::post('subscribe',[ChannelController::class,'postSubscribe']);
+  Route::get('videos',[ChannelController::class,'videos']);
 });

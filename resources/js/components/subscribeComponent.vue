@@ -1,5 +1,5 @@
 <template>
-  <button @click="subscribe" class="absolute top-0 right-0 bg-red-600 text-xl text-white py-1 px-2 rounded"
+  <button @click="subscribe" class="bg-red-600 text-xl text-white py-1 px-2 rounded"
   :class="{'bg-gray-300 text-black' : subscribed}"
   >{{subscribeText}}</button>
 </template>
@@ -27,7 +27,7 @@ export default {
     },
     methods:{
         subscribe(){
-            axios.post('/channel/subscribe',{userId:this.userid,channelId:this.channelid})
+            axios.post('/channel/subscribe',{params:{userId:this.userid,channelId:this.channelid}})
             .then(res=>{
              this.subscribed=!this.subscribed; 
              this.subscribeText=='subscribe' ? this.subscribeText='unsubscribe' : this.subscribeText='subscribe';

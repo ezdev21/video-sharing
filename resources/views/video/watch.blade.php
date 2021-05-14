@@ -27,7 +27,8 @@
                        <p class="text-xl font-bold">{{$video->channel->name}}</p>
                        <span>
                            @auth
-                           <subscribe-component channelid="{{$video->channel->id}}" userid="{{Auth::user()->id}}"/>
+                           <subscribe-component channelid="{{$video->channel->id}}" userid="{{Auth::user()->id}}"
+                            class="absolute top-0 right-0"/>
                            @endauth
                        </span>
                        <p class="text-xl">{{$video->channel->subscribes->count()}} subscribers</p>

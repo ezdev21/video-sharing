@@ -25,12 +25,12 @@ export default {
      }      
     },
     mounted(){
-     axios.get('/channel/videos',{params:{channelId:this.channelid}})
+     axios.get('/channel/videos',{params:{channelId:this.channelId}})
           .then(res=>{
            this.videos=res.data.videos;
           })
           .catch(err=>{
-            console.log('error i loading videos');
+            console.log('error in loading videos');
           }); 
     }   
 }

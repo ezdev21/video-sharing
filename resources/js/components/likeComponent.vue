@@ -1,8 +1,8 @@
 <template>
 <div class="inline mx-4">
-  <span class="text-xl">{{totalLikes}}</span>
-  <button @click="like" class="bg-primary text-xl p-1 px-4 mr-2 text-white rounded" :class="{'bg-gray-400 text-black':liked}">
+  <button @click="like" class="bg-primary text-xl p-1 px-4 text-white rounded" :class="{'bg-gray-400 text-black':liked}">
   {{likeText}}</button>
+  <span class="text-xl mr-2">{{totalLikes}}</span>
   <button @click="dislike" class="bg-red-500 text-xl p-1 px-4 ml-2 text-white rounded" :class="{'bg-gray-400 text-black':disliked}">
   {{dislikeText}}</button>
   <span class="text-xl text-red">{{totalDislikes}}</span>
@@ -30,7 +30,6 @@ export default {
           this.totalDislikes=res.data.totalDislikes;
           this.liked ? this.likeText='liked' : this.likeText='like'
           this.disliked ? this.dislikeText='disliked' : this.dislikeText='dislike'
-          console.log(res.data);
       })
       .catch(err=>{
         console.log('error in fetching like data');

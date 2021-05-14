@@ -63,7 +63,7 @@ class ChannelController extends Controller
     public function show($id)
     {
         $channel=Channel::findOrFail($id);
-        return view('channel.show',$channel);
+        return view('channel.show',['channel'=>$channel]);
     }
 
     /**
@@ -72,9 +72,10 @@ class ChannelController extends Controller
      * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function edit(Channel $channel)
+    public function edit($id)
     {
-        //
+        $channel=Channel::findOrFail($id);
+        return view('channel.edit',['channel'=>$channel]);
     }
 
     /**
@@ -84,9 +85,24 @@ class ChannelController extends Controller
      * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Channel $channel)
+    public function update(ChannelFormRequest $request)
     {
-        //
+        $channel=Channel::find($request->id);
+        $channel->name=$request->name;
+        $channel->description=$request->description;
+        if($request->has('cover')){
+            $channel->cover=$channel->id.'.'.$request->cover->extension();
+        }
+        if($request->has('background')){
+            $channel->background=$channel->id.'.'.$request->background->extension();
+        }
+        $channel->save();
+        if($request->has('cover')){
+            $request->cover->storeAs('channelCover',$channel->cover,'public');
+        }
+        if($request->has('background')){
+            $request->background->storeAs('channelBackground',$channel->background,'public');
+        }
     }
 
     /**
@@ -119,5 +135,11 @@ class ChannelController extends Controller
         DB::table('channel_user')->insert(['channel_id'=>$request->channelId,'user_id'=>$request->userId]);
       }
       return response()->json(['channelId'=>$request->channelId,'userId'=>$request->userId]);
+    }
+    public function videos(Request $request)
+    {
+       $channel=Channel::find($request->id);
+       $videos=$channel->videos->latest();
+       return response()->json(['videos'=>$videos]);
     }
 }

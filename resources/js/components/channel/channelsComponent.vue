@@ -1,12 +1,12 @@
 <template>
   <div>
-   <div v-if="channels.length" class="felx">
+   <div v-if="channels.length" class="flex">
     <div v-for="channel in channels" :key="channel.id" class="felx-initial">
      <img :src="channel.imagePath" alt="" class="w-12 h-12 rounded-full ">
      <p>{{channel.name}}</p>
      <p>{{channel.subscribers}} subscribers</p>
      <p v-if="user.id">
-      <subscribe-component userId="" channelId="this.channel.id"/>
+      <subscribe-component user-id="user.id" channel-id="channel.id"/>
      </p>
     </div>
    </div>
@@ -16,10 +16,10 @@
   </div>     
 </template>
 <script>
-import subscribeComponent from './components/subscribeComponent';
-export default {
+ //import subscribeComponent from './components/subscribeComponent.vue';
+ export default {
    components:{
-    'subscribe-componet' :subscribeComponent
+    //'subscribe-component' : subscribeComponent,
    },
    props:[],
    data(){

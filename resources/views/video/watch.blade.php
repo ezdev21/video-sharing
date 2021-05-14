@@ -15,7 +15,7 @@
                     <span class="m-2 text-xl">{{$video->views}} views</span>
                     <span class="m-2 text-xl">{{$video->created_at->toDateString()}}</span>
                     @auth
-                    <like-component videoid="{{$video->id}}" userid="{{Auth::user()->id}}"/>
+                    <like-component video-id="{{$video->id}}" user-id="{{Auth::user()->id}}"/>
                     @endauth
                 </p>  
              </div>

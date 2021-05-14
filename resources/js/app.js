@@ -8,6 +8,7 @@ require('./bootstrap');
 
 //window.Vue = require('vue').default;
 import Vue from 'vue'
+import router from './ChannelRouter'
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -21,6 +22,7 @@ import Vue from 'vue'
 
 Vue.component('like-component', require('./components/likeComponent.vue').default);
 Vue.component('subscribe-component', require('./components/SubscribeComponent.vue').default);
+Vue.component('channel-component',require('./components/channelComponet.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -30,4 +32,5 @@ Vue.component('subscribe-component', require('./components/SubscribeComponent.vu
 
 const app = new Vue({
     el: '#app',
+    router:router
 });

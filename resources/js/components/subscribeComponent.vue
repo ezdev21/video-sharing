@@ -1,6 +1,6 @@
 <template>
   <button @click="subscribe" class="absolute top-0 right-0 bg-red-600 text-xl text-white py-1 px-2 rounded"
-  :class="subscribed? 'bg-gray-300 text-xl-black':''"
+  :class="{'bg-gray-300 text-black' : subscribed}"
   >{{subscribeText}}</button>
 </template>
 <script>
@@ -20,10 +20,9 @@ export default {
           if(this.subscribed){
              this.subscribeText='unsubscribe';
           }
-          console.log('get subscribe data');
       })
       .catch(err=>{
-        console.log('err in fetching subscribe data');
+        
       });
     },
     methods:{
@@ -32,11 +31,9 @@ export default {
             .then(res=>{
              this.subscribed=!this.subscribed; 
              this.subscribeText=='subscribe' ? this.subscribeText='unsubscribe' : this.subscribeText='subscribe';
-             console.log('post subscribe data');
-             console.log(res.data);
             })
             .catch(err=>{
-              console.log('error in posting subscribe data');
+              
             });
         }
     }

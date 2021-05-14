@@ -59,7 +59,6 @@ class VideoController extends Controller
          $id=$request->userId;
          $user=User::findOrfail($id);
          $video->channel_id=$user->channel->id;
-         $video->channel_id=$request->channelId;
          $video->save();
          $imageExtension=$request->cover->extension();
          $video->cover=$video->id.'.'.$imageExtension;
@@ -81,6 +80,8 @@ class VideoController extends Controller
     { 
         $recommendedVideos=Video::latest()->get();
         $video=Video::findOrFail($id);
+        $video->views+=1;
+        $video->save();
         return view('video.watch',['video'=>$video,'recommendedVideos'=>$recommendedVideos]);
     }
 
@@ -118,7 +119,9 @@ class VideoController extends Controller
         //
     }
     public function getLike(Request $request)
-    {
+    { 
+      $totalLikes=DB::table('user_video')->where('type','like')->count(); 
+      $totalDislikes=DB::table('user_video')->where('type','dislike')->count();
       if(DB::table('user_video')->
        where([['video_id',$request->videoId],['user_id',$request->userId],['type','like']])
        ->exists()){
@@ -127,26 +130,25 @@ class VideoController extends Controller
        else{
            $liked=false;
        }
-       return response()->json(['liked'=>$liked]);
+       if(DB::table('user_video')->
+       where([['video_id',$request->videoId],['user_id',$request->userId],['type','dislike']])
+       ->exists()){
+           $disliked=true;
+       }
+       else{
+           $disliked=false;
+       }
+       return response()->json(['liked'=>$liked,'disliked'=>$disliked,
+       'totalLikes'=>$totalLikes,'totalDislikes'=>$totalDislikes]);
     }
     public function postLike(Request $request)
     {
-       if(DB::table('user_video')->insert(['type'=>'like','video_id'=>$request->videoId,'user_id'=>$request->userId])){
-           $status=true;
+       if(DB::table('user_video')->where([['user_id',$request->userId],['video_id',$request->videoId]])->exists()){
+           DB::table('user_video')->update(['type',$request->type]);
        }
        else{
-           $status=false;
+        DB::table('user_video')->insert(['user_id'=>$request->userId,'video_id'=>$request->videoId,'type'=>$request->type]);
        }
-       return response()->json(['status'=>$status]);
-    }
-    public function getDislike($videoId,$userId)
-    {
-       $liked=DB::table('user_video')->where('video_id',$videoId)
-       ->where('user_id',$userId)->where('type','dislike')->get();
-       return response()->json($liked);
-    }
-    public function postDislike($videoId,$userId)
-    {
-       DB::table('user_video')->insert(['type'=>'dislike','videoId'=>$videoId,'userId'=>$userId]);
+       
     }
 }

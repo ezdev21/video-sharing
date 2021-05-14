@@ -1,11 +1,11 @@
 <template>
 <div class="inline mx-4">
-  <span class="text-xl">0</span>
-  <button @click="like" class="bg-primary text-xl py-1 px-4 text-white" :class="{'bg-gray-90':liked}">
+  <span class="text-xl">{{totalLikes}}</span>
+  <button @click="like" class="bg-primary text-xl p-1 px-4 mr-2 text-white rounded" :class="{'bg-gray-400 text-black':liked}">
   {{likeText}}</button>
-  <span class="text-xl">0</span>
-  <button @click="dislike" class="bg-red-500 text-xl py-1 px-4 text-white" :class="{'text-grey-900 text-grey-900' :diliked}">
+  <button @click="dislike" class="bg-red-500 text-xl p-1 px-4 ml-2 text-white rounded" :class="{'bg-gray-400 text-black':disliked}">
   {{dislikeText}}</button>
+  <span class="text-xl text-red">{{totalDislikes}}</span>
 </div>
 </template>
 <script>
@@ -16,7 +16,9 @@ export default {
           liked:false,
           disliked:false,
           likeText:'like',
-          dislikeText:'dislike'
+          dislikeText:'dislike',
+          totalLikes:0,
+          totalDislikes:0,
         }
     },
     mounted(){
@@ -24,10 +26,11 @@ export default {
       .then(res=>{
           this.liked=res.data.liked;
           this.disliked=res.data.disliked;
-          if(this.liked){
-            this.likeText='liked'
-          }
-          console.log('get like data succesfull');
+          this.totalLikes=res.data.totalLikes;
+          this.totalDislikes=res.data.totalDislikes;
+          this.liked ? this.likeText='liked' : this.likeText='like'
+          this.disliked ? this.dislikeText='disliked' : this.dislikeText='dislike'
+          console.log(res.data);
       })
       .catch(err=>{
         console.log('error in fetching like data');
@@ -35,27 +38,33 @@ export default {
     },
     methods:{
         like(){
-            axios.post('/video/like',{videoId:this.videoid,userId:this.userid})
+            axios.post('/video/like',{videoId:this.videoId,userId:this.userId,type:'like'})
             .then(res=>{ 
               this.liked=!this.liked;
-              this.disliked ? this.disliked=!this.disliked : '';
+              this.disliked ? this.dislikeText='dislike' : '';
               this.likeText=='like' ? this.likeText='liked' : this.likeText='like';
+              this.totalLikes+=1;
               console.log('post like data successful');
+              console.log(res.data);
             })
             .catch(err=>{
               console.log('error in post like data');
+              console.log(err);
             });
         },
         dislike(){
-            axios.post('/video/like',{videoId:this.videoid,userId:this.userid})
+            axios.post('/video/like',{videoId:this.videoId,userId:this.userId,type:'dislike'})
             .then(res=>{ 
               this.disliked=!this.disliked;
-              this.liked ? this.liked=!this.liked : '';
+              this.liked ? this.likeText='like' : '';
               this.dislikeText=='dislike' ? this.dislikeText='disliked' : this.dislikeText='dislike';
-              console.log('post like data successful');
+              this.totalDislikes+=1;
+              console.log('post dislike data successful');
+              console.log(res.data);
             })
             .catch(err=>{
               console.log('error in post like data');
+              console.log(err);
             });
 
         }

@@ -1873,11 +1873,7 @@ __webpack_require__.r(__webpack_exports__);
       if (_this.subscribed) {
         _this.subscribeText = 'unsubscribe';
       }
-
-      console.log('get subscribe data');
-    })["catch"](function (err) {
-      console.log('err in fetching subscribe data');
-    });
+    })["catch"](function (err) {});
   },
   methods: {
     subscribe: function subscribe() {
@@ -1889,11 +1885,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         _this2.subscribed = !_this2.subscribed;
         _this2.subscribeText == 'subscribe' ? _this2.subscribeText = 'unsubscribe' : _this2.subscribeText = 'subscribe';
-        console.log('post subscribe data');
-        console.log(res.data);
-      })["catch"](function (err) {
-        console.log('error in posting subscribe data');
-      });
+      })["catch"](function (err) {});
     }
   }
 });
@@ -1922,12 +1914,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['userid', 'videoid'],
+  props: ['userId', 'videoId'],
   data: function data() {
     return {
       liked: false,
+      disliked: false,
       likeText: 'like',
-      dislikeText: 'dislike'
+      dislikeText: 'dislike',
+      totalLikes: 0,
+      totalDislikes: 0
     };
   },
   mounted: function mounted() {
@@ -1935,17 +1930,17 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get('/video/like', {
       params: {
-        videoId: this.videoid,
-        userId: this.userid
+        videoId: this.videoId,
+        userId: this.userId
       }
     }).then(function (res) {
       _this.liked = res.data.liked;
-
-      if (_this.liked) {
-        _this.likeText = 'liked';
-      }
-
-      console.log('get like data succesfull');
+      _this.disliked = res.data.disliked;
+      _this.totalLikes = res.data.totalLikes;
+      _this.totalDislikes = res.data.totalDislikes;
+      _this.liked ? _this.likeText = 'liked' : _this.likeText = 'like';
+      _this.disliked ? _this.dislikeText = 'disliked' : _this.dislikeText = 'dislike';
+      console.log(res.data);
     })["catch"](function (err) {
       console.log('error in fetching like data');
     });
@@ -1955,28 +1950,38 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.post('/video/like', {
-        videoId: this.videoid,
-        userId: this.userid
+        videoId: this.videoId,
+        userId: this.userId,
+        type: 'like'
       }).then(function (res) {
         _this2.liked = !_this2.liked;
+        _this2.disliked ? _this2.dislikeText = 'dislike' : '';
         _this2.likeText == 'like' ? _this2.likeText = 'liked' : _this2.likeText = 'like';
+        _this2.totalLikes += 1;
         console.log('post like data successful');
+        console.log(res.data);
       })["catch"](function (err) {
         console.log('error in post like data');
+        console.log(err);
       });
     },
     dislike: function dislike() {
       var _this3 = this;
 
       axios.post('/video/like', {
-        videoId: this.videoid,
-        userId: this.userid
+        videoId: this.videoId,
+        userId: this.userId,
+        type: 'dislike'
       }).then(function (res) {
-        _this3.liked = !_this3.liked;
-        _this3.likeText == 'like' ? _this3.likeText = 'liked' : _this3.likeText = 'like';
-        console.log('post like data successful');
+        _this3.disliked = !_this3.disliked;
+        _this3.liked ? _this3.likeText = 'like' : '';
+        _this3.dislikeText == 'dislike' ? _this3.dislikeText = 'disliked' : _this3.dislikeText = 'dislike';
+        _this3.totalDislikes += 1;
+        console.log('post dislike data successful');
+        console.log(res.data);
       })["catch"](function (err) {
         console.log('error in post like data');
+        console.log(err);
       });
     }
   }
@@ -2001,6 +2006,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //window.Vue = require('vue').default;
 
 
+ //import router from './ChannelRouter'
 
 /**
  * The following block of code may be used to automatically register your
@@ -2013,7 +2019,9 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //window.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 vue__WEBPACK_IMPORTED_MODULE_0__.default.component('like-component', __webpack_require__(/*! ./components/likeComponent.vue */ "./resources/js/components/likeComponent.vue").default);
-vue__WEBPACK_IMPORTED_MODULE_0__.default.component('subscribe-component', __webpack_require__(/*! ./components/SubscribeComponent.vue */ "./resources/js/components/SubscribeComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0__.default.component('subscribe-component', __webpack_require__(/*! ./components/SubscribeComponent.vue */ "./resources/js/components/SubscribeComponent.vue").default); //Vue.component('channel-component',require('./components/channelComponet.vue').default);
+//Vue.component('comment-component',require('./components/commentComponet.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -2021,7 +2029,8 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.component('subscribe-component', __webp
  */
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_0__.default({
-  el: '#app'
+  el: '#app' //router:router
+
 });
 
 /***/ }),
@@ -37631,7 +37640,7 @@ var render = function() {
     {
       staticClass:
         "absolute top-0 right-0 bg-red-600 text-xl text-white py-1 px-2 rounded",
-      class: _vm.subscribed ? "bg-gray-300 text-xl-black" : "",
+      class: { "bg-gray-300 text-black": _vm.subscribed },
       on: { click: _vm.subscribe }
     },
     [_vm._v(_vm._s(_vm.subscribeText))]
@@ -37661,29 +37670,31 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "inline mx-4" }, [
-    _c("span", { staticClass: "text-xl" }, [_vm._v("0")]),
+    _c("span", { staticClass: "text-xl" }, [_vm._v(_vm._s(_vm.totalLikes))]),
     _vm._v(" "),
     _c(
       "button",
       {
-        staticClass: "bg-primary text-xl py-1 px-4 text-white",
-        class: { "bg-gray-90": _vm.liked },
+        staticClass: "bg-primary text-xl p-1 px-4 mr-2 text-white rounded",
+        class: { "bg-gray-400 text-black": _vm.liked },
         on: { click: _vm.like }
       },
       [_vm._v("\r\n  " + _vm._s(_vm.likeText))]
     ),
     _vm._v(" "),
-    _c("span", { staticClass: "text-xl" }, [_vm._v("0")]),
-    _vm._v(" "),
     _c(
       "button",
       {
-        staticClass: "bg-red-500 text-xl py-1 px-4 text-white",
-        style: _vm.liked ? "text-grey-900 text-grey-900" : "",
+        staticClass: "bg-red-500 text-xl p-1 px-4 ml-2 text-white rounded",
+        class: { "bg-gray-400 text-black": _vm.disliked },
         on: { click: _vm.dislike }
       },
       [_vm._v("\r\n  " + _vm._s(_vm.dislikeText))]
-    )
+    ),
+    _vm._v(" "),
+    _c("span", { staticClass: "text-xl text-red" }, [
+      _vm._v(_vm._s(_vm.totalDislikes))
+    ])
   ])
 }
 var staticRenderFns = []

@@ -2,8 +2,8 @@
 @section('content')
     <div class="flex">
         <div class="flex-auto w-2/3 m-2">
-            <div class="w-full m-2">
-                <video controls class="w-full">
+            <div class="w-4/5">
+                <video controls class="w-full" autoplay>
                     <source  src="/storage/video/{{$video->source}}" type="video/mp4"/>
                         your browser does not support html5 video
                 </video>
@@ -23,7 +23,7 @@
                 <p>
                     <a href="{{route('channel.show',$video->channel->id)}}">
                     <img src="/storage/channelCover/{{$video->channel->cover}}" alt=""
-                       class="w-12 h-12 rounded-full inline"> </a>
+                       class="w-24 h-24 rounded-full inline"> </a>
                        <p class="text-xl font-bold">{{$video->channel->name}}</p>
                        <span>
                            @auth
@@ -38,8 +38,8 @@
             <div class="block w-full p-2">
                 <p class="text-xl">{{$video->comments->count()}} comments</p>
                 <div>
+                    @auth
                     <p class="text-2xl">comment as {{Auth::user()->name}}</p>
-                    @if (Auth::check())
                     <form method="post" action="{{route('comment.store')}}">
                         @csrf
                         <input type="hidden" name="video" value="{{$video->id}}">
@@ -47,7 +47,10 @@
                         <textarea name="body" id="" cols="60" rows="10" class="block m-2 text-xl rounded-lg"></textarea>
                         <input type="submit" value="comment" class="m-2 py-1 rounded px-3 bg-red-600 text-xl text-white">
                       </form>
-                    @endif
+                    @else
+                     <p>sign in to comment <a href="{{route('login')}}" 
+                        class="text-xl text-gray-200 bg-red-600 rounded p-1 no-underline">sign in</a></p>
+                    @endauth
                 </div>
                 @foreach ($video->comments as $comment)
                     <div class="rounded-md bg-blue-100 w-max p-2 m-2">
@@ -74,8 +77,8 @@
         <div class="flex-auto md:block justify-center">
           <p class="text-2xl m-3 text-bold">Recommended videos</p>
                 @forelse ($recommendedVideos as $video)
-                <a href="{{route('video.watch',$video->id)}}">
-                    <div class="flex flex-auto mx-3">
+                <a href="{{route('video.watch',$video->id)}}" class="hover:no-underline hover:text-black">
+                    <div class="flex flex-auto mx-3 my-2">
                         <img src="/storage/videoCover/{{$video->cover}}" width="100px" height="70px" alt="">
                         <div class="m-2 p-1">
                           <p class="text-xl">{{$video->title}}</p>

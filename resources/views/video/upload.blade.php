@@ -5,7 +5,7 @@
    <a href="{{route('login')}}" class="text-xl no-undeline text-white bg-red-600 p-1 rounded">Login</a></p>
  @else
  @if (Auth::user()->channel)
- <div class="bg-gray-100 -mt-6 p-3">
+ <div class="bg-gray-100 -mt-6 p-3 m-auto">
        <form method="post" action="{{route('video.store')}}" enctype="multipart/form-data">
          @csrf
          <input type="hidden" name="userId" value="{{Auth::user()->id}}">

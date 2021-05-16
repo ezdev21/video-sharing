@@ -134,12 +134,30 @@ class ChannelController extends Controller
       else{
         DB::table('channel_user')->insert(['channel_id'=>$request->channelId,'user_id'=>$request->userId]);
       }
-      return response()->json(['channelId'=>$request->channelId,'userId'=>$request->userId]);
     }
-    public function videos(Request $request)
+    public function videos($id)
     {
-       $channel=Channel::find($request->id);
-       $videos=$channel->videos->latest();
-       return response()->json(['videos'=>$videos]);
+       $channel=Channel::find($id);
+       return view('channel.videos',['channel'=>$channel]);
+    }
+    public function playlists($id)
+    {
+       $channel=Channel::find($id);
+       return view('channel.playlists',['channel'=>$channel]);
+    }
+    public function community($id)
+    {
+       $channel=Channel::find($id);
+       return view('channel.community',['channel'=>$channel]);
+    }
+    public function about($id)
+    {
+       $channel=Channel::find($id);
+       return view('channel.about',['channel'=>$channel]);
+    }
+    public function search($id)
+    {
+       $channel=Channel::find($id);
+       return view('channel.search',['channel'=>$channel]);
     }
 }

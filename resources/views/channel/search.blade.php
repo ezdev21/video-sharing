@@ -2,7 +2,7 @@
 @section('content')
 @include('channel.show')
 <div>
-  @forelse ($videos as $video)
+  @forelse ($channel->videos as $video)
    <a href="{{route('video.watch',$video->id)}}">
     <div>
         <img src="storage/videoCovers/{{$video->id}}" alt=""

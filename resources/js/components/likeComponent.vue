@@ -32,7 +32,7 @@ export default {
           this.disliked ? this.dislikeText='disliked' : this.dislikeText='dislike'
       })
       .catch(err=>{
-        console.log('error in fetching like data');
+        
       });
     },
     methods:{
@@ -43,12 +43,9 @@ export default {
               this.disliked ? this.dislikeText='dislike' : '';
               this.likeText=='like' ? this.likeText='liked' : this.likeText='like';
               this.totalLikes+=1;
-              console.log('post like data successful');
-              console.log(res.data);
             })
             .catch(err=>{
-              console.log('error in post like data');
-              console.log(err);
+              
             });
         },
         dislike(){
@@ -57,13 +54,9 @@ export default {
               this.disliked=!this.disliked;
               this.liked ? this.likeText='like' : '';
               this.dislikeText=='dislike' ? this.dislikeText='disliked' : this.dislikeText='dislike';
-              this.totalDislikes+=1;
-              console.log('post dislike data successful');
-              console.log(res.data);
             })
             .catch(err=>{
-              console.log('error in post like data');
-              console.log(err);
+              
             });
 
         }

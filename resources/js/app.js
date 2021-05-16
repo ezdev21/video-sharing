@@ -8,7 +8,7 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 //import Vue from 'vue'
-import router from './ChannelRouter.js'
+//import router from './ChannelRouter.js'
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -33,5 +33,5 @@ Vue.component('channel-component',require('./components/channelComponent.vue').d
 
 const app = new Vue({
     el: '#app',
-    router:router
+ //   router:router
 });

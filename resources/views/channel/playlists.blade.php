@@ -2,7 +2,7 @@
 @section('content')
 @include('channel.show')
 <div>
-@forelse ($playlists as $playlist)
+@forelse ($channel->playlists as $playlist)
  <div class="relative">
   <img src="/storage/videoCovers/{{$playlist->videos->first()->id}}" alt=""
    class="w-25">

@@ -5,9 +5,12 @@
         <a href="{{route('video.watch',$video->id)}}">
           <div class="p-1">
               <img src="storage/videoCover/{{$video->cover}}" alt="image not found" width="200px">
-              <p>{{$video->title}}</p>
-              <p>{{$video->views}} views</p>
+              <p class="text-xl font-bold">{{$video->title}}</p>
               <p>{{$video->channel->name}}</p>
+              <p>
+                <span>{{$video->views}} views</span>
+                <span>{{$video->created_at->toDateString()}}</span>
+              </p>
           </div>
         </a>
       @empty

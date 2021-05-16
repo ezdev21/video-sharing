@@ -17,10 +17,12 @@
  </div>
  <div>
     <p class="uppercase text-xl">links</p>
-    @foreach ($channel->links as $link)
+    @forelse ($channel->videos as $link)
      <a href="{{$link->adress}}" class="text-xl no-undeline text-gray-900"
         >{{$link->name}}</a> 
-    @endforeach
+    @empty 
+    <p>this channel has no links</p>   
+    @endforelse
  </div>
 </div>    
 @endsection

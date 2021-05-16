@@ -2,10 +2,10 @@
 @section('content')
 @include('channel.show')
 <div class="flex m-2 p-2">
-  @forelse ($videos as $video)
+  @forelse ($channel->videos as $video)
    <a href="{{route('video.watch',$video->id)}}">
     <div class="flex-auto my-2">
-        <img src="storage/videoCover/{{$video->id}}" alt="" class="w-25">
+        <img src="storage/videoCover/{{$video->cover}}" alt="" class="w-25">
         <p class="text-xl">{{$video->title}}</p>
         <p>
           <span>{{$video->views}} views</span>

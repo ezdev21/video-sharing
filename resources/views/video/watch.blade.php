@@ -22,16 +22,20 @@
               <div class="relative ">
                 <p>
                     <a href="{{route('channel.show',$video->channel->id)}}">
-                    <img src="/storage/channelCover/{{$video->channel->cover}}" alt=""
-                       class="w-24 h-24 rounded-full inline"> </a>
+                    <div class="flex mb-2">
+                     <img src="/storage/channelCover/{{$video->channel->cover}}" alt=""
+                        class="w-20 h-20 rounded-full inline"> </a>
+                      <div class="ml-3 mt-2">
                        <p class="text-xl font-bold">{{$video->channel->name}}</p>
+                       <p class="text-xl">{{$video->channel->subscribes->count()}} subscribers</p>
+                       </div>
+                    </div>
                        <span>
                            @auth
-                           <subscribe-component channelid="{{$video->channel->id}}" userid="{{Auth::user()->id}}"
+                           <subscribe-component channel-id="{{$video->channel->id}}" user-id="{{Auth::user()->id}}"
                             class="absolute top-0 right-0"/>
                            @endauth
                        </span>
-                       <p class="text-xl">{{$video->channel->subscribes->count()}} subscribers</p>
                        <p>{{$video->description}}</p>
                   </p>    
               </div> 

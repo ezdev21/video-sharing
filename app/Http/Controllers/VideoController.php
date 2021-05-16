@@ -146,11 +146,11 @@ class VideoController extends Controller
     public function postLike(Request $request)
     {
        if(DB::table('user_video')->where([['user_id',$request->userId],['video_id',$request->videoId]])->exists()){
-           DB::table('user_video')->update(['type',$request->type]);
+           DB::table('user_video')->update(['type'=>$request->type]);
        }
        else{
         DB::table('user_video')->insert(['user_id'=>$request->userId,'video_id'=>$request->videoId,'type'=>$request->type]);
        }
-       
+       //DB::table('user_video')->upsert(['user_id'=>$request->userId,'video_id'=>$request->videoId,'type'=>$request->type],[['user_id',$request->userId],['video_id',$request->videoId]],['type']);
     }
 }

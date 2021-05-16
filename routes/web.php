@@ -5,6 +5,8 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,9 +19,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/',[VideoController::class,'index']);
-Route::post('/',function(){
-  return response()->json(['message'=>'success']);
-});
+
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -45,11 +45,15 @@ Route::prefix('comment')->group(function(){
 });
 Route::prefix('channel')->group(function(){
   Route::get('{id}/edit',[ChannelController::class,'edit'])->name('channel.edit');
-  Route::post('/update',[ChannelController::class,'update'])->name('channel.update');
+  Route::patch('/update',[ChannelController::class,'update'])->name('channel.update');
   Route::get('create',[ChannelController::class,'create'])->name('channel.create');
   Route::post('create',[ChannelController::class,'store'])->name('channel.store');
   Route::get('show/{id}',[ChannelController::class,'show'])->name('channel.show');
   Route::get('subscribe',[ChannelController::class,'getSubscribe']);
   Route::post('subscribe',[ChannelController::class,'postSubscribe']);
-  Route::get('videos',[ChannelController::class,'videos']);
+  Route::get('{id}/videos',[ChannelController::class,'videos'])->name('channel.videos');
+  Route::get('{id}/playlists',[ChannelController::class,'playlists'])->name('channel.playlists');
+  Route::get('{id}/community',[ChannelController::class,'community'])->name('channel.community');
+  Route::get('{id}/about',[ChannelController::class,'about'])->name('channel.about');
+  Route::get('{id}/search',[ChannelController::class,'search'])->name('channel.search');
 });

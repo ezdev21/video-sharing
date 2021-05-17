@@ -1,5 +1,3 @@
-@extends('layouts.app')
-@section('content')
 @include('channel.show')
 <div class="flex">
  <div>
@@ -25,4 +23,3 @@
     @endforelse
  </div>
 </div>    
-@endsection

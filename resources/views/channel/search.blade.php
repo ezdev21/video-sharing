@@ -1,5 +1,3 @@
-@extends('layouts.app')
-@section('content')
 @include('channel.show')
 <div>
   @forelse ($channel->videos as $video)
@@ -18,4 +16,3 @@
    <p class="text-xl text-red-600 m-3">no videos found like {{$search}}</p>
   @endforelse    
 </div>    
-@endsection

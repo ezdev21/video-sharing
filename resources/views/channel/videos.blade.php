@@ -1,20 +1,17 @@
-@extends('layouts.app')
-@section('content')
 @include('channel.show')
-<div class="flex m-2 p-2">
+<div class="block sm:flex md:flex lg:flex mx-2 p-2">
   @forelse ($channel->videos as $video)
-   <a href="{{route('video.watch',$video->id)}}">
-    <div class="flex-auto my-2">
-        <img src="storage/videoCover/{{$video->cover}}" alt="" class="w-25">
-        <p class="text-xl">{{$video->title}}</p>
-        <p>
-          <span>{{$video->views}} views</span>
-          <span>{{$video->created_at}}</span>
-        </p>
-    </div>
-   </a> 
+  <div class="flex-initial m-2">
+    <a href="{{route('video.watch',$video->id)}}">
+      <img src="/storage/videoCover/{{$video->cover}}" alt="" width="200px">
+      <p class="text-xl text-center">{{$video->title}}</p>
+      <p class="text-md text-center">
+        <span>{{$video->views}} views</span>
+        <span>{{$video->created_at}}</span>
+      </p>
+    </a> 
+  </div>
   @empty
     <p class="text-xl mx-2 text-red-700">this channnel has no videos yet</p>  
   @endforelse 
 </div>
-@endsection

@@ -1,6 +1,6 @@
 <template>
   <button @click="subscribe" class="bg-red-600 text-xl text-white py-1 px-2 rounded"
-  :class="{'bg-gray-300 text-black' : subscribed}"
+  :class="{'bg-gray-300 text-black' :subscribed}"
   >{{subscribeText}}</button>
 </template>
 <script>
@@ -27,12 +27,10 @@ export default {
     },
     methods:{
         subscribe(){
-            console.log('user_id '+this.userId+' channel_id '+this.channelId);
             axios.post('/channel/subscribe',{userId:this.userId,channelId:this.channelId})
             .then(res=>{
              this.subscribed=!this.subscribed; 
              this.subscribeText=='subscribe' ? this.subscribeText='unsubscribe' : this.subscribeText='subscribe';
-             console.log(res.data);
             })
             .catch(err=>{
               

@@ -1,5 +1,3 @@
-@extends('layouts.app')
-@section('content')
 @include('channel.show')
 <div>
 @forelse ($channel->playlists as $playlist)
@@ -17,4 +15,3 @@
  <p class="text-xl text-red-600 m-2">this channels has no playlists</p>   
 @endforelse    
 </div>    
-@endsection

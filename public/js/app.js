@@ -1879,14 +1879,12 @@ __webpack_require__.r(__webpack_exports__);
     subscribe: function subscribe() {
       var _this2 = this;
 
-      console.log('user_id ' + this.userId + ' channel_id ' + this.channelId);
       axios.post('/channel/subscribe', {
         userId: this.userId,
         channelId: this.channelId
       }).then(function (res) {
         _this2.subscribed = !_this2.subscribed;
         _this2.subscribeText == 'subscribe' ? _this2.subscribeText = 'unsubscribe' : _this2.subscribeText = 'subscribe';
-        console.log(res.data);
       })["catch"](function (err) {});
     }
   }
@@ -1988,12 +1986,19 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/video/like', {
         videoId: this.videoId,
         userId: this.userId,
-        type: 'like'
+        type: 'like',
+        status: this.liked
       }).then(function (res) {
+        _this2.liked ? _this2.totalLikes -= 1 : _this2.totalLikes += 1;
+        _this2.disliked ? _this2.totalDislikes -= 1 : '';
         _this2.liked = !_this2.liked;
+
+        if (_this2.liked && _this2.disliked) {
+          _this2.disliked = false;
+        }
+
         _this2.disliked ? _this2.dislikeText = 'dislike' : '';
-        _this2.likeText == 'like' ? _this2.likeText = 'liked' : _this2.likeText = 'like';
-        _this2.totalLikes += 1;
+        _this2.liked ? _this2.likeText = 'liked' : _this2.likeText = 'like';
       })["catch"](function (err) {});
     },
     dislike: function dislike() {
@@ -2002,11 +2007,19 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/video/like', {
         videoId: this.videoId,
         userId: this.userId,
-        type: 'dislike'
+        type: 'dislike',
+        status: this.disliked
       }).then(function (res) {
+        _this3.disliked ? _this3.totalDislikes -= 1 : _this3.totalDislikes += 1;
+        _this3.liked ? _this3.totalLikes -= 1 : '';
         _this3.disliked = !_this3.disliked;
+
+        if (_this3.liked && _this3.disliked) {
+          _this3.liked = false;
+        }
+
         _this3.liked ? _this3.likeText = 'like' : '';
-        _this3.dislikeText == 'dislike' ? _this3.dislikeText = 'disliked' : _this3.dislikeText = 'dislike';
+        _this3.disliked ? _this3.dislikeText = 'disliked' : _this3.dislikeText = 'dislike';
       })["catch"](function (err) {});
     }
   }
@@ -37834,7 +37847,7 @@ var render = function() {
     _c(
       "button",
       {
-        staticClass: "bg-primary text-xl p-1 px-4 text-white rounded",
+        staticClass: "bg-green-500 text-xl p-1 px-4 text-white rounded",
         class: { "bg-gray-400 text-black": _vm.liked },
         on: { click: _vm.like }
       },
@@ -37849,7 +37862,7 @@ var render = function() {
       "button",
       {
         staticClass: "bg-red-500 text-xl p-1 px-4 ml-2 text-white rounded",
-        class: { "bg-gray-400 text-black": _vm.disliked },
+        class: [_vm.disliked ? "bg-gray-400 text-black" : ""],
         on: { click: _vm.dislike }
       },
       [_vm._v("\r\n  " + _vm._s(_vm.dislikeText))]
@@ -50123,7 +50136,7 @@ Vue.compile = compileToFunctions;
 /******/ 					__webpack_require__.m[moduleId] = moreModules[moduleId];
 /******/ 				}
 /******/ 			}
-/******/ 			if(runtime) var result = runtime(__webpack_require__);
+/******/ 			if(runtime) runtime(__webpack_require__);
 /******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
 /******/ 			for(;i < chunkIds.length; i++) {
 /******/ 				chunkId = chunkIds[i];
@@ -50132,7 +50145,7 @@ Vue.compile = compileToFunctions;
 /******/ 				}
 /******/ 				installedChunks[chunkIds[i]] = 0;
 /******/ 			}
-/******/ 			return __webpack_require__.O(result);
+/******/ 			__webpack_require__.O();
 /******/ 		}
 /******/ 		
 /******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];

@@ -26,10 +26,10 @@
                     <a class="text-xl mr-10 hover:text-green-500" href="{{ url('/') }}">
                         Home
                     </a>
-                        <form action="{{route('video.search')}}" method="post">
+                        <form action="{{route('video.search')}}" method="post" class="flex">
                             @csrf
                             <input type="text" name="searchQuery" placeholder="search" required
-                            class=" h-8 my-1 text-xl placeholder-xl text-bold text-green-900">
+                            class="w-4/5 h-10 rounded border-2 my-auto text-xl placeholder-search text-bold text-green-900">
                             <input type="submit" value="search"
                             class=" text-xl text-white bg-red-700 -pt-1">
                         </form>

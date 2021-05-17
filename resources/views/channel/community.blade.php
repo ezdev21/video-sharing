@@ -1,7 +1,4 @@
-@extends('layouts.app')
-@section('content')
 @include('channel.show')
-<div>
+<div class="px-5">
   <p>this channel has no posts</p>
 </div> 
-@endsection

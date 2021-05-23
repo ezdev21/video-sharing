@@ -1969,13 +1969,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['videoId', 'userId'],
   data: function data() {
     return {
       body: '',
+      editing: false,
+      editBody: '',
       user: {},
-      comment: {},
+      comment: {
+        userId: this.userId,
+        videoID: this.videoId,
+        body: this.body
+      },
       comments: []
     };
   },
@@ -1990,7 +2006,6 @@ __webpack_require__.r(__webpack_exports__);
     }).then(function (res) {
       _this.comments = res.data.comments;
       _this.user = res.data.user;
-      console.log(_this.user);
     })["catch"](function (err) {});
   },
   methods: {
@@ -2002,7 +2017,7 @@ __webpack_require__.r(__webpack_exports__);
         userId: this.userId,
         body: this.body
       }).then(function (res) {
-        //this.comments.push({});
+        //this.comments.push(this.comment);
         _this2.body = '';
       })["catch"](function (err) {});
     },
@@ -2024,19 +2039,20 @@ __webpack_require__.r(__webpack_exports__);
         type: 'dislike'
       }).then(function (res) {})["catch"](function (res) {});
     },
-    editComment: function editComment() {
-      axios.post('/comment/edit', {
-        params: {
-          userId: this.userId,
-          commentId: this.commentId
-        }
-      }).then(function (res) {})["catch"](function (res) {});
+    editComment: function editComment(id) {
+      var _this3 = this;
+
+      axios.patch('/comment/update', {
+        body: this.editBody,
+        commentId: id
+      }).then(function (res) {
+        _this3.editing = false;
+      })["catch"](function (res) {});
     },
-    deleteComment: function deleteComment() {
-      axios.post('/comment/delete', {
+    deleteComment: function deleteComment(id) {
+      axios["delete"]('/comment/delete', {
         params: {
-          userId: this.userId,
-          commentId: this.commentId
+          commentId: id
         }
       }).then(function (res) {})["catch"](function (res) {});
     }
@@ -38065,7 +38081,8 @@ var render = function() {
                       expression: "body"
                     }
                   ],
-                  staticClass: " p-2 rounded-lg border-2 border-gray-500",
+                  staticClass:
+                    "text-lg block m-2 p-2 rounded-lg border-2 border-gray-500",
                   attrs: { name: "description", id: "", cols: "60", rows: "5" },
                   domProps: { value: _vm.body },
                   on: {
@@ -38080,7 +38097,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("input", {
                   staticClass:
-                    "rounded bg-green-500 text-white text-xl py-1 px-2",
+                    "m-1 rounded bg-green-500 text-white text-xl py-1 px-2",
                   attrs: { type: "submit", value: "comment" }
                 })
               ]
@@ -38091,38 +38108,43 @@ var render = function() {
       _vm._l(_vm.comments, function(comment) {
         return _c(
           "div",
-          { key: comment.id, staticClass: "rounded bg-gray-200 m-1 p-1" },
+          { key: comment.id, staticClass: "rounded bg-gray-200 m-2 p-2" },
           [
             _c("p", {}, [
               _c("span", { staticClass: "text-lg font-semibold" }, [
                 _vm._v(_vm._s(comment.user.name))
               ]),
-              _c("span", [_vm._v(_vm._s(comment.created_at))])
+              _vm._v(" "),
+              _c("span", { staticClass: "mx-4" }, [
+                _vm._v(_vm._s(comment.created_at))
+              ])
             ]),
             _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(comment.body))]),
+            _c("p", { staticClass: "text-lg" }, [_vm._v(_vm._s(comment.body))]),
             _vm._v(" "),
             _c("div", { staticClass: "flex" }, [
               _c("p", { staticClass: "mx-2" }, [
                 _c(
                   "button",
                   {
-                    staticClass:
-                      "text-lg text-white bg-green-600 rounded px-2 mx-1",
+                    staticClass: "text-lg text-green-600 rounded px-2 mx-1",
                     on: { click: _vm.likeComment }
                   },
                   [_vm._v("like")]
                 ),
                 _vm._v(" "),
+                _c("span", { staticClass: "text-lg" }, [_vm._v("0")]),
+                _vm._v(" "),
                 _c(
                   "button",
                   {
-                    staticClass:
-                      "text-lg text-white bg-red-600 rounded px-2 mx-1",
+                    staticClass: "text-lg text-red-600 rounded px-2 mx-1",
                     on: { click: _vm.dislikeComment }
                   },
                   [_vm._v("dislike")]
-                )
+                ),
+                _vm._v(" "),
+                _c("span", { staticClass: "text-lg" }, [_vm._v("0")])
               ]),
               _vm._v(" "),
               _vm.userId == comment.user.id
@@ -38130,9 +38152,13 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass:
-                          "rounded bg-blue-500 text-white text-xl px-2 mx-1",
-                        on: { click: _vm.editComment }
+                        staticClass: "rounded text-blue-500 text-lg px-2 mx-1",
+                        on: {
+                          click: function($event) {
+                            _vm.editing = true
+                            _vm.editBody = comment.body
+                          }
+                        }
                       },
                       [_vm._v("edit")]
                     ),
@@ -38140,14 +38166,68 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass:
-                          "rounded bg-red-500 text-white text-xl px-2 mx-1",
-                        on: { click: _vm.deleteComment }
+                        staticClass: "rounded text-red-500 text-lg px-2 mx-1",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteComment(comment.id)
+                          }
+                        }
                       },
                       [_vm._v("delete")]
                     )
                   ])
-                : _vm._e()
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", [
+                _vm.editing && _vm.userId == comment.user.id
+                  ? _c(
+                      "form",
+                      {
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.editComment(comment.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.editBody,
+                              expression: "editBody"
+                            }
+                          ],
+                          staticClass:
+                            "text-lg m-2 p-2 rounded-lg border-2 border-gray-500",
+                          attrs: {
+                            name: "description",
+                            id: "",
+                            cols: "60",
+                            rows: "5"
+                          },
+                          domProps: { value: _vm.editBody },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.editBody = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass:
+                            "rounded bg-green-500 text-white text-xl py-1 px-2",
+                          attrs: { type: "submit", value: "comment" }
+                        })
+                      ]
+                    )
+                  : _vm._e()
+              ])
             ])
           ]
         )

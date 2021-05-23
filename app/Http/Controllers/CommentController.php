@@ -35,12 +35,11 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {   
-        // $comment=new Comment;
-        // $comment->user_id=$request->userId;
-        // $comment->video_id=$request->videoId;
-        // $comment->body=$request->body;
-        // $comment->save();
-        return response()->json(['data'=>$request]);
+        $comment=new Comment;
+        $comment->user_id=$request->userId;
+        $comment->video_id=$request->videoId;
+        $comment->body=$request->body;
+        $comment->save();
     }
 
     /**
@@ -72,9 +71,11 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comment $comment)
+    public function update(Request $request)
     {
-        //
+      $comment=Comment::find($request->commentId);
+      $comment->body=$request->body;
+      $comment->save();
     }
 
     /**
@@ -83,8 +84,9 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy(Request $request)
     {
-        //
+      $comment=Comment::find($request->commentId);
+      $comment->delete();
     }
 }

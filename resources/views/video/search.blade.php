@@ -4,22 +4,26 @@
   @if ($channels->count()>0 || $videos->count()>0)
   <div class="m-2 w-max">
     @foreach ($channels as $channel)
+    <div class="flex">
+      <div>
         <a href="{{route('channel.show',$channel->id)}}">
         <div class="flex p-2 w-max">
           <img src="/storage/channelCover/{{$channel->cover}}" class="w-24 h-24 rounded-full my-auto">
           <div class="m-2 p-2">
             <p class="text-2xl">{{$channel->name}}</p>
             <p>
-              <span>{{$channel->subscribes->count()}}</span>
+              <span class="text-lg">{{$channel->subscribes->count()}} subscribers</span>
               <span>{{$channel->created_at->toDateString()}}</span>
             </p>
-            <p>{{$channel->description}}</p>
-          </div>
-          <div class="my-auto">
-            <subscribe-component channel-id="{{$channel->id}}" @auth user-id="{{Auth::user()->id}}" @endauth/>
+            <p class="text-lg">{{$channel->description}}</p>
           </div>
         </div>
-        </a> 
+        </a>
+        </div>
+        <div class="my-auto">
+            <subscribe-component channel-id="{{$channel->id}}" @auth user-id="{{Auth::user()->id}}" @endauth/>
+        </div>
+      </div> 
     @endforeach
     </div>
     <div class="w-max">

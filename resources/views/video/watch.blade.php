@@ -14,9 +14,7 @@
                 <p class="">
                     <span class="m-2 text-xl">{{$video->views}} views</span>
                     <span class="m-2 text-xl">{{$video->created_at->toDateString()}}</span>
-                    @auth
-                    <like-component video-id="{{$video->id}}" user-id="{{Auth::user()->id}}"/>
-                    @endauth
+                    <like-component video-id="{{$video->id}}" @auth user-id="{{Auth::user()->id}}"@endauth/>
                 </p>  
              </div>
               <div class="relative ">
@@ -24,19 +22,16 @@
                     <a href="{{route('channel.show',$video->channel->id)}}">
                     <div class="flex mb-2">
                      <img src="/storage/channelCover/{{$video->channel->cover}}" alt=""
-                        class="w-20 h-20 rounded-full inline"> </a>
+                        class="w-20 h-20 rounded-full inline">
                       <div class="ml-3 mt-2">
                        <p class="text-xl font-bold">{{$video->channel->name}}</p>
                        <p class="text-xl">{{$video->channel->subscribes->count()}} subscribers</p>
-                       </div>
+                      </div>
+                    </a>   
                     </div>
-                       <span>
-                           @auth
-                           <subscribe-component channel-id="{{$video->channel->id}}" user-id="{{Auth::user()->id}}"
-                            class="absolute top-0 right-0"/>
-                           @endauth
-                       </span>
-                       <p class="text-lg">{{$video->description}}</p>
+                    <subscribe-component channel-id="{{$video->channel->id}}" @auth user-id="{{Auth::user()->id}}" @endauth
+                    class="absolute top-0 right-0"/>
+                    <p class="text-lg">{{$video->description}}</p>
                   </p>    
               </div> 
             </div>
@@ -88,7 +83,7 @@
                         <img src="/storage/videoCover/{{$video->cover}}" width="100px" height="70px" alt="">
                         <div class="m-2 p-1">
                           <p class="text-xl">{{$video->title}}</p>
-                          <p class="text-xl">{{$video->channel->name}}</p>
+                          <p class="text-lg">{{$video->channel->name}}</p>
                           <p>
                            <span>{{$video->views}} views</span>.
                            <span>{{$video->updated_at->format('Y-m-d')}}</span>

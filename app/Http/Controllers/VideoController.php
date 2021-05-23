@@ -158,14 +158,14 @@ class VideoController extends Controller
       }
     }
     public function comments(Request $request)
-    {
-      $user=User::find($request->userId);  
+    { 
       $video=Video::find($request->videoId);
       $comments=$video->comments;
       foreach($comments as $comment){
         $user=User::find($comment->user_id);  
         $comment->user=$user;  
       }
+      $user=User::find($request->userId); 
       return response()->json(['comments'=>$comments,'user'=>$user]);
     }
 }

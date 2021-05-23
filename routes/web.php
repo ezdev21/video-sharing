@@ -36,9 +36,8 @@ Route::prefix('video')->group(function(){
 });
 Route::prefix('comment')->group(function(){
   Route::post('store',[CommentController::class,'store'])->name('comment.store');
-  //Route::get('commentId/edit',[CommentController::class,'edit'])->name('comment.edit');
   Route::patch('update',[CommentController::class,'update'])->name('comment.update');
-  Route::delete('delete',[CommentController::class,'delete'])->name('comment.delete');
+  Route::delete('delete',[CommentController::class,'destroy'])->name('comment.delete');
   Route::get('like/commentId/userId',[CommentController::class,'getLike']);
   Route::post('like/commentId/userId',[CommentController::class,'postLike']);
   Route::get('dislike/commentId/userId',[CommentController::class,'getDislike']);

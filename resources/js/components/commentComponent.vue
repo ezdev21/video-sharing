@@ -5,24 +5,34 @@
     <p class="text-xl">comment as {{user.name}}</p>
    <form action="" @submit.prevent="addComment">
     <textarea name="description" id="" cols="60" rows="5"
-        class=" p-2 rounded-lg border-2 border-gray-500" v-model="body"></textarea>
-    <input type="submit" value="comment" class="rounded bg-green-500 text-white text-xl py-1 px-2">
+        class="text-lg block m-2 p-2 rounded-lg border-2 border-gray-500" v-model="body"></textarea>
+    <input type="submit" value="comment" class="m-1 rounded bg-green-500 text-white text-xl py-1 px-2">
    </form> 
   </div>
-  <div v-for="comment in comments" :key="comment.id" class="rounded bg-gray-200 m-1 p-1">
-    <p class=""><span class="text-lg font-semibold">{{comment.user.name}}</span><span>{{comment.created_at}}</span></p>
-    <p>{{comment.body}}</p>
+  <div v-for="comment in comments" :key="comment.id" class="rounded bg-gray-200 m-2 p-2">
+    <p class="">
+      <span class="text-lg font-semibold">{{comment.user.name}}</span>
+      <span class="mx-4">{{comment.created_at}}</span>  
+    </p>
+    <p class="text-lg">{{comment.body}}</p>
     <div class="flex">
       <p class="mx-2">
-        <!--<span class="text-xl">{{comment.likes.length}}</span>-->
-        <button @click="likeComment" class="text-lg text-white bg-green-600 rounded px-2 mx-1">like</button>
-        <!--<span>{{comment.likes.length}}</span>-->
-        <button @click="dislikeComment" class="text-lg text-white bg-red-600 rounded px-2 mx-1">dislike</button>
+        <button @click="likeComment" class="text-lg text-green-600 rounded px-2 mx-1">like</button>
+        <span class="text-lg">0</span>
+        <button @click="dislikeComment" class="text-lg text-red-600 rounded px-2 mx-1">dislike</button>
+        <span class="text-lg">0</span>
       </p>
       <p v-if="userId==comment.user.id" class="mx-2">
-        <button @click="editComment" class="rounded bg-blue-500 text-white text-xl px-2 mx-1">edit</button>
-        <button @click="deleteComment" class="rounded bg-red-500 text-white text-xl px-2 mx-1">delete</button>
+        <button @click="editing=true;editBody=comment.body" class="rounded text-blue-500 text-lg px-2 mx-1">edit</button>
+        <button @click="deleteComment(comment.id)" class="rounded text-red-500 text-lg px-2 mx-1">delete</button>
       </p>
+      <div>
+        <form v-if="editing && userId==comment.user.id" @submit.prevent="editComment(comment.id)">
+         <textarea name="description" id="" cols="60" rows="5" v-model="editBody" 
+         class="text-lg m-2 p-2 rounded-lg border-2 border-gray-500"></textarea>
+         <input type="submit" value="comment" class="rounded bg-green-500 text-white text-xl py-1 px-2"> 
+        </form>
+      </div>
     </div>
   </div>
  </div>      
@@ -33,8 +43,14 @@ export default {
    data(){
     return{
      body:'',
+     editing:false,
+     editBody:'',
      user:{},
-     comment:{},
+     comment:{
+       userId:this.userId,
+       videoID:this.videoId,
+       body:this.body,
+       },
      comments:[],
     }
    },
@@ -43,7 +59,6 @@ export default {
           .then(res=>{
             this.comments=res.data.comments;
             this.user=res.data.user;
-            console.log(this.user);
           })
           .catch(err=>{
 
@@ -54,7 +69,7 @@ export default {
      {
       axios.post('/comment/store',{videoId:this.videoId,userId:this.userId,body:this.body})
            .then(res=>{
-              //this.comments.push({});
+              //this.comments.push(this.comment);
               this.body='';
            }).
            catch(err=>{
@@ -78,24 +93,24 @@ export default {
 
            });  
      },
-     editComment(){
-       axios.post('/comment/edit',{params:{userId:this.userId,commentId:this.commentId}})
-            .then(res=>{
+     editComment(id){
+       axios.patch('/comment/update',{body:this.editBody,commentId:id})
+        .then(res=>{
+          this.editing=false;
+        })
+        .catch(res=>{
 
-            })
-            .catch(res=>{
-
-           });  
+        });  
      },
-     deleteComment(){
-            axios.post('/comment/delete',{params:{userId:this.userId,commentId:this.commentId}})
-            .then(res=>{
+     deleteComment(id){
+      axios.delete('/comment/delete',{params:{commentId:id}})
+        .then(res=>{
 
-            })
-            .catch(res=>{
+        })
+        .catch(res=>{
 
-           });  
-     }     
-   }    
+        });  
+        }     
+    }    
 }
 </script>

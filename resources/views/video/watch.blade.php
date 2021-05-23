@@ -3,7 +3,7 @@
     <div class="flex">
         <div class="flex-auto w-2/3 m-2">
             <div class="w-4/5">
-                <video controls class="w-full" autoplay>
+                <video controls class="w-full">
                     <source  src="/storage/video/{{$video->source}}" type="video/mp4"/>
                         your browser does not support html5 video
                 </video>
@@ -35,44 +35,6 @@
                   </p>    
               </div> 
             </div>
-            {{-- <div class="block w-full p-2">
-                <p class="text-xl">{{$video->comments->count()}} comments</p>
-                <div>
-                    @auth
-                    <p class="text-2xl">comment as {{Auth::user()->name}}</p>
-                    <form method="post" action="{{route('comment.store')}}">
-                        @csrf
-                        <input type="hidden" name="video" value="{{$video->id}}">
-                        <input type="hidden" name="user" value="{{Auth::user()->id}}">
-                        <textarea name="body" id="" cols="60" rows="10" class="block m-2 text-xl rounded-lg"></textarea>
-                        <input type="submit" value="comment" class="m-2 py-1 rounded px-3 bg-red-600 text-xl text-white">
-                      </form>
-                    @else
-                     <p>sign in to comment <a href="{{route('login')}}" 
-                        class="text-xl text-gray-200 bg-red-600 rounded p-1 no-underline">sign in</a></p>
-                    @endauth
-                </div>
-                @foreach ($video->comments as $comment)
-                    <div class="rounded-md bg-blue-100 w-max p-2 m-2">
-                        <img src="avatar/{{$comment->user->id}}" alt="" width="25px">
-                        <p>
-                         <span class="text-lg font-bold">{{$comment->user->name}}</span>
-                         <span>{{$comment->updated_at}}</span>
-                         </p>
-                         <p>{{$comment->body}}</p>
-                         <p>
-                         <span>{{$comment->likes->count()}}</span>
-                         <span>{{$comment->likes->count()}}</span>
-                        </p>
-                        @if(Auth::user()->id===$comment->user->id)
-                            <a href="{{route('comment.edit')}}">edit</a>
-                        @endif
-                        @if(Auth::user()->id===$comment->user->id)
-                            <a href="{{route('comment.delete')}}">delete</a>
-                        @endif
-                    </div>
-                @endforeach
-            </div> --}}
             <comment-component video-id="{{$video->id}}" @auth user-id="{{Auth::user()->id}}" @endauth/>
         </div>
         <div class="flex-auto md:block justify-center">

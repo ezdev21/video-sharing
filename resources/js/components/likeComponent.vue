@@ -45,7 +45,7 @@ export default {
               if(this.liked&&this.disliked){
                 this.disliked=false;
               }
-              this.disliked ? this.dislikeText='dislike' : '';
+              this.disliked ? this.dislikeText='disliked' : this.dislikeText='dislike';
               this.liked ? this.likeText='liked' : this.likeText='like';
             })
             .catch(err=>{
@@ -61,7 +61,7 @@ export default {
               if(this.liked&&this.disliked){
                 this.liked=false;
               }
-              this.liked ? this.likeText='like' : '';
+              this.liked ? this.likeText='liked' : this.likeText='like';
               this.disliked ? this.dislikeText='disliked' : this.dislikeText='dislike';
             })
             .catch(err=>{

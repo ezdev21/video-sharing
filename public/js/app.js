@@ -1985,13 +1985,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       body: '',
       editing: false,
-      editBody: '',
+      editedBody: '',
       user: {},
-      comment: {
-        userId: this.userId,
-        videoID: this.videoId,
-        body: this.body
-      },
+      comment: {},
       comments: []
     };
   },
@@ -2017,7 +2013,16 @@ __webpack_require__.r(__webpack_exports__);
         userId: this.userId,
         body: this.body
       }).then(function (res) {
-        //this.comments.push(this.comment);
+        var comment = {
+          user: {
+            name: _this2.user.name,
+            id: _this2.userId
+          },
+          body: _this2.body
+        };
+
+        _this2.comments.push(comment);
+
         _this2.body = '';
       })["catch"](function (err) {});
     },
@@ -2043,18 +2048,31 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       axios.patch('/comment/update', {
-        body: this.editBody,
+        body: this.editedBody,
         commentId: id
       }).then(function (res) {
+        var comment = _this3.comments.find(function (comment) {
+          return comment.id == id;
+        });
+
+        comment.body = _this3.editedBody;
         _this3.editing = false;
       })["catch"](function (res) {});
     },
     deleteComment: function deleteComment(id) {
+      var _this4 = this;
+
       axios["delete"]('/comment/delete', {
         params: {
           commentId: id
         }
-      }).then(function (res) {})["catch"](function (res) {});
+      }).then(function (res) {
+        var comment = _this4.comments.find(function (comment) {
+          return comment.id == id;
+        });
+
+        _this4.comments.pop(comment);
+      })["catch"](function (res) {});
     }
   }
 });
@@ -2129,7 +2147,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2.disliked = false;
         }
 
-        _this2.disliked ? _this2.dislikeText = 'dislike' : '';
+        _this2.disliked ? _this2.dislikeText = 'disliked' : _this2.dislikeText = 'dislike';
         _this2.liked ? _this2.likeText = 'liked' : _this2.likeText = 'like';
       })["catch"](function (err) {});
     },
@@ -2150,7 +2168,7 @@ __webpack_require__.r(__webpack_exports__);
           _this3.liked = false;
         }
 
-        _this3.liked ? _this3.likeText = 'like' : '';
+        _this3.liked ? _this3.likeText = 'liked' : _this3.likeText = 'like';
         _this3.disliked ? _this3.dislikeText = 'disliked' : _this3.dislikeText = 'dislike';
       })["catch"](function (err) {});
     }
@@ -38050,13 +38068,13 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("p", { staticClass: "text-2xl" }, [
+      _c("p", { staticClass: "text-2xl mx-3" }, [
         _vm._v(_vm._s(_vm.comments.length) + " comments")
       ]),
       _vm._v(" "),
       _vm.userId
         ? _c("div", [
-            _c("p", { staticClass: "text-xl" }, [
+            _c("p", { staticClass: "text-xl mx-3 font-semibold" }, [
               _vm._v("comment as " + _vm._s(_vm.user.name))
             ]),
             _vm._v(" "),
@@ -38156,7 +38174,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             _vm.editing = true
-                            _vm.editBody = comment.body
+                            _vm.editedBody = comment.body
                           }
                         }
                       },
@@ -38196,8 +38214,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.editBody,
-                              expression: "editBody"
+                              value: _vm.editedBody,
+                              expression: "editedBody"
                             }
                           ],
                           staticClass:
@@ -38208,13 +38226,13 @@ var render = function() {
                             cols: "60",
                             rows: "5"
                           },
-                          domProps: { value: _vm.editBody },
+                          domProps: { value: _vm.editedBody },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.editBody = $event.target.value
+                              _vm.editedBody = $event.target.value
                             }
                           }
                         }),

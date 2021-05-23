@@ -1,8 +1,8 @@
 <template>
  <div>
-  <p class="text-2xl">{{comments.length}} comments</p>
+  <p class="text-2xl mx-3">{{comments.length}} comments</p>
   <div v-if="userId">
-    <p class="text-xl">comment as {{user.name}}</p>
+    <p class="text-xl mx-3 font-semibold">comment as {{user.name}}</p>
    <form action="" @submit.prevent="addComment">
     <textarea name="description" id="" cols="60" rows="5"
         class="text-lg block m-2 p-2 rounded-lg border-2 border-gray-500" v-model="body"></textarea>
@@ -23,12 +23,12 @@
         <span class="text-lg">0</span>
       </p>
       <p v-if="userId==comment.user.id" class="mx-2">
-        <button @click="editing=true;editBody=comment.body" class="rounded text-blue-500 text-lg px-2 mx-1">edit</button>
+        <button @click="editing=true;editedBody=comment.body" class="rounded text-blue-500 text-lg px-2 mx-1">edit</button>
         <button @click="deleteComment(comment.id)" class="rounded text-red-500 text-lg px-2 mx-1">delete</button>
       </p>
       <div>
         <form v-if="editing && userId==comment.user.id" @submit.prevent="editComment(comment.id)">
-         <textarea name="description" id="" cols="60" rows="5" v-model="editBody" 
+         <textarea name="description" id="" cols="60" rows="5" v-model="editedBody" 
          class="text-lg m-2 p-2 rounded-lg border-2 border-gray-500"></textarea>
          <input type="submit" value="comment" class="rounded bg-green-500 text-white text-xl py-1 px-2"> 
         </form>
@@ -44,13 +44,9 @@ export default {
     return{
      body:'',
      editing:false,
-     editBody:'',
+     editedBody:'',
      user:{},
-     comment:{
-       userId:this.userId,
-       videoID:this.videoId,
-       body:this.body,
-       },
+     comment:{},
      comments:[],
     }
    },
@@ -69,7 +65,10 @@ export default {
      {
       axios.post('/comment/store',{videoId:this.videoId,userId:this.userId,body:this.body})
            .then(res=>{
-              //this.comments.push(this.comment);
+             var comment={
+               user:{name:this.user.name,id:this.userId},
+               body:this.body};
+              this.comments.push(comment);
               this.body='';
            }).
            catch(err=>{
@@ -94,8 +93,11 @@ export default {
            });  
      },
      editComment(id){
-       axios.patch('/comment/update',{body:this.editBody,commentId:id})
+       axios.patch('/comment/update',{body:this.editedBody,commentId:id})
         .then(res=>{
+          var comment=this.comments.find(comment=>{
+            return comment.id==id });
+          comment.body=this.editedBody;
           this.editing=false;
         })
         .catch(res=>{
@@ -105,7 +107,10 @@ export default {
      deleteComment(id){
       axios.delete('/comment/delete',{params:{commentId:id}})
         .then(res=>{
-
+          var comment=this.comments.find(comment=>{
+            return comment.id==id;
+          });
+          this.comments.pop(comment);
         })
         .catch(res=>{
 

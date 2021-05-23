@@ -23,7 +23,7 @@ window.Vue = require('vue').default;
 Vue.component('like-component', require('./components/likeComponent.vue').default);
 Vue.component('subscribe-component', require('./components/SubscribeComponent.vue').default);
 Vue.component('channel-component',require('./components/channelComponent.vue').default);
-//Vue.component('comment-component',require('./components/commentComponet.vue').default);
+Vue.component('comment-component',require('./components/commentComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

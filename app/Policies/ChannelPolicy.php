@@ -65,7 +65,7 @@ class ChannelPolicy
      */
     public function delete(User $user, Channel $channel)
     {
-        //
+        return $user->id==$channel->user->id;
     }
 
     /**

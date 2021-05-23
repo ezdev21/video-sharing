@@ -32,12 +32,13 @@ Route::prefix('video')->group(function(){
   Route::get('watch/{videoId}',[VideoController::class,'show'])->name('video.watch');
   Route::get('like',[VideoController::class,'getLike']);
   Route::post('like',[VideoController::class,'postLike']);
+  Route::get('comments',[VideoController::class,'comments']);
 });
 Route::prefix('comment')->group(function(){
-  Route::post('create',[CommentController::class,'store'])->name('comment.store');
-  Route::get('commentId/edit',[CommentController::class,'edit'])->name('comment.edit');
+  Route::post('store',[CommentController::class,'store'])->name('comment.store');
+  //Route::get('commentId/edit',[CommentController::class,'edit'])->name('comment.edit');
   Route::patch('update',[CommentController::class,'update'])->name('comment.update');
-  Route::delete('delete',[CommentController::class,'deklete'])->name('comment.delete');
+  Route::delete('delete',[CommentController::class,'delete'])->name('comment.delete');
   Route::get('like/commentId/userId',[CommentController::class,'getLike']);
   Route::post('like/commentId/userId',[CommentController::class,'postLike']);
   Route::get('dislike/commentId/userId',[CommentController::class,'getDislike']);
@@ -47,8 +48,9 @@ Route::prefix('channel')->group(function(){
   Route::get('{id}/edit',[ChannelController::class,'edit'])->name('channel.edit');
   Route::patch('/update',[ChannelController::class,'update'])->name('channel.update');
   Route::get('create',[ChannelController::class,'create'])->name('channel.create');
-  Route::post('create',[ChannelController::class,'store'])->name('channel.store');
+  Route::post('update',[ChannelController::class,'store'])->name('channel.store');
   Route::get('show/{id}',[ChannelController::class,'show'])->name('channel.show');
+  Route::delete('delete/{id}',[ChannelController::class,'delete'])->name('channel.delete');
   Route::get('subscribe',[ChannelController::class,'getSubscribe']);
   Route::post('subscribe',[ChannelController::class,'postSubscribe']);
   Route::get('{id}/videos',[ChannelController::class,'videos'])->name('channel.videos');

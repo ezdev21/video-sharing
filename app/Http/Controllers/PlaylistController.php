@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
+use App\Models\Playlist;
 use Illuminate\Http\Request;
 
-class CommentController extends Controller
+class PlaylistController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,9 +22,9 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-      
+        //
     }
 
     /**
@@ -34,22 +34,17 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
-        // $comment=new Comment;
-        // $comment->user_id=$request->userId;
-        // $comment->video_id=$request->videoId;
-        // $comment->body=$request->body;
-        // $comment->save();
-        return response()->json(['data'=>$request]);
+    {
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Playlist  $playlist
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
+    public function show(Playlist $playlist)
     {
         //
     }
@@ -57,10 +52,10 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Playlist  $playlist
      * @return \Illuminate\Http\Response
      */
-    public function edit(Comment $comment)
+    public function edit(Playlist $playlist)
     {
         //
     }
@@ -69,10 +64,10 @@ class CommentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Playlist  $playlist
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comment $comment)
+    public function update(Request $request, Playlist $playlist)
     {
         //
     }
@@ -80,10 +75,10 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Playlist  $playlist
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy(Playlist $playlist)
     {
         //
     }

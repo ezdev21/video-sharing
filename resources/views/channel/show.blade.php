@@ -9,11 +9,17 @@
             <p class="text-4xl">{{$channel->name}}</p>
             <p class="text-xl ">{{$channel->subscribes->count()}} subscribers</p>
          </div>
-         <p class="mx-3 my-auto">
+         <div class="mx-3 my-auto">
             @if(Auth::check())
             <subscribe-component channel-id="{{$channel->id}}" user-id="{{Auth::user()->id}}"/>  
            @endif
-         </p>
+           @can('edit',$channel)
+            <a href="{{route('channel.edit',$channel->id)}}" class="text-xl font-semibold mx-2">edit channel</a>
+           @endcan
+           @can('delete',$channel)
+            <a href="{{route('channel.delete',$channel->id)}}" class="text-xl font-semibold mx-2">delete channel</a>
+           @endcan
+         </div>
      </div>
      <nav class="p-2 m-2">
        <ul class="list-style-none flex">

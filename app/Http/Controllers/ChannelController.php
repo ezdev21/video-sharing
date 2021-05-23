@@ -87,6 +87,7 @@ class ChannelController extends Controller
      */
     public function update(ChannelFormRequest $request)
     {
+        $this->authorize('update',auth()->user());
         $channel=Channel::find($request->id);
         $channel->name=$request->name;
         $channel->description=$request->description;
@@ -111,9 +112,9 @@ class ChannelController extends Controller
      * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Channel $channel)
+    public function destroy($id)
     {
-        //
+        $this->authorize('delete',auth()->user());
     }
     public function getSubscribe(Request $request)
     {

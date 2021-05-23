@@ -10,7 +10,7 @@
             </div>
             <div class="w-full">
              <div class="border-b-2 m-2 p-2 border-gray-300">
-                <p class="ml-2 text-xl">{{$video->title}}</p>
+                <p class="ml-2 text-2xl">{{$video->title}}</p>
                 <p class="">
                     <span class="m-2 text-xl">{{$video->views}} views</span>
                     <span class="m-2 text-xl">{{$video->created_at->toDateString()}}</span>
@@ -36,11 +36,11 @@
                             class="absolute top-0 right-0"/>
                            @endauth
                        </span>
-                       <p>{{$video->description}}</p>
+                       <p class="text-lg">{{$video->description}}</p>
                   </p>    
               </div> 
             </div>
-            <div class="block w-full p-2">
+            {{-- <div class="block w-full p-2">
                 <p class="text-xl">{{$video->comments->count()}} comments</p>
                 <div>
                     @auth
@@ -77,7 +77,8 @@
                         @endif
                     </div>
                 @endforeach
-            </div>
+            </div> --}}
+            <comment-component video-id="{{$video->id}}" @auth user-id="{{Auth::user()->id}}" @endauth/>
         </div>
         <div class="flex-auto md:block justify-center">
           <p class="text-2xl m-3 text-bold">Recommended videos</p>

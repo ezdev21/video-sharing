@@ -58,7 +58,14 @@ export default {
           })
           .catch(err=>{
 
-          });       
+          });
+      axios.get('/video/like',{params:{userId:this.userId,commentId:this.commentId}})
+           .then(res=>{
+
+           })
+           .catch(err=>{
+
+           });            
    },
    methods:{
      addComment()
@@ -73,24 +80,6 @@ export default {
            }).
            catch(err=>{
            });
-     },
-     likeComment(){
-      axios.post('/comment/like',{params:{userId:this.userId,commentId:this.commentId,type:'like'}})
-           .then(res=>{
-
-           })
-           .catch(res=>{
-
-           });   
-     },
-     dislikeComment(){
-       axios.post('/comment/dislike',{params:{userId:this.userId,commentId:this.commentId},type:'dislike'})
-            .then(res=>{
-
-            })
-            .catch(res=>{
-
-           });  
      },
      editComment(id){
        axios.patch('/comment/update',{body:this.editedBody,commentId:id})
@@ -115,7 +104,25 @@ export default {
         .catch(res=>{
 
         });  
-        }     
+        }
+      likeComment(){
+      axios.post('/comment/like',{params:{userId:this.userId,commentId:this.commentId,type:'like'}})
+           .then(res=>{
+
+           })
+           .catch(res=>{
+
+           });   
+     },
+     dislikeComment(){
+       axios.post('/comment/dislike',{params:{userId:this.userId,commentId:this.commentId},type:'dislike'})
+            .then(res=>{
+
+            })
+            .catch(res=>{
+
+           });  
+     },       
     }    
 }
 </script>

@@ -42,8 +42,8 @@
                 @forelse ($recommendedVideos as $video)
                 <a href="{{route('video.watch',$video->id)}}" class="hover:no-underline hover:text-black">
                     <div class="flex flex-auto mx-3 my-2">
-                        <img src="/storage/videoCover/{{$video->cover}}" width="100px" height="70px" alt="">
-                        <div class="m-2 p-1">
+                        <img src="/storage/videoCover/{{$video->cover}}" class="w-60" alt="">
+                        <div class="mx-2">
                           <p class="text-xl">{{$video->title}}</p>
                           <p class="text-lg">{{$video->channel->name}}</p>
                           <p>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
@@ -88,5 +89,16 @@ class CommentController extends Controller
     {
       $comment=Comment::find($request->commentId);
       $comment->delete();
+    }
+    public function getLike(Request $request){
+
+    }
+    public function postLike(Request $request){
+      if(DB::table('comment_user')->where([['user_id',$request->userId],])->exists()){
+
+      }
+      else{
+
+      }  
     }
 }

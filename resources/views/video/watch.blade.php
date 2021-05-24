@@ -18,21 +18,19 @@
                 </p>  
              </div>
               <div class="relative ">
-                <p>
-                    <a href="{{route('channel.show',$video->channel->id)}}">
+                  <a href="{{route('channel.show',$video->channel->id)}}">
                     <div class="flex mb-2">
-                     <img src="/storage/channelCover/{{$video->channel->cover}}" alt=""
-                        class="w-20 h-20 rounded-full inline">
-                      <div class="ml-3 mt-2">
-                       <p class="text-xl font-bold">{{$video->channel->name}}</p>
-                       <p class="text-xl">{{$video->channel->subscribes->count()}} subscribers</p>
-                      </div>
-                    </a>   
+                    <img src="/storage/channelCover/{{$video->channel->cover}}" alt=""
+                        class="w-20 h-20 rounded-full inline" />
+                    <div class="ml-3 mt-2">
+                      <p class="text-xl font-bold">{{$video->channel->name}}</p>
+                      <p class="text-xl">{{$video->channel->subscribes->count()}} subscribers</p>
+                    </div>  
                     </div>
-                    <subscribe-component channel-id="{{$video->channel->id}}" @auth user-id="{{Auth::user()->id}}" @endauth
-                    class="absolute top-0 right-0"/>
                     <p class="text-lg">{{$video->description}}</p>
-                  </p>    
+                   </a> 
+                    <subscribe-component channel-id="{{$video->channel->id}}" @auth user-id="{{Auth::user()->id}}" @endauth
+                    class="absolute top-0 right-0"/>    
               </div> 
             </div>
             <comment-component video-id="{{$video->id}}" @auth user-id="{{Auth::user()->id}}" @endauth/>

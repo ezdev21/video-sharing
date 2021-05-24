@@ -1,9 +1,9 @@
 <template>
 <div class="inline mx-4">
-  <button @click="like" class="bg-green-500 text-xl p-1 px-4 text-white rounded" :class="{'bg-gray-400 text-black':liked}">
+  <button @click="like" class="bg-green-500 text-xl p-1 px-4 text-white rounded" :class="liked ? 'bg-gray-400 text-black':''">
   {{likeText}}</button>
   <span class="text-xl mr-2">{{totalLikes}}</span>
-  <button @click="dislike" class="bg-red-500 text-xl p-1 px-4 ml-2 text-white rounded" :class="{'bg-gray-400 text-black':disliked}">
+  <button @click="dislike" class="bg-red-500 text-xl p-1 px-4 ml-2 text-white rounded" :class="liked ? 'bg-gray-400 text-black':''">
   {{dislikeText}}</button>
   <span class="text-xl text-red">{{totalDislikes}}</span>
 </div>

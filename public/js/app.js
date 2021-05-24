@@ -1871,7 +1871,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.subscribed = res.data.subscribed;
 
       if (_this.subscribed) {
-        _this.subscribeText = 'unsubscribe';
+        _this.subscribeText = 'subscribed';
       }
     })["catch"](function (err) {});
   },
@@ -1884,7 +1884,7 @@ __webpack_require__.r(__webpack_exports__);
         channelId: this.channelId
       }).then(function (res) {
         _this2.subscribed = !_this2.subscribed;
-        _this2.subscribeText == 'subscribe' ? _this2.subscribeText = 'unsubscribe' : _this2.subscribeText = 'subscribe';
+        _this2.subscribeText == 'subscribe' ? _this2.subscribeText = 'subscribed' : _this2.subscribeText = 'subscribe';
       })["catch"](function (err) {});
     }
   }
@@ -2003,6 +2003,12 @@ __webpack_require__.r(__webpack_exports__);
       _this.comments = res.data.comments;
       _this.user = res.data.user;
     })["catch"](function (err) {});
+    axios.get('/video/like', {
+      params: {
+        userId: this.userId,
+        commentId: this.commentId
+      }
+    }).then(function (res) {})["catch"](function (err) {});
   },
   methods: {
     addComment: function addComment() {
@@ -2025,24 +2031,6 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.body = '';
       })["catch"](function (err) {});
-    },
-    likeComment: function likeComment() {
-      axios.post('/comment/like', {
-        params: {
-          userId: this.userId,
-          commentId: this.commentId,
-          type: 'like'
-        }
-      }).then(function (res) {})["catch"](function (res) {});
-    },
-    dislikeComment: function dislikeComment() {
-      axios.post('/comment/dislike', {
-        params: {
-          userId: this.userId,
-          commentId: this.commentId
-        },
-        type: 'dislike'
-      }).then(function (res) {})["catch"](function (res) {});
     },
     editComment: function editComment(id) {
       var _this3 = this;
@@ -2073,6 +2061,24 @@ __webpack_require__.r(__webpack_exports__);
 
         _this4.comments.pop(comment);
       })["catch"](function (res) {});
+    },
+    likeComment: function likeComment() {
+      axios.post('/comment/like', {
+        params: {
+          userId: this.userId,
+          commentId: this.commentId,
+          type: 'like'
+        }
+      }).then(function (res) {})["catch"](function (res) {});
+    },
+    dislikeComment: function dislikeComment() {
+      axios.post('/comment/dislike', {
+        params: {
+          userId: this.userId,
+          commentId: this.commentId
+        },
+        type: 'dislike'
+      }).then(function (res) {})["catch"](function (res) {});
     }
   }
 });
@@ -37968,7 +37974,7 @@ var render = function() {
     "button",
     {
       staticClass: "bg-red-600 text-xl text-white py-1 px-2 rounded",
-      class: { "bg-gray-300 text-black": _vm.subscribed },
+      class: _vm.subscribed ? "bg-gray-300 text-black" : "",
       on: { click: _vm.subscribe }
     },
     [_vm._v(_vm._s(_vm.subscribeText))]
@@ -38282,7 +38288,7 @@ var render = function() {
       "button",
       {
         staticClass: "bg-green-500 text-xl p-1 px-4 text-white rounded",
-        class: { "bg-gray-400 text-black": _vm.liked },
+        class: _vm.liked ? "bg-gray-400 text-black" : "",
         on: { click: _vm.like }
       },
       [_vm._v("\r\n  " + _vm._s(_vm.likeText))]
@@ -38296,7 +38302,7 @@ var render = function() {
       "button",
       {
         staticClass: "bg-red-500 text-xl p-1 px-4 ml-2 text-white rounded",
-        class: { "bg-gray-400 text-black": _vm.disliked },
+        class: _vm.liked ? "bg-gray-400 text-black" : "",
         on: { click: _vm.dislike }
       },
       [_vm._v("\r\n  " + _vm._s(_vm.dislikeText))]

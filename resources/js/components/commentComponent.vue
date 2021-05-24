@@ -104,7 +104,7 @@ export default {
         .catch(res=>{
 
         });  
-        }
+        },
       likeComment(){
       axios.post('/comment/like',{params:{userId:this.userId,commentId:this.commentId,type:'like'}})
            .then(res=>{

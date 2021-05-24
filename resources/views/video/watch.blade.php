@@ -18,7 +18,7 @@
                 </p>  
              </div>
               <div class="relative ">
-                  <a href="{{route('channel.show',$video->channel->id)}}">
+                  <a href="{{route('channel.show',$video->channel->id)}}" class="hover:no-underline">
                     <div class="flex mb-2">
                     <img src="/storage/channelCover/{{$video->channel->cover}}" alt=""
                         class="w-20 h-20 rounded-full inline" />

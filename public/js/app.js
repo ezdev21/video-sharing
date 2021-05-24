@@ -38112,8 +38112,8 @@ var render = function() {
                     }
                   ],
                   staticClass:
-                    "text-lg w-full h-40 m-2 p-2 rounded-lg border-2 border-gray-500",
-                  attrs: { name: "description", rows: "5" },
+                    "text-lg w-2/3 block h-40 m-2 p-2 rounded-lg border-2 border-gray-500",
+                  attrs: { name: "description", rows: "5", required: "" },
                   domProps: { value: _vm.body },
                   on: {
                     input: function($event) {
@@ -38127,7 +38127,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("input", {
                   staticClass:
-                    "m-1 rounded bg-green-500 text-white text-xl py-1 px-2",
+                    "rounded bg-green-500 text-white text-xl py-1 px-2",
                   attrs: { type: "submit", value: "comment" }
                 })
               ]
@@ -38268,7 +38268,7 @@ var render = function() {
                               }
                             ],
                             staticClass:
-                              "text-lg m-auto focus:outline-none p-2 w-full h-40 rounded-lg border-2 border-gray-300",
+                              "text-lg m-auto focus:outline-none p-2 w-full h-40 rounded-xl border-2 border-gray-300",
                             attrs: { name: "description" },
                             domProps: { value: _vm.editedBody },
                             on: {
@@ -38297,7 +38297,7 @@ var render = function() {
       _vm._v(" "),
       _vm.editing
         ? _c("div", {
-            staticClass: "absolute inset-0 opacity-50 bg-black z-10",
+            staticClass: "absolute -inset-full opacity-50 bg-black z-10",
             on: {
               click: function($event) {
                 _vm.editing = false

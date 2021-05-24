@@ -9,6 +9,9 @@
     <input type="submit" value="comment" class="rounded bg-green-500 text-white text-xl py-1 px-2">
    </form> 
   </div>
+  <div v-else>
+   <p>sign in to comment <a href="/login" class="no-underline text-xl text-blue-500 m-1">login</a></p>
+  </div>
   <div v-for="comment in comments" :key="comment.id" class="rounded bg-gray-200 m-2 p-2">
     <p class="">
       <span class="text-lg font-semibold">{{comment.user.name}}</span>

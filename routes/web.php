@@ -42,12 +42,12 @@ Route::prefix('comment')->group(function(){
   Route::post('like',[CommentController::class,'postLike']);
 });
 Route::prefix('channel')->group(function(){
-  Route::get('{id}/edit',[ChannelController::class,'edit'])->name('channel.edit');
+  Route::get('{channel}/edit',[ChannelController::class,'edit'])->name('channel.edit')->middleware('can:update,channel');
   Route::patch('/update',[ChannelController::class,'update'])->name('channel.update');
   Route::get('create',[ChannelController::class,'create'])->name('channel.create');
   Route::post('update',[ChannelController::class,'store'])->name('channel.store');
   Route::get('show/{id}',[ChannelController::class,'show'])->name('channel.show');
-  Route::delete('delete/{id}',[ChannelController::class,'delete'])->name('channel.delete');
+  Route::delete('{channel}/delete/',[ChannelController::class,'delete'])->name('channel.delete');
   Route::get('subscribe',[ChannelController::class,'getSubscribe']);
   Route::post('subscribe',[ChannelController::class,'postSubscribe']);
   Route::get('{id}/videos',[ChannelController::class,'videos'])->name('channel.videos');

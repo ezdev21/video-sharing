@@ -2,7 +2,7 @@
 @section('content')
     <div class="flex">
         <div class="flex-auto w-2/3 m-2">
-            <div class="w-4/5">
+            <div class="mx-2 w-full bg-black">
                 <video controls class="w-full">
                     <source  src="/storage/video/{{$video->source}}" type="video/mp4"/>
                         your browser does not support html5 video

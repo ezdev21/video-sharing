@@ -72,9 +72,8 @@ class ChannelController extends Controller
      * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Channel $channel)
     {
-        $channel=Channel::findOrFail($id);
         return view('channel.edit',['channel'=>$channel]);
     }
 
@@ -86,9 +85,9 @@ class ChannelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(ChannelFormRequest $request)
-    {
-        $this->authorize('update',auth()->user());
+    {  
         $channel=Channel::find($request->id);
+        $this->authorize('update',$channel);
         $channel->name=$request->name;
         $channel->description=$request->description;
         if($request->has('cover')){
@@ -112,9 +111,10 @@ class ChannelController extends Controller
      * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $this->authorize('delete',auth()->user());
+    public function destroy(Channel $channel)
+    { 
+        $this->authorize('delete',$channel);
+        $channel->delete;
     }
     public function getSubscribe(Request $request)
     {

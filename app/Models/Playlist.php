@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Playlist extends Model
 {
     use HasFactory;
+
+    public function channel()
+    {
+        return $this->belongsTo(Channel::class);
+    }
 }

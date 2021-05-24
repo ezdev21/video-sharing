@@ -9,16 +9,19 @@
             <p class="text-4xl">{{$channel->name}}</p>
             <p class="text-xl ">{{$channel->subscribes->count()}} subscribers</p>
          </div>
-         <div class="mx-3 my-auto">
-            @if(Auth::check())
-            <subscribe-component channel-id="{{$channel->id}}" user-id="{{Auth::user()->id}}"/>  
-           @endif
-           @can('edit',$channel)
-            <a href="{{route('channel.edit',$channel->id)}}" class="text-xl font-semibold mx-2">edit channel</a>
-           @endcan
-           @can('delete',$channel)
-            <a href="{{route('channel.delete',$channel->id)}}" class="text-xl font-semibold mx-2">delete channel</a>
-           @endcan
+         <div class="mx-3 my-auto"> 
+           <subscribe-component channel-id="{{$channel->id}}" @auth user-id="{{Auth::user()->id}}" @endauth/>  
+         </div>
+         <div class="flex mx-3 my-auto">
+            @can('update',$channel)
+              <a href="{{route('channel.edit',$channel->id)}}" class="text-2xl font-semibold mx-2 text-blue-500">edit channel</a>
+            @endcan
+            @can('delete',$channel)
+             <form method="post" action="{{route('channel.delete',$channel)}}">
+               @method('delete')
+               <input type="submit" value="delete channel" class="text-2xl font-semibold mx-2 text-red-500" />
+             </form>
+            @endcan
          </div>
      </div>
      <nav class="p-2 m-2">

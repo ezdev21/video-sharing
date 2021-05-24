@@ -1979,12 +1979,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['videoId', 'userId'],
   data: function data() {
     return {
       body: '',
       editing: false,
+      editedId: null,
       editedBody: '',
       user: {},
       comment: {},
@@ -38106,8 +38112,8 @@ var render = function() {
                     }
                   ],
                   staticClass:
-                    "text-lg block m-2 p-2 rounded-lg border-2 border-gray-500",
-                  attrs: { name: "description", id: "", cols: "60", rows: "5" },
+                    "text-lg w-full h-40 m-2 p-2 rounded-lg border-2 border-gray-500",
+                  attrs: { name: "description", rows: "5" },
                   domProps: { value: _vm.body },
                   on: {
                     input: function($event) {
@@ -38180,6 +38186,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             _vm.editing = true
+                            _vm.editedId = comment.id
                             _vm.editedBody = comment.body
                           }
                         }
@@ -38200,62 +38207,104 @@ var render = function() {
                       [_vm._v("delete")]
                     )
                   ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("div", [
-                _vm.editing && _vm.userId == comment.user.id
-                  ? _c(
-                      "form",
-                      {
-                        on: {
-                          submit: function($event) {
-                            $event.preventDefault()
-                            return _vm.editComment(comment.id)
-                          }
-                        }
-                      },
-                      [
-                        _c("textarea", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.editedBody,
-                              expression: "editedBody"
-                            }
-                          ],
-                          staticClass:
-                            "text-lg m-2 p-2 rounded-lg border-2 border-gray-500",
-                          attrs: {
-                            name: "description",
-                            id: "",
-                            cols: "60",
-                            rows: "5"
-                          },
-                          domProps: { value: _vm.editedBody },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.editedBody = $event.target.value
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass:
-                            "rounded bg-green-500 text-white text-xl py-1 px-2",
-                          attrs: { type: "submit", value: "comment" }
-                        })
-                      ]
-                    )
-                  : _vm._e()
-              ])
+                : _vm._e()
             ])
           ]
         )
-      })
+      }),
+      _vm._v(" "),
+      _vm.editing
+        ? _c(
+            "div",
+            {
+              staticClass:
+                "absolute inset-0 flex justify-center items-center z-20"
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "w-1/2 relative px-10 py-2 bg-gray-300 rounded-xl"
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "absolute rounded-tr-xl top-0 right-0 text-2xl px-3 bg-red-500 text-white",
+                      on: {
+                        click: function($event) {
+                          _vm.editing = false
+                        }
+                      }
+                    },
+                    [_vm._v("x")]
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-2xl text-center m-2" }, [
+                    _vm._v("Edit your comment")
+                  ]),
+                  _vm._v(" "),
+                  _vm.editing
+                    ? _c(
+                        "form",
+                        {
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.editComment(_vm.editedId)
+                            }
+                          }
+                        },
+                        [
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.editedBody,
+                                expression: "editedBody"
+                              }
+                            ],
+                            staticClass:
+                              "text-lg m-auto focus:outline-none p-2 w-full h-40 rounded-lg border-2 border-gray-300",
+                            attrs: { name: "description" },
+                            domProps: { value: _vm.editedBody },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.editedBody = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass:
+                              "rounded bg-green-500 m-auto text-white text-xl py-1 px-2",
+                            attrs: { type: "submit", value: "edit comment" }
+                          })
+                        ]
+                      )
+                    : _vm._e()
+                ]
+              )
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.editing
+        ? _c("div", {
+            staticClass: "absolute inset-0 opacity-50 bg-black z-10",
+            on: {
+              click: function($event) {
+                _vm.editing = false
+              }
+            }
+          })
+        : _vm._e()
     ],
     2
   )

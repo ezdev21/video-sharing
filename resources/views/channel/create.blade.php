@@ -8,7 +8,7 @@
         <input type="hidden" name="user" value="{{Auth::user()->id}}">
         <label for="name" class="text-xl">channel name</label>
         <input type="text" name="name" placeholder="channel name" required
-        class="block h-10 p-1 text-xl rounded-md border-2 border-gray-500 w-full">
+        class="block h-10 p-1 text-xl rounded-md border-2 border-gray-300 w-full">
         @if ($errors->has('name'))
          <p class="text-xl text-red-600">{{$errors->first('name')}}</p>
         @endif
@@ -19,8 +19,8 @@
          <p class="text-xl text-red-600">{{$errors->first('cover')}}</p>
         @endif
         <label for="description" class="text-xl">channel description here</label>
-        <textarea name="description" id="" cols="60" rows="10"
-        class="w-full block p-2 text-xl rounded-xl border-2 border-gray-500"></textarea>
+        <textarea name="description" id=""
+        class="w-full h-40 m-auto focus:outline-none p-2 text-xl rounded-xl border-2 border-gray-300"></textarea>
         <input type="submit" value="create channel"
         class="text-white bg-red-700 text-xl rounded-lg m-2 p-2">
       </form>

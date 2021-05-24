@@ -11,7 +11,7 @@
          @csrf
          <input type="hidden" name="userId" value="{{Auth::user()->id}}">
          <input type="text" name="title" placeholder="video title" required
-         class="m-2 border-2 rounded border-gray-500 w-full h-10 text-xl">
+         class="m-2 border-2 rounded border-gray-300 w-full h-10 text-xl">
          @if ($errors->has('title'))
            <p>{{$errors->first('title')}}</p>
          @endif
@@ -28,7 +28,7 @@
            <p>{{$errors->first('video')}}</p>
          @endif
          <p class="text-xl font-bold">Description</p>
-         <textarea name="description" id="" cols="60" rows="10" class="p-2 w-full text-xl rounded-xl border-2 border-gray-500 m-2"></textarea>
+         <textarea name="description" id="" class="p-2 w-full m-auto h-40 focus:outline-none text-xl rounded-xl border-2 border-gray-300 m-2"></textarea>
          <input type="submit" value="upload"
          class="m-2 px-3 rounded-lg h-10 text-xl bg-red-600 text-white">
        </form>

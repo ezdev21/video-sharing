@@ -4,8 +4,8 @@
   <div v-if="userId">
     <p class="text-xl mx-3 font-semibold">comment as {{user.name}}</p>
    <form action="" @submit.prevent="addComment">
-    <textarea name="description" id="" cols="60" rows="5"
-        class="text-lg block m-2 p-2 rounded-lg border-2 border-gray-500" v-model="body"></textarea>
+    <textarea name="description" rows="5"
+        class="text-lg w-full h-40 m-2 p-2 rounded-lg border-2 border-gray-500" v-model="body"></textarea>
     <input type="submit" value="comment" class="m-1 rounded bg-green-500 text-white text-xl py-1 px-2">
    </form> 
   </div>
@@ -23,18 +23,23 @@
         <span class="text-lg">0</span>
       </p>
       <p v-if="userId==comment.user.id" class="mx-2">
-        <button @click="editing=true;editedBody=comment.body" class="rounded text-blue-500 text-lg px-2 mx-1">edit</button>
+        <button @click="editing=true;editedId=comment.id;editedBody=comment.body" class="rounded text-blue-500 text-lg px-2 mx-1">edit</button>
         <button @click="deleteComment(comment.id)" class="rounded text-red-500 text-lg px-2 mx-1">delete</button>
       </p>
-      <div>
-        <form v-if="editing && userId==comment.user.id" @submit.prevent="editComment(comment.id)">
-         <textarea name="description" id="" cols="60" rows="5" v-model="editedBody" 
-         class="text-lg m-2 p-2 rounded-lg border-2 border-gray-500"></textarea>
-         <input type="submit" value="comment" class="rounded bg-green-500 text-white text-xl py-1 px-2"> 
-        </form>
-      </div>
     </div>
   </div>
+   <div v-if="editing" class="absolute inset-0 flex justify-center items-center z-20">
+     <div class="w-1/2 relative px-10 py-2 bg-gray-300 rounded-xl">
+      <button @click="editing=false" class="absolute rounded-tr-xl top-0 right-0 text-2xl px-3 bg-red-500 text-white">x</button>
+      <p class="text-2xl text-center m-2">Edit your comment</p>
+      <form v-if="editing" @submit.prevent="editComment(editedId)">
+         <textarea name="description" v-model="editedBody" 
+         class="text-lg m-auto focus:outline-none p-2 w-full h-40 rounded-lg border-2 border-gray-300"></textarea>
+         <input type="submit" value="edit comment" class="rounded bg-green-500 m-auto text-white text-xl py-1 px-2"> 
+      </form> 
+     </div>  
+    </div>
+  <div v-if="editing" @click="editing=false" class="absolute inset-0 opacity-50 bg-black z-10"></div>
  </div>      
 </template>
 <script>
@@ -44,6 +49,7 @@ export default {
     return{
      body:'',
      editing:false,
+     editedId:null,
      editedBody:'',
      user:{},
      comment:{},

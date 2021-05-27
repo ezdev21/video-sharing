@@ -38025,11 +38025,12 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", [
+    _c("div", { staticClass: "bg-green-500 relative" }, [
       _c(
         "button",
         {
-          staticClass: "bg-red-600 text-xl text-white py-1 px-2 rounded",
+          staticClass:
+            "absolute top-0 right-0 bg-red-600 text-xl text-white py-1 px-2 rounded",
           class: { "bg-gray-300 text-black": _vm.subscribed },
           on: { click: _vm.subscribe }
         },
@@ -38056,7 +38057,7 @@ var render = function() {
                   "button",
                   {
                     staticClass:
-                      "absolute top-0 right-0 text-5xl px-3 text-red-500",
+                      "absolute top-0 right-0 text-4xl px-3 text-red-500",
                     on: {
                       click: function($event) {
                         _vm.subscribing = false
@@ -38354,7 +38355,7 @@ var render = function() {
                     "button",
                     {
                       staticClass:
-                        "absolute top-0 right-0 text-5xl px-3 text-red-500",
+                        "absolute top-0 right-0 text-4xl px-3 text-red-500",
                       on: {
                         click: function($event) {
                           _vm.editing = false
@@ -38524,7 +38525,7 @@ var render = function() {
                   "button",
                   {
                     staticClass:
-                      "absolute top-0 right-0 text-5xl px-3 text-red-500",
+                      "absolute top-0 right-0 text-4xl px-3 text-red-500",
                     on: {
                       click: function($event) {
                         _vm.liking = false
@@ -38579,7 +38580,7 @@ var render = function() {
                   "button",
                   {
                     staticClass:
-                      "absolute top-0 right-0 text-5xl px-3 text-red-500",
+                      "absolute top-0 right-0 text-4xl px-3 text-red-500",
                     on: {
                       click: function($event) {
                         _vm.disliking = false

@@ -17,7 +17,7 @@
                     <like-component video-id="{{$video->id}}" @auth user-id="{{Auth::user()->id}}"@endauth/>
                 </p>  
              </div>
-              <div class="relative ">
+              <div class="">
                   <a href="{{route('channel.show',$video->channel->id)}}" class="hover:no-underline">
                     <div class="flex mb-2">
                     <img src="/storage/channelCover/{{$video->channel->cover}}" alt=""
@@ -27,10 +27,9 @@
                       <p class="text-xl">{{$video->channel->subscribes->count()}} subscribers</p>
                     </div>  
                     </div>
-                   </a> 
+                   </a>
+                   <subscribe-component channel-id="{{$video->channel->id}}" @auth user-id="{{Auth::user()->id}}" @endauth/>     
                    <p class="text-lg">{{$video->description}}</p>
-                    <subscribe-component channel-id="{{$video->channel->id}}" @auth user-id="{{Auth::user()->id}}" @endauth
-                    class="absolute top-0 right-0"/>    
               </div> 
             </div>
             <comment-component video-id="{{$video->id}}" @auth user-id="{{Auth::user()->id}}" @endauth/>

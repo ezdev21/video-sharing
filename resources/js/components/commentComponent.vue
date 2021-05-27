@@ -33,7 +33,7 @@
   </div>
    <div v-if="editing" class="fixed inset-0 flex justify-center items-center z-20">
      <div class=" h-1/2 w-1/2 fixed px-10 py-2 bg-gray-300 rounded-xl">
-      <button @click="editing=false" class="absolute rounded-tr-xl top-0 right-0 text-2xl px-3 bg-red-500 text-white">x</button>
+      <button @click="editing=false" class="absolute top-0 right-0 text-4xl px-3 text-red-500">x</button>
       <p class="text-2xl text-center mt-10 mb-2 text-gray-900">Edit your comment</p>
       <form v-if="editing" @submit.prevent="editComment(editedId)">
          <textarea name="description" v-model="editedBody" 

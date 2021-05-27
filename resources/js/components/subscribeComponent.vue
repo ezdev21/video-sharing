@@ -1,17 +1,19 @@
 <template>
   <div>
-   <button @click="subscribe" class="bg-red-600 text-xl text-white py-1 px-2 rounded"
+   <div>
+    <button @click="subscribe" class="bg-red-600 text-xl text-white py-1 px-2 rounded"
     :class="{'bg-gray-300 text-black' : subscribed}"
     >{{subscribeText}}</button>
+   </div>
     <div v-if="subscribing" class="absolute inset-0 z-20 flex justify-center items-center">
-     <div class="relative bg-white p-10 flex flex-col justify-center items-center rounded-xl">
-     <button @click="subscribing=false" class="text-xl p-2 absolute top-0 right-0 text-white bg-red-500 rounded-tr-xl">x</button>
-     <p class="text-2xl">want to subscribe this channel ?</p>
-     <p class="text-xl">sign in to subscribe this channel</p>
-     <p class="m-auto"><a href="/login" class="text-2xl text-primary">sign in</a></p>
-    </div>  
-    </div>
-    <div v-if="subscribing" @click="subscribing=false" class="absolute -inset-full opacity-50 bg-black z-10"></div>
+     <div class="fixed bg-white p-10 flex flex-col justify-center items-center rounded-xl">
+      <button @click="subscribing=false" class="absolute top-0 right-0 text-4xl px-3 text-red-500">x</button>
+      <p class="text-2xl">want to subscribe this channel ?</p>
+      <p class="text-xl">sign in to subscribe this channel</p>
+      <p class="m-auto"><a href="/login" class="text-2xl text-primary">sign in</a></p>
+     </div> 
+  </div> 
+  <div v-if="subscribing" @click="subscribing=false" class="absolute -inset-full opacity-50 bg-black z-10"></div>
   </div>
 </template>
 <script>

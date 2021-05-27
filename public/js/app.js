@@ -1861,6 +1861,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['userId', 'channelId'],
   data: function data() {
@@ -38023,15 +38025,17 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "button",
-      {
-        staticClass: "bg-red-600 text-xl text-white py-1 px-2 rounded",
-        class: { "bg-gray-300 text-black": _vm.subscribed },
-        on: { click: _vm.subscribe }
-      },
-      [_vm._v(_vm._s(_vm.subscribeText))]
-    ),
+    _c("div", [
+      _c(
+        "button",
+        {
+          staticClass: "bg-red-600 text-xl text-white py-1 px-2 rounded",
+          class: { "bg-gray-300 text-black": _vm.subscribed },
+          on: { click: _vm.subscribe }
+        },
+        [_vm._v(_vm._s(_vm.subscribeText))]
+      )
+    ]),
     _vm._v(" "),
     _vm.subscribing
       ? _c(
@@ -38045,13 +38049,14 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "relative bg-white p-10 flex flex-col justify-center items-center rounded-xl"
+                  "fixed bg-white p-10 flex flex-col justify-center items-center rounded-xl"
               },
               [
                 _c(
                   "button",
                   {
-                    staticClass: "absolute top-0 right-0 text-white bg-red-500",
+                    staticClass:
+                      "absolute top-0 right-0 text-5xl px-3 text-red-500",
                     on: {
                       click: function($event) {
                         _vm.subscribing = false
@@ -38349,7 +38354,7 @@ var render = function() {
                     "button",
                     {
                       staticClass:
-                        "absolute rounded-tr-xl top-0 right-0 text-2xl px-3 bg-red-500 text-white",
+                        "absolute top-0 right-0 text-5xl px-3 text-red-500",
                       on: {
                         click: function($event) {
                           _vm.editing = false
@@ -38512,13 +38517,14 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "relative bg-white p-10 flex flex-col justify-center items-center rounded-xl"
+                  "fixed bg-white p-10 flex flex-col justify-center items-center rounded-xl"
               },
               [
                 _c(
                   "button",
                   {
-                    staticClass: "absolute top-0 right-0 text-white bg-red-500",
+                    staticClass:
+                      "absolute top-0 right-0 text-5xl px-3 text-red-500",
                     on: {
                       click: function($event) {
                         _vm.liking = false
@@ -38566,16 +38572,17 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "relative bg-white p-10 flex flex-col justify-center items-center rounded-xl"
+                  "fixed bg-white p-10 flex flex-col justify-center items-center rounded-xl"
               },
               [
                 _c(
                   "button",
                   {
-                    staticClass: "absolute top-0 right-0 text-white bg-red-500",
+                    staticClass:
+                      "absolute top-0 right-0 text-5xl px-3 text-red-500",
                     on: {
                       click: function($event) {
-                        _vm.liking = false
+                        _vm.disliking = false
                       }
                     }
                   },

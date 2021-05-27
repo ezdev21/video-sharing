@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Channel;
 use Illuminate\Http\Request;
-use App\Http\Requests\ChannelFormRequest;
+use App\Http\Requests\ChannelStoreRequest;
+use App\Http\Requests\ChannelEditRequest;
 use Illuminate\Support\Facades\DB;
 
 class ChannelController extends Controller
@@ -39,7 +40,7 @@ class ChannelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ChannelFormRequest $request)
+    public function store(ChannelStoreRequest $request)
     {
         $channel=new Channel;
         $channel->name=$request->name;
@@ -84,25 +85,23 @@ class ChannelController extends Controller
      * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function update(ChannelFormRequest $request)
+    public function update(ChannelEditRequest $request)
     {  
-        $channel=Channel::find($request->id);
+        $channel=Channel::find($request->channelId);
         $this->authorize('update',$channel);
         $channel->name=$request->name;
         $channel->description=$request->description;
-        if($request->has('cover')){
-            $channel->cover=$channel->id.'.'.$request->cover->extension();
-        }
-        if($request->has('background')){
-            $channel->background=$channel->id.'.'.$request->background->extension();
-        }
         $channel->save();
         if($request->has('cover')){
+            $channel->cover=$channel->id.'.'.$request->cover->extension();
             $request->cover->storeAs('channelCover',$channel->cover,'public');
         }
         if($request->has('background')){
+            $channel->background=$channel->id.'.'.$request->background->extension();
             $request->background->storeAs('channelBackground',$channel->background,'public');
         }
+        $channel->save();
+        return view('channel.show',['channel'=>$channel]);
     }
 
     /**

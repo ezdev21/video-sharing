@@ -5,13 +5,13 @@
    <a href="{{route('login')}}" class="text-xl no-undeline text-white bg-red-600 p-1 rounded">Login</a></p>
  @else
  @if (Auth::user()->channel)
- <div class="bg-gray-200 m-auto p-3 w-1/2 rounded-2xl">
+ <div class="bg-blue-100 m-auto p-5 w-1/2 rounded-2xl">
        <p class="text-2xl font-semibold text-center mb-3">upload a new video here</p>
        <form method="post" action="{{route('video.store')}}" enctype="multipart/form-data">
          @csrf
          <input type="hidden" name="userId" value="{{Auth::user()->id}}">
          <input type="text" name="title" placeholder="video title" required
-         class="m-2 border-2 rounded border-gray-300 w-full h-10 text-xl">
+         class="m-2 border-2 rounded-lg border-gray-300 w-full px-3 py-2 text-xl">
          @if ($errors->has('title'))
            <p>{{$errors->first('title')}}</p>
          @endif

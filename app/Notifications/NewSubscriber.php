@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Notifications;
-
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -10,15 +10,15 @@ use Illuminate\Notifications\Notification;
 class NewSubscriber extends Notification
 {
     use Queueable;
-
+    public $subscriber;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $subscriber)
     {
-        //
+        $this->subscriber=$subscriber;
     }
 
     /**
@@ -29,7 +29,7 @@ class NewSubscriber extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -55,7 +55,7 @@ class NewSubscriber extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            $this->subscriber.'subscribed your channel'
         ];
     }
 }

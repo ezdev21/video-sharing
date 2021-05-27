@@ -1,30 +1,24 @@
 <?php
-
+use App\Models\User;
+use App\Notifications\NewSubscriber;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Route::get('/',[VideoController::class,'index']);
+//Route::get('/',[VideoController::class,'index']);
 
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::get('/home',[VideoController::class, 'index'])->name('home');
+Route::get('/',function(){
+//  $user=User::find(1);
+//  $user->notify(new NewSubscriber());
+ foreach(auth()->user()->notifications as $notification){
+   dump($notification->data);
+ }
+});
 Route::post('search',[VideoController::class,'search'])->name('video.search');
-Route::get('/videos',[VideoController::class,'index'])->name('video.index');
 
 Route::prefix('video')->group(function(){
   Route::get('upload',[VideoController::class,'create'])->name('video.create');

@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Notifications;
-
+use App\Models\Channel;
+use App\Models\Video;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -10,15 +11,17 @@ use Illuminate\Notifications\Notification;
 class ChannelNewVideo extends Notification
 {
     use Queueable;
-
+    public $channel;
+    public $video;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Channel $channel,Video $video)
     {
-        //
+      $this->channel=$channel;
+      $this->video=$video;
     }
 
     /**
@@ -29,7 +32,7 @@ class ChannelNewVideo extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -55,7 +58,7 @@ class ChannelNewVideo extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            $this->channel->name.' post new video '.$this->video->title
         ];
     }
 }

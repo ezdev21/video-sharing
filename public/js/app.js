@@ -1860,6 +1860,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['userId', 'channelId'],
   data: function data() {
@@ -2145,6 +2146,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['userId', 'videoId'],
   data: function data() {
@@ -2180,7 +2183,7 @@ __webpack_require__.r(__webpack_exports__);
     like: function like() {
       var _this2 = this;
 
-      if (this.liking) {
+      if (this.userId) {
         axios.post('/video/like', {
           videoId: this.videoId,
           userId: this.userId,
@@ -2205,7 +2208,7 @@ __webpack_require__.r(__webpack_exports__);
     dislike: function dislike() {
       var _this3 = this;
 
-      if (this.disliking) {
+      if (this.userId) {
         axios.post('/video/like', {
           videoId: this.videoId,
           userId: this.userId,
@@ -38035,9 +38038,41 @@ var render = function() {
           "div",
           {
             staticClass:
-              "bg-green-500 absolute inset-0 z-20 flex justify-center items-center"
+              "absolute inset-0 z-20 flex justify-center items-center"
           },
-          [_vm._m(0)]
+          [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "relative bg-white p-10 flex flex-col justify-center items-center rounded-xl"
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "absolute top-0 right-0 text-white bg-red-500",
+                    on: {
+                      click: function($event) {
+                        _vm.subscribing = false
+                      }
+                    }
+                  },
+                  [_vm._v("x")]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-2xl" }, [
+                  _vm._v("want to subscribe this channel ?")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-xl" }, [
+                  _vm._v("sign in to subscribe this channel")
+                ]),
+                _vm._v(" "),
+                _vm._m(0)
+              ]
+            )
+          ]
         )
       : _vm._e(),
     _vm._v(" "),
@@ -38058,30 +38093,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "fixed bg-white p-10 flex flex-col justify-center items-center rounded-xl"
-      },
-      [
-        _c("p", { staticClass: "text-2xl" }, [
-          _vm._v("want to subscribe this channel ?")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "text-xl" }, [
-          _vm._v("sign in to subscribe this channel")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "m-auto" }, [
-          _c(
-            "a",
-            { staticClass: "text-2xl text-primary", attrs: { href: "/login" } },
-            [_vm._v("sign in")]
-          )
-        ])
-      ]
-    )
+    return _c("p", { staticClass: "m-auto" }, [
+      _c(
+        "a",
+        { staticClass: "text-2xl text-primary", attrs: { href: "/login" } },
+        [_vm._v("sign in")]
+      )
+    ])
   }
 ]
 render._withStripped = true
@@ -38489,7 +38507,39 @@ var render = function() {
             staticClass:
               "absolute inset-0 z-20 flex justify-center items-center"
           },
-          [_vm._m(0)]
+          [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "relative bg-white p-10 flex flex-col justify-center items-center rounded-xl"
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "absolute top-0 right-0 text-white bg-red-500",
+                    on: {
+                      click: function($event) {
+                        _vm.liking = false
+                      }
+                    }
+                  },
+                  [_vm._v("x")]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-2xl" }, [
+                  _vm._v("want to like this video ?")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-xl" }, [
+                  _vm._v("sign in to like this video")
+                ]),
+                _vm._v(" "),
+                _vm._m(0)
+              ]
+            )
+          ]
         )
       : _vm._e(),
     _vm._v(" "),
@@ -38511,7 +38561,39 @@ var render = function() {
             staticClass:
               "absolute inset-0 z-20 flex justify-center items-center"
           },
-          [_vm._m(1)]
+          [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "relative bg-white p-10 flex flex-col justify-center items-center rounded-xl"
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "absolute top-0 right-0 text-white bg-red-500",
+                    on: {
+                      click: function($event) {
+                        _vm.liking = false
+                      }
+                    }
+                  },
+                  [_vm._v("x")]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-2xl" }, [
+                  _vm._v("want to dislike this video ?")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-xl" }, [
+                  _vm._v("sign in to dislike this video")
+                ]),
+                _vm._v(" "),
+                _vm._m(1)
+              ]
+            )
+          ]
         )
       : _vm._e(),
     _vm._v(" "),
@@ -38532,59 +38614,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "fixed bg-white p-10 flex flex-col justify-center items-center rounded-xl"
-      },
-      [
-        _c("p", { staticClass: "text-2xl" }, [
-          _vm._v("want to like this video ?")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "text-xl" }, [
-          _vm._v("sign in to like this video")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "m-auto" }, [
-          _c(
-            "a",
-            { staticClass: "text-2xl text-primary", attrs: { href: "/login" } },
-            [_vm._v("sign in")]
-          )
-        ])
-      ]
-    )
+    return _c("p", { staticClass: "m-auto" }, [
+      _c(
+        "a",
+        { staticClass: "text-2xl text-primary", attrs: { href: "/login" } },
+        [_vm._v("sign in")]
+      )
+    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "fixed bg-white p-10 flex flex-col justify-center items-center rounded-xl"
-      },
-      [
-        _c("p", { staticClass: "text-2xl" }, [
-          _vm._v("want to dislike this video ?")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "text-xl" }, [
-          _vm._v("sign in to dislike this video")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "m-auto" }, [
-          _c(
-            "a",
-            { staticClass: "text-2xl text-primary", attrs: { href: "/login" } },
-            [_vm._v("sign in")]
-          )
-        ])
-      ]
-    )
+    return _c("p", { staticClass: "m-auto" }, [
+      _c(
+        "a",
+        { staticClass: "text-2xl text-primary", attrs: { href: "/login" } },
+        [_vm._v("sign in")]
+      )
+    ])
   }
 ]
 render._withStripped = true

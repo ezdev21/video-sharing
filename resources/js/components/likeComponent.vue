@@ -8,7 +8,7 @@
   <span class="text-xl text-red">{{totalDislikes}}</span>
   <div v-if="liking" class="absolute inset-0 z-20 flex justify-center items-center">
    <div class="relative bg-white p-10 flex flex-col justify-center items-center rounded-xl">
-     <button @click="liking=false" class="absolute top-0 right-0 text-white bg-red-500">x</button>
+     <button @click="liking=false" class="text-xl p-2 absolute top-0 right-0 text-white bg-red-500 rounded-tr-xl">x</button>
      <p class="text-2xl">want to like this video ?</p>
      <p class="text-xl">sign in to like this video</p>
      <p class="m-auto"><a href="/login" class="text-2xl text-primary">sign in</a></p>
@@ -17,7 +17,7 @@
   <div v-if="liking" @click="liking=false" class="absolute -inset-full opacity-50 bg-black z-10"></div>
   <div v-if="disliking" class="absolute inset-0 z-20 flex justify-center items-center">
     <div class="relative bg-white p-10 flex flex-col justify-center items-center rounded-xl">
-     <button @click="liking=false" class="absolute top-0 right-0 text-white bg-red-500">x</button>
+     <button @click="disliking=false" class="text-xl p-2 absolute top-0 right-0 text-white bg-red-500 rounded-tr-xl">x</button>
      <p class="text-2xl">want to dislike this video ?</p>
      <p class="text-xl">sign in to dislike this video</p>
      <p class="m-auto"><a href="/login" class="text-2xl text-primary">sign in</a></p>

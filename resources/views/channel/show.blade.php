@@ -19,7 +19,7 @@
             @can('delete',$channel)
              <form method="post" action="{{route('channel.delete',$channel)}}">
                @method('delete')
-               <input type="submit" value="delete channel" class="text-2xl font-semibold mx-2 text-red-500" />
+               <input type="submit" value="delete channel" class="text-2xl font-semibold mx-2 text-red-500 bg-white" />
              </form>
             @endcan
          </div>

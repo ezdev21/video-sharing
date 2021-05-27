@@ -1850,13 +1850,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['userId', 'channelId'],
   data: function data() {
     return {
       subscribeText: 'subscribe',
       subscribed: false,
-      loggedin: true
+      subscribing: false
     };
   },
   mounted: function mounted() {
@@ -1879,13 +1887,17 @@ __webpack_require__.r(__webpack_exports__);
     subscribe: function subscribe() {
       var _this2 = this;
 
-      axios.post('/channel/subscribe', {
-        userId: this.userId,
-        channelId: this.channelId
-      }).then(function (res) {
-        _this2.subscribed = !_this2.subscribed;
-        _this2.subscribeText == 'subscribe' ? _this2.subscribeText = 'subscribed' : _this2.subscribeText = 'subscribe';
-      })["catch"](function (err) {});
+      if (this.userId) {
+        axios.post('/channel/subscribe', {
+          userId: this.userId,
+          channelId: this.channelId
+        }).then(function (res) {
+          _this2.subscribed = !_this2.subscribed;
+          _this2.subscribeText == 'subscribe' ? _this2.subscribeText = 'subscribed' : _this2.subscribeText = 'subscribe';
+        })["catch"](function (err) {});
+      } else {
+        this.subscribing = true;
+      }
     }
   }
 });
@@ -1940,6 +1952,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
 //
 //
 //
@@ -2112,12 +2127,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['userId', 'videoId'],
   data: function data() {
     return {
       liked: false,
       disliked: false,
+      liking: false,
+      disliking: false,
       likeText: 'like',
       dislikeText: 'dislike',
       totalLikes: 0,
@@ -2145,44 +2178,52 @@ __webpack_require__.r(__webpack_exports__);
     like: function like() {
       var _this2 = this;
 
-      axios.post('/video/like', {
-        videoId: this.videoId,
-        userId: this.userId,
-        type: 'like',
-        status: this.liked
-      }).then(function (res) {
-        _this2.liked ? _this2.totalLikes -= 1 : _this2.totalLikes += 1;
-        _this2.disliked ? _this2.totalDislikes -= 1 : '';
-        _this2.liked = !_this2.liked;
+      if (this.liking) {
+        axios.post('/video/like', {
+          videoId: this.videoId,
+          userId: this.userId,
+          type: 'like',
+          status: this.liked
+        }).then(function (res) {
+          _this2.liked ? _this2.totalLikes -= 1 : _this2.totalLikes += 1;
+          _this2.disliked ? _this2.totalDislikes -= 1 : '';
+          _this2.liked = !_this2.liked;
 
-        if (_this2.liked && _this2.disliked) {
-          _this2.disliked = false;
-        }
+          if (_this2.liked && _this2.disliked) {
+            _this2.disliked = false;
+          }
 
-        _this2.disliked ? _this2.dislikeText = 'disliked' : _this2.dislikeText = 'dislike';
-        _this2.liked ? _this2.likeText = 'liked' : _this2.likeText = 'like';
-      })["catch"](function (err) {});
+          _this2.disliked ? _this2.dislikeText = 'disliked' : _this2.dislikeText = 'dislike';
+          _this2.liked ? _this2.likeText = 'liked' : _this2.likeText = 'like';
+        })["catch"](function (err) {});
+      } else {
+        this.liking = true;
+      }
     },
     dislike: function dislike() {
       var _this3 = this;
 
-      axios.post('/video/like', {
-        videoId: this.videoId,
-        userId: this.userId,
-        type: 'dislike',
-        status: this.disliked
-      }).then(function (res) {
-        _this3.disliked ? _this3.totalDislikes -= 1 : _this3.totalDislikes += 1;
-        _this3.liked ? _this3.totalLikes -= 1 : '';
-        _this3.disliked = !_this3.disliked;
+      if (this.disliking) {
+        axios.post('/video/like', {
+          videoId: this.videoId,
+          userId: this.userId,
+          type: 'dislike',
+          status: this.disliked
+        }).then(function (res) {
+          _this3.disliked ? _this3.totalDislikes -= 1 : _this3.totalDislikes += 1;
+          _this3.liked ? _this3.totalLikes -= 1 : '';
+          _this3.disliked = !_this3.disliked;
 
-        if (_this3.liked && _this3.disliked) {
-          _this3.liked = false;
-        }
+          if (_this3.liked && _this3.disliked) {
+            _this3.liked = false;
+          }
 
-        _this3.liked ? _this3.likeText = 'liked' : _this3.likeText = 'like';
-        _this3.disliked ? _this3.dislikeText = 'disliked' : _this3.dislikeText = 'dislike';
-      })["catch"](function (err) {});
+          _this3.liked ? _this3.likeText = 'liked' : _this3.likeText = 'like';
+          _this3.disliked ? _this3.dislikeText = 'disliked' : _this3.dislikeText = 'dislike';
+        })["catch"](function (err) {});
+      } else {
+        this.disliking = true;
+      }
     }
   }
 });
@@ -37976,17 +38017,64 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "button",
-    {
-      staticClass: "bg-red-600 text-xl text-white py-1 px-2 rounded",
-      class: _vm.subscribed ? "bg-gray-300 text-black" : "",
-      on: { click: _vm.subscribe }
-    },
-    [_vm._v(_vm._s(_vm.subscribeText))]
-  )
+  return _c("div", [
+    _c(
+      "button",
+      {
+        staticClass: "bg-red-600 text-xl text-white py-1 px-2 rounded",
+        class: { "bg-gray-300 text-black": _vm.subscribed },
+        on: { click: _vm.subscribe }
+      },
+      [_vm._v(_vm._s(_vm.subscribeText))]
+    ),
+    _vm._v(" "),
+    _vm.subscribing
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "z-20 fixed bg-white p-10 flex flex-col justify-center items-center rounded-xl"
+          },
+          [
+            _c("p", { staticClass: "text-2xl" }, [
+              _vm._v("want to subscribe this channel ?")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "text-xl" }, [
+              _vm._v("sign in to subscribe this channel")
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.subscribing
+      ? _c("div", {
+          staticClass: "absolute -inset-full opacity-50 bg-black z-10",
+          on: {
+            click: function($event) {
+              _vm.subscribing = false
+            }
+          }
+        })
+      : _vm._e()
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "m-auto" }, [
+      _c(
+        "a",
+        { staticClass: "text-2xl text-primary", attrs: { href: "/login" } },
+        [_vm._v("sign in")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -38133,12 +38221,15 @@ var render = function() {
               ]
             )
           ])
-        : _vm._e(),
+        : _c("div", [_vm._m(0)]),
       _vm._v(" "),
       _vm._l(_vm.comments, function(comment) {
         return _c(
           "div",
-          { key: comment.id, staticClass: "rounded bg-gray-200 m-2 p-2" },
+          {
+            key: comment.id,
+            staticClass: "shadow-sm rounded bg-blue-100 m-4 p-3"
+          },
           [
             _c("p", {}, [
               _c("span", { staticClass: "text-lg font-semibold" }, [
@@ -38217,15 +38308,14 @@ var render = function() {
         ? _c(
             "div",
             {
-              staticClass:
-                "absolute inset-0 flex justify-center items-center z-20"
+              staticClass: "fixed inset-0 flex justify-center items-center z-20"
             },
             [
               _c(
                 "div",
                 {
                   staticClass:
-                    "w-1/2 relative px-10 py-2 bg-gray-300 rounded-xl"
+                    " h-1/2 w-1/2 fixed px-10 py-2 bg-gray-300 rounded-xl"
                 },
                 [
                   _c(
@@ -38242,9 +38332,14 @@ var render = function() {
                     [_vm._v("x")]
                   ),
                   _vm._v(" "),
-                  _c("p", { staticClass: "text-2xl text-center m-2" }, [
-                    _vm._v("Edit your comment")
-                  ]),
+                  _c(
+                    "p",
+                    {
+                      staticClass:
+                        "text-2xl text-center mt-10 mb-2 text-gray-900"
+                    },
+                    [_vm._v("Edit your comment")]
+                  ),
                   _vm._v(" "),
                   _vm.editing
                     ? _c(
@@ -38268,7 +38363,7 @@ var render = function() {
                               }
                             ],
                             staticClass:
-                              "text-lg m-auto focus:outline-none p-2 w-full h-40 rounded-xl border-2 border-gray-300",
+                              "text-xl m-auto p-2 w-full h-40 rounded-xl border-2",
                             attrs: { name: "description" },
                             domProps: { value: _vm.editedBody },
                             on: {
@@ -38283,7 +38378,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("input", {
                             staticClass:
-                              "rounded bg-green-500 m-auto text-white text-xl py-1 px-2",
+                              "rounded bg-green-500 m-auto text-white text-2xl py-1 px-2",
                             attrs: { type: "submit", value: "edit comment" }
                           })
                         ]
@@ -38309,7 +38404,24 @@ var render = function() {
     2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "text-xl" }, [
+      _vm._v("sign in to comment "),
+      _c(
+        "a",
+        {
+          staticClass: "no-underline text-xl text-blue-500 m-1",
+          attrs: { href: "/login" }
+        },
+        [_vm._v("sign in")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -38337,7 +38449,7 @@ var render = function() {
       "button",
       {
         staticClass: "bg-green-500 text-xl p-1 px-4 text-white rounded",
-        class: _vm.liked ? "bg-gray-400 text-black" : "",
+        class: { "bg-gray-400 text-black": _vm.liked },
         on: { click: _vm.like }
       },
       [_vm._v("\r\n  " + _vm._s(_vm.likeText))]
@@ -38351,7 +38463,7 @@ var render = function() {
       "button",
       {
         staticClass: "bg-red-500 text-xl p-1 px-4 ml-2 text-white rounded",
-        class: _vm.liked ? "bg-gray-400 text-black" : "",
+        class: { "bg-gray-400 text-black": _vm.liked },
         on: { click: _vm.dislike }
       },
       [_vm._v("\r\n  " + _vm._s(_vm.dislikeText))]
@@ -38359,10 +38471,113 @@ var render = function() {
     _vm._v(" "),
     _c("span", { staticClass: "text-xl text-red" }, [
       _vm._v(_vm._s(_vm.totalDislikes))
-    ])
+    ]),
+    _vm._v(" "),
+    _vm.liking
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "absolute inset-0 z-20 flex justify-center items-center"
+          },
+          [_vm._m(0)]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.liking
+      ? _c("div", {
+          staticClass: "absolute -inset-full opacity-50 bg-black z-10",
+          on: {
+            click: function($event) {
+              _vm.liking = false
+            }
+          }
+        })
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.disliking
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "absolute inset-0 z-20 flex justify-center items-center"
+          },
+          [_vm._m(1)]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.disliking
+      ? _c("div", {
+          staticClass: "absolute -inset-full opacity-50 bg-black z-10",
+          on: {
+            click: function($event) {
+              _vm.disliking = false
+            }
+          }
+        })
+      : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "fixed bg-white p-10 flex flex-col justify-center items-center rounded-xl"
+      },
+      [
+        _c("p", { staticClass: "text-2xl" }, [
+          _vm._v("want to like this video ?")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "text-xl" }, [
+          _vm._v("sign in to like this video")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "m-auto" }, [
+          _c(
+            "a",
+            { staticClass: "text-2xl text-primary", attrs: { href: "/login" } },
+            [_vm._v("sign in")]
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "fixed bg-white p-10 flex flex-col justify-center items-center rounded-xl"
+      },
+      [
+        _c("p", { staticClass: "text-2xl" }, [
+          _vm._v("want to dislike this video ?")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "text-xl" }, [
+          _vm._v("sign in to dislike this video")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "m-auto" }, [
+          _c(
+            "a",
+            { staticClass: "text-2xl text-primary", attrs: { href: "/login" } },
+            [_vm._v("sign in")]
+          )
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 

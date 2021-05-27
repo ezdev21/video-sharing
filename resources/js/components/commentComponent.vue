@@ -10,9 +10,9 @@
    </form> 
   </div>
   <div v-else>
-   <p>sign in to comment <a href="/login" class="no-underline text-xl text-blue-500 m-1">login</a></p>
+   <p class="text-xl">sign in to comment <a href="/login" class="no-underline text-xl text-blue-500 m-1">sign in</a></p>
   </div>
-  <div v-for="comment in comments" :key="comment.id" class="rounded bg-gray-200 m-2 p-2">
+  <div v-for="comment in comments" :key="comment.id" class="shadow-sm rounded bg-blue-100 m-4 p-3">
     <p class="">
       <span class="text-lg font-semibold">{{comment.user.name}}</span>
       <span class="mx-4">{{comment.created_at}}</span>  
@@ -31,14 +31,14 @@
       </p>
     </div>
   </div>
-   <div v-if="editing" class="absolute inset-0 flex justify-center items-center z-20">
-     <div class="w-1/2 relative px-10 py-2 bg-gray-300 rounded-xl">
+   <div v-if="editing" class="fixed inset-0 flex justify-center items-center z-20">
+     <div class=" h-1/2 w-1/2 fixed px-10 py-2 bg-gray-300 rounded-xl">
       <button @click="editing=false" class="absolute rounded-tr-xl top-0 right-0 text-2xl px-3 bg-red-500 text-white">x</button>
-      <p class="text-2xl text-center m-2">Edit your comment</p>
+      <p class="text-2xl text-center mt-10 mb-2 text-gray-900">Edit your comment</p>
       <form v-if="editing" @submit.prevent="editComment(editedId)">
          <textarea name="description" v-model="editedBody" 
-         class="text-lg m-auto focus:outline-none p-2 w-full h-40 rounded-xl border-2 border-gray-300"></textarea>
-         <input type="submit" value="edit comment" class="rounded bg-green-500 m-auto text-white text-xl py-1 px-2"> 
+         class="text-xl m-auto p-2 w-full h-40 rounded-xl border-2"></textarea>
+         <input type="submit" value="edit comment" class="rounded bg-green-500 m-auto text-white text-2xl py-1 px-2"> 
       </form> 
      </div>  
     </div>

@@ -1858,6 +1858,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['userId', 'channelId'],
   data: function data() {
@@ -38033,19 +38035,9 @@ var render = function() {
           "div",
           {
             staticClass:
-              "z-20 fixed bg-white p-10 flex flex-col justify-center items-center rounded-xl"
+              "bg-green-500 absolute inset-0 z-20 flex justify-center items-center"
           },
-          [
-            _c("p", { staticClass: "text-2xl" }, [
-              _vm._v("want to subscribe this channel ?")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "text-xl" }, [
-              _vm._v("sign in to subscribe this channel")
-            ]),
-            _vm._v(" "),
-            _vm._m(0)
-          ]
+          [_vm._m(0)]
         )
       : _vm._e(),
     _vm._v(" "),
@@ -38066,13 +38058,30 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "m-auto" }, [
-      _c(
-        "a",
-        { staticClass: "text-2xl text-primary", attrs: { href: "/login" } },
-        [_vm._v("sign in")]
-      )
-    ])
+    return _c(
+      "div",
+      {
+        staticClass:
+          "fixed bg-white p-10 flex flex-col justify-center items-center rounded-xl"
+      },
+      [
+        _c("p", { staticClass: "text-2xl" }, [
+          _vm._v("want to subscribe this channel ?")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "text-xl" }, [
+          _vm._v("sign in to subscribe this channel")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "m-auto" }, [
+          _c(
+            "a",
+            { staticClass: "text-2xl text-primary", attrs: { href: "/login" } },
+            [_vm._v("sign in")]
+          )
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true

@@ -4,7 +4,8 @@
     :class="{'bg-gray-300 text-black' : subscribed}"
     >{{subscribeText}}</button>
     <div v-if="subscribing" class="absolute inset-0 z-20 flex justify-center items-center">
-     <div class="fixed bg-white p-10 flex flex-col justify-center items-center rounded-xl">
+     <div class="relative bg-white p-10 flex flex-col justify-center items-center rounded-xl">
+     <button @click="subscribing=false" class="absolute top-0 right-0 text-white bg-red-500">x</button>
      <p class="text-2xl">want to subscribe this channel ?</p>
      <p class="text-xl">sign in to subscribe this channel</p>
      <p class="m-auto"><a href="/login" class="text-2xl text-primary">sign in</a></p>

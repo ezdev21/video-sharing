@@ -42,7 +42,7 @@
             @foreach ($recommendedVideos as $video)
             <a href="{{route('video.watch',$video->id)}}" class="hover:no-underline hover:text-black">
                 <div class="flex flex-auto mx-3 my-2">
-                    <img src="/storage/videoCover/{{$video->cover}}" class="w-60" alt="">
+                    <img src="/storage/videoCover/{{$video->cover}}" class="w-60 h-36" alt="">
                     <div class="mx-2">
                     <p class="text-xl">{{$video->title}}</p>
                     <p class="text-lg">{{$video->channel->name}}</p>

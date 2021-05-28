@@ -38025,12 +38025,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "bg-green-500 relative" }, [
+    _c("div", {}, [
       _c(
         "button",
         {
-          staticClass:
-            "absolute top-0 right-0 bg-red-600 text-xl text-white py-1 px-2 rounded",
+          staticClass: "bg-red-600 text-xl text-white py-1 px-2 rounded",
           class: { "bg-gray-300 text-black": _vm.subscribed },
           on: { click: _vm.subscribe }
         },
@@ -38233,7 +38232,7 @@ var render = function() {
                     }
                   ],
                   staticClass:
-                    "text-lg w-2/3 block h-40 m-2 p-2 rounded-lg border-2 border-gray-500",
+                    "text-lg w-2/3 block h-40 m-2 p-2 rounded-lg border-2 border-gray-200",
                   attrs: { name: "description", rows: "5", required: "" },
                   domProps: { value: _vm.body },
                   on: {

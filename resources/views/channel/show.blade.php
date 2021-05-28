@@ -4,13 +4,13 @@
     <img src="/storage/channelBackground/{{$channel->background}}" alt="">
      <div class="m-2 p-2 flex">
          <img src="/storage/channelCover/{{$channel->cover}}" alt="" 
-         class="w-20 h-20 rounded-full ">
+         class="w-28 h-28 rounded-full ">
          <div class="my-auto mx-5">
             <p class="text-4xl">{{$channel->name}}</p>
             <p class="text-xl ">{{$channel->subscribes->count()}} subscribers</p>
          </div>
-         <div class="mx-3 my-auto"> 
-           <subscribe-component channel-id="{{$channel->id}}" @auth user-id="{{Auth::user()->id}}" @endauth/>  
+         <div class="mx-5 py-5"> 
+            <subscribe-component channel-id="{{$channel->id}}" @auth user-id="{{Auth::user()->id}}" @endauth/>
          </div>
          <div class="flex mx-3 my-auto">
             @can('update',$channel)

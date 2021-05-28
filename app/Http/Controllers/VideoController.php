@@ -70,10 +70,12 @@ class VideoController extends Controller
          $request->video->storeAs('video',$video->source,'public');
          $channel=Channel::find($video->channel_id);
          $subscribers=$channel->subscribers;
-         foreach($subscribers as $subscriber){
-             $subscriber->notify(new ChannelNewVideo($channel,$video));
+         if($subscribers){
+            foreach($subscribers as $subscriber){
+                $subscriber->notify(new ChannelNewVideo($channel,$video));
+            }  
          }
-         return redirect()->route('video.index');
+         return redirect()->route('home');
     }
 
     /**

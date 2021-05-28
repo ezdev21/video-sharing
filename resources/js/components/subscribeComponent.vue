@@ -1,7 +1,7 @@
 <template>
   <div>
-   <div class="bg-green-500 relative">
-    <button @click="subscribe" class="absolute top-0 right-0 bg-red-600 text-xl text-white py-1 px-2 rounded"
+   <div class="">
+    <button @click="subscribe" class="bg-red-600 text-xl text-white py-1 px-2 rounded"
     :class="{'bg-gray-300 text-black' : subscribed}"
     >{{subscribeText}}</button>
    </div>

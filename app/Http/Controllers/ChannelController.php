@@ -135,11 +135,11 @@ class ChannelController extends Controller
       }
       else{
         DB::table('channel_user')->insert(['channel_id'=>$request->channelId,'user_id'=>$request->userId]);
+        $user=User::find($request->userId);
+        $channel=Channel::find($request->channelId);
+        $channelOwner=User::find($channel->user->id);
+        $channelOwner->notify(new NewSubscriber($user));
       }
-      $user=User::find($request->userId);
-      $channel=Channel::find($request->channelId);
-      $channelOwner=User::find($channel->user->id);
-      $channelOwner->notify(new NewSubscriber($user));
     }
     public function videos($id)
     {

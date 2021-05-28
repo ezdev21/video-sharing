@@ -58,7 +58,7 @@ class ChannelNewVideo extends Notification
     public function toArray($notifiable)
     {
         return [
-            $this->channel->name.' post new video '.$this->video->title
+            'data'=>$this->channel->name.' post new video '.$this->video->title
         ];
     }
 }

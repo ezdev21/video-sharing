@@ -55,7 +55,7 @@ class NewSubscriber extends Notification
     public function toArray($notifiable)
     {
         return [
-            $this->subscriber.'subscribed your channel'
+            'data'=>$this->subscriber.'subscribed your channel'
         ];
     }
 }

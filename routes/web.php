@@ -11,13 +11,7 @@ Route::get('/',[VideoController::class,'index']);
 
 Auth::routes();
 Route::get('/home',[VideoController::class, 'index'])->name('home');
-// Route::get('/',function(){
-// //  $user=User::find(1);
-// //  $user->notify(new NewSubscriber());
-//  foreach(auth()->user()->notifications as $notification){
-//    dump($notification->data);
-//  }
-// });
+
 Route::post('search',[VideoController::class,'search'])->name('video.search');
 
 Route::prefix('video')->group(function(){

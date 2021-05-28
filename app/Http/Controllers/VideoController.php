@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Notifications\ChannelNewVideo;
 
 class VideoController extends Controller
 {
@@ -67,6 +68,11 @@ class VideoController extends Controller
          $video->save();
          $request->cover->storeAS('videoCover',$video->cover,'public');
          $request->video->storeAs('video',$video->source,'public');
+         $channel=Channel::find($video->channel_id);
+         $subscribers=$channel->subscribers;
+         foreach($subscribers as $subscriber){
+             $subscriber->notify(new ChannelNewVideo($channel,$video));
+         }
          return redirect()->route('video.index');
     }
 

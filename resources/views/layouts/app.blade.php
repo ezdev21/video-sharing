@@ -21,7 +21,7 @@
 </head>
 <body>
     <div id="app">
-            <nav class="bg-red-700 text-white shadow-sm block flex justify-between p-1">
+            <nav class="bg-red-700 text-white shadow-sm flex justify-between p-1">
                 <div class="flex flex-auto">
                     <a class="text-xl mr-10 hover:text-green-500" href="{{ url('/') }}">
                         Home

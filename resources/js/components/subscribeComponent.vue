@@ -1,8 +1,8 @@
 <template>
   <div>
    <div class="">
-    <button @click="subscribe" class="bg-red-600 text-xl text-white py-1 px-2 rounded"
-    :class="{'bg-gray-300 text-black' : subscribed}"
+    <button @click="subscribe" class=" text-xl  py-1 px-2"
+    :class="[subscribed? 'bg-gray-500 text-gray-900' : 'bg-red-600 text-white']"
     >{{subscribeText}}</button>
    </div>
     <div v-if="subscribing" class="absolute inset-0 z-20 flex justify-center items-center">

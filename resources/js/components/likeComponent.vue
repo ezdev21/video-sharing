@@ -41,8 +41,6 @@ export default {
           disliked:false,
           liking:false,
           disliking:false,
-          likeText:'like',
-          dislikeText:'dislike',
           totalLikes:0,
           totalDislikes:0,
         }
@@ -54,8 +52,6 @@ export default {
           this.disliked=res.data.disliked;
           this.totalLikes=res.data.totalLikes;
           this.totalDislikes=res.data.totalDislikes;
-          this.liked ? this.likeText='liked' : this.likeText='like'
-          this.disliked ? this.dislikeText='disliked' : this.dislikeText='dislike'
       })
       .catch(err=>{
         
@@ -72,8 +68,6 @@ export default {
               if(this.liked&&this.disliked){
                 this.disliked=false;
               }
-              this.disliked ? this.dislikeText='disliked' : this.dislikeText='dislike';
-              this.liked ? this.likeText='liked' : this.likeText='like';
             })
             .catch(err=>{
               
@@ -93,8 +87,6 @@ export default {
               if(this.liked&&this.disliked){
                 this.liked=false;
               }
-              this.liked ? this.likeText='liked' : this.likeText='like';
-              this.disliked ? this.dislikeText='disliked' : this.dislikeText='dislike';
             })
             .catch(err=>{
               

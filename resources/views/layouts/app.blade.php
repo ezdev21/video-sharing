@@ -40,17 +40,28 @@
                           class="no-underline text-xl mr-10 ml-10 hover:text-green-500 hover:no-underline">create channel
                         </a>
                         @auth
-                        <span class="">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                            </svg>  
-                        </span>
-                        <span class="text-3xl ">({{auth()->user()->notifications->count()}})</span>
-                        
+                        <div class="dropdown">
+                            <a class="dropdown-toggle flex hover:no-underline hover:text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                                </svg>
+                                @if(auth()->user()->unreadNotifications->count())
+                                <span class="text-3xl ">({{auth()->user()->unreadNotifications->count()}})</span>   
+                                @endif  
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                              <ul>
+                               @foreach (auth()->user()->unreadNotifications as $notification)
+                               @isset($notification->data['href'])
+                               <li><a class="dropdown-item text-xl" href="/video/watch/{{$notification->data['href']}}">{{$notification->data['data']}}</a></li>
+                               @else
+                                 <li><a class="dropdown-item text-xl" href="#">{{$notification->data['data']}}</a></li>                              
+                               @endisset
+                               @endforeach  
+                              </ul>
+                            </div>
+                        </div>
                         @endauth
-                    {{-- <button class="bg-green-500 navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                        <span class="navbar-toggler-icon"></span>
-                    </button> --}}
                 </div>
                 <div class="flex flex-auto justify-end" id="navbarSupportedContent">
                     <ul class="flex mx-2 p-x2">
@@ -68,6 +79,9 @@
                                 </li>
                             @endif
                         @else
+                          {{-- <button class=" navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                            <span class="navbar-toggler-icon"></span>
+                          </button> --}}
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle text-lg" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

@@ -54,22 +54,22 @@ class VideoController extends Controller
      */
     public function store(VideoFormRequest $request)
     { 
-         $video=new Video;
-         $video->title=$request->title;
-         $video->description=$request->description;
-         $id=$request->userId;
-         $user=User::findOrfail($id);
-         $video->channel_id=$user->channel->id;
-         $video->save();
-         $imageExtension=$request->cover->extension();
-         $video->cover=$video->id.'.'.$imageExtension;
-         $videoExtension=$request->video->extension();
-         $video->source=$video->id.'.'.$videoExtension;
-         $video->save();
-         $request->cover->storeAS('videoCover',$video->cover,'public');
-         $request->video->storeAs('video',$video->source,'public');
+        $video=new Video;
+        $video->title=$request->title;
+        $video->description=$request->description;
+        $id=$request->userId;
+        $user=User::findOrfail($id);
+        $video->channel_id=$user->channel->id;
+        $video->save();
+        $imageExtension=$request->cover->extension();
+        $video->cover=$video->id.'.'.$imageExtension;
+        $videoExtension=$request->video->extension();
+        $video->source=$video->id.'.'.$videoExtension;
+        $video->save();
+        $request->cover->storeAS('videoCover',$video->cover,'public');
+        $request->video->storeAs('video',$video->source,'public');
          $channel=Channel::find($video->channel_id);
-         $subscribers=$channel->subscribers;
+         $subscribers=$channel->subscribes;
          if($subscribers){
             foreach($subscribers as $subscriber){
                 $subscriber->notify(new ChannelNewVideo($channel,$video));

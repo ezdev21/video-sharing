@@ -1,24 +1,28 @@
 <?php
 
 namespace App\Notifications;
-use App\Models\User;
+
 use Illuminate\Bus\Queueable;
+use App\Models\User;
+use App\Models\Video;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewSubscriber extends Notification
+class VideoComment extends Notification
 {
     use Queueable;
-    public $subscriber;
+    public $user;
+    public $video;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $subscriber)
+    public function __construct(User $user,Video $video)
     {
-        $this->subscriber=$subscriber;
+        $this->user=$user;
+        $this->video=$video;
     }
 
     /**
@@ -29,7 +33,7 @@ class NewSubscriber extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['mail'];
     }
 
     /**
@@ -55,7 +59,8 @@ class NewSubscriber extends Notification
     public function toArray($notifiable)
     {
         return [
-            'data'=>$this->subscriber->name.' subscribed your channel',
+            'data'=>$this->user->name.' liked your video '.$this->video->title,
+            'href'=>$this->video->id
         ];
     }
 }

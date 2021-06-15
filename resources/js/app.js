@@ -21,7 +21,7 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('like-component', require('./components/likeComponent.vue').default);
-Vue.component('subscribe-component', require('./components/SubscribeComponent.vue').default);
+Vue.component('subscribe-component', require('./components/subscribeComponent.vue').default);
 Vue.component('channel-component',require('./components/channelComponent.vue').default);
 Vue.component('comment-component',require('./components/commentComponent.vue').default);
 

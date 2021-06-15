@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -41,6 +42,8 @@ class CommentController extends Controller
         $comment->video_id=$request->videoId;
         $comment->body=$request->body;
         $comment->save();
+        $comment->user=User::find($request->userId);
+        return response()->json(['comment'=>$comment]);
     }
 
     /**

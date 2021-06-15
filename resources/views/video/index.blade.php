@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="flex flex-wrap px-5">
-      @forelse ($videos as $video)
+      @foreach ($videos as $video)
         <a href="{{route('video.watch',$video->id)}}" class="hover:no-underline">
           <div class="p-1 m-2 shadow-lg">
               <img src="storage/videoCover/{{$video->cover}}" class="w-60 h-36">
@@ -18,8 +18,6 @@
               </div>
           </div>
         </a>
-      @empty
-        <p class="text-red-600 text-4xl text-center w-full">oops error in loading videos</p>
-      @endforelse
+      @endforeach
     </div>
 @endsection

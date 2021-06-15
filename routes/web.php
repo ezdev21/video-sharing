@@ -7,7 +7,7 @@ use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/',[VideoController::class,'index']);
+Route::get('/',[VideoController::class,'index'])->name('video.index');
 
 Auth::routes();
 Route::get('/home',[VideoController::class, 'index'])->name('home');
@@ -22,13 +22,7 @@ Route::prefix('video')->group(function(){
   Route::post('like',[VideoController::class,'postLike']);
   Route::get('comments',[VideoController::class,'comments']);
 });
-Route::prefix('comment')->group(function(){
-  Route::post('store',[CommentController::class,'store'])->name('comment.store');
-  Route::patch('update',[CommentController::class,'update'])->name('comment.update');
-  Route::delete('delete',[CommentController::class,'destroy'])->name('comment.delete');
-  Route::get('like',[CommentController::class,'getLike']);
-  Route::post('like',[CommentController::class,'postLike']);
-});
+
 Route::prefix('channel')->group(function(){
   Route::get('{channel}/edit',[ChannelController::class,'edit'])->name('channel.edit')->middleware('can:update,channel');
   Route::patch('/update',[ChannelController::class,'update'])->name('channel.update');
@@ -43,4 +37,12 @@ Route::prefix('channel')->group(function(){
   Route::get('{id}/community',[ChannelController::class,'community'])->name('channel.community');
   Route::get('{id}/about',[ChannelController::class,'about'])->name('channel.about');
   Route::get('{id}/search',[ChannelController::class,'search'])->name('channel.search');
+});
+
+Route::prefix('comment')->group(function(){
+  Route::post('store',[CommentController::class,'store'])->name('comment.store');
+  Route::patch('update',[CommentController::class,'update'])->name('comment.update');
+  Route::delete('delete',[CommentController::class,'destroy'])->name('comment.delete');
+  Route::get('like',[CommentController::class,'getLike']);
+  Route::post('like',[CommentController::class,'postLike']);
 });

@@ -27,7 +27,7 @@
       </p>
       <p v-if="userId==comment.user.id" class="mx-2">
         <button @click="editing=true;editedId=comment.id;editedBody=comment.body" class="rounded text-blue-500 text-lg px-2 mx-1">edit</button>
-        <button @click="deleteComment(comment.id)" class="rounded text-red-500 text-lg px-2 mx-1">delete</button>
+        <button @click="deleting=true;deletedId=comment.id;" class="rounded text-red-500 text-lg px-2 mx-1">delete</button>
       </p>
     </div>
   </div>
@@ -43,6 +43,16 @@
      </div>  
     </div>
   <div v-if="editing" @click="editing=false" class="absolute -inset-full opacity-50 bg-black z-10"></div>
+  <div v-if="deleting" class="fixed inset-0 flex justify-center items-center z-20">
+     <div class="fixed px-10 py-2 bg-gray-300 rounded-xl">
+      <button @click="deleting=false" class="absolute top-0 right-0 text-4xl px-3 text:gray-600 hover:text-red-500">x</button>
+      <p class="text-2xl text-center mt-10 mb-2 text-gray-900">are you sure to delete remember this is unchangable</p>
+      <form @submit.prevent="deleteComment(deletedId)">
+         <input type="submit" value="delete anyways" class="rounded bg-red-500 m-auto text-white text-2xl py-1 px-2"> 
+      </form> 
+     </div>  
+    </div>
+  <div v-if="deleting" @click="editing=false" class="absolute -inset-full opacity-50 bg-black z-10"></div>
  </div>      
 </template>
 <script>
@@ -53,6 +63,8 @@ export default {
      body:'',
      editing:false,
      editedId:null,
+     deleting:false,
+     deletedId:null,
      editedBody:'',
      user:{},
      comment:{},
@@ -81,11 +93,10 @@ export default {
      {
       axios.post('/comment/store',{videoId:this.videoId,userId:this.userId,body:this.body})
            .then(res=>{
-             var comment={
-               user:{name:this.user.name,id:this.userId},
-               body:this.body};
-              this.comments.push(comment);
-              this.body='';
+             let comment=res.data.comment;
+             this.comments.push(comment);
+             this.body='';
+
            }).
            catch(err=>{
            });
@@ -109,6 +120,7 @@ export default {
             return comment.id==id;
           });
           this.comments.pop(comment);
+          this.deleting=false;
         })
         .catch(res=>{
 

@@ -82,13 +82,18 @@
                           {{-- <button class=" navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                             <span class="navbar-toggler-icon"></span>
                           </button> --}}
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown ">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle text-lg" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                <div class="dropdown-menu dropdown-menu-right bg-gray-200" aria-labelledby="navbarDropdown">
+                                    <div>
+                                     <ul class="list-style-none">
+                                      <li class="m-auto text-center text-xl"><a href="#">liked videos</a></li>
+                                      <li class="m-auto text-center text-xl"><a href="#">my comments</a> </li>     
+                                     </ul>   
+                                    </div>
+                                    <a class="dropdown-item text-xl text-center" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}

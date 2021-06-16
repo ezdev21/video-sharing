@@ -1935,6 +1935,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['videoId', 'userId'],
   data: function data() {
@@ -1961,13 +1969,8 @@ __webpack_require__.r(__webpack_exports__);
     }).then(function (res) {
       _this.comments = res.data.comments;
       _this.user = res.data.user;
+      console.log(res.data.comments);
     })["catch"](function (err) {});
-    axios.get('/video/like', {
-      params: {
-        userId: this.userId,
-        commentId: this.commentId
-      }
-    }).then(function (res) {})["catch"](function (err) {});
   },
   methods: {
     addComment: function addComment() {
@@ -38169,13 +38172,44 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "text-lg text-green-600 rounded px-2 mx-1",
+                    staticClass: "text-lg text-green-600 rounded px-1 mx-1",
                     on: { click: _vm.likeComment }
                   },
-                  [_vm._v("like")]
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: " h-5 w-5",
+                        class: [
+                          comment.status == "liked"
+                            ? "fill-current text-green-500"
+                            : ""
+                        ],
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          fill: "none",
+                          viewBox: "0 0 24 24",
+                          stroke: "currentColor"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                            "stroke-width": "2",
+                            d:
+                              "M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+                          }
+                        })
+                      ]
+                    )
+                  ]
                 ),
                 _vm._v(" "),
-                _c("span", { staticClass: "text-lg" }, [_vm._v("0")]),
+                _c("span", { staticClass: "text-lg" }, [
+                  _vm._v(_vm._s(comment.totalLikes))
+                ]),
                 _vm._v(" "),
                 _c(
                   "button",
@@ -38183,10 +38217,41 @@ var render = function() {
                     staticClass: "text-lg text-red-600 rounded px-2 mx-1",
                     on: { click: _vm.dislikeComment }
                   },
-                  [_vm._v("dislike")]
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: " h-5 w-5",
+                        class: [
+                          comment.status == "disliked"
+                            ? "fill-current text-red-500"
+                            : ""
+                        ],
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          fill: "none",
+                          viewBox: "0 0 24 24",
+                          stroke: "currentColor"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                            "stroke-width": "2",
+                            d:
+                              "M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"
+                          }
+                        })
+                      ]
+                    )
+                  ]
                 ),
                 _vm._v(" "),
-                _c("span", { staticClass: "text-lg" }, [_vm._v("0")])
+                _c("span", { staticClass: "text-lg" }, [
+                  _vm._v(_vm._s(comment.totalDislikes))
+                ])
               ]),
               _vm._v(" "),
               _vm.userId == comment.user.id
@@ -38319,7 +38384,7 @@ var render = function() {
             "div",
             {
               staticClass:
-                "fixed z-20 bottom-1/3 left-1/3 px-10 py-2 bg-white rounded-xl"
+                "fixed z-20 bottom-1/3 left-1/3 px-2 py-2 bg-white rounded-xl"
             },
             [
               _c(
@@ -38357,7 +38422,7 @@ var render = function() {
                 [
                   _c("input", {
                     staticClass:
-                      "block rounded bg-red-500 m-auto text-white text-2xl py-1 px-2",
+                      "block rounded bg-red-500 mx-auto my-3 text-white text-2xl py-1 px-2",
                     attrs: { type: "submit", value: "delete anyways" }
                   })
                 ]
@@ -38632,7 +38697,7 @@ var render = function() {
           staticClass: " text-xl  py-1 px-2 rounded",
           class: [
             _vm.subscribed
-              ? "bg-gray-500 text-gray-100"
+              ? "bg-gray-400 text-gray-100"
               : "bg-red-600 text-white"
           ],
           on: { click: _vm.subscribe }

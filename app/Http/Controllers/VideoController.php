@@ -171,7 +171,20 @@ class VideoController extends Controller
       $comments=$video->comments;
       foreach($comments as $comment){
         $user=User::find($comment->user_id);  
-        $comment->user=$user;  
+        $comment->user=$user;
+        $comment->totalLikes=$comment->users->count();
+        $comment->totalDislikes=$comment->users->count();
+        $comment->status=$comment->type;
+        if(DB::table('comment_user')->where([['user_id',$request->userId],['comment_id',$request->commentId]])->exists())
+        {
+          $comment->status='liked';
+        }
+        else if(DB::table('comment_user')->where([['user_id',$request->userId],['type','dislike']])->exists()){
+          $comment->status='disliked';   
+        }
+        else{
+          $comment->status=null;  
+        } 
       }
       $user=User::find($request->userId); 
       return response()->json(['comments'=>$comments,'user'=>$user]);

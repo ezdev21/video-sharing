@@ -43,6 +43,6 @@ Route::prefix('comment')->group(function(){
   Route::post('store',[CommentController::class,'store'])->name('comment.store');
   Route::patch('update',[CommentController::class,'update'])->name('comment.update');
   Route::delete('delete',[CommentController::class,'destroy'])->name('comment.delete');
-  Route::get('like',[CommentController::class,'getLike']);
-  Route::post('like',[CommentController::class,'postLike']);
+  Route::post('like',[CommentController::class,'getLike']);
+  Route::post('dislike',[CommentController::class,'postLike']);
 });

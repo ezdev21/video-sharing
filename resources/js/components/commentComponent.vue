@@ -20,10 +20,18 @@
     <p class="text-lg">{{comment.body}}</p>
     <div class="flex">
       <p class="mx-2">
-        <button @click="likeComment" class="text-lg text-green-600 rounded px-2 mx-1">like</button>
-        <span class="text-lg">0</span>
-        <button @click="dislikeComment" class="text-lg text-red-600 rounded px-2 mx-1">dislike</button>
-        <span class="text-lg">0</span>
+        <button @click="likeComment" class="text-lg text-green-600 rounded px-1 mx-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class=" h-5 w-5" :class="[comment.status=='liked'? 'fill-current text-green-500' :'']" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+          </svg>
+        </button>
+        <span class="text-lg">{{comment.totalLikes}}</span>
+        <button @click="dislikeComment" class="text-lg text-red-600 rounded px-2 mx-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class=" h-5 w-5" fill="none" :class="[comment.status=='disliked'? 'fill-current text-red-500':'']" viewBox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5" />
+          </svg>
+        </button>
+        <span class="text-lg">{{comment.totalDislikes}}</span>
       </p>
       <p v-if="userId==comment.user.id" class="mx-2">
         <button @click="editing=true;editedId=comment.id;editedBody=comment.body" class="rounded text-blue-500 text-lg px-2 mx-1">edit</button>
@@ -41,11 +49,11 @@
       </form> 
      </div>  
   <div v-if="editing" @click="editing=false" class="absolute -inset-full opacity-50 bg-black z-10"></div>
-     <div v-if="deleting" class="fixed z-20 bottom-1/3 left-1/3 px-10 py-10 bg-white rounded-xl">
+     <div v-if="deleting" class="fixed z-20 bottom-1/3 left-1/3 px-2 py-2 bg-white rounded-xl">
       <button @click="deleting=false" class="absolute top-0 right-0 text-4xl px-3 text:gray-600 hover:text-red-500">x</button>
       <p class="text-2xl text-center mt-10 mb-2 text-gray-900">are you sure to delete remember this is unchangable</p>
       <form @submit.prevent="deleteComment(deletedId)">
-         <input type="submit" value="delete anyways" class="block rounded bg-red-500 m-auto text-white text-2xl py-1 px-2"> 
+         <input type="submit" value="delete anyways" class="block rounded bg-red-500 mx-auto my-3 text-white text-2xl py-1 px-2"> 
       </form> 
      </div>  
   <div v-if="deleting" @click="deleting=false" class="absolute -inset-full opacity-50 bg-black z-10"></div>
@@ -72,17 +80,11 @@ export default {
           .then(res=>{
             this.comments=res.data.comments;
             this.user=res.data.user;
+            console.log(res.data.comments);
           })
           .catch(err=>{
 
-          });
-      axios.get('/video/like',{params:{userId:this.userId,commentId:this.commentId}})
-           .then(res=>{
-
-           })
-           .catch(err=>{
-
-           });            
+          });           
    },
    methods:{
      addComment()

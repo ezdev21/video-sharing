@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-    <div class="flex">
-        <div class="flex-auto w-2/3 m-2">
-            <div class="mx-2 w-full bg-black">
+    <div class="flex flex-col lg:flex-row xl:flex-row 2xl:flex-row">
+        <div class="flex-auto w-full lg:w-2/3 xl:w-2/3 2xl:w-2/3 m-2">
+            <div class="w-full bg-black">
                 <video controls class="w-full">
                     <source  src="/storage/video/{{$video->source}}" type="video/mp4"/>
                         your browser does not support html5 video
@@ -47,7 +47,7 @@
                     <p class="text-xl">{{$video->title}}</p>
                     <p class="text-lg">{{$video->channel->name}}</p>
                     <p>
-                    <span>{{$video->views}} views</span>.
+                    <span>{{$video->views}} views</span>
                     <span>{{$video->updated_at->format('Y-m-d')}}</span>
                     </p>
                     </div>

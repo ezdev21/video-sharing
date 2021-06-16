@@ -16,7 +16,7 @@ class Comment extends Model
     {
         return $this->belongsTo(Video::class);
     }
-    public function likes()
+    public function users()
     {
         return $this->belongsToMany(User::class);
     }

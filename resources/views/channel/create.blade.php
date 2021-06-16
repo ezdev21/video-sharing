@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
   @auth
-  <div class="w-1/2 m-auto bg-blue-100 p-5 rounded-xl">
+  <div class="my-3 w-full md:w-3/4 lg:w-2/3 xl:w-1/2 2xl:w-1/2 mx-auto bg-blue-100 p-5 rounded-xl">
     <p class="text-3xl font-semibold text-center">create your channel</p>
       <form method="POST" action="{{route('channel.store')}}" enctype="multipart/form-data">
         {{csrf_field()}}

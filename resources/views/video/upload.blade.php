@@ -5,7 +5,7 @@
    <a href="{{route('login')}}" class="no-undeline text-white bg-red-500 p-1 rounded">sign in</a></p>
  @else
  @if (Auth::user()->channel)
- <div class="bg-blue-100 m-auto p-5 w-1/2 rounded-2xl">
+ <div class="w-full md:w-3/4 lg:w-2/3 xl:w-1/2 2xl:w-1/2 bg-blue-100 my-3 mx-auto p-5 rounded-2xl">
        <p class="text-2xl font-semibold text-center mb-3">upload a new video here</p>
        <form method="post" action="{{route('video.store')}}" enctype="multipart/form-data">
          @csrf
@@ -30,7 +30,7 @@
          <p class="text-xl font-bold">Description</p>
          <textarea name="description" id="" class="p-2 w-full m-auto h-40 focus:outline-none text-xl rounded-xl border-2 border-gray-300 my-2"></textarea>
          <input type="submit" value="upload"
-         class="m-2 px-3 rounded-lg h-10 text-xl bg-red-600 text-white">
+         class="block my-2 mx-auto px-3 rounded-lg h-10 text-xl bg-red-600 text-white">
        </form>
    </div>  
  @else

@@ -17,6 +17,7 @@ class CreateCommentUserTable extends Migration
             $table->id();
             $table->foreignId('comment_id');
             $table->foreignId('user_id');
+            $table->string('type');
             $table->timestamps();
         });
     }

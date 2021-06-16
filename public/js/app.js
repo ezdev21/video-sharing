@@ -38511,7 +38511,7 @@ var render = function() {
           "div",
           {
             staticClass:
-              "fixed z-20 m-auto bg-white p-10 flex flex-col justify-center items-center rounded-xl"
+              "fixed z-20 bottom-1/3 left-1/3 bg-white p-10 flex flex-col justify-center items-center rounded-xl"
           },
           [
             _c(
@@ -38557,7 +38557,7 @@ var render = function() {
           "div",
           {
             staticClass:
-              "absolute z-20 inset-auto bg-white p-10 flex flex-col justify-center items-center rounded-xl"
+              "fixed z-20 bottom-1/3 left-1/3 inset-auto bg-white p-10 flex flex-col justify-center items-center rounded-xl"
           },
           [
             _c(
@@ -38669,7 +38669,7 @@ var render = function() {
           "div",
           {
             staticClass:
-              "fixed z-20 bg-white p-10 flex flex-col justify-center items-center rounded-xl"
+              "fixed z-20 bottom-1/3 left-1/3 bg-white p-10 flex flex-col justify-center items-center rounded-xl"
           },
           [
             _c(
@@ -38701,7 +38701,7 @@ var render = function() {
     _vm._v(" "),
     _vm.subscribing
       ? _c("div", {
-          staticClass: "absolute -inset-full opacity-50 bg-black z-10",
+          staticClass: "fixed -inset-full opacity-70 bg-black z-10",
           on: {
             click: function($event) {
               _vm.subscribing = false

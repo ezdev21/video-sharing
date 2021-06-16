@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
  @guest
- <p>sign in and create channel first to upload video
-   <a href="{{route('login')}}" class="text-xl no-undeline text-white bg-red-600 p-1 rounded">Login</a></p>
+ <p class="text-2xl m-2">sign in and create channel first to upload video
+   <a href="{{route('login')}}" class="no-undeline text-white bg-red-500 p-1 rounded">sign in</a></p>
  @else
  @if (Auth::user()->channel)
  <div class="bg-blue-100 m-auto p-5 w-1/2 rounded-2xl">

@@ -12,14 +12,14 @@
    </svg>
   </button>
   <span class="text-xl text-red">{{totalDislikes}}</span>
-  <div v-if="liking" class="fixed z-20 m-auto bg-white p-10 flex flex-col justify-center items-center rounded-xl">
+  <div v-if="liking" class="fixed z-20 bottom-1/3 left-1/3 bg-white p-10 flex flex-col justify-center items-center rounded-xl">
      <button @click="liking=false" class="absolute top-0 right-0 text-4xl px-3 text-gray:600 hover:text-red-500">x</button>
      <p class="text-2xl">want to like this video ?</p>
      <p class="text-xl">sign in to like this video</p>
      <p class="m-auto"><a href="/login" class="text-2xl text-primary">sign in</a></p>
     </div>
     <div v-if="liking" @click="liking=false" class="absolute -inset-full opacity-50 bg-black z-10"></div> 
-    <div v-if="disliking" class="fixed z-20 inset-auto bg-white p-10 flex flex-col justify-center items-center rounded-xl">
+    <div v-if="disliking" class="fixed z-20 bottom-1/3 left-1/3 inset-auto bg-white p-10 flex flex-col justify-center items-center rounded-xl">
      <button @click="disliking=false" class="absolute top-0 right-0 text-4xl px-3 text-gray:600 hover:text-red-500">x</button>
      <p class="text-2xl">want to dislike this video ?</p>
      <p class="text-xl">sign in to dislike this video</p>

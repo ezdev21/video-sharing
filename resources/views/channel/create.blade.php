@@ -26,7 +26,6 @@
       </form>
   </div>
   @else
-  <a href="{{route('login')}}" class="text-2xl no-underline"
-  >login first to create channel</a>    
+  <p class="text-2xl">login first to create channel<a href="{{route('login')}}" class="no-underline text-white bg-red-500 m-2 rounded p-1">sign in</a></p>    
   @endauth  
 @endsection

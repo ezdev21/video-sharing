@@ -2,7 +2,7 @@
  <div>
   <p class="text-2xl mx-3">{{comments.length}} comments</p>
   <div v-if="userId">
-    <p class="text-xl mx-3 font-semibold">comment as {{user.name}}</p>
+    <p class="text-xl mx-3">comment as {{user.name}}</p>
    <form action="" @submit.prevent="addComment">
     <textarea name="description" rows="5" required
         class="text-lg w-2/3 block h-40 m-2 p-2 rounded-lg border-2 border-gray-200" v-model="body"></textarea>
@@ -31,8 +31,7 @@
       </p>
     </div>
   </div>
-   <div v-if="editing" class="fixed inset-0 flex justify-center items-center z-20">
-     <div class=" h-1/2 w-1/2 fixed px-10 py-2 bg-gray-300 rounded-xl">
+     <div v-if="editing" class="fixed z-20 bottom-1/3 left-1/3 px-10 py-2 bg-gray-300 rounded-xl">
       <button @click="editing=false" class="absolute top-0 right-0 text-4xl px-3 text-red-500">x</button>
       <p class="text-2xl text-center mt-10 mb-2 text-gray-900">Edit your comment</p>
       <form v-if="editing" @submit.prevent="editComment(editedId)">
@@ -41,18 +40,15 @@
          <input type="submit" value="edit comment" class="rounded bg-green-500 m-auto text-white text-2xl py-1 px-2"> 
       </form> 
      </div>  
-    </div>
   <div v-if="editing" @click="editing=false" class="absolute -inset-full opacity-50 bg-black z-10"></div>
-  <div v-if="deleting" class="fixed inset-0 flex justify-center items-center z-20">
-     <div class="fixed px-10 py-2 bg-gray-300 rounded-xl">
+     <div v-if="deleting" class="fixed z-20 bottom-1/3 left-1/3 px-10 py-10 bg-white rounded-xl">
       <button @click="deleting=false" class="absolute top-0 right-0 text-4xl px-3 text:gray-600 hover:text-red-500">x</button>
       <p class="text-2xl text-center mt-10 mb-2 text-gray-900">are you sure to delete remember this is unchangable</p>
       <form @submit.prevent="deleteComment(deletedId)">
-         <input type="submit" value="delete anyways" class="rounded bg-red-500 m-auto text-white text-2xl py-1 px-2"> 
+         <input type="submit" value="delete anyways" class="block rounded bg-red-500 m-auto text-white text-2xl py-1 px-2"> 
       </form> 
      </div>  
-    </div>
-  <div v-if="deleting" @click="editing=false" class="absolute -inset-full opacity-50 bg-black z-10"></div>
+  <div v-if="deleting" @click="deleting=false" class="absolute -inset-full opacity-50 bg-black z-10"></div>
  </div>      
 </template>
 <script>

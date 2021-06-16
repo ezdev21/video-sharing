@@ -1935,10 +1935,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['videoId', 'userId'],
   data: function data() {
@@ -38099,7 +38095,7 @@ var render = function() {
       _vm._v(" "),
       _vm.userId
         ? _c("div", [
-            _c("p", { staticClass: "text-xl mx-3 font-semibold" }, [
+            _c("p", { staticClass: "text-xl mx-3" }, [
               _vm._v("comment as " + _vm._s(_vm.user.name))
             ]),
             _vm._v(" "),
@@ -38234,84 +38230,75 @@ var render = function() {
         ? _c(
             "div",
             {
-              staticClass: "fixed inset-0 flex justify-center items-center z-20"
+              staticClass:
+                "fixed z-20 bottom-1/3 left-1/3 px-10 py-2 bg-gray-300 rounded-xl"
             },
             [
               _c(
-                "div",
+                "button",
                 {
                   staticClass:
-                    " h-1/2 w-1/2 fixed px-10 py-2 bg-gray-300 rounded-xl"
+                    "absolute top-0 right-0 text-4xl px-3 text-red-500",
+                  on: {
+                    click: function($event) {
+                      _vm.editing = false
+                    }
+                  }
                 },
-                [
-                  _c(
-                    "button",
+                [_vm._v("x")]
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  staticClass: "text-2xl text-center mt-10 mb-2 text-gray-900"
+                },
+                [_vm._v("Edit your comment")]
+              ),
+              _vm._v(" "),
+              _vm.editing
+                ? _c(
+                    "form",
                     {
-                      staticClass:
-                        "absolute top-0 right-0 text-4xl px-3 text-red-500",
                       on: {
-                        click: function($event) {
-                          _vm.editing = false
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.editComment(_vm.editedId)
                         }
                       }
                     },
-                    [_vm._v("x")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "p",
-                    {
-                      staticClass:
-                        "text-2xl text-center mt-10 mb-2 text-gray-900"
-                    },
-                    [_vm._v("Edit your comment")]
-                  ),
-                  _vm._v(" "),
-                  _vm.editing
-                    ? _c(
-                        "form",
-                        {
-                          on: {
-                            submit: function($event) {
-                              $event.preventDefault()
-                              return _vm.editComment(_vm.editedId)
-                            }
+                    [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.editedBody,
+                            expression: "editedBody"
                           }
-                        },
-                        [
-                          _c("textarea", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.editedBody,
-                                expression: "editedBody"
-                              }
-                            ],
-                            staticClass:
-                              "text-xl m-auto p-2 w-full h-40 rounded-xl border-2",
-                            attrs: { name: "description" },
-                            domProps: { value: _vm.editedBody },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.editedBody = $event.target.value
-                              }
+                        ],
+                        staticClass:
+                          "text-xl m-auto p-2 w-full h-40 rounded-xl border-2",
+                        attrs: { name: "description" },
+                        domProps: { value: _vm.editedBody },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          }),
-                          _vm._v(" "),
-                          _c("input", {
-                            staticClass:
-                              "rounded bg-green-500 m-auto text-white text-2xl py-1 px-2",
-                            attrs: { type: "submit", value: "edit comment" }
-                          })
-                        ]
-                      )
-                    : _vm._e()
-                ]
-              )
+                            _vm.editedBody = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass:
+                          "rounded bg-green-500 m-auto text-white text-2xl py-1 px-2",
+                        attrs: { type: "submit", value: "edit comment" }
+                      })
+                    ]
+                  )
+                : _vm._e()
             ]
           )
         : _vm._e(),
@@ -38331,58 +38318,48 @@ var render = function() {
         ? _c(
             "div",
             {
-              staticClass: "fixed inset-0 flex justify-center items-center z-20"
+              staticClass:
+                "fixed z-20 bottom-1/3 left-1/3 px-10 py-2 bg-white rounded-xl"
             },
             [
               _c(
-                "div",
-                { staticClass: "fixed px-10 py-2 bg-gray-300 rounded-xl" },
+                "button",
+                {
+                  staticClass:
+                    "absolute top-0 right-0 text-4xl px-3 text:gray-600 hover:text-red-500",
+                  on: {
+                    click: function($event) {
+                      _vm.deleting = false
+                    }
+                  }
+                },
+                [_vm._v("x")]
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  staticClass: "text-2xl text-center mt-10 mb-2 text-gray-900"
+                },
+                [_vm._v("are you sure to delete remember this is unchangable")]
+              ),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.deleteComment(_vm.deletedId)
+                    }
+                  }
+                },
                 [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "absolute top-0 right-0 text-4xl px-3 text:gray-600 hover:text-red-500",
-                      on: {
-                        click: function($event) {
-                          _vm.deleting = false
-                        }
-                      }
-                    },
-                    [_vm._v("x")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "p",
-                    {
-                      staticClass:
-                        "text-2xl text-center mt-10 mb-2 text-gray-900"
-                    },
-                    [
-                      _vm._v(
-                        "are you sure to delete remember this is unchangable"
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "form",
-                    {
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                          return _vm.deleteComment(_vm.deletedId)
-                        }
-                      }
-                    },
-                    [
-                      _c("input", {
-                        staticClass:
-                          "rounded bg-red-500 m-auto text-white text-2xl py-1 px-2",
-                        attrs: { type: "submit", value: "delete anyways" }
-                      })
-                    ]
-                  )
+                  _c("input", {
+                    staticClass:
+                      "block rounded bg-red-500 m-auto text-white text-2xl py-1 px-2",
+                    attrs: { type: "submit", value: "delete anyways" }
+                  })
                 ]
               )
             ]
@@ -38394,7 +38371,7 @@ var render = function() {
             staticClass: "absolute -inset-full opacity-50 bg-black z-10",
             on: {
               click: function($event) {
-                _vm.editing = false
+                _vm.deleting = false
               }
             }
           })
@@ -38652,10 +38629,10 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: " text-xl  py-1 px-2",
+          staticClass: " text-xl  py-1 px-2 rounded",
           class: [
             _vm.subscribed
-              ? "bg-gray-500 text-gray-900"
+              ? "bg-gray-500 text-gray-100"
               : "bg-red-600 text-white"
           ],
           on: { click: _vm.subscribe }

@@ -38172,7 +38172,7 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "text-lg text-green-600 rounded px-1 mx-1",
+                    staticClass: " rounded px-1 mx-1",
                     on: { click: _vm.likeComment }
                   },
                   [
@@ -38214,7 +38214,7 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "text-lg text-red-600 rounded px-2 mx-1",
+                    staticClass: "rounded px-2 mx-1",
                     on: { click: _vm.dislikeComment }
                   },
                   [

@@ -20,7 +20,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="">
             <nav class="bg-red-700 text-white shadow-sm flex justify-between p-1">
                 <div class="flex flex-auto">
                     <a class="text-xl mr-10 hover:text-green-500" href="{{ url('/') }}">

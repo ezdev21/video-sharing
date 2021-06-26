@@ -1,6 +1,4 @@
 <?php
-use App\Models\User;
-use App\Notifications\NewSubscriber;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\VideoController;

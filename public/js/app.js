@@ -2565,29 +2565,28 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vue_router__WEBPACK_IMPORTED_MODULE
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
   mode: 'history',
-  base_url: '/channel/show/:channelId',
   routes: [{
-    path: '/videos',
+    path: '/channel/show/:channelId/videos',
     name: 'channelVideos',
     component: _components_channel_channelVideosComponent_vue__WEBPACK_IMPORTED_MODULE_2__.default
   }, {
-    path: '/channels',
+    path: '/channel/show/:channelId/channels',
     name: 'channels',
     component: _components_channel_channelsComponent_vue__WEBPACK_IMPORTED_MODULE_3__.default
   }, {
-    path: '/about',
+    path: '/channel/show/:channelId/about',
     name: 'about',
     component: _components_channel_aboutComponent_vue__WEBPACK_IMPORTED_MODULE_4__.default
   }, {
-    path: '/playlists',
+    path: '/channel/show/:channelId/playlists',
     name: 'playlists',
     component: _components_channel_playlistsComponent_vue__WEBPACK_IMPORTED_MODULE_5__.default
   }, {
-    path: '/community',
+    path: '/channel/show/:channelId/community',
     name: 'community',
     component: _components_channel_communityComponent_vue__WEBPACK_IMPORTED_MODULE_6__.default
   }, {
-    path: '/search',
+    path: '/channel/show/:channelId/search',
     name: 'search',
     component: _components_channel_searchComponent_vue__WEBPACK_IMPORTED_MODULE_7__.default
   }]
@@ -39157,7 +39156,7 @@ var render = function() {
         {
           staticClass: "text-2xl text-bold px-3",
           attrs: {
-            to: { name: "videos", params: { channelId: _vm.channelId } }
+            to: { name: "channelVideos", params: { channelId: _vm.channelId } }
           }
         },
         [_vm._v("videos")]

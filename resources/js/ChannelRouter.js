@@ -11,35 +11,34 @@ import searchComponent from './components/channel/searchComponent.vue';
 
 const router=new VueRouter({
        mode:'history',
-       base_url:'/channel/show/:channelId',
        routes:[
            {
-            path:'/videos',
+            path:'/channel/show/:channelId/videos',
             name:'channelVideos',
             component:videosComponent
            },
            {
-            path:'/channels',
+            path:'/channel/show/:channelId/channels',
             name:'channels',
             component:channelsComponent
            },
            {
-            path:'/about',
+            path:'/channel/show/:channelId/about',
             name:'about',
             component:aboutComponent
            },
            {
-            path:'/playlists',
+            path:'/channel/show/:channelId/playlists',
             name:'playlists',
             component:playlistsComponent
            },
            {
-            path:'/community',
+            path:'/channel/show/:channelId/community',
             name:'community',
             component:communityComponent
            },
            {
-            path:'/search',
+            path:'/channel/show/:channelId/search',
             name:'search',
             component:searchComponent
            }   

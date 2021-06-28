@@ -24,7 +24,7 @@
             @endcan
          </div>
      </div>
-     <nav class="p-2 m-2">
+     {{-- <nav class="p-2 m-2">
        <ul class="list-style-none flex">
         <li class="mx-2 p-2"><a href="{{route('channel.videos',$channel->id)}}" class="text-2xl no-undeline">videos</a></li>
         <li class="mx-2 p-2"><a href="{{route('channel.playlists',$channel->id)}}" class="text-2xl no-undeline">playlists</a></li>
@@ -32,7 +32,7 @@
         <li class="mx-2 p-2"><a href="{{route('channel.about',$channel->id)}}" class="text-2xl no-undeline">about</a></li>   
         <li class="mx-2 p-2"><a href="{{route('channel.search',$channel->id)}}" class="text-2xl no-undeline">search</a></li>
        </ul>  
-     </nav>
-     {{--<channel-component channel-id="{{$channel->id}}"/>--}}
+     </nav> --}}
+     <channel-component channel-id="{{$channel->id}}"/>
  </div>   
 @endsection

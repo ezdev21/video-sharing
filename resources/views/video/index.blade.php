@@ -4,7 +4,7 @@
       @foreach ($videos as $video)
         <a href="{{route('video.watch',$video->id)}}" class="hover:no-underline">
           <div class="p-1 m-2 shadow-lg">
-              <img src="storage/videoCover/{{$video->cover}}" class="w-60 h-36">
+              <img src="/storage/videoCover/{{$video->cover}}" class="w-60 h-36">
               <div class="flex">
                 <img src="/storage/channelCover/{{$video->channel->cover}}" class="w-10 h-10 rounded-full my-auto mx-2">
                 <div>

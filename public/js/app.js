@@ -1922,30 +1922,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['channelId'],
   data: function data() {
     return {
-      video: {
-        linkPath: '/video/watch/' + this.videoId,
-        coverPath: '/storage/videoCover/' + this.videoId
-      },
+      channelId: null,
       videos: []
     };
   },
   mounted: function mounted() {
     var _this = this;
 
+    this.channelId = this.$route.params.channelId;
     axios.get('/channel/videos', {
       params: {
         channelId: this.channelId
       }
     }).then(function (res) {
       _this.videos = res.data.videos;
-    })["catch"](function (err) {
-      console.log('error in loading videos');
+
+      _this.videos.forEach(function (video) {
+        var date = new Date();
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        var d = date.getDate();
+        video.date = [y, m, d].join('-');
+      });
     });
   }
 });
@@ -2264,8 +2265,7 @@ __webpack_require__.r(__webpack_exports__);
     }).then(function (res) {
       _this.comments = res.data.comments;
       _this.user = res.data.user;
-      console.log(res.data.comments);
-    })["catch"](function (err) {});
+    });
   },
   methods: {
     addComment: function addComment() {
@@ -38879,30 +38879,26 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.videos.length
-    ? _c("div", [
-        _c(
-          "a",
-          { attrs: { href: _vm.video.linkPath } },
-          _vm._l(_vm.videos, function(video) {
-            return _c("div", { key: video.id }, [
-              _c("img", {
-                attrs: { src: video.imagePath, alt: "", width: "full" }
-              }),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-xl" }, [_vm._v(_vm._s(video.name))]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  _vm._s(video.totalViews) +
-                    " views . " +
-                    _vm._s(video.created_at)
-                )
-              ])
+    ? _c(
+        "div",
+        _vm._l(_vm.videos, function(video) {
+          return _c("div", { key: video.id }, [
+            _c("img", {
+              staticClass: "w-60",
+              attrs: { src: "/storage/videoCover/" + video.cover }
+            }),
+            _vm._v(" "),
+            _c("p", { staticClass: "text-xl" }, [_vm._v(_vm._s(video.name))]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                _vm._s(video.totalViews) + " views . " + _vm._s(video.date)
+              )
             ])
-          }),
-          0
-        )
-      ])
+          ])
+        }),
+        0
+      )
     : _c("div", [
         _c("p", { staticClass: "text-xl" }, [
           _vm._v("this channel has no videos")

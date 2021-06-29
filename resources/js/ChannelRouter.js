@@ -10,7 +10,7 @@ import communityComponent from './components/channel/communityComponent.vue';
 import searchComponent from './components/channel/searchComponent.vue';
 
 const router=new VueRouter({
-       mode:'history',
+       mode:'hash',
        routes:[
            {
             path:'/channel/show/:channelId/videos',

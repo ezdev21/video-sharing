@@ -141,10 +141,11 @@ class ChannelController extends Controller
         $channelOwner->notify(new NewSubscriber($user));
       }
     }
-    public function videos($id)
-    {
-       $channel=Channel::find($id);
-       return view('channel.videos',['channel'=>$channel]);
+    public function videos(Request $request)
+    { 
+       $channel=Channel::find($request->channelId);
+       $videos=$channel->videos;
+       return response()->json(['videos'=>$videos]);
     }
     public function playlists($id)
     {

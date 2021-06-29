@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="flex flex-col lg:flex-row xl:flex-row 2xl:flex-row">
-        <div class="flex-auto w-full lg:w-2/3 xl:w-2/3 2xl:w-2/3 m-2">
+        <div class="flex-auto w-full lg:w-3/5xl:w-3/5 2xl:w-3/5 m-2">
             <div class="w-full bg-black">
                 <video controls class="w-full">
                     <source  src="/storage/video/{{$video->source}}" type="video/mp4"/>

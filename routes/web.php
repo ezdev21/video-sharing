@@ -30,11 +30,11 @@ Route::prefix('channel')->group(function(){
   Route::delete('{channel}/delete/',[ChannelController::class,'delete'])->name('channel.delete');
   Route::get('subscribe',[ChannelController::class,'getSubscribe']);
   Route::post('subscribe',[ChannelController::class,'postSubscribe']);
-  Route::get('{id}/videos',[ChannelController::class,'videos'])->name('channel.videos');
-  Route::get('{id}/playlists',[ChannelController::class,'playlists'])->name('channel.playlists');
-  Route::get('{id}/community',[ChannelController::class,'community'])->name('channel.community');
-  Route::get('{id}/about',[ChannelController::class,'about'])->name('channel.about');
-  Route::get('{id}/search',[ChannelController::class,'search'])->name('channel.search');
+  Route::get('videos',[ChannelController::class,'videos'])->name('channel.videos');
+  Route::get('playlists',[ChannelController::class,'playlists'])->name('channel.playlists');
+  Route::get('community',[ChannelController::class,'community'])->name('channel.community');
+  Route::get('about',[ChannelController::class,'about'])->name('channel.about');
+  Route::get('search',[ChannelController::class,'search'])->name('channel.search');
 });
 
 Route::prefix('comment')->group(function(){

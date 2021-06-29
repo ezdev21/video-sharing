@@ -20,10 +20,7 @@ export default {
   props:['channelId'],
   data(){
    return{
-      searchText:'',
-      video:{
-       imagePath:'/storage/videoCover/'+this.video.id,      
-      },    
+      searchText:'', 
       videos:[]    
    }      
   },

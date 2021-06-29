@@ -6,27 +6,23 @@
      <p>{{channel.name}}</p>
      <p>{{channel.subscribers}} subscribers</p>
      <p v-if="user.id">
-      <subscribe-component user-id="user.id" channel-id="channel.id"/>
+      <subscribe-component :userId="user.id" :channelId="channel.id"/>
      </p>
     </div>
    </div>
    <div v-else>
-    <p class="text-2xl">this channel des not have featured channel</p>
+    <p class="text-2xl mx-5">this channel does not have featured channel</p>
    </div>
   </div>     
 </template>
 <script>
- //import subscribeComponent from './components/subscribeComponent.vue';
+ import subscribeComponent from './components/subscribeComponent.vue';
  export default {
    components:{
-    //'subscribe-component' : subscribeComponent,
+    'subscribe-component' : subscribeComponent,
    },
-   props:[],
    data(){
     return{
-     channel:{
-       imagePath:'/storage/channelCover/'+this.channel.id,      
-     },
      channels:[]
     }      
    },
@@ -34,10 +30,7 @@
     axios.get('/channel/community',{params:{}})
          .then(res=>{
            this.channels=res.data.channels;
-         })
-         .catch(err=>{
-
-         });      
+         })     
    }    
 }
 </script>

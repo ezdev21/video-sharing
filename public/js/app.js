@@ -1922,6 +1922,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -1941,7 +1943,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.videos = res.data.videos;
 
       _this.videos.forEach(function (video) {
-        var date = new Date();
+        var date = new Date(video.created_at);
         var y = date.getFullYear();
         var m = date.getMonth() + 1;
         var d = date.getDate();
@@ -38883,17 +38885,21 @@ var render = function() {
         "div",
         _vm._l(_vm.videos, function(video) {
           return _c("div", { key: video.id }, [
-            _c("img", {
-              staticClass: "w-60",
-              attrs: { src: "/storage/videoCover/" + video.cover }
-            }),
-            _vm._v(" "),
-            _c("p", { staticClass: "text-xl" }, [_vm._v(_vm._s(video.name))]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                _vm._s(video.totalViews) + " views . " + _vm._s(video.date)
-              )
+            _c("a", { attrs: { href: "/video/watch/" + video.id } }, [
+              _c("img", {
+                staticClass: "w-60",
+                attrs: { src: "/storage/videoCover/" + video.cover }
+              }),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-xl" }, [
+                _vm._v(_vm._s(video.title))
+              ]),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v(
+                  _vm._s(video.totalViews) + " views . " + _vm._s(video.date)
+                )
+              ])
             ])
           ])
         }),

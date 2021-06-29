@@ -18,7 +18,7 @@
    <p class="text-2xl">Stats</p>
    <p>joined {{channel.created_at}}</p>
    <p>{{channel.subscribers}} subscribers</p>
-   <p>{{channel.views}}</p>
+   <p>{{channel.views}} views</p>
   </div>
  </div>      
 </template>

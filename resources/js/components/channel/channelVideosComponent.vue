@@ -1,13 +1,15 @@
 <template>
   <div v-if="videos.length">
     <div v-for="video in videos" :key="video.id" class="">
-     <img :src="'/storage/videoCover/'+video.cover" class="w-60">
-     <p class="text-xl">{{video.title}}</p>
-     <p>{{video.totalViews}} views . {{video.date}}</p>
+     <a :href="'/video/watch/'+video.id">
+      <img :src="'/storage/videoCover/'+video.cover" class="w-60">
+      <p class="text-xl">{{video.title}}</p>
+      <p>{{video.totalViews}} views . {{video.date}}</p>
+     </a>
    </div>
   </div>
   <div v-else>
-   <p class="text-xl">this channel has no videos</p>
+   <p class="text-2xl mx-5">this channel has no videos</p>
   </div>     
 </template>
 <script>

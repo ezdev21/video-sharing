@@ -27,6 +27,7 @@ Route::prefix('channel')->group(function(){
   Route::get('create',[ChannelController::class,'create'])->name('channel.create');
   Route::post('update',[ChannelController::class,'store'])->name('channel.store');
   Route::get('show/{id}',[ChannelController::class,'show'])->name('channel.show');
+  Route::get('show/{id}/{any}',[ChannelController::class,'show'])->where('any','.*');
   Route::delete('{channel}/delete/',[ChannelController::class,'delete'])->name('channel.delete');
   Route::get('subscribe',[ChannelController::class,'getSubscribe']);
   Route::post('subscribe',[ChannelController::class,'postSubscribe']);

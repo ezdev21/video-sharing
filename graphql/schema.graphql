@@ -13,6 +13,8 @@ type Query {
     channel(id: ID @eq): Channel @find
     comments: [Comment!]! @all
     comment(id: ID @eq): Comment @find
+    playlists: [Playlist!]! @all
+    playlist(id: ID @eq): Playlist @find
 }
 
 type User {
@@ -22,6 +24,7 @@ type User {
     created_at: DateTime!
     updated_at: DateTime!
 }
+
 type Video {
     id: ID!
     title: String!
@@ -33,15 +36,17 @@ type Video {
     created_at: DateTime!
     updated_at: DateTime!
 }
+
 type Channel {
     id: ID!
     name: String!
     description: String!
     cover: String!
-    user:User! @belongsTo
+    user: User! @belongsTo
     created_at: DateTime!
     updated_at: DateTime!
 }
+
 type Comment {
     id: ID!
     body: String!
@@ -50,44 +55,78 @@ type Comment {
     created_at: DateTime!
     updated_at: DateTime!
 }
-type MUtation{
+
+type Playlist {
+    id: ID!
+    name: String!
+    videos: [Video] @hasMany
+    user:User! @belongsTo
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Mutation{
+
   createVideo(
    title: String! @rules(apply:["required","min:4","max:30"])
-   description: String @rules(apply:["max:250"])
+   description: String @rules(apply:["max:200"])
    cover: String! @rules(apply:["required","min:4","max:30"])
    source: String! @rules(apply:["required","min:4","max:30"])
   ):Video @create
+  
+  updateVideo(
+   title: String! @rules(apply:["required","min:4","max:30"])
+   description: String @rules(apply:["max:200"])
+   cover: String! @rules(apply:["required","min:4","max:30"])
+   source: String! @rules(apply:["required","min:4","max:30"])
+  ):Video @update
 
   deleteVideo(
     id:ID!
   ):Video @delete
 
   createChannel(
-   name: String!
-   description: String
-   cover: String!
+   name: String! @rules(apply:["required","min:4","max:30"])
+   description: String @rules(apply:["min:4","max:200"])
+   cover: String! @rules(apply:["required","min:4","max:30"])
   ):Channel @create
 
   updateChannel(
-    name:String!
-    description: String!
-    cover: String!  
+    name:String! @rules(apply:["required","min:4","max:30"])
+    description: String! @rules(apply:["max:200"])
+    cover: String! @rules(apply:["required","min:4","max:30"]) 
   ):Channel @update
+
   deleteChannel(
    id:ID!   
-  )
+  ):Channel @delete
+
   createComment(
-   body: String!
-   
+   body: String! @rules(apply:["required","min:4","max:30"])
+   user: User! @belongsTo
+   video: Video! @belongsTo
   ):Comment @create
 
   updateComment(
-   body: String!
-   
+   body: String! @rules(apply:["required","min:4","max:30"])
+   user: User! @belongsTo
+   video: Video! @belongsTo
   ):Comment @update
 
   deleteComment(
-   body: String!
-   
+   id:ID!
   ):Comment @delete
+
+  createPlaylist(
+    name: String! @rules(apply:["required","min:4","max:30"])
+  ):Playlist @create
+
+  updatePlaylist(
+    name: String! @rules(apply:["required","min:4","max:30"])
+    videos: [Video]
+  ):Playlist @update
+
+  deletePlaylist(
+    id:ID!
+  ):Playlist @delete
 }

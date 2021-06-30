@@ -1,10 +1,10 @@
 <template>
-  <div v-if="videos.length">
+  <div v-if="videos.length" class="m-2 p-2 flex">
     <div v-for="video in videos" :key="video.id" class="">
      <a :href="'/video/watch/'+video.id">
       <img :src="'/storage/videoCover/'+video.cover" class="w-60">
       <p class="text-xl">{{video.title}}</p>
-      <p>{{video.totalViews}} views . {{video.date}}</p>
+      <p class="text-md"><span>{{video.views}} views</span><span> {{video.date}}</span></p>
      </a>
    </div>
   </div>

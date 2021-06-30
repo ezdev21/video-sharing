@@ -186,6 +186,6 @@ class VideoController extends Controller
         }
       }
       $user=User::find($request->userId); 
-      return response()->json(['comments'=>$comments]);
+      return response()->json(['comments'=>$comments,'user'=>$user]);
     }
 }

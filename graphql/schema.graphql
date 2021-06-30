@@ -72,6 +72,8 @@ type Mutation{
    description: String @rules(apply:["max:200"])
    cover: String! @rules(apply:["required","min:4","max:30"])
    source: String! @rules(apply:["required","min:4","max:30"])
+   #channel: Channel @belongsTo
+   channel_id: ID!
   ):Video @create
   
   updateVideo(
@@ -89,6 +91,7 @@ type Mutation{
    name: String! @rules(apply:["required","min:4","max:30"])
    description: String @rules(apply:["min:4","max:200"])
    cover: String! @rules(apply:["required","min:4","max:30"])
+   user_id:ID!
   ):Channel @create
 
   updateChannel(
@@ -103,14 +106,18 @@ type Mutation{
 
   createComment(
    body: String! @rules(apply:["required","min:4","max:30"])
-   user: User! @belongsTo
-   video: Video! @belongsTo
+  #  user: User! @belongsTo
+  #  video: Video! @belongsTo
+  user_id: ID!
+  video_id: ID!
   ):Comment @create
 
   updateComment(
    body: String! @rules(apply:["required","min:4","max:30"])
-   user: User! @belongsTo
-   video: Video! @belongsTo
+  #  user: User! @belongsTo
+  #  video: Video! @belongsTo
+  user_id: ID!
+  video_id: ID!
   ):Comment @update
 
   deleteComment(

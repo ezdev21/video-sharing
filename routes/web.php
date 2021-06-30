@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/',[VideoController::class,'index'])->name('video.index');
 
 Route::get('/me',function(){
-  $client = \Softonic\GraphQL\ClientBuilder::build('http://127.0.0.1:8000/graphql');
+  $client = \Softonic\GraphQL\ClientBuilder::build('http://127.0.0.1:8000/graphql-playground');
   $query ='
   query getVideos{
     videos{

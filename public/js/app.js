@@ -38876,6 +38876,7 @@ var render = function() {
   return _vm.videos.length
     ? _c(
         "div",
+        { staticClass: "m-2 p-2 flex" },
         _vm._l(_vm.videos, function(video) {
           return _c("div", { key: video.id }, [
             _c("a", { attrs: { href: "/video/watch/" + video.id } }, [
@@ -38888,10 +38889,9 @@ var render = function() {
                 _vm._v(_vm._s(video.title))
               ]),
               _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  _vm._s(video.totalViews) + " views . " + _vm._s(video.date)
-                )
+              _c("p", { staticClass: "text-lg" }, [
+                _c("span", [_vm._v(_vm._s(video.views) + " views")]),
+                _c("span", [_vm._v(" " + _vm._s(video.date))])
               ])
             ])
           ])
@@ -38927,33 +38927,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.channels.length
-      ? _c(
-          "div",
-          { staticClass: "flex" },
-          _vm._l(_vm.channels, function(channel) {
-            return _c("div", { key: channel.id, staticClass: "felx-initial" }, [
-              _c("img", {
-                staticClass: "w-12 h-12 rounded-full ",
-                attrs: { src: channel.imagePath, alt: "" }
-              }),
-              _vm._v(" "),
-              _c("p", [_vm._v(_vm._s(channel.name))]),
-              _vm._v(" "),
-              _c("p", [_vm._v(_vm._s(channel.subscribers) + " subscribers")])
-            ])
-          }),
-          0
-        )
-      : _c("div", [
-          _c("p", { staticClass: "text-2xl mx-5" }, [
-            _vm._v("this channel does not have featured channel")
-          ])
-        ])
-  ])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("p", { staticClass: "text-2xl mx-5" }, [
+        _vm._v("this channel does not have featured channel")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -39416,7 +39403,7 @@ var render = function() {
             "div",
             {
               staticClass:
-                "fixed z-20 bottom-1/3 left-1/3 sm:w-full px-10 py-2 bg-gray-300 rounded-xl"
+                "fixed top-1/3 left-1/4 z-20 w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2 px-10 py-2 bg-gray-300 rounded-xl"
             },
             [
               _c(
@@ -39490,7 +39477,8 @@ var render = function() {
       _vm._v(" "),
       _vm.editing
         ? _c("div", {
-            staticClass: "absolute -inset-full opacity-50 bg-black z-10",
+            staticClass:
+              "absolute -inset-y-full -inset-x-0 opacity-50 bg-black z-10",
             on: {
               click: function($event) {
                 _vm.editing = false

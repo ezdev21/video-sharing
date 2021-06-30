@@ -1985,14 +1985,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //import subscribeComponent from './components/subscribeComponent.vue';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  components: {//'subscribe-component' : subscribeComponent,
-  },
-  props: [],
+  //  components:{
+  //   'subscribe-component' : subscribeComponent,
+  //  },
   data: function data() {
     return {
-      channel: {
-        imagePath: '/storage/channelCover/' + this.channel.id
-      },
       channels: []
     };
   },
@@ -2003,7 +2000,7 @@ __webpack_require__.r(__webpack_exports__);
       params: {}
     }).then(function (res) {
       _this.channels = res.data.channels;
-    })["catch"](function (err) {});
+    });
   }
 });
 
@@ -2053,25 +2050,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['channelId'],
   data: function data() {
     return {
-      playlist: {},
+      channelId: null,
       playlists: []
     };
   },
   mounted: function mounted() {
     var _this = this;
 
+    this.channelId = this.$route.params.channelId;
     axios.get('/channel/playlists', {
       params: {
         channelId: this.channelId
       }
     }).then(function (res) {
-      _this.playlists = res.data.playlist;
-    })["catch"](function (err) {
-      console.log('error in loading plalists');
+      _this.playlists = res.data.playlists;
     });
   }
 });
@@ -2111,9 +2107,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       searchText: '',
-      video: {
-        imagePath: '/storage/videoCover/' + this.video.id
-      },
       videos: []
     };
   },
@@ -38853,7 +38846,7 @@ var render = function() {
       _vm._v(" "),
       _c("p", [_vm._v(_vm._s(_vm.channel.subscribers) + " subscribers")]),
       _vm._v(" "),
-      _c("p", [_vm._v(_vm._s(_vm.channel.views))])
+      _c("p", [_vm._v(_vm._s(_vm.channel.views) + " views")])
     ])
   ])
 }
@@ -38906,7 +38899,7 @@ var render = function() {
         0
       )
     : _c("div", [
-        _c("p", { staticClass: "text-xl" }, [
+        _c("p", { staticClass: "text-2xl mx-5" }, [
           _vm._v("this channel has no videos")
         ])
       ])
@@ -38948,29 +38941,14 @@ var render = function() {
               _vm._v(" "),
               _c("p", [_vm._v(_vm._s(channel.name))]),
               _vm._v(" "),
-              _c("p", [_vm._v(_vm._s(channel.subscribers) + " subscribers")]),
-              _vm._v(" "),
-              _vm.user.id
-                ? _c(
-                    "p",
-                    [
-                      _c("subscribe-component", {
-                        attrs: {
-                          "user-id": "user.id",
-                          "channel-id": "channel.id"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                : _vm._e()
+              _c("p", [_vm._v(_vm._s(channel.subscribers) + " subscribers")])
             ])
           }),
           0
         )
       : _c("div", [
-          _c("p", { staticClass: "text-2xl" }, [
-            _vm._v("this channel des not have featured channel")
+          _c("p", { staticClass: "text-2xl mx-5" }, [
+            _vm._v("this channel does not have featured channel")
           ])
         ])
   ])
@@ -39023,34 +39001,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.videos.length
-      ? _c(
-          "div",
-          _vm._l(_vm.playlists, function(playlist) {
-            return _c("div", { key: playlist.id, staticClass: "relative" }, [
-              _c("img", { attrs: { src: playlist.cover, alt: "" } }),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "opacity-0.5 absolute top-0 right-0 w-1/2 bg-black"
-                },
-                [_vm._v(_vm._s(playlist.totalPlaylist))]
-              )
-            ])
-          }),
-          0
-        )
-      : _c("div", [
-          _c("p", { staticClass: "text-xl" }, [
-            _vm._v("this channel has no playlists")
-          ])
-        ])
-  ])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("p", { staticClass: "text-2xl mx-5" }, [
+        _vm._v("this channel has no playlists")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

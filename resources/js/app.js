@@ -24,7 +24,7 @@ Vue.component('like-component', require('./components/likeComponent.vue').defaul
 Vue.component('subscribe-component', require('./components/subscribeComponent.vue').default);
 Vue.component('channel-component',require('./components/channelComponent.vue').default);
 Vue.component('comment-component',require('./components/commentComponent.vue').default);
-
+Vue.component('navigation-component',require('./components/navigation.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

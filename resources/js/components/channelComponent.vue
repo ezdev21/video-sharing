@@ -1,11 +1,11 @@
 <template>
-  <div class="p-1 m-1">
-   <router-link class="text-2xl text-bold px-3" active-class="border-gray-500 border-b-2" :to="{name:'channelVideos',params:{channelId:channelId}}">videos</router-link>
-   <router-link class="text-2xl text-bold px-3" active-class="border-gray-500 border-b-2" :to="{name:'playlists',params:{channelId:channelId}}">playlists</router-link>
-   <router-link class="text-2xl text-bold px-3" active-class="border-gray-500 border-b-2" :to="{name:'channels',params:{channelId:channelId}}">channels</router-link>
-   <router-link class="text-2xl text-bold px-3" active-class="border-gray-500 border-b-2" :to="{name:'community',params:{channelId:channelId}}">community</router-link>
-   <router-link class="text-2xl text-bold px-3" active-class="border-gray-500 border-b-2" :to="{name:'about',params:{channelId:channelId}}">about</router-link>
-   <router-link class="text-2xl text-bold px-3" active-class="border-gray-500 border-b-2" :to="{name:'search',params:{channelId:channelId}}">search</router-link>
+  <div class="p-3 m-3">
+   <router-link class="text-2xl text-bold px-3 mx-1" active-class="border-gray-500 border-b-3" :to="{name:'channelVideos',params:{channelId:channelId}}">Videos</router-link>
+   <router-link class="text-2xl text-bold px-3 mx-1" active-class="border-gray-500 border-b-3" :to="{name:'playlists',params:{channelId:channelId}}">Playlists</router-link>
+   <router-link class="text-2xl text-bold px-3 mx-1" active-class="border-gray-500 border-b-3" :to="{name:'channels',params:{channelId:channelId}}">Channels</router-link>
+   <router-link class="text-2xl text-bold px-3 mx-1" active-class="border-gray-500 border-b-3" :to="{name:'community',params:{channelId:channelId}}">Community</router-link>
+   <router-link class="text-2xl text-bold px-3 mx-1" active-class="border-gray-500 border-b-3" :to="{name:'about',params:{channelId:channelId}}">About</router-link>
+   <router-link class="text-2xl text-bold px-3 mx-1" active-class="border-gray-500 border-b-3" :to="{name:'search',params:{channelId:channelId}}">Search</router-link>
    <router-view keep-alive></router-view>
   </div> 
 </template>

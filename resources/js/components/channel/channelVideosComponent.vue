@@ -1,6 +1,6 @@
 <template>
   <div v-if="videos.length" class="m-2 p-2 flex">
-    <div v-for="video in videos" :key="video.id" class="">
+    <div v-for="video in videos" :key="video.id" class="m-2">
      <a :href="'/video/watch/'+video.id">
       <img :src="'/storage/videoCover/'+video.cover" class="w-60">
       <p class="text-xl">{{video.title}}</p>

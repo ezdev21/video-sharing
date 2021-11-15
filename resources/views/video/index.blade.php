@@ -7,8 +7,8 @@
               <img src="/storage/videoCover/{{$video->cover}}" class="w-64 h-36">
               <div class="flex">
                 <img src="/storage/channelCover/{{$video->channel->cover}}" class="w-14 h-14 rounded-full my-auto mx-2">
-                <div>
-                  <p class="text-xl font-semibold">{{$video->title}}</p>
+                <div class="overflow-hidden">
+                  <p class="truncate text-lg font-semibold">{{$video->title}}</p>
                   <p class="text-md font-medium">{{$video->channel->name}}</p>
                   <p class="font-medium">
                     <span>{{$video->views}} views</span>

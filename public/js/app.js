@@ -39414,7 +39414,7 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-md" }, [
                 _c("span", [_vm._v(_vm._s(video.views) + " views")]),
-                _c("span", { staticClass: "font-bold" }, [_vm._v(".")]),
+                _c("span", { staticClass: "font-bold mx-1" }, [_vm._v(".")]),
                 _c("span", [_vm._v(" " + _vm._s(video.date))])
               ])
             ])
@@ -39708,7 +39708,7 @@ var render = function() {
                     }
                   ],
                   staticClass:
-                    "text-lg w-2/3 block h-40 m-2 p-2 rounded-lg border-2 border-gray-200",
+                    "text-lg w-2/3 block h-40 my-2 p-2 rounded-lg border-2 border-gray-200",
                   attrs: { name: "description", rows: "5", required: "" },
                   domProps: { value: _vm.body },
                   on: {
@@ -39723,7 +39723,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("input", {
                   staticClass:
-                    "rounded bg-green-500 text-white text-xl py-1 px-2",
+                    "rounded bg-blue-500 text-white text-xl py-1 px-2",
                   attrs: { type: "submit", value: "comment" }
                 })
               ]
@@ -40507,10 +40507,7 @@ var render = function() {
             )
           : _c(
               "div",
-              {
-                staticClass:
-                  "my-auto font-medium flex text-white text-xl text-xl"
-              },
+              { staticClass: "my-auto flex text-white text-xl text-xl" },
               [
                 _c(
                   "a",
@@ -40763,11 +40760,11 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: " text-xl font-meduim py-1 px-3 rounded",
+          staticClass: " text-2xl font-meduim py-2 px-4 rounded-lg",
           class: [
             _vm.subscribed
-              ? "bg-gray-400 text-gray-100"
-              : "bg-red-600 text-white"
+              ? "bg-gray-300 text-gray-700"
+              : "bg-blue-500 text-white"
           ],
           on: { click: _vm.subscribe }
         },

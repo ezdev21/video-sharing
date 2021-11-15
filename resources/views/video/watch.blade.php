@@ -9,11 +9,11 @@
                 </video>
             </div>
             <div class="w-full">
-             <div class="border-b-2 m-2 p-2 border-gray-300">
-                <p class="ml-2 text-2xl">{{$video->title}}</p>
+             <div class="border-b-2 my-2 py-2 border-gray-300">
+                <p class="ml-2 text-2xl font-medium">{{$video->title}}</p>
                 <p class="">
                     <span class="m-2 text-xl">{{$video->views}} views</span>
-                    <span class="m-2 text-xl">{{$video->created_at->format('M d y')}}</span>
+                    <span class="m-2 text-xl">{{$video->created_at->format('M d Y')}}</span>
                     <like-component video-id="{{$video->id}}" @auth user-id="{{Auth::user()->id}}"@endauth/>
                 </p>  
              </div>

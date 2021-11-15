@@ -50,7 +50,7 @@
         </svg>
        </button>   
      </div>
-     <div v-else class="my-auto font-medium flex text-white text-xl text-xl">
+     <div v-else class="my-auto flex text-white text-xl text-xl">
       <a href="/login" class="text-2xl text-blue-500 mx-2 my-auto px-4 py-2">sign in</a>
       <a href="/register" class="my-auto text-2xl my-auto text-white bg-blue-500 mx-2 my-2 rounded-3xl px-4 py-2">sign up</a>  
      </div>

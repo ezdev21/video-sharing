@@ -4,7 +4,7 @@
      <a :href="'/video/watch/'+video.id">
       <img :src="'/storage/videoCover/'+video.cover" class="w-60">
       <p class="text-xl">{{video.title}}</p>
-      <p class="text-md"><span>{{video.views}} views</span><span class="font-bold">.</span><span> {{video.date}}</span></p>
+      <p class="text-md"><span>{{video.views}} views</span><span class="font-bold mx-1">.</span><span> {{video.date}}</span></p>
      </a>
    </div>
   </div>

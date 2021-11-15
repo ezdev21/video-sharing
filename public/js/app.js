@@ -39238,7 +39238,7 @@ var render = function() {
       _c(
         "router-link",
         {
-          staticClass: "text-2xl text-bold px-3 py-1 mx-1",
+          staticClass: "hover:no-underline text-2xl text-bold px-3 py-1 mx-1",
           attrs: {
             "active-class": "border-gray-500 border-b-4",
             to: { name: "channelVideos", params: { channelId: _vm.channelId } }
@@ -39250,7 +39250,7 @@ var render = function() {
       _c(
         "router-link",
         {
-          staticClass: "text-2xl text-bold px-3 py-1 mx-1",
+          staticClass: "hover:no-underline text-2xl text-bold px-3 py-1 mx-1",
           attrs: {
             "active-class": "border-gray-500 border-b-4",
             to: { name: "playlists", params: { channelId: _vm.channelId } }
@@ -39262,7 +39262,7 @@ var render = function() {
       _c(
         "router-link",
         {
-          staticClass: "text-2xl text-bold px-3 py-1 mx-1",
+          staticClass: "hover:no-underline text-2xl text-bold px-3 py-1 mx-1",
           attrs: {
             "active-class": "border-gray-500 border-b-4",
             to: { name: "channels", params: { channelId: _vm.channelId } }
@@ -39274,7 +39274,7 @@ var render = function() {
       _c(
         "router-link",
         {
-          staticClass: "text-2xl text-bold px-3 py-1 mx-1",
+          staticClass: "hover:no-underline text-2xl text-bold px-3 py-1 mx-1",
           attrs: {
             "active-class": "border-gray-500 border-b-4",
             to: { name: "community", params: { channelId: _vm.channelId } }
@@ -39286,7 +39286,7 @@ var render = function() {
       _c(
         "router-link",
         {
-          staticClass: "text-2xl text-bold px-3 py-1 mx-1",
+          staticClass: "hover:no-underline text-2xl text-bold px-3 py-1 mx-1",
           attrs: {
             "active-class": "border-gray-500 border-b-4",
             to: { name: "about", params: { channelId: _vm.channelId } }
@@ -39298,7 +39298,7 @@ var render = function() {
       _c(
         "router-link",
         {
-          staticClass: "text-2xl text-bold px-3 py-1 mx-1",
+          staticClass: "hover:no-underline text-2xl text-bold px-3 py-1 mx-1",
           attrs: {
             "active-class": "border-gray-500 border-b-4",
             to: { name: "search", params: { channelId: _vm.channelId } }
@@ -40509,7 +40509,7 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "my-auto font-meduim flex text-white text-xl text-xl"
+                  "my-auto font-medium flex text-white text-xl text-xl"
               },
               [
                 _c(
@@ -40763,7 +40763,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: " text-xl  py-1 px-2 rounded",
+          staticClass: " text-xl font-meduim py-1 px-3 rounded",
           class: [
             _vm.subscribed
               ? "bg-gray-400 text-gray-100"

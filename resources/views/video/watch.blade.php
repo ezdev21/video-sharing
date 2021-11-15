@@ -19,7 +19,7 @@
              </div>
               <div class="relative">
                   <div class="max-w-max">
-                    <a href="{{route('channel.show',$video->channel->id)}}" class="max-w-max hover:no-underline">
+                    <a href="/channel/show/{{$video->channel->id}}/videos" class="max-w-max hover:no-underline">
                         <div class="flex mb-2">
                         <img src="/storage/channelCover/{{$video->channel->cover}}" alt=""
                             class="w-20 h-20 rounded-full inline" />

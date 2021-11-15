@@ -2568,22 +2568,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['userId'],
   data: function data() {
     return {
       user: {},
-      categoryId: 'all',
       searchQuery: '',
-      categories: [],
       userDropdownMenu: false
     };
   },
@@ -2656,7 +2646,9 @@ __webpack_require__.r(__webpack_exports__);
       }
     });
   },
-  methods: {}
+  methods: {
+    showNotifications: function showNotifications() {}
+  }
 });
 
 /***/ }),
@@ -39631,7 +39623,7 @@ var render = function() {
     _c(
       "svg",
       {
-        staticClass: "text-white h-8 w-8",
+        staticClass: "text-blue-500 h-8 w-8",
         attrs: {
           xmlns: "http://www.w3.org/2000/svg",
           fill: "none",
@@ -40279,7 +40271,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "flex justify-between bg-primary w-full shadow-xl py-2" },
+    { staticClass: "flex justify-between bg-gray-100 w-full shadow-xl py-2" },
     [
       _c("div", { staticClass: "flex" }, [
         _c("div", { staticClass: "flex mx-3 p-1" }, [
@@ -40288,7 +40280,7 @@ var render = function() {
               "svg",
               {
                 staticClass:
-                  "my-auto text-white h-10 w-10 hover:text-green-500",
+                  "font-semibold my-auto text-blue-500 h-10 w-10 hover:text-green-500",
                 attrs: {
                   xmlns: "http://www.w3.org/2000/svg",
                   fill: "none",
@@ -40358,7 +40350,7 @@ var render = function() {
                 "button",
                 {
                   staticClass:
-                    "capitalize bg-blue-800 rounded-r-3xl lg:rounded-r-3xl xl:rounded-r-3xl 2xl:rounded-r-3xl text-xl lg:text-3xl xl:text-2xl 2xl:text-2xl py-2 px-4 my-auto",
+                    "capitalize bg-blue-500 rounded-r-3xl lg:rounded-r-3xl xl:rounded-r-3xl 2xl:rounded-r-3xl text-xl lg:text-3xl xl:text-2xl 2xl:text-2xl py-2 px-4 my-auto",
                   attrs: { type: "submit" }
                 },
                 [
@@ -40497,7 +40489,7 @@ var render = function() {
                 _c(
                   "a",
                   {
-                    staticClass: "bg-blue-500 mx-2 my-auto px-4 py-2",
+                    staticClass: "text-blue-500 mx-2 my-auto px-4 py-2",
                     attrs: { href: "/login" }
                   },
                   [_vm._v("sign in")]
@@ -40507,7 +40499,7 @@ var render = function() {
                   "a",
                   {
                     staticClass:
-                      "my-auto bg-blue-800 mx-2 my-2 rounded-3xl px-4 py-2",
+                      "my-auto text-blue-500 mx-2 my-2 rounded-3xl px-4 py-2",
                     attrs: { href: "/register" }
                   },
                   [_vm._v("sign up")]
@@ -40577,7 +40569,10 @@ var staticRenderFns = [
             [
               _c(
                 "a",
-                { staticClass: "my-auto", attrs: { href: "/channel/create" } },
+                {
+                  staticClass: "my-auto text-blue-500",
+                  attrs: { href: "/channel/create" }
+                },
                 [_vm._v("create")]
               )
             ]
@@ -40589,7 +40584,10 @@ var staticRenderFns = [
             [
               _c(
                 "a",
-                { staticClass: "my-auto", attrs: { href: "/video/upload" } },
+                {
+                  staticClass: "my-auto text-blue-500",
+                  attrs: { href: "/video/upload" }
+                },
                 [_vm._v("upload")]
               )
             ]
@@ -40600,7 +40598,7 @@ var staticRenderFns = [
             { staticClass: "my-auto mx-2 hover:text-green-500 h-full p-1" },
             [
               _c("a", {
-                staticClass: "my-auto",
+                staticClass: "my-auto text-blue-500",
                 attrs: { href: "/collection" }
               })
             ]
@@ -40685,7 +40683,7 @@ var render = function() {
       _c(
         "svg",
         {
-          staticClass: "text-white h-10 w-10",
+          staticClass: "text-blue-500 h-10 w-10",
           attrs: {
             xmlns: "http://www.w3.org/2000/svg",
             fill: "none",

@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Video Sharing</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -21,6 +21,9 @@
 </head>
 <body>
  <div id="app" class="">
+  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+    @csrf
+  </form> 
   <div>
    <navigation-component @auth user-id="{{auth()->user()->id}}"@endauth/>
   </div>       

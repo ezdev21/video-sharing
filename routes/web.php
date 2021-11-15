@@ -7,30 +7,13 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/',[VideoController::class,'index'])->name('video.index');
 
-Route::get('/me',function(){
-  $client = \Softonic\GraphQL\ClientBuilder::build('http://127.0.0.1:8000/graphql-playground');
-  $query ='
-  query getVideos{
-    videos{
-      title
-      views
-      cover
-      source
-      channel{
-        name
-        cover
-      }
-    }
-  }
-  ';
-
-  $variables = [];
-  $response = $client->query($query, $variables);
-  dd($response->getData());
-});
-
 Auth::routes();
 Route::get('/home',[VideoController::class, 'index'])->name('home');
+
+Route::get('/navigation',function(Request $request){
+   $user=User::find($request->userId);
+   return response()->json(['user'=>$user]);
+});
 
 Route::post('search',[VideoController::class,'search'])->name('video.search');
 

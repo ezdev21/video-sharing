@@ -39623,7 +39623,7 @@ var render = function() {
     _c(
       "svg",
       {
-        staticClass: "text-blue-500 h-8 w-8",
+        staticClass: "text-white h-8 w-8",
         attrs: {
           xmlns: "http://www.w3.org/2000/svg",
           fill: "none",
@@ -40271,7 +40271,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "flex justify-between bg-gray-100 w-full shadow-xl py-2" },
+    { staticClass: "flex justify-between bg-blue-500 w-full shadow-xl py-1.5" },
     [
       _c("div", { staticClass: "flex" }, [
         _c("div", { staticClass: "flex mx-3 p-1" }, [
@@ -40280,7 +40280,7 @@ var render = function() {
               "svg",
               {
                 staticClass:
-                  "font-semibold my-auto text-blue-500 h-10 w-10 hover:text-green-500",
+                  "font-semibold my-auto text-white h-10 w-10 hover:text-green-500",
                 attrs: {
                   xmlns: "http://www.w3.org/2000/svg",
                   fill: "none",
@@ -40303,7 +40303,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "rounded-4xl my-auto py-auto mx-5" }, [
+        _c("div", { staticClass: "rounded-4xl my-auto py-auto mx-3" }, [
           _c(
             "form",
             {
@@ -40326,7 +40326,7 @@ var render = function() {
                   }
                 ],
                 staticClass:
-                  "w-96 py-2 px-3 text-lg lg:text-xl xl:text-xl 2xl:text-xl outline-none focus:border-b-2 border-tiruhakim rounded-l-3xl",
+                  "w-96 py-2.5 px-3 text-lg lg:text-xl xl:text-xl 2xl:text-xl outline-none focus:border-b-2 border-tiruhakim rounded-l-3xl",
                 attrs: {
                   type: "text",
                   required: "",
@@ -40350,7 +40350,7 @@ var render = function() {
                 "button",
                 {
                   staticClass:
-                    "capitalize bg-blue-500 rounded-r-3xl lg:rounded-r-3xl xl:rounded-r-3xl 2xl:rounded-r-3xl text-xl lg:text-3xl xl:text-2xl 2xl:text-2xl py-2 px-4 my-auto",
+                    "capitalize bg-blue-700 rounded-r-3xl lg:rounded-r-3xl xl:rounded-r-3xl 2xl:rounded-r-3xl text-xl lg:text-3xl xl:text-2xl 2xl:text-2xl py-2.5 px-4 my-auto",
                   attrs: { type: "submit" }
                 },
                 [
@@ -40425,7 +40425,7 @@ var render = function() {
                 _c(
                   "svg",
                   {
-                    staticClass: "text-white h-10 w-14",
+                    staticClass: "text-blue-500 h-10 w-14",
                     attrs: {
                       xmlns: "http://www.w3.org/2000/svg",
                       fill: "none",
@@ -40450,7 +40450,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "mx-3" }, [
+      _c("div", { staticClass: "mx-3 my-auto" }, [
         _vm.userId
           ? _c(
               "div",
@@ -40483,13 +40483,13 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "font-semibold flex text-white text-xl w-full text-xl"
+                  "my-auto font-semibold flex text-white text-xl text-xl"
               },
               [
                 _c(
                   "a",
                   {
-                    staticClass: "text-blue-500 mx-2 my-auto px-4 py-2",
+                    staticClass: "text-xl text-white mx-2 my-auto px-4 py-2",
                     attrs: { href: "/login" }
                   },
                   [_vm._v("sign in")]
@@ -40499,7 +40499,7 @@ var render = function() {
                   "a",
                   {
                     staticClass:
-                      "my-auto text-blue-500 mx-2 my-2 rounded-3xl px-4 py-2",
+                      "my-auto text-xl my-auto text-white bg-blue-700 mx-2 my-2 rounded-3xl px-4 py-2",
                     attrs: { href: "/register" }
                   },
                   [_vm._v("sign up")]
@@ -40559,7 +40559,7 @@ var staticRenderFns = [
       "div",
       {
         staticClass:
-          "font-semibold text-xl my-auto text-white text-xl mx-5 hidden lg:inline xl:inline 2xl:inline"
+          "font-semibold my-auto text-white text-xl mx-5 hidden lg:inline xl:inline 2xl:inline"
       },
       [
         _c("ul", { staticClass: "flex list-style-none h-full" }, [
@@ -40570,7 +40570,7 @@ var staticRenderFns = [
               _c(
                 "a",
                 {
-                  staticClass: "my-auto text-blue-500",
+                  staticClass: "text-2xl my-auto text-white",
                   attrs: { href: "/channel/create" }
                 },
                 [_vm._v("create")]
@@ -40585,7 +40585,7 @@ var staticRenderFns = [
               _c(
                 "a",
                 {
-                  staticClass: "my-auto text-blue-500",
+                  staticClass: "text-2xl my-auto white",
                   attrs: { href: "/video/upload" }
                 },
                 [_vm._v("upload")]
@@ -40598,7 +40598,7 @@ var staticRenderFns = [
             { staticClass: "my-auto mx-2 hover:text-green-500 h-full p-1" },
             [
               _c("a", {
-                staticClass: "my-auto text-blue-500",
+                staticClass: "text-2xl my-auto text-white",
                 attrs: { href: "/collection" }
               })
             ]
@@ -40683,7 +40683,7 @@ var render = function() {
       _c(
         "svg",
         {
-          staticClass: "text-blue-500 h-10 w-10",
+          staticClass: "text-white h-10 w-10",
           attrs: {
             xmlns: "http://www.w3.org/2000/svg",
             fill: "none",

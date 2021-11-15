@@ -43,8 +43,11 @@
    </div>
    <div class="mx-3 my-auto"> 
      <div v-if="userId" class="my-auto hidden lg:inline xl:inline 2xl:inline">
-       <button @click="userDropdownMenu=true" class="my-auto">
+       <button @click="userDropdownMenu=true" class="my-auto flex">
         <span class="text-xl font-semibold capitalize text-white text-semibold">{{user.name}}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="my-auto text-white h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
        </button>   
      </div>
      <div v-else class="my-auto font-semibold flex text-white text-xl text-xl">
@@ -53,10 +56,10 @@
      </div> 
      <div v-if="userDropdownMenu" class="fixed z-20 text-xl bg-gray-100 top-2 right-2">
       <ul>
-       <li class="hover:bg-blue-200 px-5 py-1"><a href="/">home</a></li>
-       <li class="hover:bg-blue-200 px-5 py-1"><a href="/profile/edit">my profile</a></li>
-       <li class="hover:bg-blue-200 px-5 py-1"><a href="/user/products">my products</a></li>
-       <li class="hover:bg-blue-200 px-5 py-1"><a href="/product/create">add product</a></li>
+       <li class="hover:bg-blue-200 px-5 py-1"><a href="/">Home</a></li>
+       <li class="hover:bg-blue-200 px-5 py-1"><a href="/channel/creat">create channel</a></li>
+       <li class="hover:bg-blue-200 px-5 py-1"><a href="/video/upload">upload videos</a></li>
+       <li class="hover:bg-blue-200 px-5 py-1"><a href="/profile">my profile</a></li>
        <li class="hover:bg-blue-200 px-5 py-1"><a href="/order">order</a></li>
        <li class="hover:bg-blue-200 px-5 py-1"><a href="/about">contact us</a></li>
        <li class="hover:bg-blue-200 px-5 py-1">

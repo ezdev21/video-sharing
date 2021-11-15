@@ -2568,6 +2568,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['userId'],
   data: function data() {
@@ -2586,7 +2589,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     }).then(function (res) {
       _this.user = res.data.user;
-      _this.categories = res.data.categories;
     });
   },
   methods: {
@@ -40334,15 +40336,12 @@ var render = function() {
                 },
                 domProps: { value: _vm.searchQuery },
                 on: {
-                  input: [
-                    function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.searchQuery = $event.target.value
-                    },
-                    _vm.filter
-                  ]
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.searchQuery = $event.target.value
+                  }
                 }
               }),
               _vm._v(" "),
@@ -40459,7 +40458,7 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "my-auto",
+                    staticClass: "my-auto flex",
                     on: {
                       click: function($event) {
                         _vm.userDropdownMenu = true
@@ -40474,6 +40473,29 @@ var render = function() {
                           "text-xl font-semibold capitalize text-white text-semibold"
                       },
                       [_vm._v(_vm._s(_vm.user.name))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "text-white h-6 w-6",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          fill: "none",
+                          viewBox: "0 0 24 24",
+                          stroke: "currentColor"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                            "stroke-width": "2",
+                            d: "M19 9l-7 7-7-7"
+                          }
+                        })
+                      ]
                     )
                   ]
                 )
@@ -40563,46 +40585,34 @@ var staticRenderFns = [
       },
       [
         _c("ul", { staticClass: "flex list-style-none h-full" }, [
-          _c(
-            "li",
-            { staticClass: "my-auto mx-2 hover:text-green-500 h-full p-1" },
-            [
-              _c(
-                "a",
-                {
-                  staticClass: "text-2xl my-auto text-white",
-                  attrs: { href: "/channel/create" }
-                },
-                [_vm._v("create")]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "li",
-            { staticClass: " my-auto mx-2 hover:text-green-500 h-full p-1" },
-            [
-              _c(
-                "a",
-                {
-                  staticClass: "text-2xl my-auto white",
-                  attrs: { href: "/video/upload" }
-                },
-                [_vm._v("upload")]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "li",
-            { staticClass: "my-auto mx-2 hover:text-green-500 h-full p-1" },
-            [
-              _c("a", {
+          _c("li", { staticClass: "my-auto mx-2 h-full p-1" }, [
+            _c(
+              "a",
+              {
                 staticClass: "text-2xl my-auto text-white",
-                attrs: { href: "/collection" }
-              })
-            ]
-          )
+                attrs: { href: "/channel/create" }
+              },
+              [_vm._v("create")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: " my-auto mx-2 h-full p-1" }, [
+            _c(
+              "a",
+              {
+                staticClass: "text-2xl my-auto white",
+                attrs: { href: "/video/upload" }
+              },
+              [_vm._v("upload")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "my-auto mx-2 h-full p-1" }, [
+            _c("a", {
+              staticClass: "text-2xl my-auto text-white",
+              attrs: { href: "/collection" }
+            })
+          ])
         ])
       ]
     )

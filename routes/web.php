@@ -4,6 +4,8 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 Route::get('/',[VideoController::class,'index'])->name('video.index');
 

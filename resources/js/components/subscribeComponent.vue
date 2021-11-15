@@ -1,7 +1,7 @@
 <template>
   <div>
    <div class="">
-    <button @click="subscribe" class=" text-xl  py-1 px-2 rounded"
+    <button @click="subscribe" class=" text-xl font-meduim py-1 px-3 rounded"
     :class="[subscribed? 'bg-gray-400 text-gray-100' : 'bg-red-600 text-white']"
     >{{subscribeText}}</button>
    </div>

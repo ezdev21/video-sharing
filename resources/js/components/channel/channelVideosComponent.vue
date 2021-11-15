@@ -4,7 +4,7 @@
      <a :href="'/video/watch/'+video.id">
       <img :src="'/storage/videoCover/'+video.cover" class="w-60">
       <p class="text-xl">{{video.title}}</p>
-      <p class="text-md"><span>{{video.views}} views</span><span> {{video.date}}</span></p>
+      <p class="text-md"><span>{{video.views}} views</span><span class="font-bold">.</span><span> {{video.date}}</span></p>
      </a>
    </div>
   </div>
@@ -28,9 +28,11 @@ export default {
            this.videos.forEach(video=>{
              let date=new Date(video.created_at)
              let y=date.getFullYear();
-             let m=date.getMonth()+1;
+             let m=date.getMonth();
+             let months=["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"]
+             let mon=months[m];
              let d=date.getDate();
-             video.date=[y,m,d].join('-');
+             video.date=[mon,d,y].join(' ');
            })
           }); 
     }   

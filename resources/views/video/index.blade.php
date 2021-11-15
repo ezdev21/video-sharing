@@ -3,16 +3,17 @@
     <div class="flex flex-wrap px-5">
       @foreach ($videos as $video)
         <a href="{{route('video.watch',$video->id)}}" class="hover:no-underline">
-          <div class="p-1 m-2 shadow-lg">
-              <img src="/storage/videoCover/{{$video->cover}}" class="w-60 h-36">
+          <div class="p-1 m-2">
+              <img src="/storage/videoCover/{{$video->cover}}" class="w-64 h-36">
               <div class="flex">
-                <img src="/storage/channelCover/{{$video->channel->cover}}" class="w-10 h-10 rounded-full my-auto mx-2">
+                <img src="/storage/channelCover/{{$video->channel->cover}}" class="w-14 h-14 rounded-full my-auto mx-2">
                 <div>
-                  <p class="text-xl">{{$video->title}}</p>
-                  <p class="text-lg">{{$video->channel->name}}</p>
-                  <p>
+                  <p class="text-xl font-semibold">{{$video->title}}</p>
+                  <p class="text-md font-medium">{{$video->channel->name}}</p>
+                  <p class="font-medium">
                     <span>{{$video->views}} views</span>
-                    <span>{{$video->created_at->toDateString()}}</span>
+                    <span class="my-auto font-bold">.</span>
+                    <span>{{$video->created_at->format('M d Y')}}</span>
                   </p>
                 </div>
               </div>

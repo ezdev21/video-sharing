@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="flex flex-col lg:flex-row xl:flex-row 2xl:flex-row">
-        <div class="flex-auto w-full lg:w-3/5xl:w-3/5 2xl:w-3/5 m-2">
+        <div class="flex-auto w-full lg:w-2/3 xl:w-2/3 2xl:w-2/3 mx-4 mb-4 mt-2">
             <div class="w-full bg-black">
                 <video controls class="w-full">
                     <source  src="/storage/video/{{$video->source}}" type="video/mp4"/>
@@ -13,7 +13,7 @@
                 <p class="ml-2 text-2xl">{{$video->title}}</p>
                 <p class="">
                     <span class="m-2 text-xl">{{$video->views}} views</span>
-                    <span class="m-2 text-xl">{{$video->created_at->toDateString()}}</span>
+                    <span class="m-2 text-xl">{{$video->created_at->format('M d y')}}</span>
                     <like-component video-id="{{$video->id}}" @auth user-id="{{Auth::user()->id}}"@endauth/>
                 </p>  
              </div>
@@ -24,7 +24,7 @@
                         <img src="/storage/channelCover/{{$video->channel->cover}}" alt=""
                             class="w-20 h-20 rounded-full inline" />
                         <div class="ml-3 mt-2">
-                          <p class="text-xl font-bold">{{$video->channel->name}}</p>
+                          <p class="text-xl font-semibold">{{$video->channel->name}}</p>
                           <p class="text-xl">{{$video->channel->subscribes->count()}} subscribers</p>
                         </div>  
                         </div>
@@ -38,17 +38,18 @@
             </div>
             <comment-component video-id="{{$video->id}}" @auth user-id="{{Auth::user()->id}}" @endauth/>
         </div>
-        <div class="flex-auto md:block justify-center">
+        <div class="flex-auto md:block">
             @foreach ($recommendedVideos as $video)
             <a href="{{route('video.watch',$video->id)}}" class="hover:no-underline hover:text-black">
-                <div class="flex flex-auto mx-3 my-2">
+                <div class="flex flex-auto my-2">
                     <img src="/storage/videoCover/{{$video->cover}}" class="w-60 h-36" alt="">
                     <div class="mx-2">
-                    <p class="text-xl">{{$video->title}}</p>
-                    <p class="text-lg">{{$video->channel->name}}</p>
-                    <p>
-                    <span>{{$video->views}} views</span>
-                    <span>{{$video->updated_at->format('Y-m-d')}}</span>
+                    <p class="text-xl font-medium">{{$video->title}}</p>
+                    <p class="text-md font-medium">{{$video->channel->name}}</p>
+                    <p class="font-medium">
+                     <span>{{$video->views}} views</span>
+                     <span class="my-auto font-bold">.</span>
+                     <span>{{$video->created_at->format('M d Y')}}</span>
                     </p>
                     </div>
                 </div>

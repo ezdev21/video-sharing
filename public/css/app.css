@@ -42777,15 +42777,15 @@ video {
 }
 
 .text-first{
-  color: #5b9aa0;
+  color: rgb(218, 10, 51);
 }
 
 .bg-first{
-  background-color: #5b9aa0;
+  background-color: rgb(218, 10, 51);
 }
 
 .bg-second{
-  background-color: #295c61;
+  background-color: rgb(168, 6, 38);
 }
 
 @media (min-width: 640px) {

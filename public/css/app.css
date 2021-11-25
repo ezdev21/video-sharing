@@ -42776,6 +42776,18 @@ video {
   --tw-backdrop-sepia: sepia(100%);
 }
 
+.text-first{
+  color: #5b9aa0;
+}
+
+.bg-first{
+  background-color: #5b9aa0;
+}
+
+.bg-second{
+  background-color: #295c61;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

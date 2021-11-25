@@ -40076,7 +40076,7 @@ var render = function() {
         "svg",
         {
           staticClass: " h-10 w-10",
-          class: [_vm.liked ? "fill-current text-green-500" : ""],
+          class: [_vm.liked ? "fill-current text-first" : ""],
           attrs: {
             xmlns: "http://www.w3.org/2000/svg",
             fill: "none",
@@ -40107,7 +40107,7 @@ var render = function() {
         "svg",
         {
           staticClass: " h-10 w-10",
-          class: [_vm.disliked ? "fill-current text-red-500" : ""],
+          class: [_vm.disliked ? "fill-current text-first" : ""],
           attrs: {
             xmlns: "http://www.w3.org/2000/svg",
             fill: "none",
@@ -40276,7 +40276,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "flex justify-between bg-green-500 w-full shadow-xl py-1" },
+    { staticClass: "flex justify-between bg-first w-full shadow-xl py-1" },
     [
       _c("div", { staticClass: "flex" }, [
         _c("div", { staticClass: "flex mx-3 p-1" }, [
@@ -40352,7 +40352,7 @@ var render = function() {
                 "button",
                 {
                   staticClass:
-                    "capitalize bg-green-700 rounded-r-3xl lg:rounded-r-3xl xl:rounded-r-3xl 2xl:rounded-r-3xl text-xl lg:text-3xl xl:text-2xl 2xl:text-2xl py-2.5 px-4 my-auto",
+                    "capitalize bg-second rounded-r-3xl lg:rounded-r-3xl xl:rounded-r-3xl 2xl:rounded-r-3xl text-xl lg:text-3xl xl:text-2xl 2xl:text-2xl py-2.5 px-4 my-auto",
                   attrs: { type: "submit" }
                 },
                 [
@@ -40511,8 +40511,7 @@ var render = function() {
                 _c(
                   "a",
                   {
-                    staticClass:
-                      "text-2xl text-green-500 mx-2 my-auto px-4 py-2",
+                    staticClass: "text-2xl text-white mx-2 my-auto px-4 py-2",
                     attrs: { href: "/login" }
                   },
                   [_vm._v("sign in")]
@@ -40522,7 +40521,7 @@ var render = function() {
                   "a",
                   {
                     staticClass:
-                      "my-auto text-2xl my-auto text-white bg-green-500 mx-2 my-2 rounded-3xl px-4 py-2",
+                      "my-auto text-2xl my-auto text-white bg-second mx-2 my-2 rounded-3xl px-4 py-2",
                     attrs: { href: "/register" }
                   },
                   [_vm._v("sign up")]
@@ -40761,9 +40760,7 @@ var render = function() {
         {
           staticClass: " text-2xl font-meduim py-2 px-4 rounded-lg",
           class: [
-            _vm.subscribed
-              ? "bg-gray-300 text-gray-700"
-              : "bg-green-500 text-white"
+            _vm.subscribed ? "bg-gray-300 text-gray-700" : "bg-first text-white"
           ],
           on: { click: _vm.subscribe }
         },

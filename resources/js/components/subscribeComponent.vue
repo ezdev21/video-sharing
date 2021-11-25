@@ -2,7 +2,7 @@
   <div>
    <div class="">
     <button @click="subscribe" class=" text-2xl font-meduim py-2 px-4 rounded-lg"
-    :class="[subscribed? 'bg-gray-300 text-gray-700' : 'bg-green-500 text-white']"
+    :class="[subscribed? 'bg-gray-300 text-gray-700' : 'bg-first text-white']"
     >{{subscribeText}}</button>
    </div>
   <div v-if="subscribing" class="fixed z-20 bottom-1/3 left-1/3 bg-white p-10 flex flex-col justify-center items-center rounded-xl">

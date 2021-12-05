@@ -12,11 +12,6 @@ Route::get('/',[VideoController::class,'index'])->name('video.index');
 Auth::routes();
 Route::get('/home',[VideoController::class, 'index'])->name('home');
 
-Route::get('/navigation',function(Request $request){
-   $user=User::find($request->userId);
-   return response()->json(['user'=>$user]);
-});
-
 Route::post('search',[VideoController::class,'search'])->name('video.search');
 
 Route::prefix('video')->group(function(){
@@ -51,4 +46,9 @@ Route::prefix('comment')->group(function(){
   Route::delete('delete',[CommentController::class,'destroy'])->name('comment.delete');
   Route::post('like',[CommentController::class,'getLike']);
   Route::post('dislike',[CommentController::class,'postLike']);
+});
+
+Route::prefix('user')->group(function(){
+  Route::post('notifications',[UserController::class,'notifications']);
+  Route::patch('notification/mark-as-read',[UserController::class,'readNotification']);
 });

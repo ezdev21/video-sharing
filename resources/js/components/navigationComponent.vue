@@ -23,11 +23,14 @@
       <li class="my-auto mx-2 h-full p-1"><a href="/channel/create" class="text-2xl my-auto">create</a></li>
       <li class=" my-auto mx-2 h-full p-1"><a href="/video/upload" class="text-2xl my-auto">upload</a></li>
       <li class="my-auto mx-2 h-full p-1"><a href="/collection" class="text-2xl my-auto"></a></li>   
+      <li class="my-auto mx-2 h-full p-1"><a href="/stastics/show" class="my-auto text-2xl">stastics</a></li>
      </ul>   
     </div>
     <div class="my-auto hidden md:flex lg:flex xl:flex 2xl:flex mx-2">
       <div class="my-auto mx-3">
        <collection-component :userId="userId"/>   
+      </div>
+      <div>
       </div>
       <div class="my-auto mx-3">
        <notifications-component :userId="userId"/>   

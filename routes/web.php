@@ -14,6 +14,10 @@ Route::get('/home',[VideoController::class, 'index'])->name('home');
 
 Route::post('search',[VideoController::class,'search'])->name('video.search');
 
+Route::prefix('stastics')->group(function(){
+  Route::get('/show',);
+});  
+
 Route::prefix('video')->group(function(){
   Route::get('upload',[VideoController::class,'create'])->name('video.create');
   Route::post('upload',[VideoController::class,'store'])->name('video.store');

@@ -13,7 +13,7 @@
                 <p class="ml-2 text-2xl font-medium">{{$video->title}}</p>
                 <p class="">
                     <span class="m-2 text-xl">{{$video->views}} views</span>
-                    <span class="m-2 text-xl">{{$video->created_at->format('M d Y')}}</span>
+                    <span class="m-2 text-xl">{{$video->created_at}}</span>
                     <like-component video-id="{{$video->id}}" @auth user-id="{{Auth::user()->id}}"@endauth/>
                 </p>  
              </div>
@@ -49,7 +49,7 @@
                     <p class="font-medium">
                      <span>{{$video->views}} views</span>
                      <span class="my-auto font-bold">.</span>
-                     <span>{{$video->created_at->format('M d Y')}}</span>
+                     <span>{{$video->created_at}}</span>
                     </p>
                     </div>
                 </div>

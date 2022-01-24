@@ -22,12 +22,21 @@ class VideoController extends Controller
     {
         $searchQuery=$request->searchQuery;
         $channels=Channel::where('name','like',"%${searchQuery}%")->get();
+        foreach ($channels as $channel) {
+          $channel->created_at=$channel->created_at->diffForHumans();
+        }
         $videos=Video::where('title','like',"%${searchQuery}%")->get();
+        foreach ($videos as $video) {
+          $video->created_at=$video->created_at->diffForHumans();
+        }
         return view('video.search',['videos'=>$videos,'channels'=>$channels,'searchQuery'=>$searchQuery]);
     }
     public function index()
     {
        $videos=Video::latest()->take(100)->inRandomOrder()->get();
+       foreach ($videos as $video) {
+        $video->created_at=$video->created_at->diffForHumans();
+      }
        return view('video.index',['videos'=>$videos]);
     }
 
@@ -87,7 +96,11 @@ class VideoController extends Controller
     public function show($id)
     { 
         $recommendedVideos=Video::latest()->get();
+        foreach ($recommendedVideos as $video) {
+          $video->created_at=$video->created_at->diffForHumans();
+        }
         $video=Video::findOrFail($id);
+        $video->created_at=$video->created_at->diffForHumans();
         $video->views+=1;
         $video->save();
         return view('video.watch',['video'=>$video,'recommendedVideos'=>$recommendedVideos]);
@@ -170,6 +183,7 @@ class VideoController extends Controller
       $video=Video::find($request->videoId);
       $comments=$video->comments;
       foreach($comments as $comment){
+        $comment->created_at=$comment->created_at->diffForHumans();
         $user=User::find($comment->user_id);  
         $comment->user=$user;
         $comment->totalLikes=DB::table('comment_user')->where([['comment_id',$comment->id],['type','like']])->count();

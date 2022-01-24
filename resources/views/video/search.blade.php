@@ -13,7 +13,7 @@
             <p class="text-2xl">{{$channel->name}}</p>
             <p>
               <span class="text-lg">{{$channel->subscribes->count()}} subscribers</span>
-              <span>{{$channel->created_at->toDateString()}}</span>
+              <span>{{$channel->created_at}}</span>
             </p>
             <p class="text-lg">{{$channel->description}}</p>
           </div>
@@ -35,7 +35,7 @@
             <p class="text-xl m-1 font-semibold">{{$video->title}}</p>
             <p class="m-1">
               <span>{{$video->views}} views</span>
-              <span>{{$video->created_at->toDateString()}}</span>
+              <span>{{$video->created_at}}</span>
             </p>
             <div class="flex">
               <img src="/storage/channelCover/{{$video->channel->cover}}" class="w-12 h-12 rounded-full my-auto" alt="">

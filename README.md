@@ -1,1 +1,1 @@
-![video-sharing](https://user-images.githubusercontent.com/78965149/145209848-768ea3de-2906-4e91-a911-b1120668dc3d.png)
+![video-sharing](https://user-images.githubusercontent.com/78965149/182705961-462e6618-0c07-421b-8d58-4b9530a9a910.png)

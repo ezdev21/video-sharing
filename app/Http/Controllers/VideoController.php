@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VideoFormRequest;
+use App\Jobs\UploadVideo;
 use App\Models\Video;
 use App\Models\Channel;
 use Illuminate\Http\Request;
@@ -62,7 +63,7 @@ class VideoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(VideoFormRequest $request)
-    { 
+    {
         $video=new Video;
         $video->title=$request->title;
         $video->description=$request->description;
@@ -76,13 +77,14 @@ class VideoController extends Controller
         $video->source=$video->id.'.'.$videoExtension;
         $video->save();
         $request->cover->storeAS('videoCover',$video->cover,'public');
-        $request->video->storeAs('video',$video->source,'public');
+        UploadVideo::dispatch($video->source,$request);
+        //$request->video->storeAs('video',$video->source,'public');
          $channel=Channel::find($video->channel_id);
          $subscribers=$channel->subscribes;
          if($subscribers){
             foreach($subscribers as $subscriber){
                 $subscriber->notify(new ChannelNewVideo($channel,$video));
-            }  
+            }
          }
          return redirect()->route('home');
     }
@@ -94,7 +96,7 @@ class VideoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { 
+    {
         $recommendedVideos=Video::latest()->get();
         foreach ($recommendedVideos as $video) {
           $video->created_at=$video->created_at->diffForHumans();
@@ -140,9 +142,9 @@ class VideoController extends Controller
         //
     }
     public function getLike(Request $request)
-    { 
+    {
       $totalLikes=DB::table('user_video')->
-      where([['user_id',$request->userId],['video_id',$request->videoId],['type','like']])->count(); 
+      where([['user_id',$request->userId],['video_id',$request->videoId],['type','like']])->count();
       $totalDislikes=DB::table('user_video')->
       where([['user_id',$request->userId],['video_id',$request->videoId],['type','dislike']])->count();
       if(DB::table('user_video')->
@@ -175,16 +177,16 @@ class VideoController extends Controller
         }
         else{
          DB::table('user_video')->insert(['user_id'=>$request->userId,'video_id'=>$request->videoId,'type'=>$request->type]);
-        }  
+        }
       }
     }
     public function comments(Request $request)
-    { 
+    {
       $video=Video::find($request->videoId);
       $comments=$video->comments;
       foreach($comments as $comment){
         $comment->created_at=$comment->created_at->diffForHumans();
-        $user=User::find($comment->user_id);  
+        $user=User::find($comment->user_id);
         $comment->user=$user;
         $comment->totalLikes=DB::table('comment_user')->where([['comment_id',$comment->id],['type','like']])->count();
         $comment->totalDislikes=DB::table('comment_user')->where([['comment_id',$comment->id],['type','dislike']])->count();
@@ -193,13 +195,13 @@ class VideoController extends Controller
           $comment->status='liked';
         }
         else if(DB::table('comment_user')->where([['user_id',$request->userId],['comment_id',$comment->id],['type','dislike']])->exists()){
-          $comment->status='disliked';   
+          $comment->status='disliked';
         }
         else{
-          $comment->status='unknown';  
+          $comment->status='unknown';
         }
       }
-      $user=User::find($request->userId); 
+      $user=User::find($request->userId);
       return response()->json(['comments'=>$comments,'user'=>$user]);
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Http\Request;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
@@ -18,9 +19,11 @@ class UploadVideo implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+    public $request,$filename;
+    public function __construct($filename,Request $request)
     {
-        //
+        $this->filename=$filename;
+        $this->request=$request;
     }
 
     /**
@@ -30,6 +33,6 @@ class UploadVideo implements ShouldQueue
      */
     public function handle()
     {
-        //
+        $this->request->video->storeAs('video',$this->filename,'public');
     }
 }

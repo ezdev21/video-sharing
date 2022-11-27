@@ -19,25 +19,23 @@ class VideoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+       $this->middleware('auth',['create','store','edit','update','delete']);
+    }
+
     public function search(Request $request)
     {
         $searchQuery=$request->searchQuery;
         $channels=Channel::where('name','like',"%${searchQuery}%")->get();
-        foreach ($channels as $channel) {
-          $channel->created_at=$channel->created_at->diffForHumans();
-        }
         $videos=Video::where('title','like',"%${searchQuery}%")->get();
-        foreach ($videos as $video) {
-          $video->created_at=$video->created_at->diffForHumans();
-        }
         return view('video.search',['videos'=>$videos,'channels'=>$channels,'searchQuery'=>$searchQuery]);
     }
+
     public function index()
     {
+       //video recommendation system will be done in the future
        $videos=Video::latest()->take(100)->inRandomOrder()->get();
-       foreach ($videos as $video) {
-        $video->created_at=$video->created_at->diffForHumans();
-      }
        return view('video.index',['videos'=>$videos]);
     }
 
@@ -51,7 +49,6 @@ class VideoController extends Controller
         // if(Auth::user()->channel){
         //     return view('video.upload');
         // }
-        //return redirect()->route('login');
         //return redirect()->route('channel.create');
         return view('video.upload');
     }
@@ -95,14 +92,9 @@ class VideoController extends Controller
      * @param  \App\Models\Video  $video
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Video $video)
     {
-        $recommendedVideos=Video::latest()->get();
-        foreach ($recommendedVideos as $video) {
-          $video->created_at=$video->created_at->diffForHumans();
-        }
-        $video=Video::findOrFail($id);
-        $video->created_at=$video->created_at->diffForHumans();
+        $recommendedVideos=Video::limit(20)->latest()->get();
         $video->views+=1;
         $video->save();
         return view('video.watch',['video'=>$video,'recommendedVideos'=>$recommendedVideos]);
@@ -141,6 +133,7 @@ class VideoController extends Controller
     {
         //
     }
+
     public function getLike(Request $request)
     {
       $totalLikes=DB::table('user_video')->
@@ -166,6 +159,7 @@ class VideoController extends Controller
        return response()->json(['liked'=>$liked,'disliked'=>$disliked,
        'totalLikes'=>$totalLikes,'totalDislikes'=>$totalDislikes]);
     }
+
     public function postLike(Request $request)
     {
       if($request->status){
@@ -180,6 +174,7 @@ class VideoController extends Controller
         }
       }
     }
+
     public function comments(Request $request)
     {
       $video=Video::find($request->videoId);

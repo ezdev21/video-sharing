@@ -13,7 +13,7 @@
                   <p class="font-medium">
                     <span>{{$video->views}} views</span>
                     <span class="my-auto font-bold">.</span>
-                    <span>{{$video->created_at}}</span>
+                    <span>{{$video->created_at->diffForHumans()}}</span>
                   </p>
                 </div>
               </div>

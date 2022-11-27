@@ -13,7 +13,7 @@
             <p class="text-2xl">{{$channel->name}}</p>
             <p>
               <span class="text-lg">{{$channel->subscribes->count()}} subscribers</span>
-              <span>{{$channel->created_at}}</span>
+              <span>{{$channel->created_at->diffForHumans()}}</span>
             </p>
             <p class="text-lg">{{$channel->description}}</p>
           </div>
@@ -23,7 +23,7 @@
         <div class="my-auto">
             <subscribe-component channel-id="{{$channel->id}}" @auth user-id="{{Auth::user()->id}}" @endauth/>
         </div>
-      </div> 
+      </div>
     @endforeach
     </div>
     <div class="w-max">
@@ -35,7 +35,7 @@
             <p class="text-xl m-1 font-semibold">{{$video->title}}</p>
             <p class="m-1">
               <span>{{$video->views}} views</span>
-              <span>{{$video->created_at}}</span>
+              <span>{{$video->created_at->diffForHumans()}}</span>
             </p>
             <div class="flex">
               <img src="/storage/channelCover/{{$video->channel->cover}}" class="w-12 h-12 rounded-full my-auto" alt="">
@@ -46,9 +46,9 @@
         </div>
       </a>
       @endforeach
-    </div> 
+    </div>
   @else
-   <p class="text-2xl text-red=500 mx-10">opps nothing is found like {{$searchQuery}}</p>  
+   <p class="text-2xl text-red=500 mx-10">opps nothing is found like {{$searchQuery}}</p>
   @endif
  </div>
 @endsection

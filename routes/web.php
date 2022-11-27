@@ -1,11 +1,10 @@
 <?php
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\StasticsController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use Illuminate\Http\Request;
 
 Route::get('/',[VideoController::class,'index'])->name('video.index');
 
@@ -15,8 +14,8 @@ Route::get('/home',[VideoController::class, 'index'])->name('home');
 Route::post('search',[VideoController::class,'search'])->name('video.search');
 
 Route::prefix('stastics')->group(function(){
-  Route::get('/show',);
-});  
+  Route::get('/show',StasticsController::class,'index');
+});
 
 Route::prefix('video')->group(function(){
   Route::get('upload',[VideoController::class,'create'])->name('video.create');

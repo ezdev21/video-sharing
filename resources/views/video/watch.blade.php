@@ -13,9 +13,9 @@
                 <p class="ml-2 text-2xl font-medium">{{$video->title}}</p>
                 <p class="">
                     <span class="m-2 text-xl">{{$video->views}} views</span>
-                    <span class="m-2 text-xl">{{$video->created_at}}</span>
+                    <span class="m-2 text-xl">{{$video->created_at->diffForHumans()}}</span>
                     <like-component video-id="{{$video->id}}" @auth user-id="{{Auth::user()->id}}"@endauth/>
-                </p>  
+                </p>
              </div>
               <div class="relative">
                   <div class="max-w-max">
@@ -26,15 +26,15 @@
                         <div class="ml-3 mt-2">
                           <p class="text-xl font-semibold">{{$video->channel->name}}</p>
                           <p class="text-xl">{{$video->channel->subscribes->count()}} subscribers</p>
-                        </div>  
+                        </div>
                         </div>
                     </a>
                   </div>
                    <p class="text-lg">{{$video->description}}</p>
                    <div class="absolute top-0 right-0">
-                    <subscribe-component channel-id="{{$video->channel->id}}" @auth user-id="{{Auth::user()->id}}" @endauth/>   
+                    <subscribe-component channel-id="{{$video->channel->id}}" @auth user-id="{{Auth::user()->id}}" @endauth/>
                    </div>
-              </div> 
+              </div>
             </div>
             <comment-component video-id="{{$video->id}}" @auth user-id="{{Auth::user()->id}}" @endauth/>
         </div>
@@ -49,7 +49,7 @@
                     <p class="font-medium">
                      <span>{{$video->views}} views</span>
                      <span class="my-auto font-bold">.</span>
-                     <span>{{$video->created_at}}</span>
+                     <span>{{$video->created_at->diffForHumans()}}</span>
                     </p>
                     </div>
                 </div>

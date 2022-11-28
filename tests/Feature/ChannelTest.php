@@ -21,6 +21,8 @@ class ChannelTest extends TestCase
      *
      * @return void
      */
+    use RefreshDatabase;
+    
     public function test_channel_create_pageIs_rendered_fo_authtenticated_user()
     {
         $user=User::factory()->create();

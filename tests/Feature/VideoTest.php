@@ -22,6 +22,8 @@ class VideoTest extends TestCase
      *
      * @return void
      */
+    use RefreshDatabase;
+    
     public function test_videos_are_renderd_in_home_page()
     {
         $videos=Video::factory(100)->create();

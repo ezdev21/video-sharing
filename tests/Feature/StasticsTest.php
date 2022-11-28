@@ -14,6 +14,8 @@ class StasticsTest extends TestCase
      *
      * @return void
      */
+    use RefreshDatabase;
+    
     public function test_stastics_page_can_be_rendered()
     {
         $response = $this->get('/stastics');

@@ -14,6 +14,8 @@ class UserNotificationTest extends TestCase
      *
      * @return void
      */
+    use RefreshDatabase;
+    
     public function test_auhtenticated_user_can_get_database_notifications()
     {
         $user=User::factory()->create(['id'=>1]);

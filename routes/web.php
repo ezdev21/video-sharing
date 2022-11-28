@@ -14,7 +14,8 @@ Route::get('/home',[VideoController::class, 'index'])->name('home');
 Route::post('search',[VideoController::class,'search'])->name('video.search');
 
 Route::prefix('stastics')->group(function(){
-  Route::get('/show',[StasticsController::class,'index']);
+  Route::get('/',[StasticsController::class,'index']);
+  Route::get('/{channel}',[StasticsController::class,'show']);
 });
 
 Route::prefix('video')->group(function(){

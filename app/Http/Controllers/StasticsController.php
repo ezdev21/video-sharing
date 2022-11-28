@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStasticsRequest;
 use App\Http\Requests\UpdateStasticsRequest;
+use App\Models\Channel;
 use App\Models\Stastics;
+use Illuminate\Http\Request;
 
 class StasticsController extends Controller
 {
@@ -15,7 +17,7 @@ class StasticsController extends Controller
      */
     public function index()
     {
-        //
+        return view('stastics.index');
     }
 
     /**
@@ -45,9 +47,10 @@ class StasticsController extends Controller
      * @param  \App\Models\Stastics  $stastics
      * @return \Illuminate\Http\Response
      */
-    public function show(Stastics $stastics)
+    public function show(Stastics $stastics,Request $request)
     {
-        //
+        $channel=Channel::find($request->id);
+        return view('stastics.show',['channel'=>$channel]);
     }
 
     /**

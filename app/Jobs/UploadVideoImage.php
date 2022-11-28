@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class UploadVideo implements ShouldQueue
+class UploadVideoImage implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -20,7 +20,7 @@ class UploadVideo implements ShouldQueue
      * @return void
      */
     public $request,$filename;
-    
+
     public function __construct($filename,Request $request)
     {
         $this->filename=$filename;
@@ -34,6 +34,6 @@ class UploadVideo implements ShouldQueue
      */
     public function handle()
     {
-        $this->request->video->storeAs('video',$this->filename,'public');
+        $this->request->video->storeAs('videoCover',$this->filename,'public');
     }
 }

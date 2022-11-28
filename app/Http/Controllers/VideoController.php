@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\VideoFormRequest;
 use App\Jobs\UploadVideo;
+use App\Jobs\UploadVideoImage;
 use App\Models\Video;
 use App\Models\Channel;
 use Illuminate\Http\Request;
@@ -73,9 +74,10 @@ class VideoController extends Controller
         $videoExtension=$request->video->extension();
         $video->source=$video->id.'.'.$videoExtension;
         $video->save();
-        $request->cover->storeAS('videoCover',$video->cover,'public');
-        UploadVideo::dispatch($video->source,$request);
+        //$request->cover->storeAS('videoCover',$video->cover,'public');
+        UploadVideoImage::dispatch($video->cover,$request);
         //$request->video->storeAs('video',$video->source,'public');
+        UploadVideo::dispatch($video->source,$request);
          $channel=Channel::find($video->channel_id);
          $subscribers=$channel->subscribes;
          if($subscribers){

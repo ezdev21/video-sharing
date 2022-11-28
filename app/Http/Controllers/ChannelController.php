@@ -8,6 +8,7 @@ use App\Notifications\NewSubscriber;
 use Illuminate\Http\Request;
 use App\Http\Requests\ChannelStoreRequest;
 use App\Http\Requests\ChannelEditRequest;
+use App\Jobs\UploadChannelImage;
 use Illuminate\Support\Facades\DB;
 
 class ChannelController extends Controller
@@ -53,7 +54,8 @@ class ChannelController extends Controller
         $extension=$request->cover->extension();
         $channel->cover=$channel->id.'.'.$extension;
         $channel->save();
-        $request->cover->storeAs('channelCover',$channel->cover,'public');
+        //$request->cover->storeAs('channelCover',$channel->cover,'public');
+        UploadChannelImage::dispatch($channel->cover,$request);
         return redirect()->route('video.index');
     }
 

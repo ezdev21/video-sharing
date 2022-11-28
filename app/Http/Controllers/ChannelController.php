@@ -19,7 +19,7 @@ class ChannelController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth')->only(['create','store','edit','update','delete']);
     }
     public function index()
     {
@@ -47,7 +47,7 @@ class ChannelController extends Controller
         $channel=new Channel;
         $channel->name=$request->name;
         $channel->description=$request->description;
-        $channel->user_id=$request->user;
+        $channel->user_id=$request->userId;
         $channel->cover='icon.png';
         $channel->save();
         $extension=$request->cover->extension();
@@ -63,9 +63,8 @@ class ChannelController extends Controller
      * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Channel $channel)
     {
-        $channel=Channel::findOrFail($id);
         return view('channel.show',['channel'=>$channel]);
     }
 
@@ -88,7 +87,7 @@ class ChannelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(ChannelEditRequest $request)
-    {  
+    {
         $channel=Channel::find($request->channelId);
         $this->authorize('update',$channel);
         $channel->name=$request->name;
@@ -113,10 +112,11 @@ class ChannelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Channel $channel)
-    { 
+    {
         $this->authorize('delete',$channel);
-        $channel->delete;
+        $channel->delete();
     }
+
     public function getSubscribe(Request $request)
     {
        if(DB::table('channel_user')->where([['channel_id',$request->channelId],['user_id',$request->userId]])->exists())
@@ -128,6 +128,7 @@ class ChannelController extends Controller
        }
        return response()->json(['subscribed'=>$subscribed]);
     }
+
     public function postSubscribe(Request $request)
     {
       if(DB::table('channel_user')->where([['channel_id',$request->channelId],['user_id',$request->userId]])->exists()){
@@ -141,27 +142,32 @@ class ChannelController extends Controller
         $channelOwner->notify(new NewSubscriber($user));
       }
     }
+
     public function videos(Request $request)
-    { 
+    {
        $channel=Channel::find($request->channelId);
        $videos=$channel->videos;
        return response()->json(['videos'=>$videos]);
     }
+
     public function playlists($id)
     {
        $channel=Channel::find($id);
        return view('channel.playlists',['channel'=>$channel]);
     }
+
     public function community($id)
     {
        $channel=Channel::find($id);
        return view('channel.community',['channel'=>$channel]);
     }
+
     public function about($id)
     {
        $channel=Channel::find($id);
        return view('channel.about',['channel'=>$channel]);
     }
+
     public function search($id)
     {
        $channel=Channel::find($id);

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Notifications\ChannelNewVideo;
+use Illuminate\Support\Facades\Storage;
 
 class VideoController extends Controller
 {
@@ -47,10 +48,6 @@ class VideoController extends Controller
      */
     public function create()
     {
-        // if(Auth::user()->channel){
-        //     return view('video.upload');
-        // }
-        //return redirect()->route('channel.create');
         return view('video.upload');
     }
 
@@ -62,13 +59,7 @@ class VideoController extends Controller
      */
     public function store(VideoFormRequest $request)
     {
-        $video=new Video;
-        $video->title=$request->title;
-        $video->description=$request->description;
-        $id=$request->userId;
-        $user=User::findOrfail($id);
-        $video->channel_id=$user->channel->id;
-        $video->save();
+        $video=Video::create($request->validated());
         $imageExtension=$request->cover->extension();
         $video->cover=$video->id.'.'.$imageExtension;
         $videoExtension=$request->video->extension();
@@ -79,12 +70,9 @@ class VideoController extends Controller
         //$request->video->storeAs('video',$video->source,'public');
         UploadVideo::dispatch($video->source,$request);
          $channel=Channel::find($video->channel_id);
-         $subscribers=$channel->subscribes;
-         if($subscribers){
-            foreach($subscribers as $subscriber){
-                $subscriber->notify(new ChannelNewVideo($channel,$video));
-            }
-         }
+         $channel->subscribes->each(function($subscriber) use($channel,$video){
+            $subscriber->notify(new ChannelNewVideo($channel,$video));
+         });
          return redirect()->route('home');
     }
 
@@ -96,7 +84,7 @@ class VideoController extends Controller
      */
     public function show(Video $video)
     {
-        $recommendedVideos=Video::limit(20)->latest()->get();
+        $recommendedVideos=Video::where('title',$video->title)->latest()->limit(20)->inRandomOrder()->get();
         $video->views+=1;
         $video->save();
         return view('video.watch',['video'=>$video,'recommendedVideos'=>$recommendedVideos]);
@@ -110,7 +98,7 @@ class VideoController extends Controller
      */
     public function edit(Video $video)
     {
-        //
+        return view('video.edit',['video'=>$video]);
     }
 
     /**
@@ -122,7 +110,8 @@ class VideoController extends Controller
      */
     public function update(Request $request, Video $video)
     {
-        //
+        $video->update($request->validated());
+        return redirect()->route('video.show',$video);
     }
 
     /**
@@ -133,47 +122,34 @@ class VideoController extends Controller
      */
     public function destroy(Video $video)
     {
-        //
+        $video->delete();
+        Storage::delete("/videoCover/{{$video->image}}");
+        Storage::delete("/videoCover/{{$video->source}}");
+        return redirect()->route('channel.watch',$video->channel->id);
     }
 
     public function getLike(Request $request)
     {
-      $totalLikes=DB::table('user_video')->
-      where([['user_id',$request->userId],['video_id',$request->videoId],['type','like']])->count();
-      $totalDislikes=DB::table('user_video')->
-      where([['user_id',$request->userId],['video_id',$request->videoId],['type','dislike']])->count();
-      if(DB::table('user_video')->
-       where([['video_id',$request->videoId],['user_id',$request->userId],['type','like']])
-       ->exists()){
-           $liked=true;
-       }
-       else{
-           $liked=false;
-       }
-       if(DB::table('user_video')->
-       where([['video_id',$request->videoId],['user_id',$request->userId],['type','dislike']])
-       ->exists()){
-           $disliked=true;
-       }
-       else{
-           $disliked=false;
-       }
-       return response()->json(['liked'=>$liked,'disliked'=>$disliked,
-       'totalLikes'=>$totalLikes,'totalDislikes'=>$totalDislikes]);
+      $video=Video::find($request->videoId);
+      $totalLikes=$video->users()->where('type','like')->count();
+      $totalDislikes=$video->users()->where('type','dislike')->count();
+      $liked=$video->users()->where([['type','like'],['user_id',$request->userId]])->exists();
+      $disliked=$video->users()->where([['type','dislike'],['user_id',$request->userId]])->exists();
+      return response()->json([
+        'liked'=>$liked,
+        'disliked'=>$disliked,
+        'totalLikes'=>$totalLikes,
+        'totalDislikes'=>$totalDislikes
+      ]);
     }
 
     public function postLike(Request $request)
     {
       if($request->status){
-        DB::table('user_video')->where([['video_id',$request->videoId],['user_id',$request->userId]])->delete();
+        $this->question->users()->detach(auth()->user()->id);
       }
       else{
-        if(DB::table('user_video')->where([['user_id',$request->userId],['video_id',$request->videoId]])->exists()){
-            DB::table('user_video')->update(['type'=>$request->type]);
-        }
-        else{
-         DB::table('user_video')->insert(['user_id'=>$request->userId,'video_id'=>$request->videoId,'type'=>$request->type]);
-        }
+        $this->question->users()->syncWithoutDetaching([auth()->user()->id=>['type'=>'like']]);
       }
     }
 
@@ -183,22 +159,11 @@ class VideoController extends Controller
       $comments=$video->comments;
       foreach($comments as $comment){
         $comment->created_at=$comment->created_at->diffForHumans();
-        $user=User::find($comment->user_id);
-        $comment->user=$user;
-        $comment->totalLikes=DB::table('comment_user')->where([['comment_id',$comment->id],['type','like']])->count();
-        $comment->totalDislikes=DB::table('comment_user')->where([['comment_id',$comment->id],['type','dislike']])->count();
-        if(DB::table('comment_user')->where([['user_id',$request->userId],['comment_id',$comment->id],['type','like']])->exists())
-        {
-          $comment->status='liked';
-        }
-        else if(DB::table('comment_user')->where([['user_id',$request->userId],['comment_id',$comment->id],['type','dislike']])->exists()){
-          $comment->status='disliked';
-        }
-        else{
-          $comment->status='unknown';
-        }
+        $comment->totalLikes=$comment->users()->where([['comment_id',$comment->id],['type','like']])->count();
+        $comment->totalDislikes=$comment->users()->where([['comment_id',$comment->id],['type','dislike']])->count();
+        $liked=$comment->users()->where([['user_id',$request->userId],['comment_id',$comment->id],['type','like']])->exists();
+        $disliked=$comment->users()->where([['user_id',$request->userId],['comment_id',$comment->id],['type','like']])->exists();
       }
-      $user=User::find($request->userId);
-      return response()->json(['comments'=>$comments,'user'=>$user]);
+      return response()->json(['comments'=>$comments]);
     }
 }

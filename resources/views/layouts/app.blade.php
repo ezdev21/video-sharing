@@ -9,24 +9,21 @@
 
     <title>Video Sharing</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="icon" href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngaaa.com%2Fdetail%2F480377&psig=AOvVaw2IjW_JFrfS-HJold-T9fqR&ust=1624971104119000&source=images&cd=vfe&ved=0CAcQjRxqFwoTCNjS3qKvuvECFQAAAAAdAAAAABAD">
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
  <div id="app" class="">
   <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
     @csrf
-  </form> 
+  </form>
   <div>
    <navigation-component @auth user-id="{{auth()->user()->id}}"@endauth/>
-  </div>       
+  </div>
   <main class="lg:py-4 xl:py-4 2xl:py-4">
     @yield('content')
   </main>

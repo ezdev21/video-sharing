@@ -20,32 +20,19 @@
    <p>{{channel.subscribers}} subscribers</p>
    <p>{{channel.views}} views</p>
   </div>
- </div>      
+ </div>
 </template>
-<script>
-export default {
-   prosp:['channelId'],
-   data(){
-    return{
-     channel:{
-     id:'',
-     description:'',
-     created_at:'',
-     location:'',
-     links:'',
-     views:'',
-     subscribers:''
-    }       
-    }     
-   },
-   mounted(){
-     axios.get('/channel/about',{params:{channelId:this.channelId}})
-       .then(res=>{
-         this.channnel=res.data.channel;
-       })
-       .catch(err=>{
+<script setup>
+defineProps({channelId})
+let channel=$ref({})
 
-       });     
-   },    
-}
+onMounted(()=>{
+    axios.get('/channel/about',{params:{channelId:channelId}})
+    .then(res=>{
+        channnel=res.data.channel
+    })
+    .catch(err=>{
+
+    })
+})
 </script>

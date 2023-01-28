@@ -13,24 +13,17 @@
    <div> -->
     <p class="text-2xl mx-5">this channel does not have featured channel</p>
    <!-- </div> -->
-  </div>     
+  </div>
 </template>
-<script>
- //import subscribeComponent from './components/subscribeComponent.vue';
- export default {
-  //  components:{
-  //   'subscribe-component' : subscribeComponent,
-  //  },
-   data(){
-    return{
-     channels:[]
-    }      
-   },
-   mounted(){
+<script setup>
+import subscribeComponent from './components/subscribeComponent.vue';
+
+let channels=$ref([])
+
+onMounted(()=>{
     axios.get('/channel/community',{params:{}})
-         .then(res=>{
-           this.channels=res.data.channels;
-         })     
-   }    
-}
+    .then(res=>{
+      channels=res.data.channels
+    })
+})
 </script>

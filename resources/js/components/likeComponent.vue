@@ -18,81 +18,77 @@
      <p class="text-xl">sign in to like this video</p>
      <p class="m-auto"><a href="/login" class="text-2xl text-primary">sign in</a></p>
     </div>
-    <div v-if="liking" @click="liking=false" class="absolute -inset-full opacity-50 bg-black z-10"></div> 
+    <div v-if="liking" @click="liking=false" class="absolute -inset-full opacity-50 bg-black z-10"></div>
     <div v-if="disliking" class="fixed z-20 bottom-1/3 left-1/3 inset-auto bg-white p-10 flex flex-col justify-center items-center rounded-xl">
      <button @click="disliking=false" class="absolute top-0 right-0 text-4xl px-3 text-gray:600 hover:text-red-500">x</button>
      <p class="text-2xl">want to dislike this video ?</p>
      <p class="text-xl">sign in to dislike this video</p>
      <p class="m-auto"><a href="/login" class="text-2xl text-primary">sign in</a></p>
-    </div> 
+    </div>
   <div v-if="disliking" @click="disliking=false" class="absolute -inset-full opacity-50 bg-black z-10"></div>
 </div>
 </template>
-<script>
-export default {
-    props:['userId','videoId'],
-    data(){
-        return{
-          liked:false,
-          disliked:false,
-          liking:false,
-          disliking:false,
-          totalLikes:0,
-          totalDislikes:0,
-        }
-    },
-    mounted(){
-      axios.get('/video/like',{params:{videoId:this.videoId,userId:this.userId}})
-      .then(res=>{
-          this.liked=res.data.liked;
-          this.disliked=res.data.disliked;
-          this.totalLikes=res.data.totalLikes;
-          this.totalDislikes=res.data.totalDislikes;
-      })
-      .catch(err=>{
-        
-      });
-    },
-    methods:{
-        like(){
-         if(this.userId){
-            axios.post('/video/like',{videoId:this.videoId,userId:this.userId,type:'like',status:this.liked})
-            .then(res=>{ 
-              this.liked ? this.totalLikes-=1 : this.totalLikes+=1;
-              this.disliked ? this.totalDislikes-=1 : '';
-              this.liked=!this.liked;
-              if(this.liked&&this.disliked){
-                this.disliked=false;
-              }
-            })
-            .catch(err=>{
-              
-            });
-         }
-         else{
-           this.liking=true; 
-         }   
-        },
-        dislike(){
-          if(this.userId){
-            axios.post('/video/like',{videoId:this.videoId,userId:this.userId,type:'dislike',status:this.disliked})
-            .then(res=>{ 
-              this.disliked ? this.totalDislikes-=1 : this.totalDislikes+=1;
-              this.liked ? this.totalLikes-=1 : '';
-              this.disliked=!this.disliked;
-              if(this.liked&&this.disliked){
-                this.liked=false;
-              }
-            })
-            .catch(err=>{
-              
-            });
-          }
-          else{
-           this.disliking=true; 
-          }  
-        }
-    }
+<script setup>
+defineProps({userId,videoId})
 
+let liked=$ref(false)
+let disliked=$ref(false)
+let liking=$ref(false)
+let disliking=$ref(false)
+let totalLikes=$ref(0)
+let totalDislikes=$ref(0)
+
+onMounted(()=>{
+    axios.get('/video/like',{params:{videoId:videoId,userId:userId}})
+    .then(res=>{
+        liked=res.data.liked
+        disliked=res.data.disliked
+        totalLikes=res.data.totalLikes
+        totalDislikes=res.data.totalDislikes
+    })
+    .catch(err=>{
+
+    })
+})
+
+const like=()=>{
+    if(userId){
+    axios.post('/video/like',{videoId:videoId,userId:userId,type:'like',status:liked})
+    .then(res=>{
+        liked ? totalLikes-=1 : totalLikes+=1
+        disliked ? totalDislikes-=1 : ''
+        liked=!liked
+        if(liked&&disliked){
+        disliked=false
+        }
+    })
+    .catch(err=>{
+
+    })
+    }
+    else{
+    liking=true
+    }
 }
+
+const dislike=()=>{
+    if(userId){
+    axios.post('/video/like',{videoId:videoId,userId:userId,type:'dislike',status:disliked})
+    .then(res=>{
+        disliked ? totalDislikes-=1 : totalDislikes+=1
+        liked ? totalLikes-=1 : ''
+        disliked=!disliked
+        if(liked&&disliked){
+        liked=false
+        }
+    })
+    .catch(err=>{
+
+    })
+    }
+    else{
+    disliking=true
+    }
+}
+
 </script>

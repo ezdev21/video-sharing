@@ -10,22 +10,18 @@
    <!-- <div v-else>
     <p class="text-2xl mx-5">this channel has no playlists</p>
    </div> -->
-  </div>     
+  </div>
 </template>
-<script>
-export default {
-  data(){
-   return{
-    channelId:null,
-    playlists:[]      
-   }      
-  },
-  mounted(){
-    this.channelId=this.$route.params.channelId;
-    axios.get('/channel/playlists',{params:{channelId:this.channelId}})
-         .then(res=>{
-          this.playlists=res.data.playlists;
-         });    
-  }     
-}
+<script setup>
+let channelId=$ref(null)
+let playlists=$ref([])
+
+onMounted(()=>{
+    channelId=$route.params.channelId
+    axios.get('/channel/playlists',{params:{channelId:channelId}})
+      .then(res=>{
+      playlists=res.data.playlists
+    })
+})
+
 </script>

@@ -10,49 +10,44 @@
   <p class="text-2xl">want to subscribe this channel ?</p>
   <p class="text-xl">sign in to subscribe this channel</p>
   <p class="m-auto"><a href="/login" class="text-2xl text-primary">sign in</a></p>
-  </div> 
+  </div>
   <div v-if="subscribing" @click="subscribing=false" class="fixed -inset-full opacity-70 bg-black z-10"></div>
   </div>
 </template>
-<script>
-export default {
-    props:['userId','channelId'],
-    data(){
-        return{
-          subscribeText:'subscribe',
-          subscribed:false,
-          subscribing:false,
-        }
-    },
-    mounted(){
-       axios.get('/channel/subscribe',{params:{channelId:this.channelId,userId:this.userId}})
-      .then(res=>{
-          this.subscribed=res.data.subscribed;
-          if(this.subscribed){
-             this.subscribeText='subscribed';
-          }
-      })
-      .catch(err=>{
-        
-      });
-    },
-    methods:{
-        subscribe(){
-          if(this.userId){
-           axios.post('/channel/subscribe',{userId:this.userId,channelId:this.channelId})
-            .then(res=>{
-             this.subscribed=!this.subscribed; 
-             this.subscribeText=='subscribe' ? this.subscribeText='subscribed' : this.subscribeText='subscribe';
-            })
-            .catch(err=>{
-              
-            });
-          }
-          else{
-           this.subscribing=true;
-          }  
-        }
-    }
+<script setup>
+defineProps({userId,channelId})
 
+let subscribeText=$ref('subscribe')
+let subscribed=$ref(false)
+let subscribing=$ref(false)
+
+onMounted(()=>{
+    axios.get('/channel/subscribe',{params:{channelId:channelId,userId:userId}})
+    .then(res=>{
+        subscribed=res.data.subscribed
+        if(subscribed){
+            subscribeText='subscribed'
+        }
+    })
+    .catch(err=>{
+
+    })
+})
+
+const subscribe=()=>{
+    if(userId){
+    axios.post('/channel/subscribe',{userId:userId,channelId:channelId})
+    .then(res=>{
+        subscribed=!subscribed
+        subscribeText=='subscribe' ? subscribeText='subscribed' : subscribeText='subscribe'
+    })
+    .catch(err=>{
+
+    })
+    }
+    else{
+        subscribing=true
+    }
 }
+
 </script>

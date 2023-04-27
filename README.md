@@ -17,6 +17,15 @@ generate key `php artisan key:generate`
 migrate database `php artisan migrate`
 
 start server `php artisan serve`
+
+## Installation using docker
+
+`docker-compose build ecommerce`
+
+`docker-compose up -d`
+
+`docker-compose exec ecommerce php artisan key:generate`
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.

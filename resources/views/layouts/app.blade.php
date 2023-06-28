@@ -1,32 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <title>Video Sharing</title>
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link rel="icon" href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngaaa.com%2Fdetail%2F480377&psig=AOvVaw2IjW_JFrfS-HJold-T9fqR&ust=1624971104119000&source=images&cd=vfe&ved=0CAcQjRxqFwoTCNjS3qKvuvECFQAAAAAdAAAAABAD">
-    <!-- Styles -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body>
- <div id="app" class="">
-  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
-    @csrf
-  </form>
-  <div>
-   <navigation-component @auth user-id="{{auth()->user()->id}}"@endauth/>
-  </div>
-  <main class="lg:py-4 xl:py-4 2xl:py-4">
-    @yield('content')
-  </main>
- </div>
-</body>
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <body class="font-sans antialiased">
+        <div class="min-h-screen bg-gray-100">
+            @include('layouts.navigation')
+
+            <!-- Page Heading -->
+            @if (isset($header))
+                <header class="bg-white shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endif
+
+            <!-- Page Content -->
+            <main>
+                {{ $slot }}
+            </main>
+        </div>
+    </body>
 </html>

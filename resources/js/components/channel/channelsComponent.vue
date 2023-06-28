@@ -16,7 +16,6 @@
   </div>
 </template>
 <script setup>
-import subscribeComponent from './components/subscribeComponent.vue';
 
 let channels=$ref([])
 

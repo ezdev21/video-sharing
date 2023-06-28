@@ -1,39 +1,23 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 import './bootstrap';
+import '../css/app.css';
 
-window.Vue = require('vue').default;
-//import Vue from 'vue'
-import router from './ChannelRouter.js'
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+import { createApp, h } from 'vue';
+import { createInertiaApp } from '@inertiajs/vue3';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
-Vue.component('like-component', require('./components/likeComponent.vue').default);
-Vue.component('subscribe-component', require('./components/subscribeComponent.vue').default);
-Vue.component('channel-component',require('./components/channelComponent.vue').default);
-Vue.component('comment-component',require('./components/commentComponent.vue').default);
-Vue.component('navigation-component',require('./components/navigationComponent.vue').default);
-Vue.component('collection-component',require('./components/collection.vue').default);
-Vue.component('notifications-component',require('./components/notificationsComponent.vue').default);
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-const app = new Vue({
-    el: '#app',
-    router:router
+createInertiaApp({
+    title: (title) => `${title} - ${appName}`,
+    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
+    setup({ el, App, props, plugin }) {
+        return createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .use(ZiggyVue, Ziggy)
+            .mount(el);
+    },
+    progress: {
+        color: '#4B5563',
+    },
 });

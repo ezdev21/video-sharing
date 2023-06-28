@@ -1,14 +1,11 @@
 <template>
  <div>
-  <div>
-  <input type="text" v-model="searchText">
-  </div>
+   <input type="text" v-model="searchText"/>
   <div v-if="searchedvideos.length">
    <div v-for="video in searchedVideos" :key="video.id" class="flex-initial">
-    <img :src="video.imagePath" alt="" width="100px">
+    <img :src="video.imagePath" alt="" width="100px" />
     <p>{{video.name}}</p>
-    <p></p>
-  </div>
+   </div>
   </div>
   <div v-else>
    <p v-if="searchText.length" class="text-xl">no videos matched your search {{searchtext}} in this channel</p>

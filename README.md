@@ -1,6 +1,6 @@
 # video sharing website
 
-**the mobile app is ready**
+**the mobile app is ready** https://github.com/ezra02/video-mobile
 
 **make sure to configure php configuration file(php.ini) upload_max_filesize!!**
 

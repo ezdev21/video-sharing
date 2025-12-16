@@ -10,7 +10,7 @@ import { Link } from "react-router-dom"
 
 export default function Navbar() {
   return (
-    <header className="top-0 z-50 w-full bg-white border-b">
+    <header className="fixed top-0 z-50 w-full bg-white border-b">
       <div className="flex items-center justify-between px-4 h-14">
 
         {/* Left */}

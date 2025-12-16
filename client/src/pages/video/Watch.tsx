@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom"
-import VideoPlayer from "@/components/watch/VideoPlayer"
-import RecommendedVideos from "@/components/watch/RecommendedVideos"
-import Comments from "@/components/watch/Comments"
-import { Video } from "@/types/video"
+import VideoPlayer from "@/components/VideoPlayer"
+import RecommendedVideos from "@/components/RecommendedVideos"
+import Comments from "@/components/Comments"
+import type { Video } from "@/types/video"
 
 const video: Video = {
   id: 1,

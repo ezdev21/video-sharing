@@ -1,4 +1,4 @@
-import { Video } from "@/types/video"
+import type { Video } from "@/types/video"
 
 interface VideoPlayerProps {
   video: Video
@@ -11,7 +11,7 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
       <div className="w-full aspect-video bg-black rounded-xl overflow-hidden">
         <iframe
           className="w-full h-full"
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+          src="https://www.youtube.com/embed/o8NPllzkFhE"
           title={video.title}
           allowFullScreen
         />

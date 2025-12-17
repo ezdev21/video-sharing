@@ -1,4 +1,4 @@
-import type { Video } from "@/types/video"
+import type { Video } from "@/types"
 
 interface VideoPlayerProps {
   video: Video

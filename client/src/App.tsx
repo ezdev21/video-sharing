@@ -5,6 +5,10 @@ import Navbar from "./components/Navbar"
 import Watch from "./pages/video/Watch"
 import VideoUpload from "./pages/video/VideoUpload"
 import CreateChannel from "./pages/channel/CreateChannel"
+import ChannelHome from "./pages/channel/ChannelHome"
+import ChannelVideos from "./components/channel/ChannelVideos"
+import ChannelPlaylists from "./components/channel/ChannelPlaylists"
+import ChannelPosts from "./components/channel/ChannelPosts"
 
 export default function App() {
   return (
@@ -15,10 +19,15 @@ export default function App() {
       <div className="bg-gray-100 min-h-screen pt-5">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/channel/create" element={<CreateChannel />} />
           <Route path="/video/upload" element={<VideoUpload />} />
           <Route path="/video/:id" element={<Watch />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/channel/create" element={<CreateChannel />} />
+          <Route path="/channel/:id" element={<ChannelHome />}>
+            <Route path="videos" element={<ChannelVideos />} />
+            <Route path="playlists" element={<ChannelPlaylists />} />
+            <Route path="posts" element={<ChannelPosts />} />
+          </Route>
         </Routes>
       </div>
     </>

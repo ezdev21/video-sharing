@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import type { Video } from "../types/video"
+import type { Video } from "@/types"
 
 interface VideoCardProps {
   video: Video
@@ -23,6 +23,7 @@ export default function VideoCard({ video }: VideoCardProps) {
       </div>
 
       {/* Info */}
+      <Link to={`/channel/${video.channel}`}>
       <div className="flex gap-3 mt-3">
         <img
           src={video.channelAvatar}
@@ -44,6 +45,7 @@ export default function VideoCard({ video }: VideoCardProps) {
           </p>
         </div>
       </div>
+      </Link>
     </div>
   )
 }

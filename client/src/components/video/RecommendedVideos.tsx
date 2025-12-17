@@ -1,4 +1,4 @@
-import type { Video } from "@/types/video"
+import type { Video } from "@/types"
 import { Link } from "react-router-dom"
 
 interface RecommendedVideosProps {
@@ -29,9 +29,11 @@ export default function RecommendedVideos({
               {video.title}
             </h3>
 
-            <p className="text-xs text-gray-500 mt-1">
-              {video.channel}
-            </p>
+            <Link to={`/channel/${video.channel}`}>
+              <p className="text-xs text-gray-500 mt-1">
+                {video.channel}
+              </p>
+            </Link>   
 
             <p className="text-xs text-gray-500">
               {video.views} views • {video.time}

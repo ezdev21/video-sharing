@@ -11,7 +11,7 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
       <div className="w-full aspect-video bg-black rounded-xl overflow-hidden">
         <iframe
           className="w-full h-full"
-          src="https://www.youtube.com/embed/o8NPllzkFhE"
+          src="https://www.youtube.com/embed/8pDqJVdNa44"
           title={video.title}
           allowFullScreen
         />

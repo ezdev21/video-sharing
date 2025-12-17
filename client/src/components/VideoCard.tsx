@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import type { Video } from "../types/video"
 
 interface VideoCardProps {
@@ -9,14 +10,16 @@ export default function VideoCard({ video }: VideoCardProps) {
     <div className="cursor-pointer">
       {/* Thumbnail */}
       <div className="relative rounded-xl overflow-hidden">
-        <img
-          src={video.thumbnail}
-          alt={video.title}
-          className="w-full aspect-video object-cover"
-        />
-        <span className="absolute bottom-1 right-1 bg-black/80 text-white text-xs px-1.5 py-0.5 rounded">
-          {video.duration}
-        </span>
+        <Link to={`/video/${video.id}`}>
+          <img
+            src={video.thumbnail}
+            alt={video.title}
+            className="w-full aspect-video object-cover"
+          />
+          <span className="absolute bottom-1 right-1 bg-black/80 text-white text-xs px-1.5 py-0.5 rounded">
+            {video.duration}
+          </span>
+        </Link>
       </div>
 
       {/* Info */}

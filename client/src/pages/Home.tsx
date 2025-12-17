@@ -46,7 +46,7 @@ const videos: Video[] = [
 
 export default function Home() {
   return (
-    <div className="max-w-[1400px] mx-auto">
+    <div className="max-w-[1400px] mx-5">
       <div
         className="
           grid gap-6

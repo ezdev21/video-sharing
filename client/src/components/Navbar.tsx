@@ -19,8 +19,10 @@ export default function Navbar() {
             <Menu size={22} />
           </button>
 
-          <div className="flex items-center gap-1 cursor-pointer">
-           
+          <div className="">
+            <Link to="/" className="text-primary font-bold text-xl">
+              ViParta
+            </Link>
           </div>
         </div>
 
@@ -30,7 +32,7 @@ export default function Navbar() {
             <input
               type="text"
               placeholder="Search"
-              className="w-full px-4 py-2 text-sm border border-gray-300 rounded-l-full focus:outline-none focus:border-blue-500"
+              className="w-full px-4 py-2 text-sm border border-gray-300 rounded-l-full focus:outline-none focus:outline-2 focus:border-blue-500"
             />
             <button className="px-6 border border-l-0 border-gray-300 rounded-r-full bg-gray-100 hover:bg-gray-200">
               <Search size={18} />
@@ -56,9 +58,9 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* + Create */}
+          {/* + Upload */}
           <Link
-            to="/video/create"
+            to="/video/upload"
             className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-300 hover:bg-gray-100"
           >
             <Plus size={18} />
@@ -71,7 +73,7 @@ export default function Navbar() {
             <Bell size={22} />
           </button>
 
-          <button className="ml-2 w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white">
+          <button className="ml-2 w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white">
             <User size={18} />
           </button>
         </div>

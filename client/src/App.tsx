@@ -1,24 +1,26 @@
 import { Routes, Route } from "react-router-dom"
 import Home from "./pages/Home"
-import ChannelCreate from "./pages/channel/Create"
-import VideoCreate from "./pages/video/Create"
 import NotFound from "./pages/NotFound"
 import Navbar from "./components/Navbar"
 import Watch from "./pages/video/Watch"
+import VideoUpload from "./pages/video/VideoUpload"
+import CreateChannel from "./pages/channel/CreateChannel"
 
 export default function App() {
   return (
     <>
-      <div className="mb-20">
+      <div className="mb-14">
         <Navbar />
       </div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/channel/create" element={<ChannelCreate />} />
-        <Route path="/video/create" element={<VideoCreate />} />
-        <Route path="/watch" element={<Watch />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <div className="bg-gray-100 min-h-screen pt-5">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/channel/create" element={<CreateChannel />} />
+          <Route path="/video/upload" element={<VideoUpload />} />
+          <Route path="/video/:id" element={<Watch />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
     </>
   )
 }

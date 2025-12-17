@@ -1,4 +1,5 @@
 import type { Video } from "@/types/video"
+import { Link } from "react-router-dom"
 
 interface RecommendedVideosProps {
   videos: Video[]
@@ -10,15 +11,18 @@ export default function RecommendedVideos({
   return (
     <div className="space-y-4">
       {videos.map((video) => (
+        
         <div
           key={video.id}
           className="flex gap-3 cursor-pointer"
         >
-          <img
-            src={video.thumbnail}
-            className="w-40 h-24 object-cover rounded-lg"
-            alt={video.title}
-          />
+          <Link to={`/video/${video.id}`}>
+            <img
+              src={video.thumbnail}
+              className="w-40 h-24 object-cover rounded-lg"
+              alt={video.title}
+            />
+          </Link>
 
           <div>
             <h3 className="text-sm font-semibold line-clamp-2">

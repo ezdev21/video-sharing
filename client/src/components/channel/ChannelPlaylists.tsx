@@ -1,11 +1,23 @@
 import type { Playlist } from "@/types";
-
-const playlists: Playlist[] = [
-  { id: 1, title: "React Tutorials", videoCount: 12 },
-  { id: 2, title: "TypeScript Guides", videoCount: 8 },
-];
+import { useEffect, useState } from "react";
 
 export default function ChannelPlaylists() {
+  const [playlists, setPlaylists] = useState<Playlist[]>([]);
+  
+  const fetchPlaylists = async () => {
+    const res = await fetch(`http://localhost:3000/channel/1/playlists`)
+    .then(res => res.json())
+    .then((data: Playlist[]) => {
+      setPlaylists(data);
+    }).catch((error) => {
+      console.error('Error fetching channel playlists:', error);
+    })
+  }
+  
+  useEffect(() => {
+    fetchPlaylists();
+  }, [])
+
   return (
     <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {playlists.map(pl => (

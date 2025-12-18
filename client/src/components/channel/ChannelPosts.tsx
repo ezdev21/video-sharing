@@ -1,11 +1,23 @@
 import type { Post } from "@/types";
-
-const posts: Post[] = [
-  { id: 1, content: "Just uploaded a new React tutorial!", date: "1 day ago" },
-  { id: 2, content: "Learning TypeScript is fun!", date: "3 days ago" },
-];
+import { useEffect, useState } from "react";
 
 export default function ChannelPosts() {
+  const [posts, setPosts] = useState<Post[]>([]);
+  
+  const fetchPosts = async () => {
+    const res = await fetch(`http://localhost:3000/channel/1/posts`)
+    .then(res => res.json())
+    .then((data: Post[]) => {
+      setPosts(data);
+    }).catch((error) => {
+      console.error('Error fetching channel posts:', error);
+    })
+  }
+  
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
   return (
     <div className="p-4 space-y-4">
       {posts.map(post => (

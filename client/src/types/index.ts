@@ -20,3 +20,10 @@ export interface Post {
   content: string;
   date: string;
 }
+
+export interface Channel{
+  id: number;
+  name: string;
+  avatar: string;
+  subscribers: string;
+}

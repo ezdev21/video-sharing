@@ -3,63 +3,37 @@ import VideoPlayer from "@/components/video/VideoPlayer"
 import RecommendedVideos from "@/components/video/RecommendedVideos"
 import Comments from "@/components/video/Comments"
 import type { Video } from "@/types"
-
-const video: Video = {
-  id: 1,
-  title: "Build a YouTube Clone with React & Tailwind",
-  thumbnail: "",
-  channel: "Code Academy",
-  channelAvatar: "https://i.pravatar.cc/150?img=1",
-  views: "1.2M",
-  time: "2 days ago",
-  duration: "12:45",
-}
-
-const recommended: Video[] = [
-  {
-    id: 2,
-    title: "React Router v6 Full Course",
-    thumbnail: "https://picsum.photos/200/120?random=10",
-    channel: "JS Mastery",
-    channelAvatar: "",
-    views: "900K",
-    time: "1 week ago",
-    duration: "18:30",
-  },
-  {
-    id: 3,
-    title: "Tailwind CSS Crash Course",
-    thumbnail: "https://picsum.photos/200/120?random=11",
-    channel: "DesignCourse",
-    channelAvatar: "",
-    views: "1.1M",
-    time: "2 weeks ago",
-    duration: "22:10",
-  },
-  {
-    id: 4,
-    title: "React Router v6 Full Course",
-    thumbnail: "https://picsum.photos/200/120?random=10",
-    channel: "JS Mastery",
-    channelAvatar: "",
-    views: "900K",
-    time: "1 week ago",
-    duration: "18:30",
-  },
-  {
-    id: 5,
-    title: "Tailwind CSS Crash Course",
-    thumbnail: "https://picsum.photos/200/120?random=11",
-    channel: "DesignCourse",
-    channelAvatar: "",
-    views: "1.1M",
-    time: "2 weeks ago",
-    duration: "22:10",
-  },
-]
+import { useEffect, useState } from "react"
 
 export default function Watch() {
   const { id } = useParams<{ id: string }>()
+  const [video, setVideo] = useState<Video | null>(null)
+  const [recommended, setRecommended] = useState<Video[]>([])
+
+  const fetchVideo = async () => {
+    const res = await fetch(`http://localhost:3000/video/${id}`)
+    .then(res => res.json())
+    .then((data: Video) => {
+      setVideo(data);
+    }).catch((error) => {
+      console.error('Error fetching videos:', error);
+    })
+  }
+  
+  const fetchRecommendedVideos = async () => {
+    const res = await fetch(`http://localhost:3000/video/${id}/recommended`)
+    .then(res => res.json())
+    .then((data: Video[]) => {
+      setRecommended(data);
+    }).catch((error) => {
+      console.error('Error fetching videos:', error);
+    })
+  }
+
+  useEffect(() => {
+    fetchVideo();
+    fetchRecommendedVideos();
+  })
 
   return (
     <div className="max-w-[1600px] mx-auto px-4">
@@ -68,7 +42,7 @@ export default function Watch() {
         {/* Left */}
         <div className="lg:col-span-8">
           <VideoPlayer video={video} />
-          <Comments />
+          <Comments id={id} />
         </div>
 
         {/* Right */}

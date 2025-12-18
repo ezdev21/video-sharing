@@ -5,7 +5,7 @@ export default function ChannelTabs() {
   const inactiveClass = "text-gray-600";
 
   return (
-    <div className="flex gap-4 px-4 border-b">
+    <div className="flex gap-4 px-4 border-b-2 font-semibold text-xl">
       <NavLink to="videos" className={({ isActive }) => isActive ? activeClass : inactiveClass}>
         Videos
       </NavLink>

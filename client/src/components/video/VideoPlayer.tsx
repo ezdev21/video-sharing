@@ -1,10 +1,14 @@
 import type { Video } from "@/types"
+import { Link } from "react-router"
 
 interface VideoPlayerProps {
   video: Video
 }
 
 export default function VideoPlayer({ video }: VideoPlayerProps) {
+  if (!video) {
+    return <div>Loading...</div>
+  }
   return (
     <div>
       {/* Video */}
@@ -24,18 +28,19 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
 
       <div className="flex items-center justify-between mt-2">
         <div className="flex items-center gap-3">
-          <img
-            src={video.channelAvatar}
-            className="w-10 h-10 rounded-full"
-            alt={video.channel}
-          />
-
-          <div>
-            <p className="font-medium">{video.channel}</p>
-            <p className="text-sm text-gray-500">
-              {video.views} views
-            </p>
-          </div>
+          <Link to={`/channel/${video.id}`} className="flex items-center gap-3">
+            <img
+              src={video.channelAvatar}
+              className="w-10 h-10 rounded-full"
+              alt={video.channel}
+            />
+            <div>
+              <p className="font-medium">{video.channel}</p>
+              <p className="text-sm text-gray-500">
+                {video.views} views
+              </p>
+            </div>
+          </Link>
         </div>
 
         <button className="px-4 py-2 rounded-full bg-black text-white">

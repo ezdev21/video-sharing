@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Comment {
   id: number;
@@ -8,39 +8,35 @@ interface Comment {
   time: string;
 }
 
-const initialComments: Comment[] = [
-  {
-    id: 1,
-    user: "John Doe",
-    avatar: "https://i.pravatar.cc/150?img=10",
-    text: "This video is amazing 🔥",
-    time: "2 hours ago",
-  },
-  {
-    id: 2,
-    user: "Jane Smith",
-    avatar: "https://i.pravatar.cc/150?img=11",
-    text: "Helped me a lot, thanks!",
-    time: "1 day ago",
-  },
-];
-
-export default function Comments() {
-  const [comments, setComments] = useState<Comment[]>(initialComments);
+export default function Comments({id}) {
+  const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
+  
+  const fetchComments = async () =>{
+      const res = await fetch(`http://localhost:3000/video/${id}/comments`)
+      .then(res => res.json())
+      .then((data: Comment[]) => {
+        setComments(data);
+      }).catch((error) => {
+        console.error('Error fetching comments:', error);
+      })
+    }
 
-  const handleAddComment = () => {
+  useEffect(() => {
+    fetchComments();
+  }, []);
+
+  const handleAddComment = async () => {
     if (!newComment.trim()) return;
+    
+    const res = await fetch('http://localhost:3000/video/comments/add')
+      .then(res => res.json())
+      .then((data: Comment) => {
+        setComments([data, ...comments]);
+      }).catch((error) => {
+        console.error('Error adding a new comment:', error);
+      })
 
-    const comment: Comment = {
-      id: comments.length + 1,
-      user: "Anonymous",
-      avatar: "https://i.pravatar.cc/150?img=12", // placeholder avatar
-      text: newComment,
-      time: "Just now",
-    };
-
-    setComments([comment, ...comments]);
     setNewComment(""); // clear textarea
   };
 

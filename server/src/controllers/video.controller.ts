@@ -1,58 +1,50 @@
-import Video from "../models/video.model.ts";
+import type { Request, Response } from "express";
+import type { Video } from '../types/index';
+import prisma from "../../prisma/client";
 
-const video_index = (req, res) => {
-  return "Hello from video controller";
-  Video.find().sort({ createdAt: -1 })
-    .then(videos => {
+export const video_index = (req: Request, res: Response) => {
+  prisma.video.findMany()
+    .then((videos: Video[]) => {
       res.send(videos);
     })
-    .catch(err => {
-      res.send('500', { title: 'Error retrieving videos' });
+    .catch((err: unknown) => {
       console.log(err);
-    });
+      res.status(500).send({ title: 'Error fetching videos' });
+    });  
 }
 
-const video_details = (req, res) => {
+export const video_details = (req: Request, res: Response) => {
   const id = req.params.id;
-  Video.findById(id)
-    .then(video => {
+  prisma.video.findUnique({ where: { id: Number(id) } })
+    .then((video: Video) => {
       res.send(video);
     })
-    .catch(err => {
+    .catch((err: unknown) => {
       console.log(err);
-      res.send('404', { title: 'Video not found' });
+      res.status(500).send({ title: 'Error fetching video details' });
     });
 }
 
-const video_create = (req, res) => {
-  const video = new Video(req.body);
-  video.save()
-    .then(video => {
+export const video_create = (req: Request, res: Response) => {
+  const videoData: Video = req.body;
+  prisma.video.create({ data: videoData })
+    .then((video: Video) => {
       res.send(video);
     })
-    .catch(err => {
+    .catch((err: unknown) => {
       console.log(err);
-      res.send('500', { title: 'Error creating video' });
+      res.status(500).send({ title: 'Error creating video' });
     });
 }
 
-const video_delete = (req, res) => {
+export const video_delete = (req: Request, res: Response) => {
   const id = req.params.id;
-  Video.findByIdAndDelete(id)
-    .then(video => {
-      res.send(video);
+  prisma.video.delete({ where: { id: Number(id) } })
+    .then(() => {
+      res.send({ message: 'Video deleted successfully' });
     })
-    .catch(err => {
+    .catch((err: unknown) => {
       console.log(err);
-      res.send('500', { title: 'Error deleting video' });
+      res.status(500).send({ title: 'Error deleting video' });
     });
 }
-
-const videoController = {
-  video_index,
-  video_details,
-  video_create,
-  video_delete
-}
-
-export default videoController;

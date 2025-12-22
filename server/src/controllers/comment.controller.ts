@@ -1,55 +1,50 @@
-import Comment from "../models/comment.model.ts";
+import type { Request, Response } from "express";
+import type { Comment } from '../types/index';
+import prisma from "../../prisma/client";
 
-const comment_index = (req, res) => {
-  Comment.find().sort({ createdAt: -1 })
-    .then(comments => {
+export const comment_index = (req: Request, res: Response) => {
+  prisma.comment.findMany()
+    .then((comments: Comment[]) => {
       res.send(comments);
     })
-    .catch(err => {
-      res.send('500', { title: 'Error retrieving comments' });
+    .catch((err: unknown) => {
       console.log(err);
-    });
+      res.status(500).send({ title: 'Error fetching comments' });
+    });  
 }
 
-const comment_details = (req, res) => {
+export const comment_details = (req: Request, res: Response) => {
   const id = req.params.id;
-  Comment.findById(id)
-    .then(comment => {
+  prisma.comment.findUnique({ where: { id: Number(id) } })
+    .then((comment: Comment) => {
       res.send(comment);
     })
-    .catch(err => {
+    .catch((err: unknown) => {
       console.log(err);
-      res.send('404', { title: 'Comment not found' });
+      res.status(500).send({ title: 'Error fetching comment details' });
     });
 }
 
-const comment_create = (req, res) => {
-  const comment = new Comment(req.body);
-  comment.save()
-    .then(comment => {
+export const comment_create = (req: Request, res: Response) => {
+  const commentData: Comment = req.body;
+  prisma.comment.create({ data: commentData })
+    .then((comment: Comment) => {
       res.send(comment);
     })
-    .catch(err => {
+    .catch((err: unknown) => {
       console.log(err);
-      res.send('500', { title: 'Error creating comment' });
+      res.status(500).send({ title: 'Error creating comment' });
     });
 }
 
-const comment_delete = (req, res) => {
+export const comment_delete = (req: Request, res: Response) => {
   const id = req.params.id;
-  Comment.findByIdAndDelete(id)
-    .then(comment => {
-      res.send(comment);
+  prisma.comment.delete({ where: { id: Number(id) } })
+    .then(() => {
+      res.send({ message: 'Comment deleted successfully' });
     })
-    .catch(err => {
+    .catch((err: unknown) => {
       console.log(err);
-      res.send('500', { title: 'Error deleting comment' });
+      res.status(500).send({ title: 'Error deleting comment' });
     });
-}
-
-export default {
-  comment_index,
-  comment_details,
-  comment_create,
-  comment_delete
 }

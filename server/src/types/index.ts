@@ -27,3 +27,17 @@ export interface Channel{
   avatar: string;
   subscribers: string;
 }
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+}
+
+export interface Comment {
+  id: number;
+  videoId: number;
+  userId: number;
+  content: string;
+  date: string;
+}

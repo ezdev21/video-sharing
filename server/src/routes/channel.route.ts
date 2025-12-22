@@ -1,5 +1,5 @@
 import express from "express";
-import channelController from "../controllers/channel.controller.ts";
+import channelController from "../controllers/channel.controller";
 
 const router = express.Router();
 

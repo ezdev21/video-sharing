@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  name      String
+  email     String     @unique
+  videos    Video[]
+  comments  Comment[]
+  channels  Channel[]
+  playlists Playlist[]
+}
+
+model Video {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String?
+  url         String    @unique
+  uploadedAt  DateTime  @default(now())
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  comments    Comment[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  userId    Int
+  videoId   Int
+  user      User     @relation(fields: [userId], references: [id])
+  video     Video    @relation(fields: [videoId], references: [id])
+}
+
+model Channel {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Playlist {
+  id        Int      @id @default(autoincrement())
+  title     String
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}

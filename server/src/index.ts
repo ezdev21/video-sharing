@@ -1,13 +1,13 @@
 import express from 'express';
 import cors from 'cors';
-import videoRoute from './routes/video.route.ts';
-import channelRoute from './routes/channel.route.ts';
-import playlistRoute from './routes/playlist.route.ts';
-import commentRoute from './routes/comment.route.ts';
-import postRoute from './routes/post.route.ts';
+import videoRoute from './routes/video.route';
+import channelRoute from './routes/channel.route';
+import playlistRoute from './routes/playlist.route';
+import commentRoute from './routes/comment.route';
+import postRoute from './routes/post.route';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const corsOptions = {
   origin: 'http://localhost:5173', // Match your frontend's address

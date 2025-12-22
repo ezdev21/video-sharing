@@ -1,55 +1,50 @@
-import Post from "../models/post.model.ts";
+import type { Request, Response } from "express";
+import type { Post } from '../types/index';
+import prisma from "../../prisma/client";
 
-const post_index = (req, res) => {
-  Post.find().sort({ createdAt: -1 })
-    .then(posts => {
+export const post_index = (req: Request, res: Response) => {
+  prisma.post.findMany()
+    .then((posts: Post[]) => {
       res.send(posts);
     })
-    .catch(err => {
-      res.send('500', { title: 'Error retrieving posts' });
+    .catch((err: unknown) => {
       console.log(err);
-    });
+      res.status(500).send({ title: 'Error fetching posts' });
+    });  
 }
 
-const post_details = (req, res) => {
+export const post_details = (req: Request, res: Response) => {
   const id = req.params.id;
-  Post.findById(id)
-    .then(post => {
+  prisma.post.findUnique({ where: { id: Number(id) } })
+    .then((post: Post) => {
       res.send(post);
     })
-    .catch(err => {
+    .catch((err: unknown) => {
       console.log(err);
-      res.send('404', { title: 'Post not found' });
+      res.status(500).send({ title: 'Error fetching post details' });
     });
 }
 
-const post_create = (req, res) => {
-  const post = new Post(req.body);
-  post.save()
-    .then(post => {
+export const post_create = (req: Request, res: Response) => {
+  const postData: Post = req.body;
+  prisma.post.create({ data: postData })
+    .then((post: Post) => {
       res.send(post);
     })
-    .catch(err => {
+    .catch((err: unknown) => {
       console.log(err);
-      res.send('500', { title: 'Error creating post' });
+      res.status(500).send({ title: 'Error creating post' });
     });
 }
 
-const post_delete = (req, res) => {
+export const post_delete = (req: Request, res: Response) => {
   const id = req.params.id;
-  Post.findByIdAndDelete(id)
-    .then(post => {
-      res.send(post);
+  prisma.post.delete({ where: { id: Number(id) } })
+    .then(() => {
+      res.send({ message: 'Post deleted successfully' });
     })
-    .catch(err => {
+    .catch((err: unknown) => {
       console.log(err);
-      res.send('500', { title: 'Error deleting post' });
+      res.status(500).send({ title: 'Error deleting post' });
     });
-}
-
-export default {
-  post_index,
-  post_details,
-  post_create,
-  post_delete
 }

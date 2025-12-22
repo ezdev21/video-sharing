@@ -1,55 +1,50 @@
-import Playlist from "../models/playlist.model.ts";
+import type { Request, Response } from "express";
+import type { Playlist } from '../types/index';
+import prisma from "../../prisma/client";
 
-const playlist_index = (req, res) => {
-  Playlist.find().sort({ createdAt: -1 })
-    .then(playlists => {
+export const playlist_index = (req: Request, res: Response) => {
+  prisma.playlist.findMany()
+    .then((playlists: Playlist[]) => {
       res.send(playlists);
     })
-    .catch(err => {
-      res.send('500', { title: 'Error retrieving playlists' });
+    .catch((err: unknown) => {
       console.log(err);
-    });
+      res.status(500).send({ title: 'Error fetching playlists' });
+    });  
 }
 
-const playlist_details = (req, res) => {
+export const playlist_details = (req: Request, res: Response) => {
   const id = req.params.id;
-  Playlist.findById(id)
-    .then(playlist => {
+  prisma.playlist.findUnique({ where: { id: Number(id) } })
+    .then((playlist: Playlist) => {
       res.send(playlist);
     })
-    .catch(err => {
+    .catch((err: unknown) => {
       console.log(err);
-      res.send('404', { title: 'Playlist not found' });
+      res.status(500).send({ title: 'Error fetching playlist details' });
     });
 }
 
-const playlist_create = (req, res) => {
-  const playlist = new Playlist(req.body);
-  playlist.save()
-    .then(playlist => {
+export const playlist_create = (req: Request, res: Response) => {
+  const playlistData: Playlist = req.body;
+  prisma.playlist.create({ data: playlistData })
+    .then((playlist: Playlist) => {
       res.send(playlist);
     })
-    .catch(err => {
+    .catch((err: unknown) => {
       console.log(err);
-      res.send('500', { title: 'Error creating playlist' });
+      res.status(500).send({ title: 'Error creating playlist' });
     });
 }
 
-const playlist_delete = (req, res) => {
+export const playlist_delete = (req: Request, res: Response) => {
   const id = req.params.id;
-  Playlist.findByIdAndDelete(id)
-    .then(playlist => {
-      res.send(playlist);
+  prisma.playlist.delete({ where: { id: Number(id) } })
+    .then(() => {
+      res.send({ message: 'Playlist deleted successfully' });
     })
-    .catch(err => {
+    .catch((err: unknown) => {
       console.log(err);
-      res.send('500', { title: 'Error deleting playlist' });
+      res.status(500).send({ title: 'Error deleting playlist' });
     });
-}
-
-export default {
-  playlist_index,
-  playlist_details,
-  playlist_create,
-  playlist_delete
 }

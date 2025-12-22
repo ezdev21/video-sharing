@@ -10,7 +10,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: 'http://localhost:5173', // Match your frontend's address
+  // origin: 'http://localhost:5173', // Match your frontend's address
+  origin: process.env.APP_ENV == 'developement' ? '*' : process.env.ORIGIN,
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
   allowedHeaders: ['Content-Type', 'Authorization'] // Specify allowed headers
 };

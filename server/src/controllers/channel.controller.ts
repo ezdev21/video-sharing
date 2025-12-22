@@ -1,10 +1,9 @@
 import type { Request, Response } from "express";
-import type { Channel } from '../types/index';
 import prisma from "../../prisma/client";
 
 export const channelIndex = (req: Request, res: Response) => {
   prisma.channel.findMany()
-    .then((channels: Channel[]) => {
+    .then((channels) => {
       res.send(channels);
     })
     .catch((err: unknown) => {
@@ -16,7 +15,7 @@ export const channelIndex = (req: Request, res: Response) => {
 export const channelDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.channel.findUnique({ where: { id: Number(id) } })
-    .then((channel: Channel) => {
+    .then((channel) => {
       res.send(channel);
     })
     .catch((err: unknown) => {
@@ -26,9 +25,9 @@ export const channelDetails = (req: Request, res: Response) => {
 }
 
 export const channelCreate = (req: Request, res: Response) => {
-  const channelData: Channel = req.body;
+  const channelData = req.body;
   prisma.channel.create({ data: channelData })
-    .then((channel: Channel) => {
+    .then((channel) => {
       res.send(channel);
     })
     .catch((err: unknown) => {
@@ -39,12 +38,12 @@ export const channelCreate = (req: Request, res: Response) => {
 
 export const channelUpdate = (req: Request, res: Response) => {
   const id = req.params.id;
-  const channelData: Channel = req.body;
+  const channelData = req.body;
   prisma.channel.update({
     where: { id: Number(id) },
     data: channelData
   })
-  .then((channel: Channel) => {
+  .then((channel) => {
     res.send(channel);
   })
   .catch((err: unknown) => {

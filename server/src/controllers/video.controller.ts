@@ -1,10 +1,9 @@
 import type { Request, Response } from "express";
-import type { Video } from '../types/index';
 import prisma from "../../prisma/client";
 
 export const videoIndex = (req: Request, res: Response) => {
   prisma.video.findMany()
-    .then((videos: Video[]) => {
+    .then((videos) => {
       res.send(videos);
     })
     .catch((err: unknown) => {
@@ -16,7 +15,7 @@ export const videoIndex = (req: Request, res: Response) => {
 export const videoDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.video.findUnique({ where: { id: Number(id) } })
-    .then((video: Video) => {
+    .then((video) => {
       res.send(video);
     })
     .catch((err: unknown) => {
@@ -26,9 +25,9 @@ export const videoDetails = (req: Request, res: Response) => {
 }
 
 export const videoCreate = (req: Request, res: Response) => {
-  const videoData: Video = req.body;
+  const videoData = req.body;
   prisma.video.create({ data: videoData })
-    .then((video: Video) => {
+    .then((video) => {
       res.send(video);
     })
     .catch((err: unknown) => {
@@ -39,12 +38,12 @@ export const videoCreate = (req: Request, res: Response) => {
 
 export const videoUpdate = (req: Request, res: Response) => {
   const id = req.params.id;
-  const videoData: Video = req.body;
+  const videoData = req.body;
   prisma.video.update({
     where: { id: Number(id) },
     data: videoData
   })
-    .then((video: Video) => {
+    .then((video) => {
       res.send(video);
     })
     .catch((err: unknown) => {

@@ -1,10 +1,9 @@
 import type { Request, Response } from "express";
-import type { Post } from '../types/index';
 import prisma from "../../prisma/client";
 
 export const postIndex = (req: Request, res: Response) => {
   prisma.post.findMany()
-    .then((posts: Post[]) => {
+    .then((posts) => {
       res.send(posts);
     })
     .catch((err: unknown) => {
@@ -16,7 +15,7 @@ export const postIndex = (req: Request, res: Response) => {
 export const postDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.post.findUnique({ where: { id: Number(id) } })
-    .then((post: Post) => {
+    .then((post) => {
       res.send(post);
     })
     .catch((err: unknown) => {
@@ -26,9 +25,9 @@ export const postDetails = (req: Request, res: Response) => {
 }
 
 export const postCreate = (req: Request, res: Response) => {
-  const postData: Post = req.body;
+  const postData = req.body;
   prisma.post.create({ data: postData })
-    .then((post: Post) => {
+    .then((post) => {
       res.send(post);
     })
     .catch((err: unknown) => {
@@ -39,12 +38,12 @@ export const postCreate = (req: Request, res: Response) => {
 
 export const postUpdate = (req: Request, res: Response) => {
   const id = req.params.id;
-  const postData: Post = req.body;
+  const postData = req.body;
   prisma.post.update({
     where: { id: Number(id) },
     data: postData
   })
-    .then((post: Post) => {
+    .then((post) => {
       res.send(post);
     })
     .catch((err: unknown) => {

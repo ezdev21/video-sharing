@@ -1,10 +1,9 @@
 import type { Request, Response } from "express";
-import type { Playlist } from '../types/index';
 import prisma from "../../prisma/client";
 
 export const playlistIndex = (req: Request, res: Response) => {
   prisma.playlist.findMany()
-    .then((playlists: Playlist[]) => {
+    .then((playlists) => {
       res.send(playlists);
     })
     .catch((err: unknown) => {
@@ -16,7 +15,7 @@ export const playlistIndex = (req: Request, res: Response) => {
 export const playlistDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.playlist.findUnique({ where: { id: Number(id) } })
-    .then((playlist: Playlist) => {
+    .then((playlist) => {
       res.send(playlist);
     })
     .catch((err: unknown) => {
@@ -26,9 +25,9 @@ export const playlistDetails = (req: Request, res: Response) => {
 }
 
 export const playlistCreate = (req: Request, res: Response) => {
-  const playlistData: Playlist = req.body;
+  const playlistData = req.body;
   prisma.playlist.create({ data: playlistData })
-    .then((playlist: Playlist) => {
+    .then((playlist) => {
       res.send(playlist);
     })
     .catch((err: unknown) => {
@@ -39,12 +38,12 @@ export const playlistCreate = (req: Request, res: Response) => {
 
 export const playlistUpdate = (req: Request, res: Response) => {
   const id = req.params.id;
-  const playlistData: Playlist = req.body;
+  const playlistData = req.body;
   prisma.playlist.update({
     where: { id: Number(id) },
     data: playlistData
   })
-  .then((playlist: Playlist) => {
+  .then((playlist) => {
     res.send(playlist);
   })
   .catch((err: unknown) => {

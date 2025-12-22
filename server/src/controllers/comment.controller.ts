@@ -1,10 +1,9 @@
 import type { Request, Response } from "express";
-import type { Comment } from '../types/index';
 import prisma from "../../prisma/client";
 
 export const commentIndex = (req: Request, res: Response) => {
   prisma.comment.findMany()
-    .then((comments: Comment[]) => {
+    .then((comments) => {
       res.send(comments);
     })
     .catch((err: unknown) => {
@@ -16,7 +15,7 @@ export const commentIndex = (req: Request, res: Response) => {
 export const commentDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.comment.findUnique({ where: { id: Number(id) } })
-    .then((comment: Comment) => {
+    .then((comment) => {
       res.send(comment);
     })
     .catch((err: unknown) => {
@@ -26,9 +25,9 @@ export const commentDetails = (req: Request, res: Response) => {
 }
 
 export const commentCreate = (req: Request, res: Response) => {
-  const commentData: Comment = req.body;
+  const commentData = req.body;
   prisma.comment.create({ data: commentData })
-    .then((comment: Comment) => {
+    .then((comment) => {
       res.send(comment);
     })
     .catch((err: unknown) => {
@@ -39,12 +38,12 @@ export const commentCreate = (req: Request, res: Response) => {
 
 export const commentUpdate = (req: Request, res: Response) => {
   const id = req.params.id;
-  const commentData: Comment = req.body;
+  const commentData = req.body;
   prisma.comment.update({
     where: { id: Number(id) },
     data: commentData
   })
-  .then((comment: Comment) => {
+  .then((comment) => {
     res.send(comment);
   })
   .catch((err: unknown) => {

@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import type { Playlist } from '../types/index';
 import prisma from "../../prisma/client";
 
-export const playlist_index = (req: Request, res: Response) => {
+export const playlistIndex = (req: Request, res: Response) => {
   prisma.playlist.findMany()
     .then((playlists: Playlist[]) => {
       res.send(playlists);
@@ -13,7 +13,7 @@ export const playlist_index = (req: Request, res: Response) => {
     });  
 }
 
-export const playlist_details = (req: Request, res: Response) => {
+export const playlistDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.playlist.findUnique({ where: { id: Number(id) } })
     .then((playlist: Playlist) => {
@@ -25,7 +25,7 @@ export const playlist_details = (req: Request, res: Response) => {
     });
 }
 
-export const playlist_create = (req: Request, res: Response) => {
+export const playlistCreate = (req: Request, res: Response) => {
   const playlistData: Playlist = req.body;
   prisma.playlist.create({ data: playlistData })
     .then((playlist: Playlist) => {
@@ -37,7 +37,23 @@ export const playlist_create = (req: Request, res: Response) => {
     });
 }
 
-export const playlist_delete = (req: Request, res: Response) => {
+export const playlistUpdate = (req: Request, res: Response) => {
+  const id = req.params.id;
+  const playlistData: Playlist = req.body;
+  prisma.playlist.update({
+    where: { id: Number(id) },
+    data: playlistData
+  })
+  .then((playlist: Playlist) => {
+    res.send(playlist);
+  })
+  .catch((err: unknown) => {
+     console.log(err);
+      res.status(500).send({ title: 'Error updating post' });
+  });
+}
+
+export const playlistDelete = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.playlist.delete({ where: { id: Number(id) } })
     .then(() => {

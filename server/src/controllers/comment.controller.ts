@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import type { Comment } from '../types/index';
 import prisma from "../../prisma/client";
 
-export const comment_index = (req: Request, res: Response) => {
+export const commentIndex = (req: Request, res: Response) => {
   prisma.comment.findMany()
     .then((comments: Comment[]) => {
       res.send(comments);
@@ -13,7 +13,7 @@ export const comment_index = (req: Request, res: Response) => {
     });  
 }
 
-export const comment_details = (req: Request, res: Response) => {
+export const commentDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.comment.findUnique({ where: { id: Number(id) } })
     .then((comment: Comment) => {
@@ -25,7 +25,7 @@ export const comment_details = (req: Request, res: Response) => {
     });
 }
 
-export const comment_create = (req: Request, res: Response) => {
+export const commentCreate = (req: Request, res: Response) => {
   const commentData: Comment = req.body;
   prisma.comment.create({ data: commentData })
     .then((comment: Comment) => {
@@ -37,7 +37,23 @@ export const comment_create = (req: Request, res: Response) => {
     });
 }
 
-export const comment_delete = (req: Request, res: Response) => {
+export const commentUpdate = (req: Request, res: Response) => {
+  const id = req.params.id;
+  const commentData: Comment = req.body;
+  prisma.comment.update({
+    where: { id: Number(id) },
+    data: commentData
+  })
+  .then((comment: Comment) => {
+    res.send(comment);
+  })
+  .catch((err: unknown) => {
+     console.log(err);
+      res.status(500).send({ title: 'Error updating post' });
+  });
+}  
+
+export const commentDelete = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.comment.delete({ where: { id: Number(id) } })
     .then(() => {

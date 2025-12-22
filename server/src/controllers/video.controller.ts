@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import type { Video } from '../types/index';
 import prisma from "../../prisma/client";
 
-export const video_index = (req: Request, res: Response) => {
+export const videoIndex = (req: Request, res: Response) => {
   prisma.video.findMany()
     .then((videos: Video[]) => {
       res.send(videos);
@@ -13,7 +13,7 @@ export const video_index = (req: Request, res: Response) => {
     });  
 }
 
-export const video_details = (req: Request, res: Response) => {
+export const videoDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.video.findUnique({ where: { id: Number(id) } })
     .then((video: Video) => {
@@ -25,7 +25,7 @@ export const video_details = (req: Request, res: Response) => {
     });
 }
 
-export const video_create = (req: Request, res: Response) => {
+export const videoCreate = (req: Request, res: Response) => {
   const videoData: Video = req.body;
   prisma.video.create({ data: videoData })
     .then((video: Video) => {
@@ -37,7 +37,23 @@ export const video_create = (req: Request, res: Response) => {
     });
 }
 
-export const video_delete = (req: Request, res: Response) => {
+export const videoUpdate = (req: Request, res: Response) => {
+  const id = req.params.id;
+  const videoData: Video = req.body;
+  prisma.video.update({
+    where: { id: Number(id) },
+    data: videoData
+  })
+    .then((video: Video) => {
+      res.send(video);
+    })
+    .catch((err: unknown) => {
+      console.log(err);
+      res.status(500).send({ title: 'Error updating video' });
+    });
+}
+
+export const videoDelete = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.video.delete({ where: { id: Number(id) } })
     .then(() => {

@@ -1,13 +1,12 @@
 import express from "express";
-import { postIndex, postDetails, postCreate, postUpdate, postDelete } from "../controllers/post.controller";
-import e from "express";
+import * as postController from "../controllers/post.controller";
 
 const router = express.Router();
 
-router.get('/', postIndex);
-router.post('/', postCreate);
-router.get('/:id', postDetails);
-router.put('/:id', postUpdate);
-router.delete('/:id', postDelete);
+router.get('/', postController.postIndex);
+router.post('/', postController.postCreate);
+router.get('/:id', postController.postDetails);
+router.put('/:id', postController.postUpdate);
+router.delete('/:id', postController.postDelete);
 
 export default router;

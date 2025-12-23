@@ -1,12 +1,10 @@
 import express from "express";
-import { channelIndex, channelDetails, channelCreate, channelUpdate, channelDelete } from "../controllers/channel.controller";
-
+import * as channelController from "../controllers/channel.controller";
 const router = express.Router();
 
-router.get('/', channelIndex);
-router.post('/', channelCreate);
-router.get('/:id', channelDetails);
-router.put('/:id', channelUpdate);
-router.delete('/:id', channelDelete);
-
+router.get('/', channelController.channelIndex);
+router.post('/', channelController.channelCreate);
+router.get('/:id', channelController.channelDetails);
+router.put('/:id', channelController.channelUpdate);
+router.delete('/:id', channelController.channelDelete);
 export default router;

@@ -7,7 +7,10 @@ import commentRoute from './routes/comment.route';
 import postRoute from './routes/post.route';
 
 const app = express();
-const port = process.env.PORT || 3000;
+
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
 
 const corsOptions = {
   // origin: 'http://localhost:5173', // Match your frontend's address
@@ -27,6 +30,8 @@ app.use('/channel', channelRoute);
 app.use('/playlist', playlistRoute);
 app.use('/comment', commentRoute);
 app.use('/post', postRoute);
+
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

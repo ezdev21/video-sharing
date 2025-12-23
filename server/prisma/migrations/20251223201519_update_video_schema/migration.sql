@@ -12,7 +12,8 @@ CREATE TABLE "Video" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
-    "url" TEXT NOT NULL,
+    "thumbnail" TEXT NOT NULL,
+    "src" TEXT NOT NULL,
     "uploadedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" INTEGER NOT NULL,
 
@@ -52,9 +53,6 @@ CREATE TABLE "Playlist" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Video_url_key" ON "Video"("url");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Channel_name_key" ON "Channel"("name");

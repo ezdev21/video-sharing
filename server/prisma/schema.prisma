@@ -21,7 +21,8 @@ model Video {
   id          Int       @id @default(autoincrement())
   title       String
   description String?
-  url         String    @unique
+  thumbnail   String
+  src         String
   uploadedAt  DateTime  @default(now())
   userId      Int
   user        User      @relation(fields: [userId], references: [id])

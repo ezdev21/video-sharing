@@ -1,5 +1,5 @@
 import express from "express";
-import * as playlistController from "../controllers/playlist.controller";
+import * as playlistController from "../controllers/playlist.controller.js";
 
 const router = express.Router();
 

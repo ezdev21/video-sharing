@@ -1,9 +1,10 @@
 import type { Request, Response } from "express";
-import prisma from "../../prisma/client";
+import prisma from "../../prisma/client.js";
+import { Channel } from "../types/index.js";
 
 export const channelIndex = (req: Request, res: Response) => {
   prisma.channel.findMany()
-    .then((channels) => {
+    .then((channels: Channel[]) => {
       res.send(channels);
     })
     .catch((err: unknown) => {
@@ -15,7 +16,7 @@ export const channelIndex = (req: Request, res: Response) => {
 export const channelDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.channel.findUnique({ where: { id: Number(id) } })
-    .then((channel) => {
+    .then((channel: Channel | null) => {
       res.send(channel);
     })
     .catch((err: unknown) => {
@@ -27,7 +28,7 @@ export const channelDetails = (req: Request, res: Response) => {
 export const channelCreate = (req: Request, res: Response) => {
   const channelData = req.body;
   prisma.channel.create({ data: channelData })
-    .then((channel) => {
+    .then((channel: Channel) => {
       res.send(channel);
     })
     .catch((err: unknown) => {
@@ -43,7 +44,7 @@ export const channelUpdate = (req: Request, res: Response) => {
     where: { id: Number(id) },
     data: channelData
   })
-  .then((channel) => {
+  .then((channel: Channel) => {
     res.send(channel);
   })
   .catch((err: unknown) => {

@@ -1,9 +1,10 @@
 import type { Request, Response } from "express";
-import prisma from "../../prisma/client";
+import prisma from "../../prisma/client.js";
+import { Video } from "../types/index.js";
 
 export const videoIndex = (req: Request, res: Response) => {
   prisma.video.findMany()
-    .then((videos) => {
+    .then((videos: Video[]) => {
       res.send(videos);
     })
     .catch((err: unknown) => {
@@ -15,7 +16,7 @@ export const videoIndex = (req: Request, res: Response) => {
 export const videoDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.video.findUnique({ where: { id: Number(id) } })
-    .then((video) => {
+    .then((video: Video | null) => {
       res.send(video);
     })
     .catch((err: unknown) => {
@@ -27,7 +28,7 @@ export const videoDetails = (req: Request, res: Response) => {
 export const videoCreate = (req: Request, res: Response) => {
   const videoData = req.body;
   prisma.video.create({ data: videoData })
-    .then((video) => {
+    .then((video: Video) => {
       res.send(video);
     })
     .catch((err: unknown) => {
@@ -43,7 +44,7 @@ export const videoUpdate = (req: Request, res: Response) => {
     where: { id: Number(id) },
     data: videoData
   })
-    .then((video) => {
+    .then((video: Video) => {
       res.send(video);
     })
     .catch((err: unknown) => {

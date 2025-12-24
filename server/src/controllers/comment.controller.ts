@@ -1,9 +1,10 @@
 import type { Request, Response } from "express";
-import prisma from "../../prisma/client";
+import prisma from "../../prisma/client.js";
+import { Comment } from "../types/index.js";
 
 export const commentIndex = (req: Request, res: Response) => {
   prisma.comment.findMany()
-    .then((comments) => {
+    .then((comments: Comment[]) => {
       res.send(comments);
     })
     .catch((err: unknown) => {
@@ -15,7 +16,7 @@ export const commentIndex = (req: Request, res: Response) => {
 export const commentDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.comment.findUnique({ where: { id: Number(id) } })
-    .then((comment) => {
+    .then((comment: Comment | null) => {
       res.send(comment);
     })
     .catch((err: unknown) => {
@@ -27,7 +28,7 @@ export const commentDetails = (req: Request, res: Response) => {
 export const commentCreate = (req: Request, res: Response) => {
   const commentData = req.body;
   prisma.comment.create({ data: commentData })
-    .then((comment) => {
+    .then((comment: Comment) => {
       res.send(comment);
     })
     .catch((err: unknown) => {
@@ -43,7 +44,7 @@ export const commentUpdate = (req: Request, res: Response) => {
     where: { id: Number(id) },
     data: commentData
   })
-  .then((comment) => {
+  .then((comment: Comment) => {
     res.send(comment);
   })
   .catch((err: unknown) => {

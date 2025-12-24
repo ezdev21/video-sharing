@@ -1,5 +1,5 @@
 import express from "express";
-import * as channelController from "../controllers/channel.controller";
+import * as channelController from "../controllers/channel.controller.js";
 const router = express.Router();
 
 router.get('/', channelController.channelIndex);

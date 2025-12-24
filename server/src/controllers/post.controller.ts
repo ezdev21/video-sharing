@@ -1,9 +1,10 @@
 import type { Request, Response } from "express";
-import prisma from "../../prisma/client";
+import prisma from "../../prisma/client.js";
+import { Post } from "../types/index.js";
 
 export const postIndex = (req: Request, res: Response) => {
   prisma.post.findMany()
-    .then((posts) => {
+    .then((posts: Post[]) => {
       res.send(posts);
     })
     .catch((err: unknown) => {
@@ -15,7 +16,7 @@ export const postIndex = (req: Request, res: Response) => {
 export const postDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.post.findUnique({ where: { id: Number(id) } })
-    .then((post) => {
+    .then((post: Post | null) => {
       res.send(post);
     })
     .catch((err: unknown) => {
@@ -27,7 +28,7 @@ export const postDetails = (req: Request, res: Response) => {
 export const postCreate = (req: Request, res: Response) => {
   const postData = req.body;
   prisma.post.create({ data: postData })
-    .then((post) => {
+    .then((post: Post) => {
       res.send(post);
     })
     .catch((err: unknown) => {
@@ -43,7 +44,7 @@ export const postUpdate = (req: Request, res: Response) => {
     where: { id: Number(id) },
     data: postData
   })
-    .then((post) => {
+    .then((post: Post) => {
       res.send(post);
     })
     .catch((err: unknown) => {

@@ -1,9 +1,10 @@
 import type { Request, Response } from "express";
-import prisma from "../../prisma/client";
+import prisma from "../../prisma/client.js";
+import { Playlist } from "../types/index.js";
 
 export const playlistIndex = (req: Request, res: Response) => {
   prisma.playlist.findMany()
-    .then((playlists) => {
+    .then((playlists: Playlist[]) => {
       res.send(playlists);
     })
     .catch((err: unknown) => {
@@ -15,7 +16,7 @@ export const playlistIndex = (req: Request, res: Response) => {
 export const playlistDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.playlist.findUnique({ where: { id: Number(id) } })
-    .then((playlist) => {
+    .then((playlist: Playlist | null) => {
       res.send(playlist);
     })
     .catch((err: unknown) => {
@@ -27,7 +28,7 @@ export const playlistDetails = (req: Request, res: Response) => {
 export const playlistCreate = (req: Request, res: Response) => {
   const playlistData = req.body;
   prisma.playlist.create({ data: playlistData })
-    .then((playlist) => {
+    .then((playlist: Playlist) => {
       res.send(playlist);
     })
     .catch((err: unknown) => {
@@ -43,7 +44,7 @@ export const playlistUpdate = (req: Request, res: Response) => {
     where: { id: Number(id) },
     data: playlistData
   })
-  .then((playlist) => {
+  .then((playlist: Playlist) => {
     res.send(playlist);
   })
   .catch((err: unknown) => {

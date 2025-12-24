@@ -30,7 +30,7 @@ const CreateChannel: React.FC = () => {
     formData.append("background", background);
 
     try {
-      const res = await fetch("http://localhost:5000/channel/create", {
+      await fetch("http://localhost:5000/channel/create", {
         method: "POST",
         body: formData,
       });

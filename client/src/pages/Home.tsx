@@ -6,7 +6,7 @@ export default function Home() {
   const [videos, setVideos] = useState<Video[]>([]);
   
   const fetchVideos = async () =>{
-    const res = await fetch('http://localhost:3000/videos')
+    await fetch('http://localhost:3000/video')
     .then(res => res.json())
     .then((data: Video[]) => {
       setVideos(data);

@@ -8,5 +8,7 @@ router.post('/', videoController.videoCreate);
 router.get('/:id', videoController.videoDetails);
 router.put('/:id', videoController.videoUpdate);
 router.delete('/:id', videoController.videoDelete);
+router.get('/:id/recommended', videoController.videoRecommended);
+router.get('/:id/channel', videoController.videoByChannel);
 
 export default router;

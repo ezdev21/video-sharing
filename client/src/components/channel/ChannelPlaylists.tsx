@@ -5,7 +5,7 @@ export default function ChannelPlaylists() {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   
   const fetchPlaylists = async () => {
-    const res = await fetch(`http://localhost:3000/channel/1/playlists`)
+    await fetch(`http://localhost:3000/channel/1/playlists`)
     .then(res => res.json())
     .then((data: Playlist[]) => {
       setPlaylists(data);

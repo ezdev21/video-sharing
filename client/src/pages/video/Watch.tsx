@@ -11,7 +11,7 @@ export default function Watch() {
   const [recommended, setRecommended] = useState<Video[]>([])
 
   const fetchVideo = async () => {
-    const res = await fetch(`http://localhost:3000/video/${id}`)
+    await fetch(`http://localhost:3000/video/${id}`)
     .then(res => res.json())
     .then((data: Video) => {
       setVideo(data);
@@ -21,7 +21,7 @@ export default function Watch() {
   }
   
   const fetchRecommendedVideos = async () => {
-    const res = await fetch(`http://localhost:3000/video/${id}/recommended`)
+    await fetch(`http://localhost:3000/video/${id}/recommended`)
     .then(res => res.json())
     .then((data: Video[]) => {
       setRecommended(data);

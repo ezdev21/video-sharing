@@ -8,7 +8,7 @@ export default function ChannelHome() {
   const [channel, setChannel] = useState<Channel>({});
   
   const fetchChannel = async () => {
-    const res = await fetch('http://localhost:3000/channel/1')
+    await fetch('http://localhost:3000/channel/1')
     .then(res => res.json())
     .then((data: Channel) => {
       setChannel(data);

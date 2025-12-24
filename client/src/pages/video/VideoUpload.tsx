@@ -30,7 +30,7 @@ const VideoUpload: React.FC = () => {
     formData.append("description", description);
 
     try {
-      const res = await fetch("http://localhost:5000/upload", {
+      await fetch("http://localhost:5000/upload", {
         method: "POST",
         body: formData,
       });

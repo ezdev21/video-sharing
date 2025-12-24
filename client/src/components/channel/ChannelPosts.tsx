@@ -5,7 +5,7 @@ export default function ChannelPosts() {
   const [posts, setPosts] = useState<Post[]>([]);
   
   const fetchPosts = async () => {
-    const res = await fetch(`http://localhost:3000/channel/1/posts`)
+    await fetch(`http://localhost:3000/channel/1/posts`)
     .then(res => res.json())
     .then((data: Post[]) => {
       setPosts(data);

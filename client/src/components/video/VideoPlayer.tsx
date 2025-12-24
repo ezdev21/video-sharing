@@ -6,19 +6,11 @@ interface VideoPlayerProps {
 }
 
 export default function VideoPlayer({ video }: VideoPlayerProps) {
-  if (!video) {
-    return <div>Loading...</div>
-  }
   return (
     <div>
       {/* Video */}
-      <div className="w-full aspect-video bg-black rounded-xl overflow-hidden">
-        <iframe
-          className="w-full h-full"
-          src="https://www.youtube.com/embed/8pDqJVdNa44"
-          title={video.title}
-          allowFullScreen
-        />
+      <div className="w-full aspect-video bg-black rounded-md overflow-hidden">
+        <video src={video.src} className="w-full h-full" controls/>
       </div>
 
       {/* Video Info */}

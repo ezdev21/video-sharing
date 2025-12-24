@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, Search, Mic, Bell, User, Plus, Video } from "lucide-react";
+import { Menu, Search, Mic, Bell, User, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 
@@ -30,11 +30,11 @@ export default function Navbar() {
           <div className="flex items-center flex-1 max-w-xl mx-6">
             <div className="flex flex-1">
               <input
-                type="text"
+                type="search"
                 placeholder="Search"
-                className="w-full px-4 py-2 text-sm border border-gray-300 rounded-l-full focus:outline-none focus:outline-2 focus:border-blue-500"
+                className="w-full px-4 py-2 text-sm border border-gray-300 rounded-l-md focus:outline-none focus:outline-2 focus:border-primary"
               />
-              <button className="px-6 border border-l-0 border-gray-300 rounded-r-full bg-gray-100 hover:bg-gray-200">
+              <button className="px-6 border border-l-0 border-gray-300 rounded-r-md bg-gray-100 hover:bg-gray-200">
                 <Search size={18} />
               </button>
             </div>

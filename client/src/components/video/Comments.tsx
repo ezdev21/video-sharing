@@ -13,7 +13,7 @@ export default function Comments({id}) {
   const [newComment, setNewComment] = useState("");
   
   const fetchComments = async () =>{
-      const res = await fetch(`http://localhost:3000/video/${id}/comments`)
+      await fetch(`http://localhost:3000/video/${id}/comments`)
       .then(res => res.json())
       .then((data: Comment[]) => {
         setComments(data);
@@ -29,7 +29,7 @@ export default function Comments({id}) {
   const handleAddComment = async () => {
     if (!newComment.trim()) return;
     
-    const res = await fetch('http://localhost:3000/video/comments/add')
+    await fetch('http://localhost:3000/video/comments/add')
       .then(res => res.json())
       .then((data: Comment) => {
         setComments([data, ...comments]);

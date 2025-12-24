@@ -6,7 +6,7 @@ export default function ChannelVideos() {
   const [videos, setVideos] = useState<Video[]>([]);
 
   const fetchVideos = async () => {
-    const res = await fetch(`http://localhost:3000/channel/1/videos`)
+    await fetch(`http://localhost:3000/channel/1/videos`)
     .then(res => res.json())
     .then((data: Video[]) => {
       setVideos(data);

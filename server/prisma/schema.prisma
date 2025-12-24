@@ -30,6 +30,8 @@ model Video {
   updatedAt   DateTime  @updatedAt
   userId      Int
   user        User      @relation(fields: [userId], references: [id])
+  channelId   Int
+  channel     Channel?  @relation(fields: [channelId], references: [id])
   comments    Comment[]
 }
 
@@ -50,6 +52,7 @@ model Channel {
   description String?
   userId      Int
   user        User     @relation(fields: [userId], references: [id])
+  videos      Video[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

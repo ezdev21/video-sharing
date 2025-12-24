@@ -1,10 +1,11 @@
 import express from 'express';
 import cors from 'cors';
-import videoRoute from './routes/video.route';
-import channelRoute from './routes/channel.route';
-import playlistRoute from './routes/playlist.route';
-import commentRoute from './routes/comment.route';
-import postRoute from './routes/post.route';
+import videoRoute from './routes/video.route.js';
+import channelRoute from './routes/channel.route.js';
+import playlistRoute from './routes/playlist.route.js';
+import commentRoute from './routes/comment.route.js';
+import postRoute from './routes/post.route.js';
+import userRoute from './routes/user.route.js';
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.get('/', (_req, res) => {
   res.send('ViParta! the video sharing website!');
 });
 
+app.use('/user', userRoute);
 app.use('/video', videoRoute);
 app.use('/channel', channelRoute);
 app.use('/playlist', playlistRoute);

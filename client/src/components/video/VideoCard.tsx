@@ -6,10 +6,11 @@ interface VideoCardProps {
 }
 
 export default function VideoCard({ video }: VideoCardProps) {
+
   return (
     <div className="cursor-pointer">
       {/* Thumbnail */}
-      <div className="relative rounded-xl overflow-hidden">
+      <div className="relative rounded-md overflow-hidden">
         <Link to={`/video/${video.id}`}>
           <img
             src={video.thumbnail}
@@ -23,11 +24,11 @@ export default function VideoCard({ video }: VideoCardProps) {
       </div>
 
       {/* Info */}
-      <Link to={`/channel/${video.channel}`}>
+      <Link to={`/channel/${video.channel?.id}`}>
       <div className="flex gap-3 mt-3">
         <img
-          src={video.channelAvatar}
-          alt={video.channel}
+          src={video.channel.avatar}
+          alt={video.channel.avatar}
           className="w-9 h-9 rounded-full"
         />
 
@@ -37,11 +38,11 @@ export default function VideoCard({ video }: VideoCardProps) {
           </h3>
 
           <p className="text-sm text-gray-600 mt-1">
-            {video.channel}
+            {video.channel.name}
           </p>
 
           <p className="text-xs text-gray-500">
-            {video.views} views • {video.time}
+            {video.views} views • {new Date(video.createdAt).toLocaleDateString()}
           </p>
         </div>
       </div>

@@ -3,7 +3,7 @@ import prisma from "../../prisma/client.js";
 import { Video } from "../types/index.js";
 
 export const videoIndex = (req: Request, res: Response) => {
-  prisma.video.findMany({orderBy: { createdAt: 'desc' } })
+  prisma.video.findMany({orderBy: { createdAt: 'desc' }, take:50, include: { channel: true } })
     .then((videos: Video[]) => {
       res.send(videos);
     })
@@ -45,7 +45,7 @@ export const videoRecommended = (req: Request, res: Response) => {
 
 export const videoDetails = (req: Request, res: Response) => {
   const id = req.params.id;
-  prisma.video.findUnique({ where: { id: Number(id) } })
+  prisma.video.findUnique({ where: { id: Number(id) }, include: { channel: true } })
     .then((video: Video | null) => {
       res.send(video);
     })

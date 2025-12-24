@@ -10,26 +10,26 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
     <div>
       {/* Video */}
       <div className="w-full aspect-video bg-black rounded-md overflow-hidden">
-        <video src={video.src} className="w-full h-full" controls/>
+        <video src={video?.src} className="w-full h-full" controls/>
       </div>
 
       {/* Video Info */}
       <h1 className="mt-4 text-lg font-semibold">
-        {video.title}
+        {video?.title}
       </h1>
 
       <div className="flex items-center justify-between mt-2">
         <div className="flex items-center gap-3">
-          <Link to={`/channel/${video.id}`} className="flex items-center gap-3">
+          <Link to={`/channel/${video?.channel.id}`} className="flex items-center gap-3">
             <img
-              src={video.channelAvatar}
+              src={video?.channel.avatar}
               className="w-10 h-10 rounded-full"
-              alt={video.channel}
+              alt={video?.channel.name}
             />
             <div>
-              <p className="font-medium">{video.channel}</p>
+              <p className="font-medium">{video?.channel.name}</p>
               <p className="text-sm text-gray-500">
-                {video.views} views
+                {video?.views} views
               </p>
             </div>
           </Link>

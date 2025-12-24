@@ -19,7 +19,7 @@ export default function RecommendedVideos({
           <Link to={`/video/${video.id}`}>
             <img
               src={video.thumbnail}
-              className="w-40 h-24 object-cover rounded-lg"
+              className="w-40 h-24 object-cover rounded-md"
               alt={video.title}
             />
           </Link>

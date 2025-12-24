@@ -48,8 +48,10 @@ model Comment {
 
 model Channel {
   id          Int      @id @default(autoincrement())
-  name        String   @unique
+  name        String
   description String?
+  avatar      String?
+  background  String?
   userId      Int
   user        User     @relation(fields: [userId], references: [id])
   videos      Video[]

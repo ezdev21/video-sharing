@@ -11,6 +11,9 @@ model User {
   id        Int        @id @default(autoincrement())
   name      String
   email     String     @unique
+  password  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   videos    Video[]
   comments  Comment[]
   channels  Channel[]
@@ -23,7 +26,8 @@ model Video {
   description String?
   thumbnail   String
   src         String
-  uploadedAt  DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   userId      Int
   user        User      @relation(fields: [userId], references: [id])
   comments    Comment[]
@@ -33,6 +37,7 @@ model Comment {
   id        Int      @id @default(autoincrement())
   content   String
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   userId    Int
   videoId   Int
   user      User     @relation(fields: [userId], references: [id])
@@ -40,11 +45,13 @@ model Comment {
 }
 
 model Channel {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Playlist {
@@ -53,4 +60,5 @@ model Playlist {
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

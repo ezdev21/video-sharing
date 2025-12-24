@@ -19,24 +19,24 @@ export default function RecommendedVideos({
           <Link to={`/video/${video.id}`}>
             <img
               src={video.thumbnail}
-              className="w-40 h-24 object-cover rounded-md"
+              className="w-40 h-24 object-cover rounded-lg"
               alt={video.title}
             />
           </Link>
 
           <div>
-            <h3 className="text-sm font-semibold line-clamp-2">
+            <h3 className="text-md font-medium line-clamp-2">
               {video.title}
             </h3>
 
-            <Link to={`/channel/${video.channel}`}>
-              <p className="text-xs text-gray-500 mt-1">
-                {video.channel}
+            <Link to={`/channel/${video.channel.id}`}>
+              <p className="text-md text-gray-500 mt-1">
+                {video.channel.name}
               </p>
             </Link>   
 
             <p className="text-xs text-gray-500">
-              {video.views} views • {video.time}
+              {video.views} views • {new Date(video.createdAt).toLocaleDateString()}
             </p>
           </div>
         </div>

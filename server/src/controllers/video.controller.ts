@@ -102,3 +102,24 @@ export const videoDelete = (req: Request, res: Response) => {
       res.status(500).send({ title: 'Error deleting video' });
     });
 }
+
+export const videoSearch = (req: Request, res: Response) => {
+  const query = req.query.query as string;
+  prisma.video.findMany({
+    where: {
+      OR: [
+        { title: { contains: query, mode: 'insensitive' } },
+        { description: { contains: query, mode: 'insensitive' } }
+      ]
+    },
+    include: { channel: true },
+    take: 50
+  })
+    .then((videos: Video[]) => {
+      res.send(videos);
+    })
+    .catch((err: unknown) => {
+      console.log(err);
+      res.status(500).send({ title: 'Error searching videos' });
+    });
+}

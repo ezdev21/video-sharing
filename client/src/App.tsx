@@ -9,6 +9,7 @@ import ChannelHome from "./pages/channel/ChannelHome"
 import ChannelVideos from "./components/channel/ChannelVideos"
 import ChannelPlaylists from "./components/channel/ChannelPlaylists"
 import ChannelPosts from "./components/channel/ChannelPosts"
+import Search from "./pages/Search"
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
       <div className="bg-gray-100 min-h-screen pt-5 px-4">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/video/upload" element={<VideoUpload />} />
           <Route path="/video/:id" element={<Watch />} />
           <Route path="*" element={<NotFound />} />

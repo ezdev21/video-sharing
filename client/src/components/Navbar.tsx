@@ -1,14 +1,23 @@
 import { useState } from "react";
 import { Menu, Search, Mic, Bell, User, Plus } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Sidebar from "./Sidebar";
 
 export default function Navbar() {
+  const [searchParams] = useSearchParams();
+  const q = searchParams.get("query") || "";
+  const [query,setQuery] = useState<string>(q);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
-  
+
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   }
+  
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      window.location.href = `/search?query=${query}`;
+    }
+  }  
 
   return (
     <>
@@ -37,10 +46,13 @@ export default function Navbar() {
                 type="search"
                 placeholder="Search"
                 className="w-full px-4 py-2 text-sm border border-gray-300 rounded-l-md focus:outline-none focus:outline-2 focus:border-primary"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
-              <button className="px-6 border border-l-0 border-gray-300 rounded-r-md bg-gray-100 hover:bg-gray-200">
+              <Link to={`/search?query=${query}`} className="px-6 border border-l-0 border-gray-300 rounded-r-md bg-gray-100 hover:bg-gray-200 flex justify-center items-center">
                 <Search size={18} />
-              </button>
+              </Link>
             </div>
 
             <button className="ml-3 p-2 rounded-full bg-gray-100 hover:bg-gray-200">

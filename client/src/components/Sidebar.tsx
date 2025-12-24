@@ -1,21 +1,23 @@
-import { Plus, Video, Home, Play, Flame, Menu } from "lucide-react";
+import { Plus, Video, Home, Flame, Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export default function Sidebar({ user, sidebarOpen }: { user: { name: string; avatarUrl: string } | null; sidebarOpen: boolean }) {
+export default function Sidebar({ user, sidebarOpen, toggleSidebar }: { user: { name: string; avatarUrl: string } | null; sidebarOpen: boolean; toggleSidebar: () => void }) {
   if (!sidebarOpen) {
     return null;
   }
   return (
-    <aside className="fixed top-0 z-50 left-0 h-full w-60 bg-white border-r shadow-md flex flex-col" >
+    <aside className={`fixed top-0 z-50 left-0 h-full bg-white border-r shadow-md flex flex-col ${sidebarOpen ? 'w-60' : 'w-0'} transition-all duration-1000`} >
       {/* Logo */}
-      <div className="text-2xl font-bold px-6 py-4 border-b">
+      <div className="text-2xl font-bold px-6 py-4 border-b h-14 flex items-center gap-4">
         <button
           className="p-2 rounded-full hover:bg-gray-100"
-          //onClick={() => setSidebarOpen(!sidebarOpen)}
+          onClick={() => toggleSidebar()}
         >
           <Menu size={22} />
         </button>
-        <span className="text-primary">Vi</span>Parta
+        <div>
+          <span className="text-primary font-bold text-xl">ViParta</span>
+        </div>
       </div>
 
       {/* User Avatar & Name */}

@@ -29,7 +29,7 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
             <div>
               <p className="font-medium">{video?.channel.name}</p>
               <p className="text-sm text-gray-500">
-                {video?.views} views
+                {video?.channel.subscribers} subscribers
               </p>
             </div>
           </Link>

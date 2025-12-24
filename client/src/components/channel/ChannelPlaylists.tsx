@@ -1,11 +1,13 @@
 import type { Playlist } from "@/types";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 export default function ChannelPlaylists() {
+  const { id } = useParams<{ id: string }>()
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   
   const fetchPlaylists = async () => {
-    await fetch(`http://localhost:3000/channel/1/playlists`)
+    await fetch(`http://localhost:3000/channel/${id}/playlists`)
     .then(res => res.json())
     .then((data: Playlist[]) => {
       setPlaylists(data);

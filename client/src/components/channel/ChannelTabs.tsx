@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 
 export default function ChannelTabs() {
-  const activeClass = "border-b-2 border-blue-600 text-blue-600";
+  const activeClass = "border-b-2 border-primary text-primary";
   const inactiveClass = "text-gray-600";
 
   return (

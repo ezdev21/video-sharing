@@ -20,7 +20,7 @@ export default function Home() {
   })  
 
   return (
-    <div className="max-w-[1400px] mx-5">
+    <div className="max-w-[1400px]">
       <div
         className="
           grid gap-6

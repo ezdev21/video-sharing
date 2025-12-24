@@ -26,4 +26,8 @@ export interface Channel{
   name: string;
   avatar: string;
   subscribers: string;
+  background: string;
+  videos?: Video[];
+  playlists?: Playlist[];
+  posts?: Post[];
 }

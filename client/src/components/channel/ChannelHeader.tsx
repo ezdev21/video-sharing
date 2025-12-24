@@ -1,18 +1,37 @@
+import { useEffect, useState } from "react";
+import type { Channel } from "../../types";
+import { useParams } from "react-router-dom";
 
-interface ChannelHeaderProps {
-  name: string;
-  avatar: string;
-  subscribers: string;
-}
+export default function ChannelHeader() {
+  const { id } = useParams<{ id: string }>()
+  const [channel, setChannel] = useState<Channel | null>(null);
+  
+  const fetchChannel = async () => {
+    await fetch(`http://localhost:3000/channel/${id}`)
+    .then(res => res.json())
+    .then((data: Channel) => {
+      setChannel(data);
+    }).catch((error) => {
+      console.error('Error fetching channel videos:', error);
+    })
+  }
+  
+  useEffect(() => {
+    fetchChannel();
+  }, [])
 
-export default function ChannelHeader({ name, avatar, subscribers }: ChannelHeaderProps) {
   return (
+    <>
+      <div className="h-40 bg-gray-200 mb-4">
+        <img src={channel?.background} className="w-full h-full object-cover" alt="channel background"/>
+      </div>
       <div className="flex items-center gap-4 p-4">
-        <img src={avatar} className="w-16 h-16 rounded-full" alt={name} />
+        <img src={channel?.avatar} className="w-16 h-16 rounded-full" alt={channel?.name} />
         <div>
-          <h1 className="text-xl font-bold">{name}</h1>
-          <p className="text-sm text-gray-500">{subscribers} subscribers</p>
+          <h1 className="text-xl font-bold">{channel?.name}</h1>
+          <p className="text-md text-gray-500">{channel?.subscribers} subscribers • {channel?.videos?.length} videos</p>
         </div>
       </div>
+    </>
   )
 }

@@ -5,6 +5,10 @@ import Sidebar from "./Sidebar";
 
 export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+  
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  }
 
   return (
     <>
@@ -14,7 +18,7 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             <button
               className="p-2 rounded-full hover:bg-gray-100"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
+              onClick={() => toggleSidebar()}
             >
               <Menu size={22} />
             </button>
@@ -82,7 +86,7 @@ export default function Navbar() {
       )}
 
       {/* Sidebar */}
-     <Sidebar user={null} sidebarOpen={sidebarOpen} />
+     <Sidebar user={null} sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
     </>
   );
 }

@@ -10,6 +10,8 @@ import ChannelVideos from "./components/channel/ChannelVideos"
 import ChannelPlaylists from "./components/channel/ChannelPlaylists"
 import ChannelPosts from "./components/channel/ChannelPosts"
 import Search from "./pages/Search"
+import Login from "./pages/auth/login"
+import Register from "./pages/auth/register"
 
 export default function App() {
   return (
@@ -20,6 +22,8 @@ export default function App() {
       <div className="bg-gray-100 min-h-screen pt-6 px-6">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/search" element={<Search />} />
           <Route path="/video/upload" element={<VideoUpload />} />
           <Route path="/video/:id" element={<Watch />} />

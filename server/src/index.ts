@@ -6,6 +6,7 @@ import playlistRoute from './routes/playlist.route.js';
 import commentRoute from './routes/comment.route.js';
 import postRoute from './routes/post.route.js';
 import userRoute from './routes/user.route.js';
+import authRoute from './routes/auth.route.js';
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.get('/', (_req, res) => {
   res.send('ViParta! the video sharing website!');
 });
 
+app.use('/auth', authRoute);
 app.use('/user', userRoute);
 app.use('/video', videoRoute);
 app.use('/channel', channelRoute);

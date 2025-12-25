@@ -45,17 +45,17 @@ export default function Navbar() {
               <input
                 type="search"
                 placeholder="Search"
-                className="w-full px-4 py-2 text-sm border border-gray-300 rounded-l-md focus:outline-none focus:outline-2 focus:border-primary"
+                className="w-full px-4 py-2 text-sm border border-gray-300 rounded-l-md focus:outline-none"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
               />
-              <Link to={`/search?query=${query}`} className="px-6 border border-l-0 border-gray-300 rounded-r-md bg-gray-100 hover:bg-gray-200 flex justify-center items-center">
+              <Link to={`/search?query=${query}`} className="px-6 border border-l-0 border-gray-300 rounded-r-md flex justify-center items-center bg-primary text-white hover:bg-primary-dark">
                 <Search size={18} />
               </Link>
             </div>
 
-            <button className="ml-3 p-2 rounded-full bg-gray-100 hover:bg-gray-200">
+            <button className="ml-3 p-2 rounded-full bg-gray-100 hover:bg-primary hover:text-white">
               <Mic size={18} />
             </button>
           </div>

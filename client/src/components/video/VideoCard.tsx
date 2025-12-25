@@ -29,7 +29,7 @@ export default function VideoCard({ video }: VideoCardProps) {
         <img
           src={video.channel.avatar}
           alt={video.channel.avatar}
-          className="w-9 h-9 rounded-full"
+          className="w-10 h-10 rounded-full"
         />
 
         <div>

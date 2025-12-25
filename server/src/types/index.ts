@@ -4,7 +4,7 @@ export interface Video {
   thumbnail: string
   channel: string
   channelAvatar: string
-  views: string
+  views: number,
   time: string
   duration: string
 }

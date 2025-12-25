@@ -1,4 +1,6 @@
 import type { Video } from "@/types"
+import { ThumbsDown, ThumbsUp } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router"
 
 interface VideoPlayerProps {
@@ -6,6 +8,23 @@ interface VideoPlayerProps {
 }
 
 export default function VideoPlayer({ video }: VideoPlayerProps) {
+  const [liked, setLiked] = useState(false);
+  const [disliked, setDisliked] = useState(false);
+
+  const likeVideo = (videoId: string) => {
+    setLiked(!liked);
+    if (disliked) {
+      setDisliked(false);
+    }
+  }
+  
+  const dislikeVideo = (videoId: string) => {
+    setDisliked(!disliked);
+    if (liked) {
+      setLiked(false);
+    }
+  }
+
   return (
     <div>
       {/* Video */}
@@ -17,6 +36,27 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
       <h1 className="mt-4 text-lg font-semibold">
         {video?.title}
       </h1>
+
+      <div>
+        <div className="flex items-center mt-2 mb-4 gap-6 border-b-2 border-gray-300 pb-2">
+          <div className="flex items-center gap-4">
+            <button onClick={() => likeVideo(video?.id)}>
+              <ThumbsUp className={`inline-block w-8 h-8 ${liked ? "fill-primary stroke-primary" : "text-gray-500"}`}/>
+              {video?.likes}
+            </button>
+            <button onClick={() => dislikeVideo(video?.id)}>
+                <ThumbsDown className={`inline-block w-8 h-8 ${disliked ? "fill-primary stroke-primary" : "text-gray-500"}`}/>
+                {video?.dislikes}
+            </button>
+          </div>
+          <div>
+            <p className="text-gray-700 text-xl font-medium">{video?.views} views {new Date(video?.createdAt).toLocaleDateString()}</p>
+          </div>
+        </div>
+        <div>
+          <p className="mt-2 bg-gray-200 rounded-md p-3 my-3">{video?.description}</p>
+        </div>
+      </div>
 
       <div className="flex items-center justify-between mt-2">
         <div className="flex items-center gap-3">

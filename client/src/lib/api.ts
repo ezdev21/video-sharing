@@ -4,6 +4,7 @@ import axios, {
   type AxiosRequestConfig,
   type AxiosResponse,
 } from "axios";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 // -----------------------------
@@ -63,7 +64,8 @@ api.interceptors.response.use(
     // Unauthorized
     if (error.response?.status === 401) {
       localStorage.removeItem("token");
-      window.location.href = "/login";
+      const navigate = useNavigate();
+      navigate("/login", { replace: true });
     }
 
     return Promise.reject(error);

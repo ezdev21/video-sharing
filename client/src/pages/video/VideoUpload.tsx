@@ -61,7 +61,7 @@ const VideoUpload: React.FC = () => {
             </label>
             <input
               type="text"
-              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -100,7 +100,7 @@ const VideoUpload: React.FC = () => {
             </label>
             <textarea
               rows={4}
-              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
@@ -109,7 +109,7 @@ const VideoUpload: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-700 transition"
+            className="w-full bg-primary text-white py-2 rounded-md hover:bg-hover transition"
           >
             Upload Video
           </button>

@@ -48,7 +48,7 @@ const CreateChannel: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
         <h2 className="text-2xl font-bold text-center mb-6">
           Create Your Channel
@@ -62,7 +62,7 @@ const CreateChannel: React.FC = () => {
             </label>
             <input
               type="text"
-              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
               value={channelName}
               onChange={(e) => setChannelName(e.target.value)}
               required
@@ -76,7 +76,7 @@ const CreateChannel: React.FC = () => {
             </label>
             <textarea
               rows={4}
-              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
@@ -113,7 +113,7 @@ const CreateChannel: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-primary text-white py-2 rounded-md hover:bg-blue-700 transition"
+            className="w-full bg-primary text-white py-2 rounded-md hover:bg-hover transition"
           >
             Create Channel
           </button>

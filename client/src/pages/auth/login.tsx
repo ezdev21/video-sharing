@@ -1,11 +1,14 @@
 import { useState } from "react";
 import api from "../../lib/api";
+import { useNavigate } from "react-router-dom";
 
 interface LoginResponse {
   token: string;
 }
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -27,11 +30,9 @@ const Login = () => {
         }
       );
 
-      // Save JWT
       localStorage.setItem("token", res.data.token);
 
-      // Optional: redirect
-      // window.location.href = "/dashboard";
+      navigate("/dashboard", { replace: true });
     } catch (err: any) {
       setError(err.response?.data?.error || "Invalid email or password");
     } finally {
@@ -40,7 +41,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Login
@@ -58,7 +59,7 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -73,7 +74,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -86,7 +87,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-60"
+            className="w-full bg-primary text-white py-2 rounded-lg hover:bg-hover transition disabled:opacity-60"
           >
             {loading ? "Logging in..." : "Login"}
           </button>
@@ -95,7 +96,7 @@ const Login = () => {
         {/* Sign up */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Don&apos;t have an account?{" "}
-          <a href="/register" className="text-blue-500 hover:underline">
+          <a href="/register" className="text-primary hover:underline">
             Sign up
           </a>
         </p>

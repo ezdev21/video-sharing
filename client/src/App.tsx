@@ -12,6 +12,7 @@ import ChannelPosts from "./components/channel/ChannelPosts"
 import Search from "./pages/Search"
 import Login from "./pages/auth/login"
 import Register from "./pages/auth/register"
+import Dashboard from "./pages/Dashboard"
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
       <div className="bg-gray-100 min-h-screen pt-6 px-6">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/search" element={<Search />} />

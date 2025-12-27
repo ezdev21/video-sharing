@@ -1,7 +1,10 @@
 import { useState } from "react";
 import api from "../../lib/api";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,18 +27,16 @@ const Register = () => {
     try {
       setLoading(true);
 
-      await api.post("/register", {
+      await api.post("/auth/register", {
         name,
         email,
         password,
       });
 
-      setSuccess("Account created successfully!");
-      setName("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
+      navigate("/dashboard", { replace: true });
+
     } catch (err: any) {
+      console.log('error occured',err)
       setError(
         err.response?.data?.error || "Registration failed. Try again."
       );
@@ -45,7 +46,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Create Account
@@ -63,7 +64,7 @@ const Register = () => {
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -78,7 +79,7 @@ const Register = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -93,7 +94,7 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Create a password"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -108,7 +109,7 @@ const Register = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm your password"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -126,7 +127,7 @@ const Register = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-60"
+            className="w-full bg-primary text-white py-2 rounded-lg hover:bg-hover transition disabled:opacity-60"
           >
             {loading ? "Registering..." : "Register"}
           </button>
@@ -135,7 +136,7 @@ const Register = () => {
         {/* Login link */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-500 hover:underline">
+          <a href="/login" className="text-primary hover:underline">
             Login
           </a>
         </p>

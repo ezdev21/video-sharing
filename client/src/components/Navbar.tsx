@@ -26,7 +26,7 @@ export default function Navbar() {
           {/* Left */}
           <div className="flex items-center gap-4">
             <button
-              className="p-2 rounded-full hover:bg-gray-100"
+              className="p-2 rounded-full hover:bg-gray-300"
               onClick={() => toggleSidebar()}
             >
               <Menu size={22} />
@@ -45,26 +45,26 @@ export default function Navbar() {
               <input
                 type="search"
                 placeholder="Search"
-                className="w-full px-4 py-2 text-sm border border-gray-300 rounded-l-md focus:outline-none"
+                className="w-full px-4 py-2 text-sm border focus:border-2 border-gray-300 rounded-l-md focus:outline-none focus:border-primary"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
               />
-              <Link to={`/search?query=${query}`} className="px-6 border border-l-0 border-gray-300 rounded-r-md flex justify-center items-center bg-primary text-white hover:bg-primary-dark">
+              <Link to={`/search?query=${query}`} className="px-6 border border-l-0 border-gray-300 rounded-r-md flex justify-center items-center bg-primary text-white hover:bg-hover">
                 <Search size={18} />
               </Link>
             </div>
 
-            <button className="ml-3 p-2 rounded-full bg-gray-100 hover:bg-primary hover:text-white">
+            <button className="ml-3 p-3 rounded-full bg-gray-300 hover:bg-hover hover:text-white">
               <Mic size={18} />
             </button>
           </div>
 
           {/* Right */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <Link
               to="/channel/create"
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-300 hover:bg-gray-100"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-300 bg-gray-300 hover:bg-hover hover:text-white"
             >
               <Plus size={18} />
               <span className="hidden sm:inline text-sm font-medium">Create</span>
@@ -72,18 +72,18 @@ export default function Navbar() {
 
             <Link
               to="/video/upload"
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-300 hover:bg-gray-100"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-300 bg-gray-300 hover:bg-hover hover:text-white"
             >
               <Plus size={18} />
               <span className="hidden sm:inline text-sm font-medium">Upload</span>
             </Link>
 
-            <button className="p-2 rounded-full hover:bg-gray-100">
+            <button className="p-2 rounded-full bg-gray-300 hover:bg-hover hover:text-white">
               <Bell size={22} />
             </button>
 
-            <button className="ml-2 w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white">
-              <User size={18} />
+            <button className="p-2 rounded-full bg-gray-300 hover:bg-hover hover:text-white">
+              <User size={22} />
             </button>
           </div>
         </div>

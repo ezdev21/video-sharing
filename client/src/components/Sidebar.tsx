@@ -10,7 +10,7 @@ export default function Sidebar({ user, sidebarOpen, toggleSidebar }: { user: { 
       {/* Logo */}
       <div className="text-2xl font-bold px-6 py-4 border-b h-14 flex items-center gap-4">
         <button
-          className="p-2 rounded-full hover:bg-gray-100"
+          className="p-2 rounded-full hover:bg-gray-300"
           onClick={() => toggleSidebar()}
         >
           <Menu size={22} />
@@ -36,7 +36,7 @@ export default function Sidebar({ user, sidebarOpen, toggleSidebar }: { user: { 
       <nav className="flex flex-col mt-4 gap-1">
         <Link
           to="/"
-          className="flex items-center gap-4 px-6 py-3 rounded-lg hover:bg-gray-100"
+          className="flex items-center gap-4 px-6 py-3 rounded-lg hover:bg-gray-200"
         >
           <Home size={20} />
           <span className="font-medium">Home</span>
@@ -44,7 +44,7 @@ export default function Sidebar({ user, sidebarOpen, toggleSidebar }: { user: { 
 
         <Link
           to="/trending"
-          className="flex items-center gap-4 px-6 py-3 rounded-lg hover:bg-gray-100"
+          className="flex items-center gap-4 px-6 py-3 rounded-lg hover:bg-gray-200"
         >
           <Flame size={20} />
           <span className="font-medium">Trending</span>
@@ -58,7 +58,7 @@ export default function Sidebar({ user, sidebarOpen, toggleSidebar }: { user: { 
       <nav className="flex flex-col gap-1">
         <Link
           to="/channel/create"
-          className="flex items-center gap-4 px-6 py-3 rounded-lg hover:bg-gray-100"
+          className="flex items-center gap-4 px-6 py-3 rounded-lg hover:bg-gray-200"
         >
           <Plus size={20} />
           <span className="font-medium">Create Channel</span>
@@ -66,7 +66,7 @@ export default function Sidebar({ user, sidebarOpen, toggleSidebar }: { user: { 
 
         <Link
           to="/video/upload"
-          className="flex items-center gap-4 px-6 py-3 rounded-lg hover:bg-gray-100"
+          className="flex items-center gap-4 px-6 py-3 rounded-lg hover:bg-gray-200"
         >
           <Video size={20} />
           <span className="font-medium">Upload Videos</span>

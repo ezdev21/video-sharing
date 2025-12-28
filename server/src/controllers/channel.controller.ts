@@ -47,8 +47,8 @@ export const channelCreate = (req: Request, res: Response) => {
       userId:parsedUserId,
       name,
       description,
-      avatar: avatar.originalname,
-      background: background.originalname,
+      avatar: avatar.filename,
+      background: background.filename,
      }
   })
   .then((channel: Channel) => {
@@ -87,37 +87,3 @@ export const channelDelete = (req: Request, res: Response) => {
       res.status(500).send({ title: 'Error deleting channel' });
     });
 }
-
-// const uploadImage = (req) => {
-//   const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//       cb(null, "uploads/images/channel/");
-//     },
-//     filename: (req, file, cb) => {
-//       const uniqueName = Date.now() + "-" + Math.round(Math.random() * 1e9);
-//       cb(null, uniqueName + path.extname(file.originalname));
-//     },
-//   });
-
-//   const fileFilter = (req, file, cb) => {
-//   const allowedTypes = [
-//     "image/jpeg",
-//     "image/png",
-//     "image/webp",
-//   ];
-
-//   if (allowedTypes.includes(file.mimetype)) {
-//       cb(null, true);
-//     } else {
-//       cb(new Error("unsupported image format"), false);
-//     }
-//   };
-  
-//   const upload = multer({
-//     storage,
-//     fileFilter,
-//     limits: {
-//       fileSize: 50 * 1024 * 1024, // 50MB
-//     },
-//   });
-// }

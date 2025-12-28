@@ -1,6 +1,6 @@
 import express from "express";
 import * as channelController from "../controllers/channel.controller.js";
-import { upload } from "../middleware/upload.js";
+import { upload } from "../middleware/multer.js";
 
 const router = express.Router();
 

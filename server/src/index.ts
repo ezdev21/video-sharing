@@ -8,6 +8,7 @@ import postRoute from './routes/post.route.js';
 import userRoute from './routes/user.route.js';
 import authRoute from './routes/auth.route.js';
 import morgan from 'morgan';
+import path from "path"
 
 const app = express();
 
@@ -36,7 +37,7 @@ app.use('/playlist', playlistRoute);
 app.use('/comment', commentRoute);
 app.use('/post', postRoute);
 
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.use(morgan("dev"));
 

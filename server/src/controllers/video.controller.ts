@@ -87,8 +87,8 @@ export const videoCreate = (req: Request, res: Response) => {
       channelId: parsedChannelId,
       title,
       description,
-      thumbnail: thumbnail.originalname,
-      src: video.originalname
+      thumbnail: thumbnail.filename,
+      src: video.filename
     } 
   })
   .then((video: Video) => {

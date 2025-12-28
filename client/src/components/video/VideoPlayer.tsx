@@ -2,6 +2,10 @@ import type { Video } from "@/types"
 import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router"
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 interface VideoPlayerProps {
   video: Video
@@ -54,7 +58,7 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
             </button>
           </div>
           <div>
-            <p className="text-gray-700 text-xl font-medium">{video?.views} views {new Date(video?.createdAt).toLocaleDateString()}</p>
+            <p className="text-gray-700">{video?.views} views {dayjs(video?.createdAt).fromNow()}</p>
           </div>
         </div>
         <div>

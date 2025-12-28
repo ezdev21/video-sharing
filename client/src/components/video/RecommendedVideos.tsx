@@ -1,5 +1,9 @@
 import type { Video } from "@/types"
 import { Link } from "react-router-dom"
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 interface RecommendedVideosProps {
   videos: Video[]
@@ -36,7 +40,7 @@ export default function RecommendedVideos({
             </Link>   
 
             <p className="text-xs text-gray-500">
-              {video.views} views • {new Date(video.createdAt).toLocaleDateString()}
+              {video.views} views • {dayjs(video.createdAt).fromNow()}
             </p>
           </div>
         </div>

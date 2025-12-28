@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom"
 import type { Video } from "@/types"
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 interface VideoCardProps {
   video: Video
@@ -42,7 +46,7 @@ export default function VideoCard({ video }: VideoCardProps) {
           </p>
 
           <p className="text-xs text-gray-500">
-            {video.views} views • {new Date(video.createdAt).toLocaleDateString()}
+            {video.views} views • {dayjs(video.createdAt).fromNow()}
           </p>
         </div>
       </div>

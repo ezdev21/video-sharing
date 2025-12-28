@@ -27,6 +27,8 @@ const VideoUpload: React.FC = () => {
     }
 
     const formData = new FormData();
+    formData.append("userId", "1");
+    formData.append("channelId", "1");
     formData.append("title", title);
     formData.append("thumbnail", thumbnail);
     formData.append("video", video);
@@ -42,8 +44,7 @@ const VideoUpload: React.FC = () => {
       navigate('/dashboard');
     })
     .catch((err) => {
-      throw new Error("Channel creation failed");
-      throw new Error("Upload failed");
+      throw new Error("Video Upload failed");
     });
   
   };
@@ -66,6 +67,7 @@ const VideoUpload: React.FC = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
+              placeholder="Video Title"
             />
           </div>
 
@@ -105,6 +107,7 @@ const VideoUpload: React.FC = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
+              placeholder="Video Description"
             />
           </div>
 

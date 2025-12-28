@@ -37,6 +37,7 @@ app.use('/comment', commentRoute);
 app.use('/post', postRoute);
 
 app.use("/uploads", express.static("uploads"));
+
 app.use(morgan("dev"));
 
 const port = process.env.PORT || 3000;

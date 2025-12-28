@@ -1,8 +1,6 @@
 import type { Request, Response } from "express";
 import prisma from "../../prisma/client.js";
 import { Channel } from "../types/index.js";
-import multer from "multer"
-import path from "path";
 
 export const channelIndex = (req: Request, res: Response) => {
   prisma.channel.findMany()

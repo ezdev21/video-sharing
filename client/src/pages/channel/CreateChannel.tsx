@@ -27,7 +27,7 @@ const CreateChannel: React.FC = () => {
     }
 
     const formData = new FormData();
-    formData.append("userId", 1);
+    formData.append("userId", "1");
     formData.append("name", channelName);
     formData.append("description", description);
     formData.append("avatar", avatar);

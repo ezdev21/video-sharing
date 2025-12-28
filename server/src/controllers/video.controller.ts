@@ -1,7 +1,6 @@
 import type { Request, Response } from "express";
 import prisma from "../../prisma/client.js";
 import { Video } from "../types/index.js";
-import multer from "multer";
 
 export const videoIndex = (req: Request, res: Response) => {
   prisma.video.findMany({
@@ -65,15 +64,40 @@ export const videoDetails = (req: Request, res: Response) => {
 }
 
 export const videoCreate = (req: Request, res: Response) => {
-  const videoData = req.body;
-  prisma.video.create({ data: videoData })
-    .then((video: Video) => {
-      res.status(201).send(video);
-    })
-    .catch((err: unknown) => {
-      console.log(err);
-      res.status(500).send({ title: 'Error creating video' });
+  const { userId, channelId, title, description } = req.body;
+  const parsedUserId = Number(userId);
+  const parsedChannelId = Number(channelId);
+  const thumbnail = (req.files as any)?.thumbnail?.[0];
+  const video = (req.files as any)?.video?.[0];
+  
+  const files = req.files as {
+    thumbnail?: Express.Multer.File[];
+    video?: Express.Multer.File[];
+  };
+  
+   if (!files?.thumbnail || !files?.video) {
+    return res.status(400).json({
+      message: "Thumbnail and Video are required",
     });
+  }
+
+  prisma.video.create({
+    data: {
+      userId: parsedUserId,
+      channelId: parsedChannelId,
+      title,
+      description,
+      thumbnail: thumbnail.originalname,
+      src: video.originalname
+    } 
+  })
+  .then((video: Video) => {
+    res.status(201).send(video);
+  })
+  .catch((err: unknown) => {
+    console.log(err);
+    res.status(500).send({ title: 'Error creating video' });
+  });
 }
 
 export const videoUpdate = (req: Request, res: Response) => {

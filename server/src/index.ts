@@ -9,12 +9,29 @@ import userRoute from './routes/user.route.js';
 import authRoute from './routes/auth.route.js';
 import morgan from 'morgan';
 import path from "path"
+import helmet from 'helmet';
+import env from 'dotenv';
 
 const app = express();
 
-app.use(express.json());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        imgSrc: ["'self'", "data:", "blob:"],
+        mediaSrc: ["'self'", "blob:"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrc: ["'self'"],
+      },
+    },
+  })
+);
 
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev"));
 
 const corsOptions = {
   // origin: 'http://localhost:5173', // Match your frontend's address
@@ -38,8 +55,6 @@ app.use('/comment', commentRoute);
 app.use('/post', postRoute);
 
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
-
-app.use(morgan("dev"));
 
 const port = process.env.PORT || 3000;
 

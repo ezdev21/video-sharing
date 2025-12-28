@@ -37,6 +37,7 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
           src={`http://localhost:3000/uploads/videos/video/${video?.src}`}
           className="w-full h-full"
           controls
+          autoPlay
         />
       </div>
 

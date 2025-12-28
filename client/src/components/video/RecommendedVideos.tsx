@@ -34,7 +34,7 @@ export default function RecommendedVideos({
             </h3>
 
             <Link to={`/channel/${video.channel.id}`}>
-              <p className="text-sm font-semibold text-gray-700 mt-1">
+              <p className="text-sm text-gray-700 mt-1">
                 {video.channel.name}
               </p>
             </Link>   

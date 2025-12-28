@@ -18,7 +18,7 @@ export default function RecommendedVideos({
         >
           <Link to={`/video/${video.id}`}>
             <img
-              src={video.thumbnail}
+              src={`http://localhost:3000/uploads/videos/thumbnail/${video.thumbnail}`}
               className="w-40 h-24 object-cover rounded-lg"
               alt={video.title}
             />

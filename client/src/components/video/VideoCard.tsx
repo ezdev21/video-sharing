@@ -13,7 +13,7 @@ export default function VideoCard({ video }: VideoCardProps) {
       <div className="relative rounded-md overflow-hidden">
         <Link to={`/video/${video.id}`}>
           <img
-            src={video.thumbnail}
+            src={`http://localhost:3000/uploads/videos/thumbnail/${video.thumbnail}`}
             alt={video.title}
             className="w-full aspect-video object-cover"
           />
@@ -27,7 +27,7 @@ export default function VideoCard({ video }: VideoCardProps) {
       <Link to={`/channel/${video.channel?.id}`}>
       <div className="flex gap-3 mt-3">
         <img
-          src={video.channel.avatar}
+          src={`http://localhost:3000/uploads/channels/avatar/${video.channel.avatar}`}
           alt={video.channel.avatar}
           className="w-10 h-10 rounded-full"
         />

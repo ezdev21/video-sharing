@@ -1,59 +1,69 @@
 import { useState } from "react";
 import { Menu, Search, Mic, Bell, User, Plus } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 
 export default function Navbar() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
   const q = searchParams.get("query") || "";
-  const [query,setQuery] = useState<string>(q);
+  const [query, setQuery] = useState<string>(q);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
-  }
-  
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      window.location.href = `/search?query=${query}`;
-    }
-  }  
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!query.trim()) return;
+
+    navigate(`/search?query=${encodeURIComponent(query)}`);
+  };
 
   return (
     <>
       <header className="fixed top-0 z-10 w-full bg-white border-b">
         <div className="flex items-center justify-between px-4 h-14">
+          
           {/* Left */}
           <div className="flex items-center gap-4">
             <button
               className="p-2 rounded-full hover:bg-gray-300"
-              onClick={() => toggleSidebar()}
+              onClick={toggleSidebar}
             >
               <Menu size={22} />
             </button>
 
-            <div>
-              <Link to="/" className="text-primary font-bold text-xl">
-                <span className="text-primary">Vi</span>Parta
-              </Link>
-            </div>
+            <Link to="/" className="text-primary font-bold text-xl">
+              <span className="text-primary">Vi</span>Parta
+            </Link>
           </div>
 
           {/* Center - Search */}
           <div className="flex items-center flex-1 max-w-xl mx-6">
-            <div className="flex flex-1">
+            <form
+              onSubmit={handleSearchSubmit}
+              className="flex flex-1"
+            >
               <input
                 type="search"
                 placeholder="Search"
+                required
                 className="w-full px-4 py-2 text-sm border focus:border-2 border-gray-300 rounded-l-md focus:outline-none focus:border-primary"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={handleKeyDown}
               />
-              <Link to={`/search?query=${query}`} className="px-6 border border-l-0 border-gray-300 rounded-r-md flex justify-center items-center bg-primary text-white hover:bg-hover">
+
+              <button
+                type="submit"
+                className="px-6 border border-l-0 border-gray-300 rounded-r-md flex justify-center items-center bg-primary text-white hover:bg-hover"
+              >
                 <Search size={18} />
-              </Link>
-            </div>
+              </button>
+            </form>
 
             <button className="ml-3 p-3 rounded-full bg-gray-300 hover:bg-hover hover:text-white">
               <Mic size={18} />
@@ -94,11 +104,11 @@ export default function Navbar() {
         <div
           className="fixed inset-0 bg-black/30 z-40"
           onClick={() => setSidebarOpen(false)}
-        ></div>
+        />
       )}
 
       {/* Sidebar */}
-     <Sidebar user={null} sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+      <Sidebar user={null} sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
     </>
   );
 }

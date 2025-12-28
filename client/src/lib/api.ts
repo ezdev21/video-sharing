@@ -31,7 +31,6 @@ const getAccessToken = (): string | null => {
 api.interceptors.request.use(
   (config: AxiosRequestConfig): AxiosRequestConfig => {
     const accessToken = getAccessToken();
-
     if (accessToken && config.headers) {
       // Prefer Authorization header
       config.headers.Authorization = `Bearer ${accessToken}`;
@@ -64,8 +63,8 @@ api.interceptors.response.use(
     // Unauthorized
     if (error.response?.status === 401) {
       localStorage.removeItem("token");
-      const navigate = useNavigate();
-      navigate("/login", { replace: true });
+      // const navigate = useNavigate();
+      // navigate("/login", { replace: true });
     }
 
     return Promise.reject(error);

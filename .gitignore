@@ -4,3 +4,4 @@
 /server/src/generated/prisma
 /server/dist
 /server/generated
+/server/uploads/

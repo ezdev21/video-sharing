@@ -1,6 +1,9 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../../lib/api";
 
 const CreateChannel: React.FC = () => {
+  const navigate = useNavigate();
   const [channelName, setChannelName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [avatar, setAvatar] = useState<File | null>(null);
@@ -24,28 +27,25 @@ const CreateChannel: React.FC = () => {
     }
 
     const formData = new FormData();
-    formData.append("channelName", channelName);
+    formData.append("userId", 1);
+    formData.append("name", channelName);
     formData.append("description", description);
     formData.append("avatar", avatar);
     formData.append("background", background);
 
-    try {
-      await fetch("http://localhost:5000/channel/create", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok) throw new Error("Channel creation failed");
-
+    api.post("/channel", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res) => {
       setStatus("Channel created successfully!");
-      setChannelName("");
-      setDescription("");
-      setAvatar(null);
-      setBackground(null);
-    } catch {
-      setStatus("Error creating channel.");
-    }
-  };
+      navigate('/dashboard');
+    })
+    .catch((err) => {
+      throw new Error("Channel creation failed");
+    });
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -66,6 +66,7 @@ const CreateChannel: React.FC = () => {
               value={channelName}
               onChange={(e) => setChannelName(e.target.value)}
               required
+              placeholder="Channel Name"
             />
           </div>
 
@@ -80,6 +81,7 @@ const CreateChannel: React.FC = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
+              placeholder="Channel Description"
             />
           </div>
 

@@ -1,6 +1,9 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../../lib/api";
 
 const VideoUpload: React.FC = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState<string>("");
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [video, setVideo] = useState<File | null>(null);
@@ -28,23 +31,21 @@ const VideoUpload: React.FC = () => {
     formData.append("thumbnail", thumbnail);
     formData.append("video", video);
     formData.append("description", description);
-
-    try {
-      await fetch("http://localhost:5000/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok) throw new Error("Upload failed");
-
+    
+    api.post('/video', formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res) => {
       setStatus("Video uploaded successfully!");
-      setTitle("");
-      setThumbnail(null);
-      setVideo(null);
-      setDescription("");
-    } catch {
-      setStatus("Error uploading video.");
-    }
+      navigate('/dashboard');
+    })
+    .catch((err) => {
+      throw new Error("Channel creation failed");
+      throw new Error("Upload failed");
+    });
+  
   };
 
   return (

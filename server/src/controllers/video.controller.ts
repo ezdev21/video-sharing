@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import prisma from "../../prisma/client.js";
 import { Video } from "../types/index.js";
+import multer from "multer";
 
 export const videoIndex = (req: Request, res: Response) => {
   prisma.video.findMany({
@@ -9,7 +10,7 @@ export const videoIndex = (req: Request, res: Response) => {
     include: { channel: true } 
   })
     .then((videos: Video[]) => {
-      res.send(videos);
+      res.status(200).send(videos);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -21,7 +22,7 @@ export const videoByChannel = (req: Request, res: Response) => {
   const channelId = req.params.channelId;
   prisma.video.findMany({ where: { channelId: Number(channelId) } })
     .then((videos: Video[]) => {
-      res.send(videos);
+      res.status(200).send(videos);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -40,7 +41,7 @@ export const videoRecommended = (req: Request, res: Response) => {
     include: { channel: true }
   })
   .then((videos: Video[]) => {
-    res.send(videos);
+    res.status(200).send(videos);
   })
   .catch((err: unknown) => {
     console.log(err);
@@ -55,7 +56,7 @@ export const videoDetails = (req: Request, res: Response) => {
     include: { channel: true } 
   })
     .then((video: Video | null) => {
-      res.send(video);
+      res.status(200).send(video);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -67,7 +68,7 @@ export const videoCreate = (req: Request, res: Response) => {
   const videoData = req.body;
   prisma.video.create({ data: videoData })
     .then((video: Video) => {
-      res.send(video);
+      res.status(201).send(video);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -83,7 +84,7 @@ export const videoUpdate = (req: Request, res: Response) => {
     data: videoData
   })
     .then((video: Video) => {
-      res.send(video);
+      res.status(200).send(video);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -95,7 +96,7 @@ export const videoDelete = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.video.delete({ where: { id: Number(id) } })
     .then(() => {
-      res.send({ message: 'Video deleted successfully' });
+      res.status(200).send({ message: 'Video deleted successfully' });
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -116,7 +117,7 @@ export const videoSearch = (req: Request, res: Response) => {
     take: 50
   })
     .then((videos: Video[]) => {
-      res.send(videos);
+      res.status(200).send(videos);
     })
     .catch((err: unknown) => {
       console.log(err);

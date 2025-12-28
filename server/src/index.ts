@@ -7,6 +7,7 @@ import commentRoute from './routes/comment.route.js';
 import postRoute from './routes/post.route.js';
 import userRoute from './routes/user.route.js';
 import authRoute from './routes/auth.route.js';
+import morgan from 'morgan';
 
 const app = express();
 
@@ -24,7 +25,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get('/', (_req, res) => {
-  res.send('ViParta! the video sharing website!');
+  res.status(200).send('ViParta! the video sharing website!');
 });
 
 app.use('/auth', authRoute);
@@ -34,6 +35,9 @@ app.use('/channel', channelRoute);
 app.use('/playlist', playlistRoute);
 app.use('/comment', commentRoute);
 app.use('/post', postRoute);
+
+app.use("/uploads", express.static("uploads"));
+app.use(morgan("dev"));
 
 const port = process.env.PORT || 3000;
 

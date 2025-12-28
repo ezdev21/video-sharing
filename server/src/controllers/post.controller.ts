@@ -5,7 +5,7 @@ import { Post } from "../types/index.js";
 export const postIndex = (req: Request, res: Response) => {
   prisma.post.findMany()
     .then((posts: Post[]) => {
-      res.send(posts);
+      res.status(200).send(posts);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -17,7 +17,7 @@ export const postDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.post.findUnique({ where: { id: Number(id) } })
     .then((post: Post | null) => {
-      res.send(post);
+      res.status(200).send(post);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -29,7 +29,7 @@ export const postCreate = (req: Request, res: Response) => {
   const postData = req.body;
   prisma.post.create({ data: postData })
     .then((post: Post) => {
-      res.send(post);
+      res.status(201).send(post);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -45,7 +45,7 @@ export const postUpdate = (req: Request, res: Response) => {
     data: postData
   })
     .then((post: Post) => {
-      res.send(post);
+      res.status(200).send(post);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -57,7 +57,7 @@ export const postDelete = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.post.delete({ where: { id: Number(id) } })
     .then(() => {
-      res.send({ message: 'Post deleted successfully' });
+      res.status(200).send({ message: 'Post deleted successfully' });
     })
     .catch((err: unknown) => {
       console.log(err);

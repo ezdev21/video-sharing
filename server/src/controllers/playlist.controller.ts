@@ -5,7 +5,7 @@ import { Playlist } from "../types/index.js";
 export const playlistIndex = (req: Request, res: Response) => {
   prisma.playlist.findMany()
     .then((playlists: Playlist[]) => {
-      res.send(playlists);
+      res.status(200).send(playlists);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -17,7 +17,7 @@ export const playlistDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.playlist.findUnique({ where: { id: Number(id) } })
     .then((playlist: Playlist | null) => {
-      res.send(playlist);
+      res.status(200).send(playlist);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -29,7 +29,7 @@ export const playlistCreate = (req: Request, res: Response) => {
   const playlistData = req.body;
   prisma.playlist.create({ data: playlistData })
     .then((playlist: Playlist) => {
-      res.send(playlist);
+      res.status(201).send(playlist);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -45,7 +45,7 @@ export const playlistUpdate = (req: Request, res: Response) => {
     data: playlistData
   })
   .then((playlist: Playlist) => {
-    res.send(playlist);
+    res.status(200).send(playlist);
   })
   .catch((err: unknown) => {
      console.log(err);
@@ -57,7 +57,7 @@ export const playlistDelete = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.playlist.delete({ where: { id: Number(id) } })
     .then(() => {
-      res.send({ message: 'Playlist deleted successfully' });
+      res.status(200).send({ message: 'Playlist deleted successfully' });
     })
     .catch((err: unknown) => {
       console.log(err);

@@ -5,7 +5,7 @@ import { User } from "../types/index.js";
 export const userIndex = (req: Request, res: Response) => {
   prisma.user.findMany()
     .then((users: User[]) => {
-      res.send(users);
+      res.status(200).send(users);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -17,7 +17,7 @@ export const userDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.user.findUnique({ where: { id: Number(id) } })
     .then((user: User | null) => {
-      res.send(user);
+      res.status(200).send(user);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -29,7 +29,7 @@ export const userCreate = (req: Request, res: Response) => {
   const userData = req.body;
   prisma.user.create({ data: userData })
     .then((user: User) => {
-      res.send(user);
+      res.status(201).send(user);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -45,7 +45,7 @@ export const userUpdate = (req: Request, res: Response) => {
     data: userData
   })
     .then((user: User) => {
-      res.send(user);
+      res.status(200).send(user);
     })
     .catch((err: unknown) => {
       console.log(err);
@@ -57,7 +57,7 @@ export const userDelete = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.user.delete({ where: { id: Number(id) } })
     .then(() => {
-      res.send({ message: 'User deleted successfully' });
+      res.status(200).send({ message: 'User deleted successfully' });
     })
     .catch((err: unknown) => {
       console.log(err);

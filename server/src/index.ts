@@ -10,7 +10,7 @@ import authRoute from './routes/auth.route.js';
 import morgan from 'morgan';
 import path from "path"
 import helmet from 'helmet';
-import env from 'dotenv';
+import rateLimit from "express-rate-limit";
 
 const app = express();
 
@@ -29,9 +29,13 @@ app.use(
   })
 );
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(morgan("dev"));
+const limiter = rateLimit({
+  windowMs: 6 * 1000,
+  max: 1000,
+  message: "Too many requests, please try again later.",
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 const corsOptions = {
   // origin: 'http://localhost:5173', // Match your frontend's address
@@ -40,7 +44,12 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'] // Specify allowed headers
 };
 
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev"));
 app.use(cors(corsOptions));
+app.use(limiter);
 
 app.get('/', (_req, res) => {
   res.status(200).send('ViParta! the video sharing website!');

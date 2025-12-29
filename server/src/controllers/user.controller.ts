@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import prisma from "../../prisma/client.js";
-import { User } from "../types/index.js";
+import type { User } from "../schemas/schemas.js";
 
 export const userIndex = (req: Request, res: Response) => {
   prisma.user.findMany()

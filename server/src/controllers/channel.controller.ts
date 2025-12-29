@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import prisma from "../../prisma/client.js";
-import { Channel } from "../types/index.js";
+import type { Channel } from "../schemas/schemas.js";
 
 export const channelIndex = (req: Request, res: Response) => {
   prisma.channel.findMany()

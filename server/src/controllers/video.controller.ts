@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import prisma from "../../prisma/client.js";
-import { Video } from "../types/index.js";
+import type { Video } from "../schemas/schemas.js";
 
 export const videoIndex = (req: Request, res: Response) => {
   prisma.video.findMany({

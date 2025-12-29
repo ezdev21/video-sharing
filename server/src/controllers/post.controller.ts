@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import prisma from "../../prisma/client.js";
-import { Post } from "../types/index.js";
+import type { Post } from "../schemas/schemas.js";
 
 export const postIndex = (req: Request, res: Response) => {
   prisma.post.findMany()

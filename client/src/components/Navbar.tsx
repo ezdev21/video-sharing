@@ -59,13 +59,13 @@ export default function Navbar() {
 
               <button
                 type="submit"
-                className="px-6 border border-l-0 border-gray-300 rounded-r-md flex justify-center items-center bg-primary text-white hover:bg-hover"
+                className="px-6 border border-l-0 border-gray-300 rounded-r-md flex justify-center items-center bg-primary text-white"
               >
                 <Search size={18} />
               </button>
             </form>
 
-            <button className="ml-3 p-3 rounded-full bg-gray-300 hover:bg-hover hover:text-white">
+            <button className="ml-3 p-3 rounded-full bg-gray-300 hover:bg-primary hover:text-white">
               <Mic size={18} />
             </button>
           </div>
@@ -74,7 +74,7 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             <Link
               to="/channel/create"
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-300 bg-gray-300 hover:bg-hover hover:text-white"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-300 bg-gray-300 hover:bg-primary hover:text-white"
             >
               <Plus size={18} />
               <span className="hidden sm:inline text-sm font-medium">Create</span>
@@ -82,17 +82,17 @@ export default function Navbar() {
 
             <Link
               to="/video/upload"
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-300 bg-gray-300 hover:bg-hover hover:text-white"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-300 bg-gray-300 hover:bg-primary hover:text-white"
             >
               <Plus size={18} />
               <span className="hidden sm:inline text-sm font-medium">Upload</span>
             </Link>
 
-            <button className="p-2 rounded-full bg-gray-300 hover:bg-hover hover:text-white">
+            <button className="p-2 rounded-full bg-gray-300 hover:bg-primary hover:text-white">
               <Bell size={22} />
             </button>
 
-            <button className="p-2 rounded-full bg-gray-300 hover:bg-hover hover:text-white">
+            <button className="p-2 rounded-full bg-gray-300 hover:bg-primary hover:text-white">
               <User size={22} />
             </button>
           </div>

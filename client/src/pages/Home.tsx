@@ -1,15 +1,18 @@
 import VideoCard from "@/components/video/VideoCard"
 import type { Video } from "@/types/"
 import { useEffect, useState } from "react"
+import { VideoCardSkeleton } from "../components/ui/VideoCardSkeleton";
 
 export default function Home() {
   const [videos, setVideos] = useState<Video[]>([]);
-  
+  const [loading, setLoading] = useState<boolean>(true);
+
   const fetchVideos = async () =>{
     await fetch('http://localhost:3000/video')
     .then(res => res.json())
     .then((data: Video[]) => {
       setVideos(data);
+      setLoading(false);
     }).catch((error) => {
       console.error('Error fetching videos:', error);
     })
@@ -30,9 +33,14 @@ export default function Home() {
           lg:grid-cols-4
         "
       >
-        {videos.map((video) => (
-          <VideoCard key={video.id} video={video} />
-        ))}
+        {loading
+        ? Array.from({ length: 12 }).map((_, i) => (
+            <VideoCardSkeleton key={i} />
+          ))
+        : videos.map((video) => (
+            <VideoCard key={video.id} video={video} />
+          ))
+        }
       </div>
     </div>
   )

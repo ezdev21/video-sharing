@@ -29,7 +29,7 @@ export default function VideoCard({ video }: VideoCardProps) {
 
       {/* Info */}
       <Link to={`/channel/${video.channel?.id}`}>
-      <div className="flex gap-3 mt-3">
+      <div className="flex gap-3 mt-2 items-center">
         <img
           src={`http://localhost:3000/uploads/channels/avatar/${video.channel.avatar}`}
           alt={video.channel.avatar}
@@ -37,11 +37,11 @@ export default function VideoCard({ video }: VideoCardProps) {
         />
 
         <div>
-          <h3 className="text-sm font-semibold leading-snug line-clamp-2">
+          <h3 className="text-md font-medium line-clamp-2">
             {video.title}
           </h3>
 
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-sm font-normal text-gray-600">
             {video.channel.name}
           </p>
 

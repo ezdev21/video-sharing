@@ -1,3 +1,4 @@
+import api from "@/lib/api";
 import type { Post } from "@/types";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -7,10 +8,9 @@ export default function ChannelPosts() {
   const [posts, setPosts] = useState<Post[]>([]);
   
   const fetchPosts = async () => {
-    await fetch(`http://localhost:3000/channel/${id}/posts`)
-    .then(res => res.json())
-    .then((data: Post[]) => {
-      setPosts(data);
+    await api.get(`/channel/${id}/posts`)
+    .then((res) => {
+      setPosts(res.data);
     }).catch((error) => {
       console.error('Error fetching channel posts:', error);
     })

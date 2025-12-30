@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import type { Channel } from "../../types";
 import { useParams } from "react-router-dom";
+import api from "@/lib/api";
 
 export default function ChannelHeader() {
   const { id } = useParams<{ id: string }>()
   const [channel, setChannel] = useState<Channel | null>(null);
   
   const fetchChannel = async () => {
-    await fetch(`http://localhost:3000/channel/${id}`)
-    .then(res => res.json())
-    .then((data: Channel) => {
-      setChannel(data);
+    await api.get(`/channel/${id}`)
+    .then((res) => {
+      setChannel(res.data);
     }).catch((error) => {
       console.error('Error fetching channel videos:', error);
     })

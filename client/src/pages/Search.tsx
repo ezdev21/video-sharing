@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import type { Video } from "../types";
+import api from "@/lib/api";
 
 const Search = () => {
   const [searchParams] = useSearchParams();
@@ -9,8 +10,7 @@ const Search = () => {
   const [videos, setVideos] = useState<Video[]>([]);
   
   useEffect(() => {
-    fetch(`http://localhost:3000/video/search?query=${query}`)
-      .then(res => res.json())
+    api.get(`/video/search?query=${query}`)
       .then((videos: Video[]) => {
         setVideos(videos);
       }).catch((err: unknown) => {

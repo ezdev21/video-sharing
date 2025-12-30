@@ -2,16 +2,16 @@ import type { Video } from "@/types";
 import VideoCard from "../video/VideoCard";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import api from "@/lib/api";
 
 export default function ChannelVideos() {
   const { id } = useParams<{ id: string }>()
   const [videos, setVideos] = useState<Video[]>([]);
 
   const fetchVideos = async () => {
-    await fetch(`http://localhost:3000/channel/${id}/videos`)
-    .then(res => res.json())
-    .then((data: Video[]) => {
-      setVideos(data);
+    await api.get(`/channel/${id}/videos`)
+    .then((res) => {
+      setVideos(res.data);
     }).catch((error) => {
       console.error('Error fetching channel videos:', error);
     })

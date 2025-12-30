@@ -4,6 +4,7 @@ import RecommendedVideos from "@/components/video/RecommendedVideos"
 import Comments from "@/components/video/Comments"
 import type { Video } from "@/types"
 import { useEffect, useState } from "react"
+import api from "@/lib/api"
 
 export default function Watch() {
   const { id } = useParams<{ id: string }>()
@@ -11,20 +12,18 @@ export default function Watch() {
   const [recommended, setRecommended] = useState<Video[]>([])
 
   const fetchVideo = async () => {
-    await fetch(`http://localhost:3000/video/${id}`)
-    .then(res => res.json())
-    .then((data: Video) => {
-      setVideo(data);
+    await api.get(`/video/${id}`)
+    .then((res) => {
+      setVideo(res.data);
     }).catch((error) => {
       console.error('Error fetching videos:', error);
     })
   }
   
   const fetchRecommendedVideos = async () => {
-    await fetch(`http://localhost:3000/video/${id}/recommended`)
-    .then(res => res.json())
-    .then((data: Video[]) => {
-      setRecommended(data);
+    await api.get(`/video/${id}/recommended`)
+    .then((res) => {
+      setRecommended(res.data);
     }).catch((error) => {
       console.error('Error fetching videos:', error);
     })
@@ -41,7 +40,7 @@ export default function Watch() {
 
         {/* Left */}
         <div className="lg:col-span-8">
-          <VideoPlayer video={video} />
+          {video && <VideoPlayer video={video} />}
           <Comments id={id} />
         </div>
 

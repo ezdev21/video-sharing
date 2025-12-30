@@ -1,3 +1,4 @@
+import api from "@/lib/api";
 import { useEffect, useState } from "react";
 
 interface Comment {
@@ -13,10 +14,9 @@ export default function Comments({id}) {
   const [newComment, setNewComment] = useState("");
   
   const fetchComments = async () =>{
-      await fetch(`http://localhost:3000/video/${id}/comments`)
-      .then(res => res.json())
-      .then((data: Comment[]) => {
-        setComments(data);
+      await api.get(`/video/${id}/comments`)
+      .then((res) => {
+        setComments(res.data);
       }).catch((error) => {
         console.error('Error fetching comments:', error);
       })
@@ -29,10 +29,9 @@ export default function Comments({id}) {
   const handleAddComment = async () => {
     if (!newComment.trim()) return;
     
-    await fetch('http://localhost:3000/video/comments/add')
-      .then(res => res.json())
-      .then((data: Comment) => {
-        setComments([data, ...comments]);
+    await api.post('/comment')
+      .then((res) => {
+        setComments([res.data, ...comments]);
       }).catch((error) => {
         console.error('Error adding a new comment:', error);
       })

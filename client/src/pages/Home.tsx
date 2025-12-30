@@ -2,16 +2,16 @@ import VideoCard from "@/components/video/VideoCard"
 import type { Video } from "@/types/"
 import { useEffect, useState } from "react"
 import { VideoCardSkeleton } from "../components/ui/VideoCardSkeleton";
+import api from "@/lib/api";
 
 export default function Home() {
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const fetchVideos = async () =>{
-    await fetch('http://localhost:3000/video')
-    .then(res => res.json())
-    .then((data: Video[]) => {
-      setVideos(data);
+    await api.get('/video')
+    .then((res) => {
+      setVideos(res.data);
       setLoading(false);
     }).catch((error) => {
       console.error('Error fetching videos:', error);
@@ -34,7 +34,7 @@ export default function Home() {
         "
       >
         {loading
-        ? Array.from({ length: 12 }).map((_, i) => (
+        ? Array.from({ length: 8 }).map((_, i) => (
             <VideoCardSkeleton key={i} />
           ))
         : videos.map((video) => (

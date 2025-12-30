@@ -115,7 +115,7 @@ const CreateChannel: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-primary text-white py-2 rounded-md hover:bg-hover transition"
+            className="w-full bg-primary text-white py-2 rounded-md  transition"
           >
             Create Channel
           </button>

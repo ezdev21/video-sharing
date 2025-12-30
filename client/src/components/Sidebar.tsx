@@ -1,26 +1,41 @@
 import { Plus, Video, Home, Flame, Menu } from "lucide-react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-export default function Sidebar({ user, sidebarOpen, toggleSidebar }: { user: { name: string; avatarUrl: string } | null; sidebarOpen: boolean; toggleSidebar: () => void }) {
+export default function Sidebar({
+  user,
+  sidebarOpen,
+  toggleSidebar,
+}: {
+  user: { name: string; avatarUrl: string } | null;
+  sidebarOpen: boolean;
+  toggleSidebar: () => void;
+}) {
   if (!sidebarOpen) {
     return null;
   }
+
+  const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
+    `flex items-center gap-4 px-6 py-3 transition-colors
+     ${
+       isActive
+         ? "bg-gray-200 text-primary font-semibold"
+         : "hover:bg-gray-200 text-gray-700"
+     }`;
+
   return (
-    <aside className={`fixed top-0 z-50 left-0 h-full bg-white border-r shadow-md flex flex-col ${sidebarOpen ? 'w-60' : 'w-0'} transition-all duration-1000`} >
+    <aside className="fixed top-0 z-50 left-0 h-full w-60 bg-white border-r shadow-md flex flex-col transition-all duration-300">
       {/* Logo */}
       <div className="text-2xl font-bold px-6 py-4 border-b h-14 flex items-center gap-4">
         <button
           className="p-2 rounded-full hover:bg-gray-300"
-          onClick={() => toggleSidebar()}
+          onClick={toggleSidebar}
         >
           <Menu size={22} />
         </button>
-        <div>
-          <span className="text-primary font-bold text-xl">ViParta</span>
-        </div>
+        <span className="text-primary font-bold text-xl">ViParta</span>
       </div>
 
-      {/* User Avatar & Name */}
+      {/* User */}
       {user && (
         <div className="flex items-center gap-3 px-6 py-4 border-b">
           <img
@@ -34,43 +49,47 @@ export default function Sidebar({ user, sidebarOpen, toggleSidebar }: { user: { 
 
       {/* Main Navigation */}
       <nav className="flex flex-col mt-4 gap-1">
-        <Link
+        <NavLink
           to="/"
-          className="flex items-center gap-4 px-6 py-3 rounded-lg hover:bg-gray-200"
+          end
+          onClick={toggleSidebar}
+          className={navLinkClasses}
         >
           <Home size={20} />
-          <span className="font-medium">Home</span>
-        </Link>
+          <span>Home</span>
+        </NavLink>
 
-        <Link
+        <NavLink
           to="/trending"
-          className="flex items-center gap-4 px-6 py-3 rounded-lg hover:bg-gray-200"
+          onClick={toggleSidebar}
+          className={navLinkClasses}
         >
           <Flame size={20} />
-          <span className="font-medium">Trending</span>
-        </Link>
-
+          <span>Trending</span>
+        </NavLink>
       </nav>
 
       <hr className="my-4 border-gray-200" />
 
-      {/* Channel / Video Actions */}
+      {/* Actions */}
       <nav className="flex flex-col gap-1">
-        <Link
+        <NavLink
           to="/channel/create"
-          className="flex items-center gap-4 px-6 py-3 rounded-lg hover:bg-gray-200"
+          onClick={toggleSidebar}
+          className={navLinkClasses}
         >
           <Plus size={20} />
-          <span className="font-medium">Create Channel</span>
-        </Link>
+          <span>Create Channel</span>
+        </NavLink>
 
-        <Link
+        <NavLink
           to="/video/upload"
-          className="flex items-center gap-4 px-6 py-3 rounded-lg hover:bg-gray-200"
+          onClick={toggleSidebar}
+          className={navLinkClasses}
         >
           <Video size={20} />
-          <span className="font-medium">Upload Videos</span>
-        </Link>
+          <span>Upload Videos</span>
+        </NavLink>
       </nav>
     </aside>
   );

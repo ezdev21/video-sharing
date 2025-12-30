@@ -9,7 +9,7 @@ export default {
   	extend: {
   		colors: {
   			primary: {
-  				DEFAULT: '#8B0000',
+  				DEFAULT: '#ad1c5f',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
   			secondary: {

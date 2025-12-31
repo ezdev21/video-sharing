@@ -46,7 +46,6 @@ const VideoUpload: React.FC = () => {
     .catch((err) => {
       throw new Error("Video Upload failed");
     });
-  
   };
 
   return (

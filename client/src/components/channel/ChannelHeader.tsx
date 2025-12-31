@@ -1,24 +1,16 @@
-import { useEffect, useState } from "react";
-import type { Channel } from "../../types";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import api from "@/lib/api";
+import { useChannelStore } from "@/store/useChannelStore";
 
 export default function ChannelHeader() {
   const { id } = useParams<{ id: string }>()
-  const [channel, setChannel] = useState<Channel | null>(null);
-  
-  const fetchChannel = async () => {
-    await api.get(`/channel/${id}`)
-    .then((res) => {
-      setChannel(res.data);
-    }).catch((error) => {
-      console.error('Error fetching channel videos:', error);
-    })
-  }
+  useChannelStore.setState({id: id})
+  const channel = useChannelStore((state) => state.channel);
+  const fetchChannel = useChannelStore((state) => state.fetchChannel)
   
   useEffect(() => {
     fetchChannel();
-  }, [])
+  }, [fetchChannel])
 
   return (
     <>

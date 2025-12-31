@@ -1,42 +1,13 @@
-import { useState } from "react";
-import api from "../../lib/api";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useNavigate } from "react-router-dom";
-
-interface LoginResponse {
-  token: string;
-}
 
 const Login = () => {
   const navigate = useNavigate();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
+  const {loginForm, loading, success, error } = useAuthStore((state) => state);
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-
-    try {
-      setLoading(true);
-
-      const res = await api.post<LoginResponse>(
-        "/auth/login",
-        {
-          email,
-          password,
-        }
-      );
-
-      localStorage.setItem("token", res.data.token);
-
+    e.preventDefault()
+    if(success){
       navigate("/dashboard", { replace: true });
-    } catch (err: any) {
-      setError(err.response?.data?.error || "Invalid email or password");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -55,8 +26,8 @@ const Login = () => {
             </label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={loginForm.email}
+              onChange={(e) => useAuthStore.setState({loginForm: {...loginForm, email: e.target.value}})}
               placeholder="Enter your email"
               required
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
@@ -70,8 +41,8 @@ const Login = () => {
             </label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={loginForm.password}
+              onChange={(e) => useAuthStore.setState({loginForm: {...loginForm, password: e.target.value}})}
               placeholder="Enter your password"
               required
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
@@ -87,7 +58,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-primary text-white py-2 rounded-lg  transition disabled:opacity-60"
+            className="w-full bg-primary hover:bg-primary/90 text-white py-2 rounded-lg  transition disabled:opacity-60"
           >
             {loading ? "Logging in..." : "Login"}
           </button>

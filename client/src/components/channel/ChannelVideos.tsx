@@ -1,29 +1,21 @@
-import type { Video } from "@/types";
 import VideoCard from "../video/VideoCard";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import api from "@/lib/api";
+import { useVideoStore } from "@/store/useVideoStore";
 
 export default function ChannelVideos() {
   const { id } = useParams<{ id: string }>()
-  const [videos, setVideos] = useState<Video[]>([]);
-
-  const fetchVideos = async () => {
-    await api.get(`/channel/${id}/videos`)
-    .then((res) => {
-      setVideos(res.data);
-    }).catch((error) => {
-      console.error('Error fetching channel videos:', error);
-    })
-  }
+  useVideoStore.setState({channelId: id});
+  const channelVideos = useVideoStore((state) => state.channelVideos)
+  const fetchChannelVideos = useVideoStore((state) => state.fetchChannelVideos)
   
   useEffect(() => {
-    fetchVideos();
-  }, []);
+    fetchChannelVideos()
+  }, [fetchChannelVideos]);
 
   return (
     <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {videos.map(video => (
+      {channelVideos.map(video => (
         <VideoCard key={video.id} video={video} />
       ))}
     </div>

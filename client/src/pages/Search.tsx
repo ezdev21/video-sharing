@@ -1,41 +1,28 @@
-import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import type { Video } from "../types";
-import api from "@/lib/api";
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useVideoStore } from "@/store/useVideoStore";
+import VideoCard from "@/components/video/VideoCard";
 
 const Search = () => {
   const [searchParams] = useSearchParams();
-  const query = searchParams.get("query") || "";
+  const query = searchParams.get("query") || '';
+  useVideoStore.setState({query: query});
+  const searchedVideos = useVideoStore((state) => state.searchedVideos);
+  const searchVideos = useVideoStore((state) => state.searchVideos);
 
-  const [videos, setVideos] = useState<Video[]>([]);
-  
   useEffect(() => {
-    api.get(`/video/search?query=${query}`)
-      .then((videos: Video[]) => {
-        setVideos(videos);
-      }).catch((err: unknown) => {
-        console.error('Error fetching videos:', err);
-      })
-  }, []);
+   searchVideos()
+  },[searchVideos]);
   
-  if(videos.length == 0) {
+  if(searchedVideos.length == 0) {
     return <div className="p-4 text-center text-gray-500 text-xl">No videos found for "{query}"</div>
   } else {
   return (
     <>
       <div className="p-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {videos.map((video) => (
-            <Link to={`/video/${video.id}`} key={video.id}>
-              <div key={video.id} className="rounded overflow-hidden shadow hover:shadow-lg transition">
-              <img
-                src={video.thumbnail}
-                alt={video.title}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-2 text-sm font-medium">{video.title}</div>
-            </div>
-            </Link>  
+          { searchedVideos.map((video) => (
+            <VideoCard key={video.id} video={video} />   
           ))}
         </div>
       </div>

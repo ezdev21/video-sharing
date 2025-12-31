@@ -1,24 +1,16 @@
-import api from "@/lib/api";
-import type { Playlist } from "@/types";
-import { useEffect, useState } from "react";
+import { usePlaylistStore } from "@/store/usePlaylistStore";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 export default function ChannelPlaylists() {
   const { id } = useParams<{ id: string }>()
-  const [playlists, setPlaylists] = useState<Playlist[]>([]);
-  
-  const fetchPlaylists = async () => {
-    await api.get(`/channel/${id}/playlists`)
-    .then((res) => {
-      setPlaylists(res.data);
-    }).catch((error) => {
-      console.error('Error fetching channel playlists:', error);
-    })
-  }
+  usePlaylistStore.setState({id: id})
+  const playlists = usePlaylistStore((state) => state.playlists);
+  const fetchPlaylists = usePlaylistStore((state) => state.fetchPlaylists)
   
   useEffect(() => {
     fetchPlaylists();
-  }, [])
+  }, [fetchPlaylists])
 
   return (
     <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

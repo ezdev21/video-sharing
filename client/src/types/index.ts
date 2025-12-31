@@ -7,18 +7,24 @@ export interface Video {
   views: string
   time: string
   duration: string
+  createdAt: string,
+  updatedAt: string
 }
 
 export interface Playlist {
   id: number;
   title: string;
   videoCount: number;
+  createdAt: string,
+  updatedAt: string
 }
 
 export interface Post {
   id: number;
+  channelId: number,
   content: string;
-  date: string;
+  createdAt: string,
+  updatedAt: string
 }
 
 export interface Channel{
@@ -30,4 +36,6 @@ export interface Channel{
   videos?: Video[];
   playlists?: Playlist[];
   posts?: Post[];
+  createdAt: string,
+  updatedAt: string
 }

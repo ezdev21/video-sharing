@@ -4,6 +4,7 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 
 export default function Navbar() {
+  const [user, setUser] = useState(null);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -52,29 +53,46 @@ export default function Navbar() {
                 type="search"
                 placeholder="Search"
                 required
-                className="w-full px-4 py-2 text-sm border focus:border-2 border-gray-300 rounded-l-md focus:outline-none focus:border-primary"
+                className="w-full px-4 py-2 text-sm border focus:border border-gray-300 rounded-l-md focus:outline-none focus:border-primary"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
 
               <button
                 type="submit"
-                className="px-6 border border-l-0 border-gray-300 rounded-r-md flex justify-center items-center bg-primary text-white"
+                className="px-6 border border-l-0 border-gray-300 rounded-r-md flex justify-center items-center bg-primary hover:bg-primary/90 text-white"
               >
                 <Search size={18} />
               </button>
             </form>
 
-            <button className="ml-3 p-3 rounded-full bg-gray-300 hover:bg-primary hover:text-white">
+            <button className="ml-3 p-3 rounded-full bg-gray-300 hover:bg-primary hover:bg-primary/90 hover:text-white">
               <Mic size={18} />
             </button>
           </div>
 
           {/* Right */}
           <div className="flex items-center gap-4">
+          { !user ? (
+            <>
+              <Link
+                to="/login"
+                className="px-5 py-1 rounded-full border border-primary text-primary hover:bg-primary hover:bg-primary/90 hover:text-white transition"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="px-5 py-1 rounded-full bg-primary hover:bg-primary/90 text-white hover:bg-primary hover:bg-primary/90/90 transition"
+              >
+                Register
+              </Link>
+            </>
+          ) : (
+          <>
             <Link
               to="/channel/create"
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-300 bg-gray-300 hover:bg-primary hover:text-white"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-300 bg-gray-300 hover:bg-primary hover:bg-primary/90 hover:text-white"
             >
               <Plus size={18} />
               <span className="hidden sm:inline text-sm font-medium">Create</span>
@@ -82,20 +100,23 @@ export default function Navbar() {
 
             <Link
               to="/video/upload"
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-300 bg-gray-300 hover:bg-primary hover:text-white"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-300 bg-gray-300 hover:bg-primary hover:bg-primary/90 hover:text-white"
             >
               <Plus size={18} />
               <span className="hidden sm:inline text-sm font-medium">Upload</span>
             </Link>
 
-            <button className="p-2 rounded-full bg-gray-300 hover:bg-primary hover:text-white">
+            <button className="p-2 rounded-full bg-gray-300 hover:bg-primary hover:bg-primary/90 hover:text-white">
               <Bell size={22} />
             </button>
 
-            <button className="p-2 rounded-full bg-gray-300 hover:bg-primary hover:text-white">
+            <button className="p-2 rounded-full bg-gray-300 hover:bg-primary hover:bg-primary/90 hover:text-white">
               <User size={22} />
             </button>
-          </div>
+          </>
+  )}
+</div>
+
         </div>
       </header>
 

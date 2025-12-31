@@ -1,43 +1,15 @@
-import api from "@/lib/api";
-import { useEffect, useState } from "react";
-
-interface Comment {
-  id: number;
-  user: string;
-  avatar: string;
-  text: string;
-  time: string;
-}
+import { useCommentStore } from "@/store/useCommentStore";
+import { useEffect } from "react";
 
 export default function Comments({id}) {
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [newComment, setNewComment] = useState("");
-  
-  const fetchComments = async () =>{
-      await api.get(`/video/${id}/comments`)
-      .then((res) => {
-        setComments(res.data);
-      }).catch((error) => {
-        console.error('Error fetching comments:', error);
-      })
-    }
+  const comments = useCommentStore((state) => state.comments);
+  const newComment = useCommentStore((state) => state.newComment);
+  const fetchComments = useCommentStore((state) => state.fetchComments);
+  const addComment = useCommentStore((state) => state.addComment);
 
   useEffect(() => {
     fetchComments();
-  }, []);
-
-  const handleAddComment = async () => {
-    if (!newComment.trim()) return;
-    
-    await api.post('/comment')
-      .then((res) => {
-        setComments([res.data, ...comments]);
-      }).catch((error) => {
-        console.error('Error adding a new comment:', error);
-      })
-
-    setNewComment(""); // clear textarea
-  };
+  }, [fetchComments]);
 
   return (
     <div className="mt-6">
@@ -51,11 +23,11 @@ export default function Comments({id}) {
           className="w-full border rounded p-2 text-sm"
           placeholder="Add a comment..."
           value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
+          onChange={(e) => useCommentStore.setState({newComment: e.target.value})}
         />
         <button
-          onClick={handleAddComment}
-          className="mt-2 px-4 py-2 bg-primary  text-white rounded "
+          onClick={addComment}
+          className="mt-2 px-4 py-2 bg-primary hover:bg-primary/90  text-white rounded "
         >
           Comment
         </button>

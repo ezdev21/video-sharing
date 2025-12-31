@@ -1,22 +1,12 @@
 import VideoCard from "@/components/video/VideoCard"
-import type { Video } from "@/types/"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { VideoCardSkeleton } from "../components/ui/VideoCardSkeleton";
-import api from "@/lib/api";
+import { useVideoStore } from "@/store/useVideoStore";
 
 export default function Home() {
-  const [videos, setVideos] = useState<Video[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const fetchVideos = async () =>{
-    await api.get('/video')
-    .then((res) => {
-      setVideos(res.data);
-      setLoading(false);
-    }).catch((error) => {
-      console.error('Error fetching videos:', error);
-    })
-  }
+  const loading = useVideoStore((state) => state.loading);
+  const videos = useVideoStore((state) => state.videos);
+  const fetchVideos = useVideoStore((state) => state.fetchVideos)
 
   useEffect(() => {
     fetchVideos();

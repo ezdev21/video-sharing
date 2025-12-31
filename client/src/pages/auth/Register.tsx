@@ -1,47 +1,13 @@
-import { useState } from "react";
-import api from "../../lib/api";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
-
+  const {registerForm, loading, success, error } = useAuthStore((state) => state);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
-    setSuccess(null);
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    try {
-      setLoading(true);
-
-      await api.post("/auth/register", {
-        name,
-        email,
-        password,
-      });
-
+    if(success){
       navigate("/dashboard", { replace: true });
-
-    } catch (err: any) {
-      console.log('error occured',err)
-      setError(
-        err.response?.data?.error || "Registration failed. Try again."
-      );
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -60,8 +26,8 @@ const Register = () => {
             </label>
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={registerForm.name}
+              onChange={(e) => useAuthStore.setState({registerForm: {...registerForm, name: e.target.value}})}
               placeholder="Enter your name"
               required
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
@@ -75,8 +41,8 @@ const Register = () => {
             </label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={registerForm.email}
+              onChange={(e) => useAuthStore.setState({registerForm: {...registerForm, email: e.target.value}})}
               placeholder="Enter your email"
               required
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
@@ -90,8 +56,8 @@ const Register = () => {
             </label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={registerForm.password}
+              onChange={(e) => useAuthStore.setState({registerForm: {...registerForm, password: e.target.value}})}
               placeholder="Create a password"
               required
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
@@ -105,8 +71,8 @@ const Register = () => {
             </label>
             <input
               type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={registerForm.confirmPassword}
+              onChange={(e) => useAuthStore.setState({registerForm: {...registerForm, confirmPassword: e.target.value}})}
               placeholder="Confirm your password"
               required
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
@@ -127,7 +93,7 @@ const Register = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-primary text-white py-2 rounded-lg  transition disabled:opacity-60"
+            className="w-full bg-primary hover:bg-primary/90 text-white py-2 rounded-lg  transition disabled:opacity-60"
           >
             {loading ? "Registering..." : "Register"}
           </button>

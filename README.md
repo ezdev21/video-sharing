@@ -6,7 +6,31 @@
 
 clone the project `git clone https://github.com/ezdev21/video-sharing`
 
-## Installation using docker
+## Client Installation
+
+navigate to client directory `cd client`
+
+install node dependencies `npm install`
+
+run in development mode `npm run dev`
+
+## Server Installation
+
+install and configure postgres database
+
+create .env file run: `cp .env.example .env`
+
+setup credentials in the .env file from postgres databse
+
+navigate to server directory: `cd server`
+
+install node dependencies: `npm install`
+
+run in development mode: `npm run dev`
+
+Generate the Prisma Client: `npx prisma generate`
+
+migrate the prisma database `npx prisma migrate dev --name <migration-name>`
 
 ## Contributing
 

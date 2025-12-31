@@ -1,4 +1,4 @@
-import { Plus, Video, Home, Flame, Menu } from "lucide-react";
+import { Plus, Video, Home, Flame, Menu, LayoutDashboard } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 export default function Sidebar({
@@ -57,6 +57,16 @@ export default function Sidebar({
         >
           <Home size={20} />
           <span>Home</span>
+        </NavLink>
+
+        <NavLink
+          to="/dashboard"
+          end
+          onClick={toggleSidebar}
+          className={navLinkClasses}
+        >
+          <LayoutDashboard size={20} />
+          <span>Dashboard</span>
         </NavLink>
 
         <NavLink

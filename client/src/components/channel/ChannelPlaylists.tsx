@@ -1,4 +1,4 @@
-import { usePlaylistStore } from "@/store/usePlaylistStore";
+import { usePlaylistStore } from "@/store/playlist.store";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 

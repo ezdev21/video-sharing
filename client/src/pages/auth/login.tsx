@@ -1,12 +1,14 @@
-import { useAuthStore } from "@/store/useAuthStore";
+import { useAuthStore } from "@/store/auth.store";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
-  const {loginForm, loading, success, error } = useAuthStore((state) => state);
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if(success){
+  const {loginForm, loading, error, login } = useAuthStore((state) => state);
+  
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const ok = await login();
+    if (ok) {
       navigate("/dashboard", { replace: true });
     }
   };
@@ -18,7 +20,7 @@ const Login = () => {
           Login
         </h2>
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-4" onSubmit={(e) => handleLogin(e)}>
           {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -26,6 +28,7 @@ const Login = () => {
             </label>
             <input
               type="email"
+              name="email"
               value={loginForm.email}
               onChange={(e) => useAuthStore.setState({loginForm: {...loginForm, email: e.target.value}})}
               placeholder="Enter your email"

@@ -1,7 +1,7 @@
 import VideoCard from "@/components/video/VideoCard"
 import { useEffect } from "react"
 import { VideoCardSkeleton } from "../components/ui/VideoCardSkeleton";
-import { useVideoStore } from "@/store/useVideoStore";
+import { useVideoStore } from "@/store/video.store";
 
 export default function Home() {
   const loading = useVideoStore((state) => state.loading);

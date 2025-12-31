@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useVideoStore } from "@/store/useVideoStore";
+import { useVideoStore } from "@/store/video.store";
 import VideoCard from "@/components/video/VideoCard";
 
 const Search = () => {

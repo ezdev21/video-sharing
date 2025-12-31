@@ -1,4 +1,4 @@
-import { useCommentStore } from "@/store/useCommentStore";
+import { useCommentStore } from "@/store/comment.store";
 import { useEffect } from "react";
 
 export default function Comments({id}) {

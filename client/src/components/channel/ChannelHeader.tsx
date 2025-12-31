@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useChannelStore } from "@/store/useChannelStore";
+import { useChannelStore } from "@/store/channel.store";
 
 export default function ChannelHeader() {
   const { id } = useParams<{ id: string }>()

@@ -1,13 +1,16 @@
-import { useAuthStore } from "@/store/useAuthStore";
+import { useAuthStore } from "@/store/auth.store";
+import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
-  const {registerForm, loading, success, error } = useAuthStore((state) => state);
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if(success){
-      navigate("/dashboard", { replace: true });
+  const {registerForm, loading, success, error, register } = useAuthStore((state) => state);
+  
+  const handleRegister = async (e: FormEvent) => {
+    e.preventDefault();  
+    const ok = await register();
+    if (ok) {
+      navigate("/login", { replace: true });
     }
   };
 
@@ -18,7 +21,7 @@ const Register = () => {
           Create Account
         </h2>
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-4" onSubmit={(e) => handleRegister(e)}>
           {/* Name */}
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -26,6 +29,7 @@ const Register = () => {
             </label>
             <input
               type="text"
+              name="name"
               value={registerForm.name}
               onChange={(e) => useAuthStore.setState({registerForm: {...registerForm, name: e.target.value}})}
               placeholder="Enter your name"
@@ -41,6 +45,7 @@ const Register = () => {
             </label>
             <input
               type="email"
+              name="email"
               value={registerForm.email}
               onChange={(e) => useAuthStore.setState({registerForm: {...registerForm, email: e.target.value}})}
               placeholder="Enter your email"
@@ -56,6 +61,7 @@ const Register = () => {
             </label>
             <input
               type="password"
+              name="password"
               value={registerForm.password}
               onChange={(e) => useAuthStore.setState({registerForm: {...registerForm, password: e.target.value}})}
               placeholder="Create a password"
@@ -71,6 +77,7 @@ const Register = () => {
             </label>
             <input
               type="password"
+              name="password"
               value={registerForm.confirmPassword}
               onChange={(e) => useAuthStore.setState({registerForm: {...registerForm, confirmPassword: e.target.value}})}
               placeholder="Confirm your password"

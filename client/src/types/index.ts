@@ -1,5 +1,13 @@
+export interface User {
+  id: string
+  name: string
+  email: string
+  createdAt: string
+  updatedAt: string
+}
+
 export interface Video {
-  id: number
+  id: string
   title: string
   thumbnail: string
   channel: string
@@ -12,7 +20,7 @@ export interface Video {
 }
 
 export interface Playlist {
-  id: number;
+  id: string;
   title: string;
   videoCount: number;
   createdAt: string,
@@ -20,7 +28,7 @@ export interface Playlist {
 }
 
 export interface Post {
-  id: number;
+  id: string;
   channelId: number,
   content: string;
   createdAt: string,
@@ -28,7 +36,7 @@ export interface Post {
 }
 
 export interface Channel{
-  id: number;
+  id: string;
   name: string;
   avatar: string;
   subscribers: string;

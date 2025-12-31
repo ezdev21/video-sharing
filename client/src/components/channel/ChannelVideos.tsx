@@ -1,7 +1,7 @@
 import VideoCard from "../video/VideoCard";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useVideoStore } from "@/store/useVideoStore";
+import { useVideoStore } from "@/store/video.store";
 
 export default function ChannelVideos() {
   const { id } = useParams<{ id: string }>()

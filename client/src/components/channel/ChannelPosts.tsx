@@ -1,4 +1,4 @@
-import { usePostStore } from "@/store/usePostStore";
+import { usePostStore } from "@/store/post.store";
 import dayjs from "dayjs";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";

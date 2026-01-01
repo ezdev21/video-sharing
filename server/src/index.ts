@@ -30,8 +30,11 @@ app.use(
 );
 
 const limiter = rateLimit({
-  windowMs: 6 * 1000,
-  max: 1000,
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  skip: (req, res) => {
+    return req.ip === '127.0.0.1' || req.ip === '::1'; // IPv4 and IPv6
+  },
   message: "Too many requests, please try again later.",
   standardHeaders: true,
   legacyHeaders: false,

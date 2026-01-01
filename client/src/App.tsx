@@ -14,6 +14,7 @@ import Login from "./pages/auth/Login"
 import Register from "./pages/auth/Register"
 import Dashboard from "./pages/Dashboard"
 import { Toaster } from "sonner"
+import ProtectedRoutes from "./utils/ProtectedRoutes"
 
 export default function App() {
   return (
@@ -25,19 +26,21 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/trending" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route element={<ProtectedRoutes/>}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/video/upload" element={<VideoUpload />} />
+            <Route path="/channel/create" element={<CreateChannel />} />
+          </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/video/upload" element={<VideoUpload />} />
           <Route path="/video/:id" element={<Watch />} />
-          <Route path="*" element={<NotFound />} />
-          <Route path="/channel/create" element={<CreateChannel />} />
           <Route path="/channel/:id" element={<ChannelHome />}>
             <Route path="videos" element={<ChannelVideos />} />
             <Route path="playlists" element={<ChannelPlaylists />} />
             <Route path="posts" element={<ChannelPosts />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
       <Toaster/>

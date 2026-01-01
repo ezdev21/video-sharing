@@ -52,8 +52,15 @@ api.interceptors.response.use(
   (error: AxiosError): Promise<AxiosError> => {
     // Network / connection error
     if (!error.response) {
-      toast.error("You are offline. Check your internet connection", {
+      const id = toast.error("Server Error. Please try again.", {
         position: "bottom-right",
+        richColors: true,
+        dismissible: true,
+        duration: 5000,
+        action: {
+          label: "Dismiss",
+          onClick: () => toast.dismiss(id),
+        },
       });
     }
 

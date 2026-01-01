@@ -3,14 +3,12 @@ import { useEffect } from "react"
 import { VideoCardSkeleton } from "../components/ui/VideoCardSkeleton";
 import { useVideoStore } from "@/store/video.store";
 
-export default function Home() {
-  const loading = useVideoStore((state) => state.loading);
-  const videos = useVideoStore((state) => state.videos);
-  const fetchVideos = useVideoStore((state) => state.fetchVideos)
+const  Home = () => {
+  const { loading, videos, fetchVideos } = useVideoStore((state) => state);
 
   useEffect(() => {
     fetchVideos();
-  })  
+  },[fetchVideos])  
 
   return (
     <div className="max-w-[1400px]">
@@ -35,3 +33,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home;

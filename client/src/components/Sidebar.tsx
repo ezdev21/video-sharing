@@ -1,4 +1,4 @@
-import { Plus, Video, Home, Flame, Menu, LayoutDashboard } from "lucide-react";
+import { Plus, Video, Home, Flame, Menu, LayoutDashboard, UserCircle } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 export default function Sidebar({
@@ -38,11 +38,14 @@ export default function Sidebar({
       {/* User */}
       {user && (
         <div className="flex items-center gap-3 px-6 py-4 border-b">
-          <img
+          {user.avatarUrl
+          ? <img
             src={user.avatarUrl}
             alt={user.name}
             className="w-10 h-10 rounded-full object-cover"
           />
+          : <UserCircle className="w-10 h-10 rounded-full"/>
+          }
           <span className="font-medium">{user.name}</span>
         </div>
       )}

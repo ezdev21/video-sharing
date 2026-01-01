@@ -1,11 +1,10 @@
 import axios, {
   AxiosError,
   type AxiosInstance,
-  type AxiosRequestConfig,
   type AxiosResponse,
 } from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 // -----------------------------
 // Axios instance
@@ -29,7 +28,7 @@ const getAccessToken = (): string | null => {
 // Request interceptor
 // -----------------------------
 api.interceptors.request.use(
-  (config: AxiosRequestConfig): AxiosRequestConfig => {
+  (config) => {
     const accessToken = getAccessToken();
     if (accessToken && config.headers) {
       // Prefer Authorization header
@@ -53,18 +52,16 @@ api.interceptors.response.use(
   (error: AxiosError): Promise<AxiosError> => {
     // Network / connection error
     if (!error.response) {
-      toast.error("Connection Error", {
-        position: "top-right",
-        autoClose: 5000,
-        theme: "dark",
+      toast.error("You are offline. Check your internet connection", {
+        position: "bottom-right",
       });
     }
 
     // Unauthorized
     if (error.response?.status === 401) {
       localStorage.removeItem("token");
-      // const navigate = useNavigate();
-      // navigate("/login", { replace: true });
+      const navigate = useNavigate();
+      navigate("/login", { replace: true });
     }
 
     return Promise.reject(error);

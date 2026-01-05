@@ -27,7 +27,6 @@ export const channelDetails = (req: Request, res: Response) => {
 
 export const channelCreate = (req: Request, res: Response) => {
   const { userId, name, description } = req.body;
-  const parsedUserId = Number(userId);
   const avatar = (req.files as any)?.avatar?.[0];
   const background = (req.files as any)?.background?.[0];
   
@@ -44,7 +43,7 @@ export const channelCreate = (req: Request, res: Response) => {
 
   prisma.channel.create({
      data: {
-      userId:parsedUserId,
+      userId,
       name,
       description,
       avatar: avatar.filename,

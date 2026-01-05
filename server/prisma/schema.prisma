@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
+  id        String     @id @default(uuid())
   name      String
   email     String     @unique
   password  String
@@ -21,39 +21,39 @@ model User {
 }
 
 model Video {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(uuid())
   title       String
   description String?
   thumbnail   String
   src         String
-  views   Int       @default(0)
+  views       Int       @default(0)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  userId      Int
+  userId      String
   user        User      @relation(fields: [userId], references: [id])
-  channelId   Int
+  channelId   String
   channel     Channel?  @relation(fields: [channelId], references: [id])
   comments    Comment[]
 }
 
 model Comment {
-  id        Int      @id @default(autoincrement())
-  content   String
+  id        String   @id @default(uuid())
+  body   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  userId    Int
-  videoId   Int
+  userId    String
+  videoId   String
   user      User     @relation(fields: [userId], references: [id])
   video     Video    @relation(fields: [videoId], references: [id])
 }
 
 model Channel {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(uuid())
   name        String
   description String?
   avatar      String?
   background  String?
-  userId      Int
+  userId      String
   user        User     @relation(fields: [userId], references: [id])
   videos      Video[]
   createdAt   DateTime @default(now())
@@ -61,9 +61,9 @@ model Channel {
 }
 
 model Playlist {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   title     String
-  userId    Int
+  userId    String
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

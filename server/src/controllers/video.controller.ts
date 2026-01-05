@@ -33,7 +33,7 @@ export const videoRecommended = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.video.findMany({
     where: {
-      NOT: { id: Number(id) }
+      NOT: { id: id }
     },
     take: 25,
     orderBy: { createdAt: 'desc' },
@@ -51,7 +51,7 @@ export const videoRecommended = (req: Request, res: Response) => {
 export const videoDetails = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.video.findUnique({ 
-    where: { id: Number(id) }, 
+    where: { id:id }, 
     include: { channel: true } 
   })
     .then((video: Video | null) => {
@@ -65,8 +65,6 @@ export const videoDetails = (req: Request, res: Response) => {
 
 export const videoCreate = (req: Request, res: Response) => {
   const { userId, channelId, title, description } = req.body;
-  const parsedUserId = Number(userId);
-  const parsedChannelId = Number(channelId);
   const thumbnail = (req.files as any)?.thumbnail?.[0];
   const video = (req.files as any)?.video?.[0];
   
@@ -83,8 +81,8 @@ export const videoCreate = (req: Request, res: Response) => {
 
   prisma.video.create({
     data: {
-      userId: parsedUserId,
-      channelId: parsedChannelId,
+      userId,
+      channelId,
       title,
       description,
       thumbnail: thumbnail.filename,

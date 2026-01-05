@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import prisma from "../../prisma/client.js";
 import type { User } from "../schemas/schemas.js";
+import { email } from "zod";
 
 export const userIndex = (req: Request, res: Response) => {
   prisma.user.findMany()
@@ -15,7 +16,7 @@ export const userIndex = (req: Request, res: Response) => {
 
 export const userDetails = (req: Request, res: Response) => {
   const id = req.params.id;
-  prisma.user.findUnique({ where: { id: Number(id) } })
+  prisma.user.findUnique({ where: { id: Number(id) }, select: { password: false} })
     .then((user: User | null) => {
       res.status(200).send(user);
     })

@@ -1,8 +1,9 @@
 import api from "@/lib/api"
 import { create } from "zustand"
+import { useAuthStore } from "./auth.store"
 
 type CommentState = {
-  userId: string,
+  userId: string | null,
   videoId: string,
   comments: Comment[],
   newComment: string,
@@ -11,8 +12,8 @@ type CommentState = {
 }
 
 export const useCommentStore = create<CommentState>((set,get) => ({
-  userId: '1',
-  videoId: '1',
+  userId: useAuthStore.getState().user?.id || '',
+  videoId: '',
   comments: [],
   newComment: '',
   fetchComments: async () =>{

@@ -3,15 +3,16 @@ import dayjs from "dayjs";
 import { UserCircle2 } from "lucide-react";
 import { useEffect } from "react";
 
-export default function Comments({id}) {
+export default function Comments({id}:{id:string}) {
   const comments = useCommentStore((state) => state.comments);
   const newComment = useCommentStore((state) => state.newComment);
   const fetchComments = useCommentStore((state) => state.fetchComments);
   const addComment = useCommentStore((state) => state.addComment);
 
   useEffect(() => {
+    useCommentStore.setState({videoId: id});
     fetchComments();
-  }, [fetchComments]);
+  }, [id,fetchComments]);
 
   return (
     <div className="my-6">

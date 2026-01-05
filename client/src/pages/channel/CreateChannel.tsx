@@ -1,6 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../lib/api";
+import { toast } from "sonner";
 
 const CreateChannel: React.FC = () => {
   const navigate = useNavigate();
@@ -43,7 +44,16 @@ const CreateChannel: React.FC = () => {
       navigate('/dashboard');
     })
     .catch((err) => {
-      throw new Error("Channel creation failed");
+      const id = toast.error("Server Error. Channel creation failed", {
+        position: "bottom-right",
+        richColors: true,
+        dismissible: true,
+        action: {
+          label: "Dismiss",
+          onClick: () => toast.dismiss(id),
+        },
+      });
+      throw new Error("");
     });
   }
 

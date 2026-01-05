@@ -1,6 +1,7 @@
 import { useAuthStore } from "@/store/auth.store";
 import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -11,6 +12,26 @@ const Register = () => {
     const ok = await register();
     if (ok) {
       navigate("/login", { replace: true });
+      const id = toast.success("Registered successfully. now login", {
+        position: "bottom-right",
+        richColors: true,
+        dismissible: true,
+        action: {
+          label: "Dismiss",
+          onClick: () => toast.dismiss(id),
+        },
+      });
+    }
+    else{
+      const id = toast.error("Registration error. please try again", {
+        position: "bottom-right",
+        richColors: true,
+        dismissible: true,
+        action: {
+          label: "Dismiss",
+          onClick: () => toast.dismiss(id),
+        },
+      });
     }
   };
 

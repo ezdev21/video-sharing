@@ -1,19 +1,21 @@
-import { Plus, Video, Home, Flame, Menu, LayoutDashboard, UserCircle } from "lucide-react";
+import { useAuthStore } from "@/store/auth.store";
+import { Plus, Video, Home, Flame, Menu, LayoutDashboard, UserCircle, LogOutIcon } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
-export default function Sidebar({
-  user,
-  sidebarOpen,
-  toggleSidebar,
-}: {
-  user: { name: string; avatarUrl: string } | null;
-  sidebarOpen: boolean;
-  toggleSidebar: () => void;
-}) {
+export default function Sidebar(
+  {
+    sidebarOpen,
+    toggleSidebar,
+  }: {
+    sidebarOpen: boolean;
+    toggleSidebar: () => void;
+  }) {
+  
+  const {loggedIn, user, logout} = useAuthStore(state => state);
   if (!sidebarOpen) {
     return null;
   }
-
+  
   const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
     `flex items-center gap-4 px-6 py-3 transition-colors
      ${
@@ -38,14 +40,7 @@ export default function Sidebar({
       {/* User */}
       {user && (
         <div className="flex items-center gap-3 px-6 py-4 border-b">
-          {user.avatarUrl
-          ? <img
-            src={user.avatarUrl}
-            alt={user.name}
-            className="w-10 h-10 rounded-full object-cover"
-          />
-          : <UserCircle className="w-10 h-10 rounded-full"/>
-          }
+          <UserCircle className="w-10 h-10 rounded-full"/>
           <span className="font-medium">{user.name}</span>
         </div>
       )}
@@ -62,15 +57,16 @@ export default function Sidebar({
           <span>Home</span>
         </NavLink>
 
-        <NavLink
-          to="/dashboard"
-          end
-          onClick={toggleSidebar}
-          className={navLinkClasses}
-        >
-          <LayoutDashboard size={20} />
-          <span>Dashboard</span>
-        </NavLink>
+        {user && (<NavLink
+            to="/dashboard"
+            end
+            onClick={toggleSidebar}
+            className={navLinkClasses}
+          >
+            <LayoutDashboard size={20} />
+            <span>Dashboard</span>
+          </NavLink>
+        )}
 
         <NavLink
           to="/trending"
@@ -85,7 +81,7 @@ export default function Sidebar({
       <hr className="my-4 border-gray-200" />
 
       {/* Actions */}
-      <nav className="flex flex-col gap-1">
+      {loggedIn && (<nav className="flex flex-col gap-1">
         <NavLink
           to="/channel/create"
           onClick={toggleSidebar}
@@ -103,7 +99,19 @@ export default function Sidebar({
           <Video size={20} />
           <span>Upload Videos</span>
         </NavLink>
-      </nav>
+
+        <button
+          onClick={() => {
+            toggleSidebar();
+            logout();
+            window.location.reload()
+          }}
+          className="flex items-center gap-4 px-6 py-3 transition-colors"
+        >
+          <LogOutIcon size={20} />
+          <span className="bg-primary hover:bg-primary/90 py-2 px-7 text-white rounded-md">Logout</span>
+        </button>
+      </nav>)}
     </aside>
   );
 }

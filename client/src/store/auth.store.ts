@@ -28,11 +28,21 @@ type AuthState = {
   logout: () => void;
 };
 
+// Safely parse user from localStorage
+const getStoredUser = (): User | null => {
+  const stored = localStorage.getItem("user");
+  if (!stored || stored === "undefined") return null;
+
+  try {
+    return JSON.parse(stored);
+  } catch {
+    return null;
+  }
+};
+
 export const useAuthStore = create<AuthState>((set, get) => ({
-  loggedIn: localStorage.getItem("token"),
-  user: localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user")!)
-    : null,
+  loggedIn: localStorage.getItem("token") || null,
+  user: getStoredUser(),
 
   loginForm: {
     email: "",
@@ -66,7 +76,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
           success: true,
         });
 
-        return true; // ✅ let component decide navigation
+        return true;
       }
 
       return false;
@@ -108,11 +118,5 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   logout: () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-
-    set({
-      loggedIn: null,
-      user: null,
-      success: false,
-    });
   },
 }));

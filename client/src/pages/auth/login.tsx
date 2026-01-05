@@ -1,5 +1,6 @@
 import { useAuthStore } from "@/store/auth.store";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -9,7 +10,28 @@ const Login = () => {
     e.preventDefault();
     const ok = await login();
     if (ok) {
-      navigate("/dashboard", { replace: true });
+      navigate("/", { replace: true });
+      const id = toast.success("Logged successfully", {
+        position: "bottom-right",
+        richColors: true,
+        dismissible: true,
+        duration: 5000,
+        action: {
+          label: "Dismiss",
+          onClick: () => toast.dismiss(id),
+        },
+      });
+    }
+    else{
+      const id = toast.error("Login error. please try again", {
+        position: "bottom-right",
+        richColors: true,
+        dismissible: true,
+        action: {
+          label: "Dismiss",
+          onClick: () => toast.dismiss(id),
+        },
+      });
     }
   };
 

@@ -11,12 +11,12 @@ type CommentState = {
 }
 
 export const useCommentStore = create<CommentState>((set,get) => ({
-  userId: '',
-  videoId: '',
+  userId: '1',
+  videoId: '1',
   comments: [],
   newComment: '',
   fetchComments: async () =>{
-    await api.get(`/video/${get().videoId}/comments`)
+    await api.get(`/comment`,{params: {videoId: get().videoId}})
     .then((res) => {
       set({comments: res.data});
     }).catch((error) => {
@@ -24,9 +24,9 @@ export const useCommentStore = create<CommentState>((set,get) => ({
     })
   },
   addComment: async () => {
-    await api.post('/comment')
+    await api.post('/comment',{userId: get().userId, videoId: get().videoId, body: get().newComment})
     .then((res) => {
-      set({comments: res.data, ...get().comments});
+      set({comments: [res.data, ...get().comments]});
     }).catch((error) => {
       console.error('Error adding a new comment:', error);
     })

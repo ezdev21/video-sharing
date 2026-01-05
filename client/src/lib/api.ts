@@ -56,7 +56,6 @@ api.interceptors.response.use(
         position: "bottom-right",
         richColors: true,
         dismissible: true,
-        duration: 5000,
         action: {
           label: "Dismiss",
           onClick: () => toast.dismiss(id),

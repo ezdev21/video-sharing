@@ -3,7 +3,7 @@ import prisma from "../../prisma/client.js";
 import type { Comment } from "../schemas/schemas.js";
 
 export const commentIndex = (req: Request, res: Response) => {
-  prisma.comment.findMany()
+  prisma.comment.findMany({ include: {user: true}})
     .then((comments: Comment[]) => {
       res.status(200).send(comments);
     })

@@ -146,13 +146,12 @@ export default function Navbar() {
                       </Link>
                       <button
                         onClick={() => {
-                          useAuthStore.getState().logout();
                           setAccountOpen(false);
                           logout();
                         }}
                         className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
                       >
-                        <a href="/login">Logout</a>
+                        <a href="/">Logout</a>
                       </button>
                     </div>
                   )}
@@ -173,7 +172,6 @@ export default function Navbar() {
 
       {/* Sidebar */}
       <Sidebar
-        user={user}
         sidebarOpen={sidebarOpen}
         toggleSidebar={toggleSidebar}
       />

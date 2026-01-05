@@ -1,6 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../lib/api";
+import { toast } from "sonner";
 
 const VideoUpload: React.FC = () => {
   const navigate = useNavigate();
@@ -44,7 +45,16 @@ const VideoUpload: React.FC = () => {
       navigate('/dashboard');
     })
     .catch((err) => {
-      throw new Error("Video Upload failed");
+      const id = toast.error("Server Error. Video Upload failed", {
+        position: "bottom-right",
+        richColors: true,
+        dismissible: true,
+        action: {
+          label: "Dismiss",
+          onClick: () => toast.dismiss(id),
+        },
+      });
+      throw new Error("");
     });
   };
 

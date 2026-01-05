@@ -1,4 +1,6 @@
 import { useCommentStore } from "@/store/comment.store";
+import dayjs from "dayjs";
+import { UserCircle2 } from "lucide-react";
 import { useEffect } from "react";
 
 export default function Comments({id}) {
@@ -12,7 +14,7 @@ export default function Comments({id}) {
   }, [fetchComments]);
 
   return (
-    <div className="mt-6">
+    <div className="my-6">
       <h2 className="text-lg font-semibold mb-4">
         {comments.length} Comments
       </h2>
@@ -20,7 +22,7 @@ export default function Comments({id}) {
       {/* Add Comment Textarea */}
       <div className="mb-4">
         <textarea
-          className="w-full border rounded p-2 text-sm"
+          className="w-full border rounded p-2 text-sm focus:border-2 focus:outline-none focus:border-primary"
           placeholder="Add a comment..."
           value={newComment}
           onChange={(e) => useCommentStore.setState({newComment: e.target.value})}
@@ -33,23 +35,28 @@ export default function Comments({id}) {
         </button>
       </div>
 
-      {/* Comments List */}
       <div className="space-y-4">
         {comments.map((comment) => (
-          <div key={comment.id} className="flex gap-3">
-            <img
-              src={comment.avatar}
+          <div key={comment.id} className="flex items-center gap-3">
+            {comment.user?.avatar
+            ?<img
+              src={comment.user?.avatar}
               className="w-9 h-9 rounded-full"
               alt={comment.user}
             />
+            :<UserCircle2 className="w-9 h-9 rounded-full"/>
+            }
             <div>
-              <p className="text-sm font-medium">
-                {comment.user}
-                <span className="ml-2 text-xs text-gray-500">
-                  {comment.time}
+              <div className="flex items-center gap-1 text-gray-600">
+                <span className="text-sm font-medium">
+                  {comment.user?.name}
                 </span>
-              </p>
-              <p className="text-sm mt-1">{comment.text}</p>
+                <span className="text-gray-500 text-xs">•</span>
+                <span className="text-xs">
+                  {dayjs(comment.createdAt).fromNow()}
+                </span>
+              </div>
+              <p className="text-sm">{comment.body}</p>
             </div>
           </div>
         ))}

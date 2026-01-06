@@ -2,37 +2,25 @@ import { useParams } from "react-router-dom"
 import VideoPlayer from "@/components/video/VideoPlayer"
 import RecommendedVideos from "@/components/video/RecommendedVideos"
 import Comments from "@/components/video/Comments"
-import type { Video } from "@/types"
 import { useEffect, useState } from "react"
-import api from "@/lib/api"
+import { useVideoStore } from "@/store/video.store"
 
 export default function Watch() {
   const { id } = useParams<{ id: string }>()
-  const [video, setVideo] = useState<Video | null>(null)
-  const [recommended, setRecommended] = useState<Video[]>([])
-
-  const fetchVideo = async () => {
-    await api.get(`/video/${id}`)
-    .then((res) => {
-      setVideo(res.data);
-    }).catch((error) => {
-      console.error('Error fetching videos:', error);
-    })
-  }
-  
-  const fetchRecommendedVideos = async () => {
-    await api.get(`/video/${id}/recommended`)
-    .then((res) => {
-      setRecommended(res.data);
-    }).catch((error) => {
-      console.error('Error fetching videos:', error);
-    })
-  }
+  useVideoStore.setState({currentVideoId: id});
+  const video = useVideoStore(state => state.currentVideo);
+  const recommended = useVideoStore(state => state.recommendedVideos);
+  const fetchVideo = useVideoStore(state => state.fetchVideo);
+  const fetchRecommendedVideos = useVideoStore(state => state.fetchRecommendedVideos);
+  const [viewed, setViewed] = useState(false);
 
   useEffect(() => {
-    fetchVideo();
+    if (!viewed) {
+      fetchVideo(); // increments views
+      setViewed(true);
+    }
     fetchRecommendedVideos();
-  })
+  },[id, viewed]);
 
   return (
     <div className="max-w-[1600px] mx-auto">

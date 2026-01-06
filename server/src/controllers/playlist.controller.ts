@@ -15,7 +15,7 @@ export const playlistIndex = (req: Request, res: Response) => {
 
 export const playlistDetails = (req: Request, res: Response) => {
   const id = req.params.id;
-  prisma.playlist.findUnique({ where: { id: Number(id) } })
+  prisma.playlist.findUnique({ where: { id: id } })
     .then((playlist: Playlist | null) => {
       res.status(200).send(playlist);
     })
@@ -41,7 +41,7 @@ export const playlistUpdate = (req: Request, res: Response) => {
   const id = req.params.id;
   const playlistData = req.body;
   prisma.playlist.update({
-    where: { id: Number(id) },
+    where: { id: id },
     data: playlistData
   })
   .then((playlist: Playlist) => {
@@ -55,7 +55,7 @@ export const playlistUpdate = (req: Request, res: Response) => {
 
 export const playlistDelete = (req: Request, res: Response) => {
   const id = req.params.id;
-  prisma.playlist.delete({ where: { id: Number(id) } })
+  prisma.playlist.delete({ where: { id: id } })
     .then(() => {
       res.status(200).send({ message: 'Playlist deleted successfully' });
     })

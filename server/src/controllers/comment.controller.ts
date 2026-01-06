@@ -15,7 +15,7 @@ export const commentIndex = (req: Request, res: Response) => {
 
 export const commentDetails = (req: Request, res: Response) => {
   const id = req.params.id;
-  prisma.comment.findUnique({ where: { id: Number(id) } })
+  prisma.comment.findUnique({ where: { id: id } })
     .then((comment: Comment | null) => {
       res.status(200).send(comment);
     })
@@ -41,7 +41,7 @@ export const commentUpdate = (req: Request, res: Response) => {
   const id = req.params.id;
   const commentData = req.body;
   prisma.comment.update({
-    where: { id: Number(id) },
+    where: { id: id },
     data: commentData
   })
   .then((comment: Comment) => {
@@ -55,7 +55,7 @@ export const commentUpdate = (req: Request, res: Response) => {
 
 export const commentDelete = (req: Request, res: Response) => {
   const id = req.params.id;
-  prisma.comment.delete({ where: { id: Number(id) } })
+  prisma.comment.delete({ where: { id: id } })
     .then(() => {
       res.status(200).send({ message: 'Comment deleted successfully' });
     })

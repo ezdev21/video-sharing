@@ -15,7 +15,7 @@ export const postIndex = (req: Request, res: Response) => {
 
 export const postDetails = (req: Request, res: Response) => {
   const id = req.params.id;
-  prisma.post.findUnique({ where: { id: Number(id) } })
+  prisma.post.findUnique({ where: { id: id } })
     .then((post: Post | null) => {
       res.status(200).send(post);
     })
@@ -41,7 +41,7 @@ export const postUpdate = (req: Request, res: Response) => {
   const id = req.params.id;
   const postData = req.body;
   prisma.post.update({
-    where: { id: Number(id) },
+    where: { id: id },
     data: postData
   })
     .then((post: Post) => {
@@ -55,7 +55,7 @@ export const postUpdate = (req: Request, res: Response) => {
 
 export const postDelete = (req: Request, res: Response) => {
   const id = req.params.id;
-  prisma.post.delete({ where: { id: Number(id) } })
+  prisma.post.delete({ where: { id: id } })
     .then(() => {
       res.status(200).send({ message: 'Post deleted successfully' });
     })

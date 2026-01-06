@@ -5,7 +5,6 @@ import { Link } from "react-router"
 import dayjs from "dayjs";
 import CustomModal from "../layout/CustomModal";
 import { useAuthStore } from "@/store/auth.store";
-import { Description } from "@radix-ui/react-dialog";
 
 interface VideoPlayerProps {
   video: Video
@@ -102,7 +101,7 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
             </button>
           </div>
           <div>
-            <p className="text-gray-700">{video?.views} views {dayjs(video?.createdAt).fromNow()}</p>
+            <p className="text-gray-700">{video.views} views {dayjs(video?.createdAt).fromNow()}</p>
           </div>
         </div>
         <div>
@@ -112,16 +111,16 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
 
       <div className="flex items-center justify-between mt-2">
         <div className="flex items-center gap-3">
-          <Link to={`/channel/${video?.channel.id}`} className="flex items-center gap-3">
+          <Link to={`/channel/${video?.channel?.id}`} className="flex items-center gap-3">
             <img
-              src={`http://localhost:3000/uploads/channels/avatar/${video?.channel.avatar}`}
+              src={`http://localhost:3000/uploads/channels/avatar/${video?.channel?.avatar}`}
               className="w-10 h-10 rounded-full"
-              alt={video?.channel.name}
+              alt={video?.channel?.name}
             />
             <div>
-              <p className="font-medium">{video?.channel.name}</p>
+              <p className="font-medium">{video?.channel?.name}</p>
               <p className="text-sm text-gray-500">
-                {video?.channel.followers} followers
+                {video?.channel?.followers} followers
               </p>
             </div>
           </Link>

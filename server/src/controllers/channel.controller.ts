@@ -15,7 +15,7 @@ export const channelIndex = (req: Request, res: Response) => {
 
 export const channelDetails = (req: Request, res: Response) => {
   const id = req.params.id;
-  prisma.channel.findUnique({ where: { id: Number(id) } })
+  prisma.channel.findUnique({ where: { id: id } })
     .then((channel: Channel | null) => {
       res.status(200).send(channel);
     })
@@ -63,7 +63,7 @@ export const channelUpdate = (req: Request, res: Response) => {
   const id = req.params.id;
   const channelData = req.body;
   prisma.channel.update({
-    where: { id: Number(id) },
+    where: { id: id },
     data: channelData
   })
   .then((channel: Channel) => {
@@ -77,7 +77,7 @@ export const channelUpdate = (req: Request, res: Response) => {
 
 export const channelDelete = (req: Request, res: Response) => {
   const id = req.params.id;
-  prisma.channel.delete({ where: { id: Number(id) } })
+  prisma.channel.delete({ where: { id: id } })
     .then(() => {
       res.status(200).send({ message: 'Channel deleted successfully' });
     })

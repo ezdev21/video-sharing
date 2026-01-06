@@ -14,12 +14,12 @@ export const videoIndex = (req: Request, res: Response) => {
     .catch((err: unknown) => {
       console.log(err);
       res.status(500).send({ title: 'Error fetching videos' });
-    });  
+    });
 }
 
 export const videoByChannel = (req: Request, res: Response) => {
   const channelId = req.params.channelId;
-  prisma.video.findMany({ where: { channelId: Number(channelId) } })
+  prisma.video.findMany({ where: { channelId: channelId } })
     .then((videos: Video[]) => {
       res.status(200).send(videos);
     })
@@ -48,11 +48,10 @@ export const videoRecommended = (req: Request, res: Response) => {
   });
 }
 
-export const videoDetails = (req: Request, res: Response) => {
+export const videoDetails = async (req: Request, res: Response) => {
   const id = req.params.id;
-  prisma.video.findUnique({ 
-    where: { id:id }, 
-    include: { channel: true } 
+  prisma.video.update({where: {id: id},
+    data: {views: { increment: 1 } }
   })
     .then((video: Video | null) => {
       res.status(200).send(video);
@@ -102,7 +101,7 @@ export const videoUpdate = (req: Request, res: Response) => {
   const id = req.params.id;
   const videoData = req.body;
   prisma.video.update({
-    where: { id: Number(id) },
+    where: { id: id },
     data: videoData
   })
     .then((video: Video) => {
@@ -116,7 +115,7 @@ export const videoUpdate = (req: Request, res: Response) => {
 
 export const videoDelete = (req: Request, res: Response) => {
   const id = req.params.id;
-  prisma.video.delete({ where: { id: Number(id) } })
+  prisma.video.delete({ where: { id: id } })
     .then(() => {
       res.status(200).send({ message: 'Video deleted successfully' });
     })

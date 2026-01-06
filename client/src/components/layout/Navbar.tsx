@@ -63,13 +63,13 @@ export default function Navbar() {
                 type="search"
                 placeholder="Search"
                 required
-                className="w-full px-4 py-2 text-sm border border-gray-300 rounded-l-md focus:outline-none focus:border-primary"
+                className="w-full px-4 py-2 text-sm border border-gray-300 rounded-l-full focus:outline-none focus:border-primary"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
               <button
                 type="submit"
-                className="px-6 border border-l-0 border-gray-300 rounded-r-md bg-primary text-white hover:bg-primary/90"
+                className="px-6 border border-l-0 border-gray-300 rounded-r-full bg-primary text-white hover:bg-primary/90"
               >
                 <Search size={18} />
               </button>

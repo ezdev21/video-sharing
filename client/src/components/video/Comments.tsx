@@ -1,14 +1,37 @@
+import { useAuthStore } from "@/store/auth.store";
 import { useCommentStore } from "@/store/comment.store";
 import dayjs from "dayjs";
 import { UserCircle2 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState, type FormEvent } from "react";
+import CustomModal from "../layout/CustomModal";
 
 export default function Comments({id}:{id:string}) {
   const comments = useCommentStore((state) => state.comments);
   const newComment = useCommentStore((state) => state.newComment);
   const fetchComments = useCommentStore((state) => state.fetchComments);
   const addComment = useCommentStore((state) => state.addComment);
-
+  const loggedIn = useAuthStore(state => state.loggedIn);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [modalData,setModalData] = useState({
+    title: '',
+    description: '',
+    redirectText: 'Login',
+    redirectLink: '/login'
+  });
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    if(loggedIn){
+      addComment()
+    }
+    else{
+      setShowModal((showModal) => !showModal);
+      setModalData(modalData =>({
+        ...modalData,
+        title: "want to give comment?",
+        description: "Login or create account to give comment on this video"
+      }));
+    }
+  }
   useEffect(() => {
     useCommentStore.setState({videoId: id});
     fetchComments();
@@ -21,20 +44,23 @@ export default function Comments({id}:{id:string}) {
       </h2>
 
       {/* Add Comment Textarea */}
+      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
       <div className="mb-4">
         <textarea
           className="w-full border rounded p-2 text-sm focus:border-2 focus:outline-none focus:border-primary"
           placeholder="Add a comment..."
           value={newComment}
           onChange={(e) => useCommentStore.setState({newComment: e.target.value})}
+          required
         />
         <button
-          onClick={addComment}
+          type="submit"
           className="mt-2 px-4 py-1 bg-primary hover:bg-primary/90  text-white rounded-full"
         >
           Comment
         </button>
       </div>
+      </form>
 
       <div className="space-y-4">
         {comments.map((comment) => (
@@ -62,6 +88,16 @@ export default function Comments({id}:{id:string}) {
           </div>
         ))}
       </div>
+
+      {showModal && (
+        <CustomModal 
+          title={modalData.title}
+          description={modalData.description}
+          redirectText={modalData.redirectText}
+          redirectLink={modalData.redirectLink}
+        />
+      )}
+
     </div>
   );
 }

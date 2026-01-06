@@ -16,7 +16,6 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
   const [disliked, setDisliked] = useState<boolean>(false);
   const [following, setFollowing] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
-  
   const [modalData,setModalData] = useState({
     title: '',
     description: '',
@@ -74,7 +73,7 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
 
   return (
     <div>
-      {/* Video */}
+
       <div className="w-full aspect-video bg-black rounded-md overflow-hidden">
         <video
           src={`http://localhost:3000/uploads/videos/video/${video?.src}`}
@@ -83,7 +82,6 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
         />
       </div>
 
-      {/* Video Info */}
       <h1 className="mt-4 text-lg font-semibold">
         {video?.title}
       </h1>

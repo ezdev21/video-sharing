@@ -86,3 +86,37 @@ export const channelDelete = (req: Request, res: Response) => {
       res.status(500).send({ title: 'Error deleting channel' });
     });
 }
+
+export const channelFollowing = (req: Request, res: Response) => {
+  const {userId, channelId} = req.body
+  prisma.channelFollow.findFirst({
+    where: {
+      userId: userId,
+      channelId: channelId
+    }
+  })
+  .then(() => {
+    res.status(200).send({ message: 'user follows this channel' });
+  })
+  .catch((err: unknown) => {
+    console.log(err);
+    res.status(500).send({ title: 'Error follwing channel' });
+  });
+}
+
+export const channelFollow = (req: Request, res: Response) => {
+  const {userId, channelId} = req.body
+  prisma.channelFollow.create({
+    data: {
+      userId,
+      channelId
+    }
+  })
+  .then(() => {
+    res.status(200).send({ message: 'Channel followed successfully' });
+  })
+  .catch((err: unknown) => {
+    console.log(err);
+    res.status(500).send({ title: 'Error follwing channel' });
+  });
+}

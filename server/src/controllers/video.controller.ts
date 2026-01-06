@@ -1,6 +1,8 @@
 import type { Request, Response } from "express";
 import prisma from "../../prisma/client.js";
 import type { Video } from "../schemas/schemas.js";
+import { includes } from "zod";
+import { channel } from "node:diagnostics_channel";
 
 export const videoIndex = (req: Request, res: Response) => {
   prisma.video.findMany({
@@ -50,8 +52,10 @@ export const videoRecommended = (req: Request, res: Response) => {
 
 export const videoDetails = async (req: Request, res: Response) => {
   const id = req.params.id;
-  prisma.video.update({where: {id: id},
-    data: {views: { increment: 1 } }
+  prisma.video.update({
+    where: { id: id },
+    data: { views: { increment: 1 } },
+    include: { channel: true }
   })
     .then((video: Video | null) => {
       res.status(200).send(video);

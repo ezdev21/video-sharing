@@ -22,7 +22,6 @@ type AuthState = {
   loading: boolean;
   success: boolean;
   error: string;
-
   login: () => Promise<boolean>;
   register: () => Promise<boolean>;
   logout: () => void;
@@ -32,10 +31,10 @@ type AuthState = {
 const getStoredUser = (): User | null => {
   const stored = localStorage.getItem("user");
   if (!stored || stored === "undefined") return null;
-
   try {
     return JSON.parse(stored);
   } catch {
+    console.log('parsing error');
     return null;
   }
 };
@@ -43,42 +42,32 @@ const getStoredUser = (): User | null => {
 export const useAuthStore = create<AuthState>((set, get) => ({
   loggedIn: localStorage.getItem("token") || null,
   user: getStoredUser(),
-
   loginForm: {
     email: "",
     password: "",
   },
-
   registerForm: {
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   },
-
   loading: false,
   success: false,
   error: "",
-
   login: async () => {
     try {
       set({ loading: true, error: "", success: false });
-
       const res = await api.post("/auth/login", get().loginForm);
-
       if (res.status === 200) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
-
         set({
           loggedIn: res.data.token,
-          user: res.data.user,
           success: true,
         });
-
         return true;
       }
-
       return false;
     } catch (error: any) {
       set({
@@ -92,17 +81,13 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   register: async () => {
     const { password, confirmPassword } = get().registerForm;
-
     if (password !== confirmPassword) {
       set({ error: "Passwords do not match" });
       return false;
     }
-
     try {
       set({ loading: true, error: "", success: false });
-
       await api.post("/auth/register", get().registerForm);
-
       set({ success: true });
       return true;
     } catch (error: any) {

@@ -17,7 +17,7 @@ export const useCommentStore = create<CommentState>((set,get) => ({
   comments: [],
   newComment: '',
   fetchComments: async () =>{
-    await api.get(`/comment`,{params: {videoId: get().videoId}})
+    await api.get(`/comment?videoId=${get().videoId}`)
     .then((res) => {
       set({comments: res.data});
     }).catch((error) => {

@@ -27,7 +27,7 @@ export const login = async (req: Request, res: Response) => {
     { expiresIn: "1h" }
   );
 
-  res.json({ token });
+  res.json({ token: token, user: user });
 }
 
 export const register = async (req: Request, res: Response) => {

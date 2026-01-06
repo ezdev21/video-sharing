@@ -3,7 +3,12 @@ import prisma from "../../prisma/client.js";
 import type { Comment } from "../schemas/schemas.js";
 
 export const commentIndex = (req: Request, res: Response) => {
-  prisma.comment.findMany({ include: {user: true}})
+  const videoId = req.query.videoId;
+  prisma.comment.findMany({
+    where: {videoId: videoId},
+    orderBy: { createdAt: 'desc' },
+    include: {user: true}
+  })
     .then((comments: Comment[]) => {
       res.status(200).send(comments);
     })
@@ -27,12 +32,14 @@ export const commentDetails = (req: Request, res: Response) => {
 
 export const commentCreate = (req: Request, res: Response) => {
   const commentData = req.body;
-  prisma.comment.create({ data: commentData })
+  prisma.comment.create({ 
+    data: commentData,
+    include: {user: true}
+  })
     .then((comment: Comment) => {
       res.status(201).send(comment);
     })
     .catch((err: unknown) => {
-      console.log(err);
       res.status(500).send({ title: 'Error creating comment' });
     });
 }

@@ -14,7 +14,7 @@ export const useChannelStore = create<ChannelState>((set,get) => ({
     id: 0,
     name: '',
     avatar: '',
-    subscribers: '',
+    followers: '',
     background: '',
     createdAt: '',
     updatedAt: ''   

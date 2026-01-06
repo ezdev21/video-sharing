@@ -4,7 +4,7 @@ import axios, {
   type AxiosResponse,
 } from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 
 // -----------------------------
 // Axios instance
@@ -52,15 +52,15 @@ api.interceptors.response.use(
   (error: AxiosError): Promise<AxiosError> => {
     // Network / connection error
     if (!error.response) {
-      const id = toast.error("Server Error. Please try again.", {
-        position: "bottom-right",
-        richColors: true,
-        dismissible: true,
-        action: {
-          label: "Dismiss",
-          onClick: () => toast.dismiss(id),
-        },
-      });
+      // const id = toast.error("Server Error. Please try again.", {
+      //   position: "bottom-right",
+      //   richColors: true,
+      //   dismissible: true,
+      //   action: {
+      //     label: "Dismiss",
+      //     onClick: () => toast.dismiss(id),
+      //   },
+      // });
     }
 
     // Unauthorized

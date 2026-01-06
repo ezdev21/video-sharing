@@ -27,7 +27,7 @@ export default function ChannelHeader() {
         />
         <div>
           <h1 className="text-xl font-bold">{channel?.name}</h1>
-          <p className="text-md text-gray-500">{channel?.subscribers} subscribers • {channel?.videos?.length} videos</p>
+          <p className="text-md text-gray-500">{channel?.followers} followers • {channel?.videos?.length} videos</p>
         </div>
       </div>
     </>

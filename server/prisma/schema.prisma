@@ -8,16 +8,17 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(uuid())
-  name      String
-  email     String     @unique
-  password  String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  videos    Video[]
-  comments  Comment[]
-  channels  Channel[]
-  playlists Playlist[]
+  id                 String              @id @default(uuid())
+  name               String
+  email              String              @unique
+  password           String
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  videos             Video[]
+  comments           Comment[]
+  channels           Channel[]
+  playlists          Playlist[]
+  channelFollowers ChannelFollower[]
 }
 
 model Video {
@@ -32,13 +33,13 @@ model Video {
   userId      String
   user        User      @relation(fields: [userId], references: [id])
   channelId   String
-  channel     Channel?  @relation(fields: [channelId], references: [id])
+  channel     Channel   @relation(fields: [channelId], references: [id])
   comments    Comment[]
 }
 
 model Comment {
   id        String   @id @default(uuid())
-  body   String
+  body      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    String
@@ -48,23 +49,37 @@ model Comment {
 }
 
 model Channel {
-  id          String   @id @default(uuid())
-  name        String
-  description String?
-  avatar      String?
-  background  String?
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  videos      Video[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                 String              @id @default(uuid())
+  name               String
+  description        String?
+  avatar             String?
+  background         String?
+  userId             String
+  user               User                @relation(fields: [userId], references: [id])
+  videos             Video[]
+  playlists          Playlist[]
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  channelFollowers ChannelFollower[]
 }
 
 model Playlist {
   id        String   @id @default(uuid())
   title     String
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id])
+  channelId String
+  channel   Channel? @relation(fields: [channelId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model ChannelFollower {
+  userId    String
+  channelId String
+
+  user    User    @relation(fields: [userId], references: [id])
+  channel Channel @relation(fields: [channelId], references: [id])
+
+  @@id([userId, channelId])
 }

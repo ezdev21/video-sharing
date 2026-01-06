@@ -30,7 +30,7 @@ export default function Comments({id}:{id:string}) {
         />
         <button
           onClick={addComment}
-          className="mt-2 px-4 py-2 bg-primary hover:bg-primary/90  text-white rounded "
+          className="mt-2 px-4 py-1 bg-primary hover:bg-primary/90  text-white rounded-full"
         >
           Comment
         </button>

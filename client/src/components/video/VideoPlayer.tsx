@@ -3,29 +3,73 @@ import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router"
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-
-dayjs.extend(relativeTime);
+import CustomModal from "../layout/CustomModal";
+import { useAuthStore } from "@/store/auth.store";
+import { Description } from "@radix-ui/react-dialog";
 
 interface VideoPlayerProps {
   video: Video
 }
 
 export default function VideoPlayer({ video }: VideoPlayerProps) {
-  const [liked, setLiked] = useState(false);
-  const [disliked, setDisliked] = useState(false);
+  const loggedIn = useAuthStore(state => state.loggedIn);
+  const [liked, setLiked] = useState<boolean>(false);
+  const [disliked, setDisliked] = useState<boolean>(false);
+  const [following, setFollowing] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  
+  const [modalData,setModalData] = useState({
+    title: '',
+    description: '',
+    redirectText: 'Login',
+    redirectLink: '/login'
+  });
+
+  const follow = () =>{
+    if(loggedIn){
+      setFollowing((followed) => !followed);
+    }
+    else{
+      setShowModal((showModal) => !showModal);
+      setModalData(modalData =>({
+        ...modalData,
+        title: "Follow this channel?",
+        description: "Login or create account to folllow this channel"
+      }));
+    }
+  }
 
   const likeVideo = (videoId: string) => {
-    setLiked(!liked);
-    if (disliked) {
-      setDisliked(false);
+    if(loggedIn){
+      setLiked(!liked);
+      if (disliked) {
+        setDisliked(false);
+      }
+    }
+    else{
+      setShowModal((showModal) => !showModal);
+      setModalData(modalData =>({
+        ...modalData,
+        title: "Like this video?",
+        description: "Login or create account to like this video"
+      }));
     }
   }
   
   const dislikeVideo = (videoId: string) => {
-    setDisliked(!disliked);
-    if (liked) {
-      setLiked(false);
+    if(loggedIn){
+      setDisliked(!disliked);
+      if (liked) {
+        setLiked(false);
+      }
+    }
+    else{
+      setShowModal((showModal) => !showModal);
+      setModalData(modalData =>({
+        ...modalData,
+        title: "Disike this video?",
+        description: "Login or create account to dislike this video"
+      }));
     }
   }
 
@@ -37,7 +81,6 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
           src={`http://localhost:3000/uploads/videos/video/${video?.src}`}
           className="w-full h-full"
           controls
-          autoPlay
         />
       </div>
 
@@ -78,15 +121,25 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
             <div>
               <p className="font-medium">{video?.channel.name}</p>
               <p className="text-sm text-gray-500">
-                {video?.channel.subscribers} subscribers
+                {video?.channel.followers} followers
               </p>
             </div>
           </Link>
         </div>
 
-        <button className="px-4 py-2 rounded-full bg-black text-white">
-          Subscribe
+        <button onClick={follow} className={`px-6 py-1 rounded-full font-semibold ${following? 'bg-gray-300 text-gray-600' : 'bg-primary text-white'}`}>
+          {following? 'Following' : 'Follow' }
         </button>
+
+        {showModal && (
+          <CustomModal 
+            title={modalData.title}
+            description={modalData.description}
+            redirectText={modalData.redirectText}
+            redirectLink={modalData.redirectLink}
+          />
+        )}
+
       </div>
     </div>
   )

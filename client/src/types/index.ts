@@ -39,7 +39,7 @@ export interface Channel{
   id: string;
   name: string;
   avatar: string;
-  subscribers: string;
+  followers: string;
   background: string;
   videos?: Video[];
   playlists?: Playlist[];

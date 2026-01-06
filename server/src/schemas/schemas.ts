@@ -24,7 +24,7 @@ export const ChannelSchema = z.object({
   id: z.number(),
   name: z.string(),
   avatar: z.string(),
-  subscribers: z.string(),
+  followers: z.string(),
 });
 
 // Playlist schema

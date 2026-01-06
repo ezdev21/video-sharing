@@ -11,14 +11,16 @@ import ChannelPlaylists from "./components/channel/ChannelPlaylists"
 import ChannelPosts from "./components/channel/ChannelPosts"
 import Search from "./pages/Search"
 import Register from "./pages/auth/Register"
-import Login from "./pages/auth/login"
+import Login from "./pages/auth/Login"
 import Dashboard from "./pages/Dashboard"
 import { Toaster } from "sonner"
 import ProtectedRoutes from "./utils/ProtectedRoutes"
+import RouteLoadingBar from "./components/layout/RouteLoadingBar"
 
 export default function App() {
   return (
     <>
+      <RouteLoadingBar/>
       <div className="mb-14">
         <Navbar />
       </div>

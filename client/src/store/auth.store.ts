@@ -27,7 +27,6 @@ type AuthState = {
   logout: () => void;
 };
 
-// Safely parse user from localStorage
 const getStoredUser = (): User | null => {
   const stored = localStorage.getItem("user");
   if (!stored || stored === "undefined") return null;

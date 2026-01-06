@@ -11,6 +11,7 @@ const Login = () => {
     const ok = await login();
     if (ok) {
       navigate("/", { replace: true });
+      window.location.reload()
       const id = toast.success("Logged successfully", {
         position: "bottom-right",
         richColors: true,

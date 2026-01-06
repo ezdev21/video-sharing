@@ -16,13 +16,13 @@ export default function ChannelHeader() {
     <>
       <div className="h-40 bg-gray-200 mb-4">
         <img 
-          src={`http://localhost:3000/uploads/channels/background/${channel?.background}`}
+          src={`${import.meta.env.VITE_API_URL}/uploads/channels/background/${channel?.background}`}
           className="w-full h-full object-cover" alt="channel background"
         />
       </div>
       <div className="flex items-center gap-4 p-4">
         <img 
-          src={`http://localhost:3000/uploads/channels/avatar/${channel?.avatar}`}
+          src={`${import.meta.env.VITE_API_URL}/uploads/channels/avatar/${channel?.avatar}`}
           className="w-16 h-16 rounded-full" alt={channel?.name}
         />
         <div>

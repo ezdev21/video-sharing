@@ -76,7 +76,7 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
 
       <div className="w-full aspect-video bg-black rounded-md overflow-hidden">
         <video
-          src={`http://localhost:3000/uploads/videos/video/${video?.src}`}
+          src={`${import.meta.env.VITE_API_URL}/uploads/videos/video/${video?.src}`}
           className="w-full h-full"
           controls
         />
@@ -111,7 +111,7 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
         <div className="flex items-center gap-3">
           <Link to={`/channel/${video?.channel?.id}`} className="flex items-center gap-3">
             <img
-              src={`http://localhost:3000/uploads/channels/avatar/${video?.channel?.avatar}`}
+              src={`${import.meta.env.VITE_API_URL}/uploads/channels/avatar/${video?.channel?.avatar}`}
               className="w-10 h-10 rounded-full"
               alt={video?.channel?.name}
             />

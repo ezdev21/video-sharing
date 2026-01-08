@@ -7,7 +7,6 @@ import { useVideoStore } from "@/store/video.store"
 
 export default function Watch() {
   const { id } = useParams<{ id: string }>()
-  useVideoStore.setState({currentVideoId: id});
   const video = useVideoStore(state => state.currentVideo);
   const recommended = useVideoStore(state => state.recommendedVideos);
   const fetchVideo = useVideoStore(state => state.fetchVideo);
@@ -15,6 +14,7 @@ export default function Watch() {
   const [viewed, setViewed] = useState(false);
 
   useEffect(() => {
+    useVideoStore.setState({currentVideoId: id});
     if (!viewed) {
       fetchVideo(); // increments views
       setViewed(true);

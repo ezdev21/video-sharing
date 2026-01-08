@@ -19,22 +19,24 @@ model User {
   channels         Channel[]
   playlists        Playlist[]
   channelFollowers ChannelFollower[]
+  videoLikes       VideoReaction[]
 }
 
 model Video {
-  id          String    @id @default(uuid())
+  id          String          @id @default(uuid())
   title       String
   description String?
   thumbnail   String
   src         String
-  views       Int       @default(0)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  views       Int             @default(0)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
   userId      String
-  user        User      @relation(fields: [userId], references: [id])
+  user        User            @relation(fields: [userId], references: [id])
   channelId   String
-  channel     Channel   @relation(fields: [channelId], references: [id])
+  channel     Channel         @relation(fields: [channelId], references: [id])
   comments    Comment[]
+  videoLikes  VideoReaction[]
 }
 
 model Comment {
@@ -75,12 +77,27 @@ model Playlist {
 }
 
 model ChannelFollower {
-  id        String @id @default(uuid())
+  id        String  @id @default(uuid())
   userId    String
   channelId String
-
-  user    User    @relation(fields: [userId], references: [id])
-  channel Channel @relation(fields: [channelId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
+  channel   Channel @relation(fields: [channelId], references: [id])
 
   @@unique([userId, channelId])
+}
+
+model VideoReaction {
+  id      String       @id @default(uuid())
+  userId  String
+  videoId String
+  type    ReactionType
+  user    User         @relation(fields: [userId], references: [id])
+  video   Video        @relation(fields: [videoId], references: [id])
+
+  @@unique([userId, videoId])
+}
+
+enum ReactionType {
+  LIKE
+  DISLIKE
 }

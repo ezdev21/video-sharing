@@ -5,17 +5,23 @@ import dayjs from "dayjs";
 import CustomModal from "../layout/CustomModal";
 import { useAuthStore } from "@/store/auth.store";
 import { useChannelStore } from "@/store/channel.store";
+import { useVideoStore } from "@/store/video.store";
 
 export default function VideoPlayer({ video }) {
   useChannelStore.setState({channelId: video.channel.id});
   const userId = useAuthStore(state => state.user?.id);
   const loggedIn = useAuthStore(state => state.loggedIn);
   const following = useChannelStore(state => state.following);
+  let likeReactions = useVideoStore(state => state.likeReactions);
+  let dislikeReactions = useVideoStore(state => state.dislikeReactions);
+  const liked = useVideoStore(state => state.liked)
+  const disliked = useVideoStore(state => state.disliked)
   const fetchChannel = useChannelStore(state => state.fetchChannel);
   const channelFollowing = useChannelStore(state => state.channelFollowing);
   const channelFollow = useChannelStore(state => state.channelFollow);
-  const [liked, setLiked] = useState<boolean>(false);
-  const [disliked, setDisliked] = useState<boolean>(false);
+  const fetchVideoReacts = useVideoStore(state => state.fetchVideoReacts);
+  const fetchUserReaction = useVideoStore(state => state.fetchUserReaction);
+  const reactVideo = useVideoStore(state => state.reactVideo)
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalData,setModalData] = useState({
     title: '',
@@ -25,12 +31,14 @@ export default function VideoPlayer({ video }) {
   });
   
   useEffect(()=>{
-    fetchChannel()
+    fetchChannel();
+    fetchVideoReacts();
     if(userId){
       useChannelStore.setState({userId: userId});
       channelFollowing();
+      fetchUserReaction(userId);
     }
-  },[userId, fetchChannel, channelFollowing])
+  },[userId, fetchChannel, channelFollowing, fetchVideoReacts, fetchUserReaction])
 
   const follow = () =>{
     if(loggedIn){
@@ -47,11 +55,21 @@ export default function VideoPlayer({ video }) {
     }
   }
 
-  const likeVideo = (videoId: string) => {
-    if(loggedIn){
-      setLiked(!liked);
+  const likeVideo = () => {
+    if(userId){
+      reactVideo(userId,'LIKE')
+      if(liked){
+        useVideoStore.setState({likeReactions: likeReactions-1})
+      }
+      else{
+        useVideoStore.setState({likeReactions: likeReactions+1})
+        if(disliked){
+          useVideoStore.setState({dislikeReactions: dislikeReactions-1})
+        }
+      }
+      useVideoStore.setState({liked: !liked})
       if (disliked) {
-        setDisliked(false);
+        useVideoStore.setState({disliked: false})
       }
     }
     else{
@@ -64,11 +82,21 @@ export default function VideoPlayer({ video }) {
     }
   }
   
-  const dislikeVideo = (videoId: string) => {
-    if(loggedIn){
-      setDisliked(!disliked);
+  const dislikeVideo = () => {
+    if(userId){
+      reactVideo(userId,'DISLIKE')
+      if(disliked){
+        useVideoStore.setState({dislikeReactions: dislikeReactions-1})
+      }
+      else{
+        useVideoStore.setState({dislikeReactions: dislikeReactions+1})
+        if(liked){
+          useVideoStore.setState({likeReactions: likeReactions-1})
+        }
+      }
+      useVideoStore.setState({disliked: !disliked})
       if (liked) {
-        setLiked(false);
+        useVideoStore.setState({liked: false})
       }
     }
     else{
@@ -101,11 +129,11 @@ export default function VideoPlayer({ video }) {
           <div className="flex items-center gap-4">
             <button onClick={() => likeVideo(video?.id)}>
               <ThumbsUp className={`inline-block w-8 h-8 ${liked ? "fill-primary stroke-primary" : "text-gray-500"}`}/>
-              {video?.likes}
+              {likeReactions}
             </button>
             <button onClick={() => dislikeVideo(video?.id)}>
                 <ThumbsDown className={`inline-block w-8 h-8 ${disliked ? "fill-primary stroke-primary" : "text-gray-500"}`}/>
-                {video?.dislikes}
+                {dislikeReactions}
             </button>
           </div>
           <div>

@@ -1,8 +1,7 @@
 import type { Request, Response } from "express";
 import prisma from "../../prisma/client.js";
 import type { Video } from "../schemas/schemas.js";
-import { includes } from "zod";
-import { channel } from "node:diagnostics_channel";
+import { VideoReaction } from "../../generated/prisma/client.js";
 
 export const videoIndex = (req: Request, res: Response) => {
   prisma.video.findMany({
@@ -148,4 +147,76 @@ export const videoSearch = (req: Request, res: Response) => {
       console.log(err);
       res.status(500).send({ title: 'Error searching videos' });
     });
+}
+
+export const videoReact = (req: Request, res: Response) => {
+  const { userId, videoId, type } = req.body;
+  prisma.VideoReaction.findUnique({
+    where: { userId_videoId: { userId, videoId } },
+  })
+  .then((reaction: VideoReaction) => {
+    if (!reaction) {
+      return prisma.VideoReaction.create({
+        data: { userId, videoId, type },
+      })
+      .then(() => res.status(200).send({ type, message: `${type} added` }));
+    }
+    if (reaction.type === type) {
+      return prisma.VideoReaction.delete({
+        where: { userId_videoId: { userId, videoId } },
+      })
+      .then(() => res.status(200).send({ type: null, message: `${type} removed` }));
+    }
+    return prisma.VideoReaction.update({
+      where: { userId_videoId: { userId, videoId } },
+      data: { type },
+    })
+    .then(() => res.status(200).send({ type, message: `Changed reaction to ${type}` }));
+  })
+  .catch((err: unknown) => {
+    console.error(err);
+    res.status(500).send({ message: 'Error reacting to video' });
+  });
+};
+
+export const VideoReacts = async (req: Request, res: Response) => {
+  const { videoId } = req.query;
+  const likeReactions = await prisma.VideoReaction.count({
+    where: { videoId, type: 'LIKE' },
+  });
+  const dislikeReactions = await prisma.VideoReaction.count({
+    where: { videoId, type: 'DISLIKE' },
+  });
+  res.status(200).json({ likeReactions, dislikeReactions });
+}
+
+export const userReaction = (req:Request, res:Response) => {
+  const {userId, videoId} = req.query;
+  prisma.VideoReaction.findUnique({
+    where: {
+      userId_videoId: {
+        userId,
+        videoId,
+      },
+    },
+  })
+  .then((videoReact: VideoReaction | null) =>{
+     if(videoReact){
+       if(videoReact.type == "LIKE"){
+         res.status(200).json({liked:true,disliked:false})
+       }
+       else if(videoReact.type == "DISLIKE"){
+         res.status(200).json({liked:false,disliked:true})
+       }
+       else{
+        res.status(200).json({liked:false,disliked:false})
+       }
+     }
+     else{
+       res.status(200).json({liked:false,disliked:false})
+     }
+  })
+  .catch((err:unknown) => {
+    res.status(500).send('error fetching user video reactions');
+  })
 }

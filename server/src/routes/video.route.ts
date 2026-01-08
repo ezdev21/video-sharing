@@ -12,6 +12,9 @@ router.post('/',
   ]),
   videoController.videoCreate);
 router.get('/search', videoController.videoSearch);
+router.get('/react', videoController.VideoReacts);
+router.post('/react', videoController.videoReact);
+router.get('/user-reaction', videoController.userReaction);
 router.get('/:id', videoController.videoDetails);
 router.put('/:id', videoController.videoUpdate);
 router.delete('/:id', videoController.videoDelete);

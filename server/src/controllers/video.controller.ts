@@ -38,19 +38,21 @@ export const videoRecommended = (req: Request, res: Response) => {
 }
 
 export const videoDetails = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  prisma.video.update({
-    where: { id: id },
-    data: { views: { increment: 1 } },
-    include: { channel: true }
-  })
-    .then((video: Video | null) => {
-      res.status(200).send(video);
-    })
-    .catch((err: unknown) => {
-      console.log(err);
-      res.status(500).send({ title: 'Error fetching video details' });
+  try {
+    const id = req.params.id;
+    const video = await prisma.video.update({
+      where: { id: id },
+      data: { views: { increment: 1 } },
+      include: { channel: true }
     });
+    const followers = await prisma.ChannelFollower.count({
+      where: {channelId: video.channel.id}
+    });
+    video.channel.followers = followers;
+    res.status(200).send(video); 
+  } catch (error) {
+    res.status(500).json({message: "error occured while fetching video details"})
+  }
 }
 
 export const videoCreate = (req: Request, res: Response) => {

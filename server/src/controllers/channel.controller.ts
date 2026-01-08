@@ -15,16 +15,24 @@ export const channelIndex = (req: Request, res: Response) => {
     });  
 }
 
-export const channelDetails = (req: Request, res: Response) => {
-  const id = req.params.id;
-  prisma.channel.findUnique({ where: { id: id } })
-    .then((channel: Channel | null) => {
-      res.status(200).send(channel);
-    })
-    .catch((err: unknown) => {
-      console.log(err);
-      res.status(500).send({ title: 'Error fetching channel details' });
+export const channelDetails = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const channel = await prisma.channel.findUnique({
+      where: { id: id },
     });
+    const followers = await prisma.ChannelFollower.count({
+      where: {channelId: id}
+    });
+    const totalVideos = await prisma.video.count({
+      where: {channelId: id}
+    })
+    channel.followers = followers;
+    channel.totalVideos = totalVideos;
+    res.status(200).send(channel); 
+  } catch (error) {
+    res.status(500).json({message: 'error fetching channel data'});
+  }
 }
 
 export const channelCreate = (req: Request, res: Response) => {

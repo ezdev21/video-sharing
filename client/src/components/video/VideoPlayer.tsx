@@ -126,18 +126,22 @@ export default function VideoPlayer({ video }) {
 
       <div>
         <div className="flex items-center mt-2 mb-4 gap-6 border-b-2 border-gray-300 pb-2">
-          <div className="flex items-center gap-4">
-            <button onClick={() => likeVideo(video?.id)}>
-              <ThumbsUp className={`inline-block w-8 h-8 ${liked ? "fill-primary stroke-primary" : "text-gray-500"}`}/>
-              {likeReactions}
-            </button>
-            <button onClick={() => dislikeVideo(video?.id)}>
+          <div className="flex items-end gap-4">
+            <div className="flex items-end gap-1">
+              <button onClick={() => likeVideo(video?.id)}>
+                <ThumbsUp className={`inline-block w-8 h-8 ${liked ? "fill-primary stroke-primary" : "text-gray-500"}`}/>
+              </button>
+              <span className="text-2xl">{likeReactions}</span>
+            </div>
+            <div className="flex items-end gap-1">
+              <button onClick={() => dislikeVideo(video?.id)}>
                 <ThumbsDown className={`inline-block w-8 h-8 ${disliked ? "fill-primary stroke-primary" : "text-gray-500"}`}/>
-                {dislikeReactions}
-            </button>
+              </button>
+              <span className="text-2xl">{dislikeReactions}</span>
+            </div>
           </div>
           <div>
-            <p className="text-gray-700">{video.views} views {dayjs(video?.createdAt).fromNow()}</p>
+            <p className="text-gray-700 text-md">{video.views} views • {dayjs(video?.createdAt).fromNow()}</p>
           </div>
         </div>
         <div>

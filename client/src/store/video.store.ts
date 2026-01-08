@@ -8,7 +8,6 @@ type VideoState = {
   query: string,
   searchedVideos: Video[] | null,
   channelId: string,
-  channelVideos: Video[] | null,
   currentVideo: Video | null,
   currentVideoId: string | null,
   recommendedVideos: Video[] | null,
@@ -18,7 +17,6 @@ type VideoState = {
   disliked: boolean,
   fetchVideos: () => Promise<void>,
   searchVideos: () => Promise<void>,
-  fetchChannelVideos: () => Promise<void>,
   fetchVideo: () => Promise<void>,
   fetchRecommendedVideos: () => Promise<void>,
   fetchVideoReacts: () => Promise<void>
@@ -32,7 +30,6 @@ export const useVideoStore = create<VideoState>((set,get) => ({
   query: '',
   searchedVideos: [],
   channelId: '',
-  channelVideos: [],
   currentVideo: null,
   currentVideoId: '',
   recommendedVideos: [],
@@ -55,14 +52,6 @@ export const useVideoStore = create<VideoState>((set,get) => ({
       set({searchedVideos: res.data})
     }).catch((err: unknown) => {
       console.error('Error fetching videos:', err);
-    })
-  },
-  fetchChannelVideos: async () => {
-    await api.get(`/channel/${get().channelId}/videos`)
-    .then((res) => {
-      set({channelVideos: res.data});
-    }).catch((error) => {
-      console.error('Error fetching channel videos:', error);
     })
   },
   fetchVideo: async () => {

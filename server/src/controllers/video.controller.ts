@@ -18,18 +18,6 @@ export const videoIndex = (req: Request, res: Response) => {
     });
 }
 
-export const videoByChannel = (req: Request, res: Response) => {
-  const channelId = req.params.channelId;
-  prisma.video.findMany({ where: { channelId: channelId } })
-    .then((videos: Video[]) => {
-      res.status(200).send(videos);
-    })
-    .catch((err: unknown) => {
-      console.log(err);
-      res.status(500).send({ title: 'Error fetching videos by channel' });
-    });
-}
-
 export const videoRecommended = (req: Request, res: Response) => {
   const id = req.params.id;
   prisma.video.findMany({

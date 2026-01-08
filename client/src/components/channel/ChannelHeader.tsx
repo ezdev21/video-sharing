@@ -4,13 +4,13 @@ import { useChannelStore } from "@/store/channel.store";
 
 export default function ChannelHeader() {
   const { id } = useParams<{ id: string }>()
-  useChannelStore.setState({id: id})
   const channel = useChannelStore((state) => state.channel);
   const fetchChannel = useChannelStore((state) => state.fetchChannel)
   
   useEffect(() => {
+    useChannelStore.setState({channelId: id})
     fetchChannel();
-  }, [fetchChannel])
+  }, [id,fetchChannel])
 
   return (
     <>

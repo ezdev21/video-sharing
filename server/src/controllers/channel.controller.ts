@@ -1,7 +1,8 @@
 import type { Request, Response } from "express";
 import prisma from "../../prisma/client.js";
-import type { Channel } from "../schemas/schemas.js";
+import type { Channel, Video } from "../schemas/schemas.js";
 import { ChannelFollower } from "../../generated/prisma/client.js";
+import { includes } from "zod";
 
 export const channelIndex = (req: Request, res: Response) => {
   prisma.channel.findMany()
@@ -158,3 +159,40 @@ export const channelFollow = (req: Request, res: Response) => {
   })
 }
 
+export const channelVideos = (req: Request, res: Response) => {
+  const channelId = req.params.id;
+  prisma.video.findMany({
+    where: { channelId: channelId },
+  })
+  .then((videos: Video[]) => {
+    res.status(200).send(videos);
+  })
+  .catch((err: unknown) => {
+    console.log(err);
+    res.status(500).send({ title: 'Error fetching channel videos' });
+  });
+}
+
+export const channelPosts = (req: Request, res: Response) => {
+  const channelId = req.params.id;
+  prisma.post.findMany({ where: { channelId: channelId } })
+  .then((videos: Video[]) => {
+    res.status(200).send(videos);
+  })
+  .catch((err: unknown) => {
+    console.log(err);
+    res.status(500).send({ title: 'Error fetching channel videos' });
+  });
+}
+
+export const channelPlaylists = (req: Request, res: Response) => {
+  const channelId = req.params.id;
+  prisma.playlist.findMany({ where: { channelId: channelId } })
+  .then((videos: Video[]) => {
+    res.status(200).send(videos);
+  })
+  .catch((err: unknown) => {
+    console.log(err);
+    res.status(500).send({ title: 'Error fetching channel videos' });
+  });
+}

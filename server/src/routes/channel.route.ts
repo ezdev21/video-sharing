@@ -16,5 +16,8 @@ router.post('/follow',channelController.channelFollow);
 router.get('/:id', channelController.channelDetails);
 router.put('/:id', channelController.channelUpdate);
 router.delete('/:id', channelController.channelDelete);
+router.get('/:id/videos', channelController.channelVideos);
+router.get('/:id/posts', channelController.channelPosts);
+router.get('/:id/playlists', channelController.channelPlaylists);
 
 export default router;

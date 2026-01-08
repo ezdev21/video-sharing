@@ -11,9 +11,10 @@ router.post('/',
     { name: "background", maxCount: 1 },
   ]),
   channelController.channelCreate);
+router.get('/follow',channelController.channelFollowing);
+router.post('/follow',channelController.channelFollow);  
 router.get('/:id', channelController.channelDetails);
 router.put('/:id', channelController.channelUpdate);
 router.delete('/:id', channelController.channelDelete);
-router.post('/follow',channelController.channelFollow);
 
 export default router;

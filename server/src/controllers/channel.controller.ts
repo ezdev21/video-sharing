@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import prisma from "../../prisma/client.js";
 import type { Channel } from "../schemas/schemas.js";
+import { ChannelFollower } from "../../generated/prisma/client.js";
 
 export const channelIndex = (req: Request, res: Response) => {
   prisma.channel.findMany()
@@ -88,15 +89,20 @@ export const channelDelete = (req: Request, res: Response) => {
 }
 
 export const channelFollowing = (req: Request, res: Response) => {
-  const {userId, channelId} = req.body
-  prisma.channelFollow.findFirst({
+  const {userId, channelId} = req.query
+  prisma.ChannelFollower.findFirst({
     where: {
       userId: userId,
       channelId: channelId
     }
   })
-  .then(() => {
-    res.status(200).send({ message: 'user follows this channel' });
+  .then((ChannelFollower: ChannelFollower) => {
+    if(ChannelFollower){
+      res.status(200).send({following: true,message: "user follows this channel"})
+    }
+    else{
+      res.status(200).send({following: false,message: "user does not follow this channel"})
+    }
   })
   .catch((err: unknown) => {
     console.log(err);
@@ -105,18 +111,50 @@ export const channelFollowing = (req: Request, res: Response) => {
 }
 
 export const channelFollow = (req: Request, res: Response) => {
-  const {userId, channelId} = req.body
-  prisma.channelFollow.create({
-    data: {
-      userId,
-      channelId
-    }
+  const { userId, channelId } = req.body
+  
+  prisma.ChannelFollower.findUnique({
+    where: {
+      userId_channelId: {
+        userId,
+        channelId,
+      },
+    },
   })
-  .then(() => {
-    res.status(200).send({ message: 'Channel followed successfully' });
+  .then((channelFollow: ChannelFollower) => {
+    if (channelFollow) {
+      return prisma.ChannelFollower.delete({
+        where: {
+          userId_channelId: {
+            userId,
+            channelId,
+          },
+        },
+      })
+      .then(() => {
+        res.status(200).send({
+          following: false,
+          message: "Channel unfollowed successfully",
+        })
+      })
+    }
+
+    return prisma.ChannelFollower.create({
+      data: {
+        userId,
+        channelId,
+      },
+    })
+    .then(() => {
+      res.status(200).send({
+        following: true,
+        message: "Channel followed successfully",
+      })
+    })
   })
   .catch((err: unknown) => {
-    console.log(err);
-    res.status(500).send({ title: 'Error follwing channel' });
-  });
+    console.error(err)
+    res.status(500).send({ title: "Error following channel" })
+  })
 }
+

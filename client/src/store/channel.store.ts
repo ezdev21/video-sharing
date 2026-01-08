@@ -3,28 +3,55 @@ import type { Channel } from "@/types"
 import { create } from "zustand"
 
 type ChannelState = {
-  id: string,
+  channelId: string,
+  userId: string | null,
   channel: Channel,
-  fetchChannel: () => Promise<void>
+  following: boolean,
+  fetchChannel: () => Promise<void>,
+  channelFollowing: () => Promise<void>,
+  channelFollow: () => Promise<void>,
 }
 
 export const useChannelStore = create<ChannelState>((set,get) => ({
-  id: '',
+  channelId: '',
+  userId: '',
+  following: false,
   channel: {
-    id: 0,
+    id: '',
     name: '',
     avatar: '',
     followers: '',
     background: '',
     createdAt: '',
-    updatedAt: ''   
+    updatedAt: ''
   },
   fetchChannel: async () => {
-    await api.get(`/channel/${get().id}`)
+    await api.get(`/channel/${get().channelId}`)
     .then((res) => {
       set({channel: res.data});
     }).catch((error) => {
       console.error('Error fetching channel videos:', error);
     })
   },
+  channelFollowing: async () => {
+    await api.get('/channel/follow',{
+      params: {
+        channelId: get().channelId,
+        userId: get().userId
+      }
+    })
+    .then((res) => {
+      set({following: res.data.following});
+    }).catch((error) => {
+      console.error('Error fetching user follwing:', error);
+    })
+  },
+  channelFollow: async () => {
+    await api.post('/channel/follow',{channelId: get().channelId,userId: get().userId})
+    .then((res) => {
+      set({following: res.data.following});
+    }).catch((error) => {
+      console.error('Error fetching user follwing:', error);
+    })
+  }
 }))

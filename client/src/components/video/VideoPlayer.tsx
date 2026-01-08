@@ -1,20 +1,21 @@
-import type { Video } from "@/types"
 import { ThumbsDown, ThumbsUp } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router"
 import dayjs from "dayjs";
 import CustomModal from "../layout/CustomModal";
 import { useAuthStore } from "@/store/auth.store";
+import { useChannelStore } from "@/store/channel.store";
 
-interface VideoPlayerProps {
-  video: Video
-}
-
-export default function VideoPlayer({ video }: VideoPlayerProps) {
+export default function VideoPlayer({ video }) {
+  useChannelStore.setState({channelId: video.channel.id});
+  const userId = useAuthStore(state => state.user?.id);
   const loggedIn = useAuthStore(state => state.loggedIn);
+  const following = useChannelStore(state => state.following);
+  const fetchChannel = useChannelStore(state => state.fetchChannel);
+  const channelFollowing = useChannelStore(state => state.channelFollowing);
+  const channelFollow = useChannelStore(state => state.channelFollow);
   const [liked, setLiked] = useState<boolean>(false);
   const [disliked, setDisliked] = useState<boolean>(false);
-  const [following, setFollowing] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalData,setModalData] = useState({
     title: '',
@@ -22,10 +23,19 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
     redirectText: 'Login',
     redirectLink: '/login'
   });
+  
+  useEffect(()=>{
+    fetchChannel()
+    if(userId){
+      useChannelStore.setState({userId: userId});
+      channelFollowing();
+    }
+  },[userId, fetchChannel, channelFollowing])
 
   const follow = () =>{
     if(loggedIn){
-      setFollowing((followed) => !followed);
+      channelFollow();
+      useChannelStore.setState({following: !following});
     }
     else{
       setShowModal((showModal) => !showModal);

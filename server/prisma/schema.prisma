@@ -8,16 +8,16 @@ datasource db {
 }
 
 model User {
-  id                 String              @id @default(uuid())
-  name               String
-  email              String              @unique
-  password           String
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime            @updatedAt
-  videos             Video[]
-  comments           Comment[]
-  channels           Channel[]
-  playlists          Playlist[]
+  id               String            @id @default(uuid())
+  name             String
+  email            String            @unique
+  password         String
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  videos           Video[]
+  comments         Comment[]
+  channels         Channel[]
+  playlists        Playlist[]
   channelFollowers ChannelFollower[]
 }
 
@@ -49,17 +49,17 @@ model Comment {
 }
 
 model Channel {
-  id                 String              @id @default(uuid())
-  name               String
-  description        String?
-  avatar             String?
-  background         String?
-  userId             String
-  user               User                @relation(fields: [userId], references: [id])
-  videos             Video[]
-  playlists          Playlist[]
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime            @updatedAt
+  id               String            @id @default(uuid())
+  name             String
+  description      String?
+  avatar           String?
+  background       String?
+  userId           String
+  user             User              @relation(fields: [userId], references: [id])
+  videos           Video[]
+  playlists        Playlist[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
   channelFollowers ChannelFollower[]
 }
 
@@ -75,11 +75,12 @@ model Playlist {
 }
 
 model ChannelFollower {
+  id        String @id @default(uuid())
   userId    String
   channelId String
 
   user    User    @relation(fields: [userId], references: [id])
   channel Channel @relation(fields: [channelId], references: [id])
 
-  @@id([userId, channelId])
+  @@unique([userId, channelId])
 }

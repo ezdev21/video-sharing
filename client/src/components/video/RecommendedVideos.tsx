@@ -29,17 +29,17 @@ export default function RecommendedVideos({
           </Link>
 
           <div>
-            <h3 className="text-md font-medium line-clamp-2">
+            <h3 className="text-md font-medium line-clamp-2 dark:text-gray-300">
               {video.title}
             </h3>
 
             <Link to={`/channel/${video.channel.id}`}>
-              <p className="text-sm text-gray-700 mt-1">
+              <p className="text-sm text-gray-700 mt-1 dark:text-gray-400">
                 {video.channel.name}
               </p>
             </Link>   
 
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-500 dark:text-gray-400">
               {video.views} views • {dayjs(video.createdAt).fromNow()}
             </p>
           </div>

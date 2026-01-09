@@ -15,7 +15,7 @@ export default function ChannelPosts() {
   
   if(!channelPosts.length){
     return (
-      <h1 className="p-5 text-xl">Channel has no posts</h1>
+      <h1 className="p-5 text-xl dark:text-gray-300">Channel has no posts</h1>
     )
   }
 

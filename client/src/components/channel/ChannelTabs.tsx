@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 export default function ChannelTabs() {
   const activeClass = "border-b-2 border-primary text-primary";
-  const inactiveClass = "text-gray-600";
+  const inactiveClass = "text-gray-600 dark:text-gray-400";
 
   return (
     <div className="flex gap-4 px-4 border-b-2 font-semibold text-xl">

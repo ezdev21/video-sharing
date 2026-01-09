@@ -39,7 +39,7 @@ export default function Comments({id}:{id:string}) {
 
   return (
     <div className="my-6">
-      <h2 className="text-lg font-semibold mb-4">
+      <h2 className="text-lg font-semibold mb-4 dark:text-gray-300">
         {comments.length} Comments
       </h2>
 
@@ -47,7 +47,7 @@ export default function Comments({id}:{id:string}) {
       <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
       <div className="mb-4">
         <textarea
-          className="w-full border rounded p-2 text-sm focus:border-2 focus:outline-none focus:border-primary"
+          className="w-full border rounded p-2 text-sm focus:border-2 focus:outline-none focus:border-primary dark:bg-gray-500"
           placeholder="Add a comment..."
           value={newComment}
           onChange={(e) => useCommentStore.setState({newComment: e.target.value})}
@@ -75,15 +75,15 @@ export default function Comments({id}:{id:string}) {
             }
             <div>
               <div className="flex items-center gap-1 text-gray-600">
-                <span className="text-sm font-medium">
+                <span className="text-sm font-medium dark:text-gray-400">
                   {comment.user?.name}
                 </span>
-                <span className="text-gray-500 text-xs">•</span>
-                <span className="text-xs">
+                <span className="text-gray-500 text-xs dark:text-gray-400">•</span>
+                <span className="text-xs dark:text-gray-400">
                   {dayjs(comment.createdAt).fromNow()}
                 </span>
               </div>
-              <p className="text-sm">{comment.body}</p>
+              <p className="text-sm dark:text-gray-400">{comment.body}</p>
             </div>
           </div>
         ))}

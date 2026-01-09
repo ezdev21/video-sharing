@@ -22,7 +22,7 @@ const  Home = () => {
         "
       >
         {loading
-        ? Array.from({ length: 8 }).map((_, i) => (
+        ? Array.from({ length: 16 }).map((_, i) => (
             <VideoCardSkeleton key={i} />
           ))
         : videos.map((video) => (

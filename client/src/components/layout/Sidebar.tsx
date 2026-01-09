@@ -17,15 +17,15 @@ export default function Sidebar(
   }
   
   const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
-    `flex items-center gap-4 px-6 py-3 transition-colors
+    `flex items-center gap-4 px-6 py-3 transition-colors dark:hover:bg-gray-600 dark:text-gray-300
      ${
        isActive
-         ? "bg-gray-200 text-primary font-semibold"
+         ? "bg-gray-200 dark:bg-gray-700 text-primary font-semibold"
          : "hover:bg-gray-200 text-gray-700"
      }`;
 
   return (
-    <aside className="fixed top-0 z-50 left-0 h-full w-60 bg-white border-r shadow-md flex flex-col transition-all duration-300">
+    <aside className="fixed top-0 z-50 left-0 h-full w-60 bg-white dark:bg-gray-800 border-r shadow-md flex flex-col transition-all duration-300">
       {/* Logo */}
       <div className="text-2xl font-bold px-6 py-4 border-b h-14 flex items-center gap-4">
         <button
@@ -109,7 +109,7 @@ export default function Sidebar(
           className="flex items-center gap-4 px-6 py-3 transition-colors"
         >
           <LogOutIcon size={20} />
-          <span className="bg-primary hover:bg-primary/90 py-2 px-7 text-white rounded-md">Logout</span>
+          <span className="bg-red-600 hover:bg-red-500 py-2 px-7 text-white rounded-md">Logout</span>
         </button>
       </nav>)}
     </aside>

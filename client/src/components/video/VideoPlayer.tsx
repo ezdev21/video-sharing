@@ -120,32 +120,32 @@ export default function VideoPlayer({ video }) {
         />
       </div>
 
-      <h1 className="mt-4 text-lg font-semibold">
+      <h1 className="mt-4 text-lg font-semibold dark:text-gray-300">
         {video?.title}
       </h1>
 
       <div>
-        <div className="flex items-center mt-2 mb-4 gap-6 border-b-2 border-gray-300 pb-2">
+        <div className="flex items-center mt-2 mb-4 gap-6 border-b-2 border-gray-300 dark:border-gray-600 pb-2">
           <div className="flex items-end gap-4">
             <div className="flex items-end gap-1">
               <button onClick={() => likeVideo(video?.id)}>
                 <ThumbsUp className={`inline-block w-8 h-8 ${liked ? "fill-primary stroke-primary" : "text-gray-500"}`}/>
               </button>
-              <span className="text-2xl">{likeReactions}</span>
+              <span className="text-2xl dark:text-gray-400">{likeReactions}</span>
             </div>
             <div className="flex items-end gap-1">
               <button onClick={() => dislikeVideo(video?.id)}>
                 <ThumbsDown className={`inline-block w-8 h-8 ${disliked ? "fill-primary stroke-primary" : "text-gray-500"}`}/>
               </button>
-              <span className="text-2xl">{dislikeReactions}</span>
+              <span className="text-2xl dark:text-gray-400">{dislikeReactions}</span>
             </div>
           </div>
           <div>
-            <p className="text-gray-700 text-md">{video.views} views • {dayjs(video?.createdAt).fromNow()}</p>
+            <p className="text-gray-700 text-md dark:text-gray-400">{video.views} views • {dayjs(video?.createdAt).fromNow()}</p>
           </div>
         </div>
         <div>
-          <p className="mt-2 bg-gray-200 rounded-md p-3 my-3">{video?.description}</p>
+          <p className="mt-2 bg-gray-200 rounded-md p-3 my-3 dark:text-gray-300 dark:bg-gray-800">{video?.description}</p>
         </div>
       </div>
 
@@ -158,8 +158,8 @@ export default function VideoPlayer({ video }) {
               alt={video?.channel?.name}
             />
             <div>
-              <p className="font-medium">{video?.channel?.name}</p>
-              <p className="text-sm text-gray-500">
+              <p className="font-medium dark:text-gray-300">{video?.channel?.name}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 {video?.channel?.followers} followers
               </p>
             </div>

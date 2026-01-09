@@ -14,7 +14,7 @@ export default function ChannelPlaylists() {
   
   if(!channelPlaylists.length){
     return (
-      <h1 className="p-5 text-xl">Channel has no playlists</h1>
+      <h1 className="p-5 text-xl dark:text-gray-300">Channel has no playlists</h1>
     )
   }
 

@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import { Menu, Search, Mic, Bell, User, Plus } from "lucide-react";
+import { Menu, Search, Mic, Bell, User, Plus, User2, Settings } from "lucide-react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useAuthStore } from "@/store/auth.store";
+import { ModeToggle } from "./ModeToggle";
 
 export default function Navbar() {
   const [searchParams] = useSearchParams();
@@ -39,13 +40,13 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed top-0 z-10 w-full bg-white border-b">
+      <header className="fixed top-0 z-10 w-full bg-white dark:bg-gray-800 border-b">
         <div className="flex items-center justify-between px-4 h-14">
 
           {/* Left */}
           <div className="flex items-center gap-4">
             <button
-              className="p-2 rounded-full hover:bg-gray-200"
+              className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
               onClick={toggleSidebar}
             >
               <Menu size={22} />
@@ -63,7 +64,7 @@ export default function Navbar() {
                 type="search"
                 placeholder="Search"
                 required
-                className="w-full px-4 py-2 text-sm border border-gray-300 rounded-l-full focus:outline-none focus:border-primary"
+                className="w-full px-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-l-full focus:outline-none focus:border-primary dark:bg-gray-700 dark:text-gray-100"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
@@ -75,7 +76,7 @@ export default function Navbar() {
               </button>
             </form>
 
-            <button className="ml-3 p-3 rounded-full bg-gray-200 hover:bg-gray-300">
+            <button className="ml-3 p-3 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">
               <Mic size={18} />
             </button>
           </div>
@@ -101,7 +102,7 @@ export default function Navbar() {
               <>
                 <Link
                   to="/channel/create"
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-200 hover:bg-gray-300"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
                 >
                   <Plus size={18} />
                   <span className="hidden sm:inline text-sm">Create</span>
@@ -109,13 +110,13 @@ export default function Navbar() {
 
                 <Link
                   to="/video/upload"
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-200 hover:bg-gray-300"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
                 >
                   <Plus size={18} />
                   <span className="hidden sm:inline text-sm">Upload</span>
                 </Link>
 
-                <button className="p-2 rounded-full bg-gray-200 hover:bg-gray-300">
+                <button className="p-2 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">
                   <Bell size={22} />
                 </button>
 
@@ -123,25 +124,30 @@ export default function Navbar() {
                 <div className="relative" ref={accountRef}>
                   <button
                     onClick={() => setAccountOpen(prev => !prev)}
-                    className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-300 font-semibold hover:bg-gray-400"
+                    className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-300 font-semibold hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600"
                   >
                     {user ? user.name.charAt(0).toUpperCase() : <User size={18} />}
                   </button>
 
                   {accountOpen && (
-                    <div className="absolute right-0 mt-2 w-40 bg-white border rounded-md shadow-md">
+                    <div className="absolute right-0 mt-2 w-40 bg-white border rounded-md shadow-mddark:bg-gray-700">
                       <Link
                         to="/profile"
-                        className="block px-4 py-2 text-sm hover:bg-gray-100"
+                        className="flex justify-start items-center gap-1 px-4 py-2 text-sm hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 border-b border-gray-500"
                         onClick={() => setAccountOpen(false)}
                       >
+                        <User2/>
                         Profile
                       </Link>
+                      <div className="dark:bg-gray-700 dark:hover:bg-gray-600 flex items-center gap-1 border-b border-gray-500 hover:bg-gray-100">
+                        <ModeToggle/>
+                      </div>
                       <Link
                         to="/settings"
-                        className="block px-4 py-2 text-sm hover:bg-gray-100"
+                        className="flex items-center gap-1 px-4 py-2 text-sm hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 border-b border-gray-500"
                         onClick={() => setAccountOpen(false)}
                       >
+                        <Settings/>
                         Settings
                       </Link>
                       <button
@@ -149,7 +155,7 @@ export default function Navbar() {
                           setAccountOpen(false);
                           logout();
                         }}
-                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                        className="w-full text-left px-4 py-2 text-sm bg-red-600 text-white hover:bg-red-500"
                       >
                         <a href="/">Logout</a>
                       </button>

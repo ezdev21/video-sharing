@@ -36,16 +36,16 @@ export default function VideoCard({ video }: VideoCardProps) {
           className="w-10 h-10 rounded-full"
         />
 
-        <div>
-          <h3 className="text-md font-medium line-clamp-2">
+        <div className="">
+          <h3 className="text-md font-medium line-clamp-2 dark:text-gray-300">
             {video.title}
           </h3>
 
-          <p className="text-sm font-normal text-gray-600">
+          <p className="text-sm font-normal text-gray-600 dark:text-gray-400">
             {video.channel.name}
           </p>
 
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-500 dark:text-gray-400">
             {video.views} views • {dayjs(video.createdAt).fromNow()}
           </p>
         </div>

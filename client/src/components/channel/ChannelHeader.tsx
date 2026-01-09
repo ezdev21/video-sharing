@@ -26,7 +26,7 @@ export default function ChannelHeader() {
           className="w-16 h-16 rounded-full" alt={channel?.name}
         />
         <div>
-          <h1 className="text-xl font-bold">{channel?.name}</h1>
+          <h1 className="text-xl font-bold dark:text-gray-300">{channel?.name}</h1>
           <p className="text-md text-gray-500">{channel?.followers} followers • {channel?.totalVideos} videos</p>
         </div>
       </div>

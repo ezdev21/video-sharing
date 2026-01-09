@@ -14,7 +14,7 @@ export default function ChannelVideos() {
   }, [id,fetchChannelVideos]);
   if(!channelVideos){
     return (
-      <h1 className="p-5 text-xl">Channel has no videos</h1>
+      <h1 className="p-5 text-xl dark:text-gray-400">Channel has no videos</h1>
     )
   }
   return (
@@ -34,10 +34,10 @@ export default function ChannelVideos() {
             </Link>
           </div>
           <div>
-            <h3 className="text-md font-medium line-clamp-2">
+            <h3 className="text-md font-medium line-clamp-2 dark:text-gray-400">
               {video.title}
             </h3>
-            <p className="text-xs text-gray-500">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               {video.views} views • {dayjs(video.createdAt).fromNow()}
             </p>
           </div>

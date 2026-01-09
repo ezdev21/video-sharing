@@ -16,15 +16,17 @@ import Dashboard from "./pages/Dashboard"
 import { Toaster } from "sonner"
 import ProtectedRoutes from "./utils/ProtectedRoutes"
 import RouteLoadingBar from "./components/layout/RouteLoadingBar"
+import { ThemeProvider } from "./components/layout/ThemeProvider"
 
 export default function App() {
   return (
-    <>
+    <div className="">
+    <ThemeProvider storageKey="vite-ui-theme">
       <RouteLoadingBar/>
       <div className="mb-14">
         <Navbar />
       </div>
-      <div className="bg-gray-100 min-h-screen pt-6 px-6">
+      <div className="bg-gray-100 dark:bg-gray-900 min-h-screen pt-6 px-6">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/trending" element={<Home />} />
@@ -46,6 +48,7 @@ export default function App() {
         </Routes>
       </div>
       <Toaster/>
-    </>
+    </ThemeProvider>
+    </div>
   )
 }

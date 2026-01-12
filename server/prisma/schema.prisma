@@ -20,6 +20,7 @@ model User {
   playlists        Playlist[]
   channelFollowers ChannelFollower[]
   videoLikes       VideoReaction[]
+  roles            Role[]            @relation("UserRoles")
 }
 
 model Video {
@@ -111,4 +112,17 @@ model VideoReaction {
 enum ReactionType {
   LIKE
   DISLIKE
+}
+
+model Role {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  users       User[]       @relation("UserRoles")
+  permissions Permission[] @relation("RolePermissions")
+}
+
+model Permission {
+  id    String @id @default(uuid())
+  name  String @unique
+  roles Role[] @relation("RolePermissions")
 }

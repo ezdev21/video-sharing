@@ -15,7 +15,7 @@ type VideoState = {
   dislikeReactions: number,
   liked: boolean,
   disliked: boolean,
-  fetchVideos: () => Promise<void>,
+  fetchVideos: () => Promise<boolean>,
   searchVideos: () => Promise<void>,
   fetchVideo: () => Promise<void>,
   fetchRecommendedVideos: () => Promise<void>,
@@ -42,9 +42,12 @@ export const useVideoStore = create<VideoState>((set,get) => ({
     .then((res) => {
       set({videos: res.data})
       set({loading: false})
+      return true
     }).catch((error) => {
       console.error('Error fetching videos:', error);
+      return false;
     })
+    return false;
   },
   searchVideos: async () => {
     await api.get(`/video/search?query=${get().query}`)

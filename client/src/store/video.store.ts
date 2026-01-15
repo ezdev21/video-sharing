@@ -3,8 +3,7 @@ import type { Video } from "@/types"
 import { create } from "zustand"
 
 type VideoState = {
-  loading: boolean,
-  videos: Video[] | null,
+  videos: Video[] | [],
   query: string,
   searchedVideos: Video[] | null,
   channelId: string,
@@ -15,7 +14,7 @@ type VideoState = {
   dislikeReactions: number,
   liked: boolean,
   disliked: boolean,
-  fetchVideos: () => Promise<boolean>,
+  fetchVideos: () => Promise<Video[]>,
   searchVideos: () => Promise<void>,
   fetchVideo: () => Promise<void>,
   fetchRecommendedVideos: () => Promise<void>,
@@ -25,7 +24,6 @@ type VideoState = {
 }
 
 export const useVideoStore = create<VideoState>((set,get) => ({
-  loading: true,
   videos: [],
   query: '',
   searchedVideos: [],
@@ -40,14 +38,11 @@ export const useVideoStore = create<VideoState>((set,get) => ({
   fetchVideos: async () => {
     await api.get('/video')
     .then((res) => {
-      set({videos: res.data})
-      set({loading: false})
-      return true
+      set({videos: res.data});
     }).catch((error) => {
-      console.error('Error fetching videos:', error);
-      return false;
+      console.log(error)
     })
-    return false;
+    return get().videos;
   },
   searchVideos: async () => {
     await api.get(`/video/search?query=${get().query}`)
@@ -97,7 +92,7 @@ export const useVideoStore = create<VideoState>((set,get) => ({
       set({liked: res.data.liked});
       set({disliked: res.data.disliked});
     }).catch((error) => {
-      console.error('Error fetching user video reactions');
+      console.error('Error fetching user video reactions',error);
     })
   },
   reactVideo: async (userId: string,type: string) => {
@@ -107,6 +102,7 @@ export const useVideoStore = create<VideoState>((set,get) => ({
       type: type
     })
     .then((res) => {
+      console.log(res.status)
     }).catch((error) => {
       console.error('Error fetching user follwing:', error);
     })

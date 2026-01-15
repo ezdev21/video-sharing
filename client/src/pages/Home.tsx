@@ -3,15 +3,17 @@ import { useEffect } from "react"
 import { VideoCardSkeleton } from "../components/ui/VideoCardSkeleton";
 import { useVideoStore } from "@/store/video.store";
 import { toast } from "sonner";
+import { useQuery } from "@tanstack/react-query";
 
 const  Home = () => {
-  const { loading, videos, fetchVideos } = useVideoStore((state) => state);
-
+  const { fetchVideos } = useVideoStore((state) => state);
+  const {error, isLoading, data:videos } = useQuery({
+    queryKey: ['video'],
+    queryFn: async () => await fetchVideos(),
+  })
   useEffect(() => {
-    const fetchData = async () => {
-      const ok = await fetchVideos();
-      if(!ok){
-        const id = toast.error("Server error. please try again", {
+    if(error){
+      const id = toast.error("Server error. please try again", {
         position: "bottom-right",
         richColors: true,
         dismissible: true,
@@ -20,10 +22,8 @@ const  Home = () => {
           onClick: () => toast.dismiss(id),
         },
       });
-      }
     }
-    fetchData()
-  },[fetchVideos])  
+  },[error])  
 
   return (
     <div className="max-w-[1400px]">
@@ -36,11 +36,11 @@ const  Home = () => {
           lg:grid-cols-4
         "
       >
-        {loading
+        {isLoading
         ? Array.from({ length: 16 }).map((_, i) => (
             <VideoCardSkeleton key={i} />
           ))
-        : videos.map((video) => (
+        : videos?.map((video) => (
             <VideoCard key={video.id} video={video} />
           ))
         }

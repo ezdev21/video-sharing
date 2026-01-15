@@ -6,7 +6,6 @@ type ReactionType = "LIKE" | "DISLIKE"
 
 type VideoState = {
   videos: Video[]
-  searchedVideos: Video[]
   recommendedVideos: Video[]
   currentVideo: Video | null
   query: string
@@ -20,9 +19,9 @@ type VideoState = {
   setChannelId: (id: string) => void
   setCurrentVideoId: (id: string | null) => void
   fetchVideos: () => Promise<Video[]>
-  searchVideos: () => Promise<void>
-  fetchVideo: () => Promise<void>
-  fetchRecommendedVideos: () => Promise<void>
+  searchVideos: () => Promise<Video[] | []>
+  fetchVideo: () => Promise<Video | undefined>
+  fetchRecommendedVideos: (id: string) => Promise<Video[]>
   fetchVideoReactions: () => Promise<void>
   fetchUserReaction: (userId: string) => Promise<void>
   reactToVideo: (userId: string, type: ReactionType) => Promise<void>
@@ -30,7 +29,6 @@ type VideoState = {
 
 export const useVideoStore = create<VideoState>((set, get) => ({
   videos: [],
-  searchedVideos: [],
   recommendedVideos: [],
   currentVideo: null,
   query: "",
@@ -57,8 +55,7 @@ export const useVideoStore = create<VideoState>((set, get) => ({
   searchVideos: async () => {
     const { query } = get()
     if (!query.trim()) {
-      set({ searchedVideos: [] })
-      return
+      return [];
     }
 
     try {
@@ -66,7 +63,7 @@ export const useVideoStore = create<VideoState>((set, get) => ({
         `/video/search`,
         { params: { query } }
       )
-      set({ searchedVideos: data })
+      return data;
     } catch (error) {
       console.error("searchVideos failed:", error)
       throw error
@@ -75,26 +72,23 @@ export const useVideoStore = create<VideoState>((set, get) => ({
 
   fetchVideo: async () => {
     const { currentVideoId } = get()
-    if (!currentVideoId) return
-
+    if (!currentVideoId) return 
     try {
       const { data } = await api.get<Video>(`/video/${currentVideoId}`)
       set({ currentVideo: data })
+      return data;
     } catch (error) {
       console.error("fetchVideo failed:", error)
       throw error
     }
   },
 
-  fetchRecommendedVideos: async () => {
-    const { currentVideoId } = get()
-    if (!currentVideoId) return
-
+  fetchRecommendedVideos: async (id) => {
     try {
       const { data } = await api.get<Video[]>(
-        `/video/${currentVideoId}/recommended`
+        `/video/${id}/recommended`
       )
-      set({ recommendedVideos: data })
+      return data;
     } catch (error) {
       console.error("fetchRecommendedVideos failed:", error)
       throw error

@@ -12,11 +12,12 @@ export const usePlaylistStore = create<PlaylistState>((set,get) => ({
   id: '',
   playlists: [],
   fetchPlaylists: async () => {
-    await api.get(`/channel/${get().id}/playlists`)
-    .then((res) => {
-      set({playlists: res.data});
-    }).catch((error) => {
+    try {
+      const { data } = await api.get(`/channel/${get().id}/playlists`);
+      set({playlists: data});
+    } catch (error) {
       console.error('Error fetching playlist videos:', error);
-    })
+      throw error;
+    }
   },
 }))

@@ -12,11 +12,12 @@ export const usePostStore = create<PostState>((set,get) => ({
   id: '',
   posts: [],
   fetchPosts: async () => {
-    await api.get(`/channel/${get().id}/posts`)
-    .then((res) => {
-      set({posts: res.data});
-    }).catch((error) => {
+    try {
+      const { data } = await api.get(`/channel/${get().id}/posts`);
+      set({posts: data});
+    } catch (error) {
       console.error('Error fetching post videos:', error);
-    })
+      throw error
+    }
   },
 }))

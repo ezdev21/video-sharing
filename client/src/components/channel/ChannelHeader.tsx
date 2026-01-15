@@ -1,17 +1,26 @@
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useChannelStore } from "@/store/channel.store";
+import { useQuery } from "@tanstack/react-query";
 
 export default function ChannelHeader() {
-  const { id } = useParams<{ id: string }>()
-  const channel = useChannelStore((state) => state.channel);
+  const { id } = useParams<{ id: string }>();
+  useChannelStore.setState({channelId: id});
   const fetchChannel = useChannelStore((state) => state.fetchChannel)
-  
-  useEffect(() => {
-    useChannelStore.setState({channelId: id})
-    fetchChannel();
-  }, [id,fetchChannel])
 
+  const { error, isLoading, data:channel } = useQuery({
+    queryKey: ['channel',id],
+    queryFn: fetchChannel
+  })
+
+  if(error){
+    return (
+      <div>error loading channel info</div>
+    )
+  }
+
+  if(isLoading){
+    return <div>loading...</div>
+  }
   return (
     <>
       <div className="h-40 bg-gray-200 mb-4">

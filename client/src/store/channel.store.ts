@@ -5,17 +5,17 @@ import { create } from "zustand"
 type ChannelState = {
   channelId: string,
   userId: string | null,
-  channel: Channel,
+  channel: Channel | null,
   channelVideos: Video[],
   channelPosts: Post[],
   channelPlaylists: Playlist[],
   following: boolean,
-  fetchChannel: () => Promise<void>,
+  fetchChannel: () => Promise<Channel>,
   channelFollowing: () => Promise<void>,
   channelFollow: () => Promise<void>,
-  fetchChannelVideos: () => Promise<void>,
-  fetchChannelPosts: () => Promise<void>,
-  fetchChannelPlaylists: () => Promise<void>,
+  fetchChannelVideos: () => Promise<Video[]>,
+  fetchChannelPosts: () => Promise<Post[]>,
+  fetchChannelPlaylists: () => Promise<Playlist[]>,
 }
 
 export const useChannelStore = create<ChannelState>((set,get) => ({
@@ -25,66 +25,72 @@ export const useChannelStore = create<ChannelState>((set,get) => ({
   channelVideos: [],
   channelPosts: [],
   channelPlaylists: [],
-  channel: {
-    id: '',
-    name: '',
-    avatar: '',
-    followers: '',
-    background: '',
-    createdAt: '',
-    updatedAt: ''
-  },
+  channel: null,
   fetchChannel: async () => {
-    await api.get(`/channel/${get().channelId}`)
-    .then((res) => {
-      set({channel: res.data});
-    }).catch((error) => {
+    try {
+      const { data } = await api.get(`/channel/${get().channelId}`)
+      set({channel: data});
+      return data;
+    } catch (error) {
       console.error('Error fetching channel videos:', error);
-    })
+      throw error
+    }
   },
+  
   channelFollowing: async () => {
-    await api.get('/channel/follow',{
+    try {
+      const { data } = await api.get('/channel/follow',{
       params: {
         channelId: get().channelId,
         userId: get().userId
       }
     })
-    .then((res) => {
-      set({following: res.data.following});
-    }).catch((error) => {
+    set({following: data.following});
+    return data.following
+    } catch (error) {
       console.error('Error fetching user follwing:', error);
-    })
+      throw error
+    }
   },
   channelFollow: async () => {
-    await api.post('/channel/follow',{channelId: get().channelId,userId: get().userId})
-    .then((res) => {
-      set({following: res.data.following});
-    }).catch((error) => {
+    try {
+      const { data } = await api.post('/channel/follow',{channelId: get().channelId,userId: get().userId})
+      set({following: data.following});
+      return data.following;
+    } catch (error) {
       console.error('Error fetching user follwing:', error);
-    })
+      throw error
+    }
   },
   fetchChannelVideos: async () => {
-    await api.get(`/channel/${get().channelId}/videos`)
-    .then((res) => {
-      set({channelVideos: res.data});
-    }).catch((error) => {
+    try {
+      const { data } = await api.get(`/channel/${get().channelId}/videos`)
+      set({channelVideos: data});
+      return data;
+    } catch (error) {
       console.error('Error fetching channel videos', error);
-    })
+      throw error
+    }
   },
   fetchChannelPosts: async () => {
-    await api.get(`/channel/${get().channelId}/posts`)
-    .then((res) => {
-      set({channelPosts: res.data});
-    }).catch((error) => {
+    try {
+      const { data } = await api.get(`/channel/${get().channelId}/posts`)
+      set({channelPosts: data});
+      return data;
+    } catch (error) {
       console.error('Error fetching channel posts', error);
-    })
+      throw error
+    }
   },
+
   fetchChannelPlaylists: async () => {
-    await api.get(`/channel/${get().channelId}/playlists`)
-    .then((res) => {
-      set({channelPlaylists: res.data});
-    }).catch((error) => {
+    try {
+      const { data } = await api.get(`/channel/${get().channelId}/playlists`)
+      set({channelPlaylists: data});
+      return data;
+    } catch (error) {
       console.error('Error fetching channel playlists', error);
-    })
+      throw error
+    }
   },
 }))

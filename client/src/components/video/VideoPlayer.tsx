@@ -131,13 +131,13 @@ export default function VideoPlayer({ video }) {
               <button onClick={() => likeVideo(video?.id)}>
                 <ThumbsUp className={`inline-block w-8 h-8 ${liked ? "fill-primary stroke-primary" : "text-gray-500"}`}/>
               </button>
-              <span className="text-2xl dark:text-gray-400">{likeReactions}</span>
+              <span className="text-2xl text-gray-600 dark:text-gray-400">{likeReactions}</span>
             </div>
             <div className="flex items-end gap-1">
               <button onClick={() => dislikeVideo(video?.id)}>
                 <ThumbsDown className={`inline-block w-8 h-8 ${disliked ? "fill-primary stroke-primary" : "text-gray-500"}`}/>
               </button>
-              <span className="text-2xl dark:text-gray-400">{dislikeReactions}</span>
+              <span className="text-2xl text-gray-600 dark:text-gray-400">{dislikeReactions}</span>
             </div>
           </div>
           <div>

@@ -1,11 +1,10 @@
+import type { User } from "@/types"
 import { create } from "zustand"
 
 type UserState = {
-  count: number
-  increment: () => void
+  user: User | null
 }
 
-export const useUserStore = create<UserState>((set) => ({
-  count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
+export const useUserStore = create<UserState>(() => ({
+  user: null,
 }))

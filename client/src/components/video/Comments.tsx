@@ -2,11 +2,13 @@ import { useAuthStore } from "@/store/auth.store";
 import { useCommentStore } from "@/store/comment.store";
 import dayjs from "dayjs";
 import { UserCircle2 } from "lucide-react";
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import CustomModal from "../layout/CustomModal";
+import { useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export default function Comments({id}:{id:string}) {
-  const comments = useCommentStore((state) => state.comments);
+  useCommentStore.setState({videoId: id});
   const newComment = useCommentStore((state) => state.newComment);
   const fetchComments = useCommentStore((state) => state.fetchComments);
   const addComment = useCommentStore((state) => state.addComment);
@@ -32,10 +34,29 @@ export default function Comments({id}:{id:string}) {
       }));
     }
   }
-  useEffect(() => {
-    useCommentStore.setState({videoId: id});
-    fetchComments();
-  }, [id,fetchComments]);
+
+  const { error, isLoading, data:comments } = useQuery({
+    queryKey: ['comments',id],
+    queryFn: fetchComments
+  })
+  
+  if(error){
+    const id = toast.error("error fetching comments. please try again", {
+      position: "bottom-right",
+      richColors: true,
+      dismissible: true,
+      action: {
+        label: "Dismiss",
+        onClick: () => toast.dismiss(id),
+      },
+    });
+  }
+
+  if(isLoading){
+    return (
+      <div className="my-6">loading comments</div>
+    )
+  }
 
   return (
     <div className="my-6">

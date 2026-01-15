@@ -1,26 +1,33 @@
-import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useChannelStore } from "@/store/channel.store";
 import dayjs from "dayjs";
+import { useQuery } from "@tanstack/react-query";
+import { VideoCardSkeleton } from "../ui/VideoCardSkeleton";
 
 export default function ChannelVideos() {
   const { id } = useParams<{ id: string }>()
-  const channelVideos = useChannelStore((state) => state.channelVideos)
+  useChannelStore.setState({channelId: id});
   const fetchChannelVideos = useChannelStore((state) => state.fetchChannelVideos)
   
-  useEffect(() => {
-    useChannelStore.setState({channelId: id});
-    fetchChannelVideos();
-  }, [id,fetchChannelVideos]);
-  if(!channelVideos){
+  const { error, isLoading, data:channelVideos } = useQuery({
+    queryKey: ['channel',id,'videos'],
+    queryFn: fetchChannelVideos
+  })
+  
+  if(error){
     return (
-      <h1 className="p-5 text-xl dark:text-gray-400">Channel has no videos</h1>
+      <div className="p-5 text-xl dark:text-gray-300">error loading channel videos</div>
     )
   }
+
   return (
     <div className="p-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {channelVideos.map(video => (
-        <div className="cursor-pointer">
+      {isLoading
+      ? Array.from({ length: 16 }).map((_, i) => (
+        <VideoCardSkeleton key={i} />
+      ))
+      : channelVideos && channelVideos.map(video => (
+        <div key={video.id} className="cursor-pointer">
           <div className="relative rounded-md overflow-hidden">
             <Link to={`/video/${video.id}`}>
               <img
@@ -42,7 +49,8 @@ export default function ChannelVideos() {
             </p>
           </div>
         </div>
-      ))}
+      ))
+      }
     </div>
   )
 }

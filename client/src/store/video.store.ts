@@ -1,110 +1,160 @@
+import { create } from "zustand"
 import api from "@/lib/api"
 import type { Video } from "@/types"
-import { create } from "zustand"
+
+type ReactionType = "LIKE" | "DISLIKE"
 
 type VideoState = {
-  videos: Video[] | [],
-  query: string,
-  searchedVideos: Video[] | null,
-  channelId: string,
-  currentVideo: Video | null,
-  currentVideoId: string | null,
-  recommendedVideos: Video[] | null,
-  likeReactions: number,
-  dislikeReactions: number,
-  liked: boolean,
-  disliked: boolean,
-  fetchVideos: () => Promise<Video[]>,
-  searchVideos: () => Promise<void>,
-  fetchVideo: () => Promise<void>,
-  fetchRecommendedVideos: () => Promise<void>,
-  fetchVideoReacts: () => Promise<void>
-  reactVideo: (userId:string,type:string) => Promise<void>,
-  fetchUserReaction: (userId:string) => Promise<void>,
+  videos: Video[]
+  searchedVideos: Video[]
+  recommendedVideos: Video[]
+  currentVideo: Video | null
+  query: string
+  channelId: string
+  currentVideoId: string | null
+  likeReactions: number
+  dislikeReactions: number
+  liked: boolean
+  disliked: boolean
+  setQuery: (query: string) => void
+  setChannelId: (id: string) => void
+  setCurrentVideoId: (id: string | null) => void
+  fetchVideos: () => Promise<Video[]>
+  searchVideos: () => Promise<void>
+  fetchVideo: () => Promise<void>
+  fetchRecommendedVideos: () => Promise<void>
+  fetchVideoReactions: () => Promise<void>
+  fetchUserReaction: (userId: string) => Promise<void>
+  reactToVideo: (userId: string, type: ReactionType) => Promise<void>
 }
 
-export const useVideoStore = create<VideoState>((set,get) => ({
+export const useVideoStore = create<VideoState>((set, get) => ({
   videos: [],
-  query: '',
   searchedVideos: [],
-  channelId: '',
-  currentVideo: null,
-  currentVideoId: '',
   recommendedVideos: [],
+  currentVideo: null,
+  query: "",
+  channelId: "",
+  currentVideoId: null,
   likeReactions: 0,
   dislikeReactions: 0,
   liked: false,
   disliked: false,
+  setQuery: (query) => set({ query }),
+  setChannelId: (id) => set({ channelId: id }),
+  setCurrentVideoId: (id) => set({ currentVideoId: id }),
   fetchVideos: async () => {
-    await api.get('/video')
-    .then((res) => {
-      set({videos: res.data});
-    }).catch((error) => {
-      console.log(error)
-    })
-    return get().videos;
+    try {
+      const { data } = await api.get<Video[]>("/video")
+      set({ videos: data })
+      return data
+    } catch (error) {
+      console.error("fetchVideos failed:", error)
+      throw error
+    }
   },
+
   searchVideos: async () => {
-    await api.get(`/video/search?query=${get().query}`)
-    .then((res) => {
-      set({searchedVideos: res.data})
-    }).catch((err: unknown) => {
-      console.error('Error fetching videos:', err);
-    })
+    const { query } = get()
+    if (!query.trim()) {
+      set({ searchedVideos: [] })
+      return
+    }
+
+    try {
+      const { data } = await api.get<Video[]>(
+        `/video/search`,
+        { params: { query } }
+      )
+      set({ searchedVideos: data })
+    } catch (error) {
+      console.error("searchVideos failed:", error)
+      throw error
+    }
   },
+
   fetchVideo: async () => {
-    await api.get(`/video/${get().currentVideoId}`)
-    .then((res) => {
-      set({currentVideo: res.data});
-    }).catch((error) => {
-      console.error('Error fetching videos:', error);
-    })
+    const { currentVideoId } = get()
+    if (!currentVideoId) return
+
+    try {
+      const { data } = await api.get<Video>(`/video/${currentVideoId}`)
+      set({ currentVideo: data })
+    } catch (error) {
+      console.error("fetchVideo failed:", error)
+      throw error
+    }
   },
+
   fetchRecommendedVideos: async () => {
-    await api.get(`/video/${get().currentVideoId}/recommended`)
-    .then((res) => {
-      set({recommendedVideos :res.data});
-    }).catch((error) => {
-      console.error('Error fetching videos:', error);
-    })
+    const { currentVideoId } = get()
+    if (!currentVideoId) return
+
+    try {
+      const { data } = await api.get<Video[]>(
+        `/video/${currentVideoId}/recommended`
+      )
+      set({ recommendedVideos: data })
+    } catch (error) {
+      console.error("fetchRecommendedVideos failed:", error)
+      throw error
+    }
   },
-  fetchVideoReacts: async () => {
-    await api.get('/video/react',{
-      params: {
-        videoId: get().currentVideoId
-      }
-    })
-    .then((res) => {
-      set({likeReactions: res.data.likeReactions});
-      set({dislikeReactions: res.data.dislikeReactions});
-    }).catch((error) => {
-      console.error('Error fetching video reactions',error);
-    })
+
+  fetchVideoReactions: async () => {
+    const { currentVideoId } = get()
+    if (!currentVideoId) return
+
+    try {
+      const { data } = await api.get("/video/react", {
+        params: { videoId: currentVideoId },
+      })
+
+      set({
+        likeReactions: data.likeReactions,
+        dislikeReactions: data.dislikeReactions,
+      })
+    } catch (error) {
+      console.error("fetchVideoReactions failed:", error)
+      throw error
+    }
   },
-  fetchUserReaction: async (userId: string) => {
-    await api.get('/video/user-reaction',{
-      params: {
-        videoId: get().currentVideoId,
-        userId: userId
-      }
-    })
-    .then((res) => {
-      set({liked: res.data.liked});
-      set({disliked: res.data.disliked});
-    }).catch((error) => {
-      console.error('Error fetching user video reactions',error);
-    })
+
+  fetchUserReaction: async (userId) => {
+    const { currentVideoId } = get()
+    if (!currentVideoId) return
+
+    try {
+      const { data } = await api.get("/video/user-reaction", {
+        params: {
+          videoId: currentVideoId,
+          userId,
+        },
+      })
+
+      set({
+        liked: data.liked,
+        disliked: data.disliked,
+      })
+    } catch (error) {
+      console.error("fetchUserReaction failed:", error)
+      throw error
+    }
   },
-  reactVideo: async (userId: string,type: string) => {
-    await api.post('/video/react',{
-      videoId: get().currentVideoId,
-      userId: userId,
-      type: type
-    })
-    .then((res) => {
-      console.log(res.status)
-    }).catch((error) => {
-      console.error('Error fetching user follwing:', error);
-    })
-  }
+
+  reactToVideo: async (userId, type) => {
+    const { currentVideoId } = get()
+    if (!currentVideoId) return
+
+    try {
+      await api.post("/video/react", {
+        videoId: currentVideoId,
+        userId,
+        type,
+      })
+    } catch (error) {
+      console.error("reactToVideo failed:", error)
+      throw error
+    }
+  },
 }))

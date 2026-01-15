@@ -8,20 +8,19 @@ import { useChannelStore } from "@/store/channel.store";
 import { useVideoStore } from "@/store/video.store";
 
 export default function VideoPlayer({ video }) {
-  useChannelStore.setState({channelId: video.channel.id});
   const userId = useAuthStore(state => state.user?.id);
   const loggedIn = useAuthStore(state => state.loggedIn);
   const following = useChannelStore(state => state.following);
-  let likeReactions = useVideoStore(state => state.likeReactions);
-  let dislikeReactions = useVideoStore(state => state.dislikeReactions);
+  const likeReactions = useVideoStore(state => state.likeReactions);
+  const dislikeReactions = useVideoStore(state => state.dislikeReactions);
   const liked = useVideoStore(state => state.liked)
   const disliked = useVideoStore(state => state.disliked)
   const fetchChannel = useChannelStore(state => state.fetchChannel);
   const channelFollowing = useChannelStore(state => state.channelFollowing);
   const channelFollow = useChannelStore(state => state.channelFollow);
-  const fetchVideoReacts = useVideoStore(state => state.fetchVideoReacts);
+  const fetchVideoReacts = useVideoStore(state => state.fetchVideoReactions);
   const fetchUserReaction = useVideoStore(state => state.fetchUserReaction);
-  const reactVideo = useVideoStore(state => state.reactVideo)
+  const reactVideo = useVideoStore(state => state.reactToVideo)
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalData,setModalData] = useState({
     title: '',
@@ -31,6 +30,7 @@ export default function VideoPlayer({ video }) {
   });
   
   useEffect(()=>{
+    useChannelStore.setState({channelId: video.channel.id});
     fetchChannel();
     fetchVideoReacts();
     if(userId){
@@ -38,7 +38,7 @@ export default function VideoPlayer({ video }) {
       channelFollowing();
       fetchUserReaction(userId);
     }
-  },[userId, fetchChannel, channelFollowing, fetchVideoReacts, fetchUserReaction])
+  },[userId, fetchChannel, channelFollowing, fetchVideoReacts, fetchUserReaction, video.channel.id])
 
   const follow = () =>{
     if(loggedIn){

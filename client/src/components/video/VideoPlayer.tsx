@@ -1,13 +1,15 @@
 import { ThumbsDown, ThumbsUp } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router"
 import dayjs from "dayjs";
 import CustomModal from "../layout/CustomModal";
 import { useAuthStore } from "@/store/auth.store";
 import { useChannelStore } from "@/store/channel.store";
 import { useVideoStore } from "@/store/video.store";
+import { useQuery } from "@tanstack/react-query";
 
 export default function VideoPlayer({ video }) {
+  useChannelStore.setState({channelId: video.channel.id});
   const userId = useAuthStore(state => state.user?.id);
   const loggedIn = useAuthStore(state => state.loggedIn);
   const following = useChannelStore(state => state.following);
@@ -18,7 +20,7 @@ export default function VideoPlayer({ video }) {
   const fetchChannel = useChannelStore(state => state.fetchChannel);
   const channelFollowing = useChannelStore(state => state.channelFollowing);
   const channelFollow = useChannelStore(state => state.channelFollow);
-  const fetchVideoReacts = useVideoStore(state => state.fetchVideoReactions);
+  const fetchVideoReactions = useVideoStore(state => state.fetchVideoReactions);
   const fetchUserReaction = useVideoStore(state => state.fetchUserReaction);
   const reactVideo = useVideoStore(state => state.reactToVideo)
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -29,16 +31,28 @@ export default function VideoPlayer({ video }) {
     redirectLink: '/login'
   });
   
-  useEffect(()=>{
-    useChannelStore.setState({channelId: video.channel.id});
-    fetchChannel();
-    fetchVideoReacts();
-    if(userId){
-      useChannelStore.setState({userId: userId});
-      channelFollowing();
-      fetchUserReaction(userId);
-    }
-  },[userId, fetchChannel, channelFollowing, fetchVideoReacts, fetchUserReaction, video.channel.id])
+  const {error:channelError, isLoading:channelIsLoading, data:channel } = useQuery({
+    queryKey: ['channel',video.channel.id],
+    queryFn: fetchChannel
+  })
+
+  const { error:videoReactionError, isLoading:videoReactionIsLoading, data:VideoReactions } = useQuery({
+    queryKey: ['video',video.id, 'reactions'],
+    queryFn: fetchVideoReactions
+  })
+
+  if(userId){
+    useChannelStore.setState({userId: userId});
+    const {error:channelFollowingError, isLoading:channelFollowingISLoading, data:channelFollowingData } = useQuery({
+      queryKey: ['channel',video.channel.id, 'following'],
+      queryFn: channelFollowing
+    });
+
+    const {error:videoUserReactionError, isLoading:videouserReactionIsLoading, data:userReaction } = useQuery({
+      queryKey: ['video',video.channel.id, 'user-reaction'],
+      queryFn: () => fetchUserReaction(userId)
+    });
+  }
 
   const follow = () =>{
     if(loggedIn){

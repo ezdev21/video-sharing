@@ -18,6 +18,7 @@ export default function Watch() {
 
   const { error:fetchRecommendedVideoError, isLoading:fetchRecommendedVideoIsLoading, data:recommended } = useQuery({
     queryKey: ['recommended-video', id],
+    enabled: id!=null,
     queryFn: () => fetchRecommendedVideos(id)
   })
 

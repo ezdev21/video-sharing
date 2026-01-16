@@ -1,7 +1,10 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../../lib/api";
 import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
+import { useVideoStore } from "@/store/video.store";
+import { useChannelStore } from "@/store/channel.store";
+import { useAuthStore } from "@/store/auth.store";
 
 const VideoUpload: React.FC = () => {
   const navigate = useNavigate();
@@ -10,6 +13,40 @@ const VideoUpload: React.FC = () => {
   const [video, setVideo] = useState<File | null>(null);
   const [description, setDescription] = useState<string>("");
   const [status, setStatus] = useState<string>("");
+  const uploadVideo = useVideoStore(state => state.uploadVideo);
+  const user = useAuthStore(state => state.user);
+  const channel = useChannelStore(state => state.channel);
+  
+  const uploadVideoMutation = useMutation({
+      mutationFn: (formData: FormData) => uploadVideo(formData),
+      onSuccess: (video) => {
+        console.log("Video uploaded successfully:", video);
+        setStatus("Video uploaded successfully!");
+        navigate('/dashboard');
+        const id = toast.success("New Video Uploaded successfully", {
+          position: "bottom-right",
+          richColors: true,
+          dismissible: true,
+          duration: 5000,
+          action: {
+            label: "Dismiss",
+            onClick: () => toast.dismiss(id),
+          },
+        });
+      },
+      onError: (error) => {
+        const id = toast.error("Server Error. Video Upload failed", {
+          position: "bottom-right",
+          richColors: true,
+          dismissible: true,
+          action: {
+            label: "Dismiss",
+            onClick: () => toast.dismiss(id),
+          },
+        });
+        console.error("Error uploading video:", error);
+      }
+    });
 
   const handleFileChange =
     (setter: (file: File | null) => void) =>
@@ -21,41 +58,18 @@ const VideoUpload: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!thumbnail || !video) {
+    if (!thumbnail || !video || !user || !channel) {
       setStatus("Please select both thumbnail and video files.");
       return;
     }
-
     const formData = new FormData();
-    formData.append("userId", "1");
-    formData.append("channelId", "1");
+    formData.append("userId", user.id);
+    formData.append("channelId", channel.id);
     formData.append("title", title);
     formData.append("thumbnail", thumbnail);
     formData.append("video", video);
     formData.append("description", description);
-    
-    api.post('/video', formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then((res) => {
-      setStatus("Video uploaded successfully!");
-      navigate('/dashboard');
-    })
-    .catch((err) => {
-      const id = toast.error("Server Error. Video Upload failed", {
-        position: "bottom-right",
-        richColors: true,
-        dismissible: true,
-        action: {
-          label: "Dismiss",
-          onClick: () => toast.dismiss(id),
-        },
-      });
-      throw new Error("");
-    });
+    uploadVideoMutation.mutate(formData);
   };
 
   return (

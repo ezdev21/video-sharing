@@ -36,7 +36,7 @@ export default function VideoPlayer({ video }) {
     queryFn: fetchChannel
   })
 
-  const { error:videoReactionError, isLoading:videoReactionIsLoading, data:VideoReactions } = useQuery({
+  const { error:videoReactionError, isLoading:videoReactionIsLoading, data:videoReactions } = useQuery({
     queryKey: ['video',video.id, 'reactions'],
     queryFn: fetchVideoReactions
   })
@@ -49,7 +49,7 @@ export default function VideoPlayer({ video }) {
     });
 
     const {error:videoUserReactionError, isLoading:videouserReactionIsLoading, data:userReaction } = useQuery({
-      queryKey: ['video',video.channel.id, 'user-reaction'],
+      queryKey: ['video',video.id, 'user-reaction'],
       queryFn: () => fetchUserReaction(userId)
     });
   }

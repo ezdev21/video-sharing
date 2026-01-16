@@ -4,10 +4,10 @@ import RecommendedVideos from "@/components/video/RecommendedVideos"
 import Comments from "@/components/video/Comments"
 import { useVideoStore } from "@/store/video.store"
 import { useQuery } from "@tanstack/react-query"
+import { useLayoutEffect } from "react"
 
 export default function Watch() {
   const { id } = useParams<{ id: string }>();
-  useVideoStore.setState({currentVideoId: id});
   const fetchVideo = useVideoStore(state => state.fetchVideo);
   const fetchRecommendedVideos = useVideoStore(state => state.fetchRecommendedVideos);
   
@@ -22,6 +22,10 @@ export default function Watch() {
     queryFn: () => fetchRecommendedVideos(id)
   })
 
+  useLayoutEffect(()=>{
+    useVideoStore.setState({currentVideoId: id});
+  })
+  
   return (
     <div className="max-w-[1600px] mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">

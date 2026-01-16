@@ -63,6 +63,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         localStorage.setItem("user", JSON.stringify(res.data.user));
         set({
           loggedIn: res.data.token,
+          user: res.data.user, 
           success: true,
         });
         return true;
@@ -89,7 +90,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       await api.post("/auth/register", get().registerForm);
       set({ success: true });
       return true;
-    } catch (error: any) {
+    } catch (error) {
       set({
         error: error.response?.data?.error || "Registration failed",
       });
@@ -102,5 +103,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   logout: () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    set({
+      loggedIn: null,
+      user: null,
+    });
   },
 }));

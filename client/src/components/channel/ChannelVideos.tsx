@@ -20,6 +20,12 @@ export default function ChannelVideos() {
     )
   }
 
+  if(!channelVideos?.length){
+    return (
+      <div className="p-5 text-xl dark:text-gray-300">this channel has no videos</div>
+    )
+  }
+
   return (
     <div className="p-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {isLoading

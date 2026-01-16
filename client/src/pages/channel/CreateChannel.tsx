@@ -1,7 +1,9 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../../lib/api";
 import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
+import { useChannelStore } from "@/store/channel.store";
+import { useAuthStore } from "@/store/auth.store";
 
 const CreateChannel: React.FC = () => {
   const navigate = useNavigate();
@@ -10,6 +12,39 @@ const CreateChannel: React.FC = () => {
   const [avatar, setAvatar] = useState<File | null>(null);
   const [background, setBackground] = useState<File | null>(null);
   const [status, setStatus] = useState<string>("");
+  const user = useAuthStore(state => state.user);
+  const createChannel = useChannelStore(state => state.createChannel);
+  
+  const channelCreateMutation = useMutation({
+      mutationFn: (formData: FormData) => createChannel(formData),
+      onSuccess: (channel) => {
+        console.log("Channel created successfully:", channel);
+        setStatus("Channel created successfully!");
+        navigate('/dashboard');
+        const id = toast.success("New Channel Created successfully", {
+          position: "bottom-right",
+          richColors: true,
+          dismissible: true,
+          duration: 5000,
+          action: {
+            label: "Dismiss",
+            onClick: () => toast.dismiss(id),
+          },
+        });
+      },
+      onError: (error) => {
+        const id = toast.error("Server Error. Channel creation failed", {
+          position: "bottom-right",
+          richColors: true,
+          dismissible: true,
+          action: {
+            label: "Dismiss",
+            onClick: () => toast.dismiss(id),
+          },
+        });
+        console.error("Error creating channel:", error);
+      }
+    });
 
   const handleFileChange =
     (setter: (file: File | null) => void) =>
@@ -18,43 +53,24 @@ const CreateChannel: React.FC = () => {
         setter(e.target.files[0]);
       }
     };
-
+  
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!avatar || !background) {
-      setStatus("Please upload both avatar and background images.");
+    if (!avatar || !background || !user) {
+      toast.error("User Information, Avatar and background are required",{
+        richColors: true,
+        position: "bottom-right",
+        dismissible: true,
+      });
       return;
     }
-
     const formData = new FormData();
-    formData.append("userId", "1");
+    formData.append("userId", user.id);
     formData.append("name", channelName);
     formData.append("description", description);
     formData.append("avatar", avatar);
     formData.append("background", background);
-
-    api.post("/channel", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then((res) => {
-      setStatus("Channel created successfully!");
-      navigate('/dashboard');
-    })
-    .catch((err) => {
-      const id = toast.error("Server Error. Channel creation failed", {
-        position: "bottom-right",
-        richColors: true,
-        dismissible: true,
-        action: {
-          label: "Dismiss",
-          onClick: () => toast.dismiss(id),
-        },
-      });
-      throw new Error("");
-    });
+    channelCreateMutation.mutate(formData);
   }
 
   return (

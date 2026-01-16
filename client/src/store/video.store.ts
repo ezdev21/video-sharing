@@ -24,7 +24,8 @@ type VideoState = {
   fetchRecommendedVideos: (id: string) => Promise<Video[]>
   fetchVideoReactions: () => Promise<void>
   fetchUserReaction: (userId: string) => Promise<void>
-  reactToVideo: (userId: string, type: ReactionType) => Promise<void>
+  reactToVideo: (userId: string, type: ReactionType) => Promise<void>,
+  uploadVideo: (formData: FormData) => Promise<Video>
 }
 
 export const useVideoStore = create<VideoState>((set, get) => ({
@@ -151,4 +152,14 @@ export const useVideoStore = create<VideoState>((set, get) => ({
       throw error
     }
   },
+  uploadVideo: async(formData) => {
+    try {
+      const { data } = await api.post('/video', formData, {headers: {"Content-Type": "multipart/form-data",}});
+      set({ videos: [...get().videos, data] });
+      return data;
+    } catch (error) {
+      console.error("upload video failed", error)
+      throw error
+    }
+  }
 }))

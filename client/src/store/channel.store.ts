@@ -11,6 +11,7 @@ type ChannelState = {
   channelPlaylists: Playlist[],
   following: boolean,
   fetchChannel: () => Promise<Channel>,
+  createChannel: (formData:FormData) => Promise<Channel>,
   channelFollowing: () => Promise<void>,
   channelFollow: () => Promise<void>,
   fetchChannelVideos: () => Promise<Video[]>,
@@ -36,7 +37,16 @@ export const useChannelStore = create<ChannelState>((set,get) => ({
       throw error
     }
   },
-  
+  createChannel: async(formData) => {
+    try {
+      const { data } = await api.post("/channel", formData, {headers: {"Content-Type": "multipart/form-data"}})
+      set({channel: data})
+      return data;
+    } catch (error) {
+      console.error('Error creating channel ', error);
+      throw error
+    }
+  },
   channelFollowing: async () => {
     try {
       const { data } = await api.get('/channel/follow',{

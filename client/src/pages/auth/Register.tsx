@@ -1,4 +1,5 @@
 import { useAuthStore } from "@/store/auth.store";
+import { useMutation } from "@tanstack/react-query";
 import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -7,11 +8,9 @@ const Register = () => {
   const navigate = useNavigate();
   const {registerForm, loading, success, error, register } = useAuthStore((state) => state);
   
-  const handleRegister = async (e: FormEvent) => {
-    e.preventDefault();  
-    const ok = await register();
-    if (ok) {
-      navigate("/login", { replace: true });
+  const registerMutation = useMutation({
+    mutationFn: register,
+    onSuccess: () => {
       const id = toast.success("Registered successfully. now login", {
         position: "bottom-right",
         richColors: true,
@@ -21,8 +20,9 @@ const Register = () => {
           onClick: () => toast.dismiss(id),
         },
       });
-    }
-    else{
+      navigate("/login", { replace: true });
+    },
+    onError: () => {
       const id = toast.error("Registration error. please try again", {
         position: "bottom-right",
         richColors: true,
@@ -32,7 +32,12 @@ const Register = () => {
           onClick: () => toast.dismiss(id),
         },
       });
-    }
+    } 
+  })
+
+  const handleRegister = async (e: FormEvent) => {
+    e.preventDefault();  
+    registerMutation.mutate();
   };
 
   return (

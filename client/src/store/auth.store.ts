@@ -71,8 +71,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       return false;
     } catch (error) {
       set({
-        error: error.response?.data?.error || "Invalid email or password",
+        error: "Invalid email or password",
       });
+      console.log(error);
       return false;
     } finally {
       set({ loading: false });
@@ -92,8 +93,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       return true;
     } catch (error) {
       set({
-        error: error.response?.data?.error || "Registration failed",
+        error:"Registration failed",
       });
+      console.log(error);
       return false;
     } finally {
       set({ loading: false });

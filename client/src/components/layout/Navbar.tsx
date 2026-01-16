@@ -4,6 +4,7 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useAuthStore } from "@/store/auth.store";
 import { ModeToggle } from "./ModeToggle";
+import { toast } from "sonner";
 
 export default function Navbar() {
   const [searchParams] = useSearchParams();
@@ -26,6 +27,22 @@ export default function Navbar() {
     if (!query.trim()) return;
     navigate(`/search?query=${encodeURIComponent(query)}`);
   };
+  
+  const handleLogout = () => {
+    setAccountOpen(false);
+    logout();
+    const id = toast.success("Logged out successfully", {
+      position: "bottom-right",
+      richColors: true,
+      dismissible: true,
+      duration: 5000,
+      action: {
+        label: "Dismiss",
+        onClick: () => toast.dismiss(id),
+      },
+    });
+    navigate("/",{ replace: true });
+  }
 
   // Close account dropdown on outside click
   useEffect(() => {
@@ -151,10 +168,7 @@ export default function Navbar() {
                         Settings
                       </Link>
                       <button
-                        onClick={() => {
-                          setAccountOpen(false);
-                          logout();
-                        }}
+                        onClick={handleLogout}
                         className="w-full text-left px-4 py-2 text-sm bg-red-600 text-white hover:bg-red-500"
                       >
                         <a href="/">Logout</a>

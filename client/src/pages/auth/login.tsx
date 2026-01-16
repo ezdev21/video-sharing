@@ -1,17 +1,16 @@
 import { useAuthStore } from "@/store/auth.store";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const Login = () => {
   const navigate = useNavigate();
   const {loginForm, loading, error, login } = useAuthStore((state) => state);
-  
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const ok = await login();
-    if (ok) {
-      navigate("/", { replace: true });
-      window.location.reload()
+
+  const loginMutation = useMutation({
+    mutationFn: login,
+    onSuccess: () => {
+
       const id = toast.success("Logged successfully", {
         position: "bottom-right",
         richColors: true,
@@ -22,18 +21,25 @@ const Login = () => {
           onClick: () => toast.dismiss(id),
         },
       });
-    }
-    else{
-      const id = toast.error("Login error. please try again", {
+      navigate("/", { replace: true });
+    },
+    onError: () => {
+      const id = toast.error("Login failed", {
         position: "bottom-right",
         richColors: true,
         dismissible: true,
+        duration: 5000,
         action: {
           label: "Dismiss",
           onClick: () => toast.dismiss(id),
         },
       });
     }
+  })
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    loginMutation.mutate();
   };
 
   return (

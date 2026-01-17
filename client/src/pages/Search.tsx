@@ -3,17 +3,21 @@ import { useVideoStore } from "@/store/video.store";
 import VideoCard from "@/components/video/VideoCard";
 import { useQuery } from "@tanstack/react-query";
 import { VideoCardSkeleton } from "@/components/ui/VideoCardSkeleton";
+import { useEffect } from "react";
 
 const Search = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("query") || '';
-  useVideoStore.setState({query: query});
   const searchVideos = useVideoStore((state) => state.searchVideos);
   const {error, isLoading, data:searchedVideos } = useQuery({
     queryKey: ['search',{query: query}],
     queryFn: searchVideos
   })
   
+  useEffect(() => {
+    useVideoStore.setState({query: query});
+  }, [query])
+
   if(error){
     return (
       <div>error while fetching videos</div>

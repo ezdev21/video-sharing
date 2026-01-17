@@ -4,10 +4,10 @@ import dayjs from "dayjs";
 import { useParams } from "react-router-dom";
 import { VideoCardSkeleton } from "../ui/VideoCardSkeleton";
 import type { Post } from "@/types";
+import { useEffect } from "react";
 
 export default function ChannelPosts() {
   const { id } = useParams<{ id: string }>()
-  useChannelStore.setState({channelId: id});
   const fetchChannelPosts = useChannelStore((state) => state.fetchChannelPosts)
   
   const { error, isLoading, data:channelPosts } = useQuery({
@@ -15,6 +15,10 @@ export default function ChannelPosts() {
     queryFn: fetchChannelPosts
   })
   
+  useEffect(() => {
+    useChannelStore.setState({channelId: id});
+  }, [id])
+
   if(error){
     return (
       <div className="p-5 text-xl dark:text-gray-300">error loading channel posts</div>

@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import { VideoCardSkeleton } from "../ui/VideoCardSkeleton";
 import type { Playlist } from "@/types";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 export default function ChannelPlaylists() {
   const { id } = useParams<{ id: string }>()
-  useChannelStore.setState({channelId: id});
   const fetchChannelPlaylists = useChannelStore((state) => state.fetchChannelPlaylists)
   
   const { error, isLoading, data:channelPlaylists } = useQuery({
@@ -14,6 +14,10 @@ export default function ChannelPlaylists() {
     queryFn: fetchChannelPlaylists
   })
   
+  useEffect(() => {
+    useChannelStore.setState({channelId: id});
+  }, [id])
+
   if(error){
     return (
       <div className="p-5 text-xl dark:text-gray-300">error loading channel playlists</div>

@@ -1,5 +1,5 @@
 import { ThumbsDown, ThumbsUp } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router"
 import dayjs from "dayjs";
 import CustomModal from "../layout/CustomModal";
@@ -9,7 +9,6 @@ import { useVideoStore } from "@/store/video.store";
 import { useQuery } from "@tanstack/react-query";
 
 export default function VideoPlayer({ video }) {
-  useChannelStore.setState({channelId: video.channel.id});
   const userId = useAuthStore(state => state.user?.id);
   const loggedIn = useAuthStore(state => state.loggedIn);
   const following = useChannelStore(state => state.following);
@@ -30,7 +29,12 @@ export default function VideoPlayer({ video }) {
     redirectText: 'Login',
     redirectLink: '/login'
   });
-  
+
+  useEffect(() => {
+    useChannelStore.setState({channelId: video.channel.id});
+    useChannelStore.setState({userId: userId});
+  }, [video.channel.id, userId]);
+
   const {error:channelError, isLoading:channelIsLoading, data:channel } = useQuery({
     queryKey: ['channel',video.channel.id],
     queryFn: fetchChannel
@@ -41,18 +45,17 @@ export default function VideoPlayer({ video }) {
     queryFn: fetchVideoReactions
   })
 
-  if(userId){
-    useChannelStore.setState({userId: userId});
-    const {error:channelFollowingError, isLoading:channelFollowingISLoading, data:channelFollowingData } = useQuery({
-      queryKey: ['channel',video.channel.id, 'following'],
-      queryFn: channelFollowing
-    });
+  const {error:channelFollowingError, isLoading:channelFollowingISLoading, data:channelFollowingData } = useQuery({
+    queryKey: ['channel',video.channel.id, 'following'],
+    queryFn: channelFollowing,
+    enabled: !userId
+  });
 
-    const {error:videoUserReactionError, isLoading:videouserReactionIsLoading, data:userReaction } = useQuery({
-      queryKey: ['video',video.id, 'user-reaction'],
-      queryFn: () => fetchUserReaction(userId)
-    });
-  }
+  const {error:videoUserReactionError, isLoading:videouserReactionIsLoading, data:userReaction } = useQuery({
+    queryKey: ['video',video.id, 'user-reaction'],
+    queryFn: () => fetchUserReaction(userId),
+    enabled: !userId
+  });
 
   const follow = () =>{
     if(loggedIn){

@@ -3,10 +3,10 @@ import { useChannelStore } from "@/store/channel.store";
 import dayjs from "dayjs";
 import { useQuery } from "@tanstack/react-query";
 import { VideoCardSkeleton } from "../ui/VideoCardSkeleton";
+import { useEffect } from "react";
 
 export default function ChannelVideos() {
   const { id } = useParams<{ id: string }>()
-  useChannelStore.setState({channelId: id});
   const fetchChannelVideos = useChannelStore((state) => state.fetchChannelVideos)
   
   const { error, isLoading, data:channelVideos } = useQuery({
@@ -14,6 +14,10 @@ export default function ChannelVideos() {
     queryFn: fetchChannelVideos
   })
   
+  useEffect(() => {
+    useChannelStore.setState({channelId: id});
+  }, [id])
+
   if(error){
     return (
       <div className="p-5 text-xl dark:text-gray-300">error loading channel videos</div>

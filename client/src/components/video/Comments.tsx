@@ -2,13 +2,12 @@ import { useAuthStore } from "@/store/auth.store";
 import { useCommentStore } from "@/store/comment.store";
 import dayjs from "dayjs";
 import { UserCircle2 } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import CustomModal from "../layout/CustomModal";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export default function Comments({id}:{id:string}) {
-  useCommentStore.setState({videoId: id});
   const newComment = useCommentStore((state) => state.newComment);
   const fetchComments = useCommentStore((state) => state.fetchComments);
   const addComment = useCommentStore((state) => state.addComment);
@@ -20,6 +19,11 @@ export default function Comments({id}:{id:string}) {
     redirectText: 'Login',
     redirectLink: '/login'
   });
+
+  useEffect(() => {
+    useCommentStore.setState({videoId: id});
+  }, [id])
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     if(loggedIn){

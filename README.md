@@ -1,9 +1,5 @@
 # video sharing website
 
-<img width="1920" height="1080" alt="Screenshot (65)" src="https://github.com/user-attachments/assets/5e5e41a3-000b-4650-8c04-240e98504465" />
-
-![video-sharing](https://user-images.githubusercontent.com/78965149/182705961-462e6618-0c07-421b-8d58-4b9530a9a910.png)
-
 clone the project `git clone https://github.com/ezdev21/video-sharing`
 
 ## Client Installation

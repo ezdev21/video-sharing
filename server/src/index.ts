@@ -55,7 +55,7 @@ app.use(cors(corsOptions));
 app.use(limiter);
 
 app.get('/', (_req, res) => {
-  res.status(200).send('ViParta! the video sharing website!');
+  res.status(200).send('Streamly! the video sharing website!');
 });
 
 app.use('/auth', authRoute);

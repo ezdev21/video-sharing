@@ -70,7 +70,7 @@ export default function Navbar() {
             </button>
 
             <Link to="/" className="font-bold text-xl text-primary">
-              ViParta
+              Streamly
             </Link>
           </div>
 

@@ -34,7 +34,7 @@ export default function Sidebar(
         >
           <Menu size={22} />
         </button>
-        <span className="text-primary font-bold text-xl">ViParta</span>
+        <span className="text-primary font-bold text-xl">Streamly</span>
       </div>
 
       {/* User */}

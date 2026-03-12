@@ -1,4 +1,4 @@
-# video sharing website
+# Streamly video sharing and streaming website
 
 <img width="1920" height="1080" alt="Screenshot (65)" src="https://github.com/user-attachments/assets/5e5e41a3-000b-4650-8c04-240e98504465" />
 

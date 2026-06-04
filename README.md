@@ -16,11 +16,11 @@ run in development mode `npm run dev`
 
 install and configure postgres database
 
+navigate to server directory: `cd server`
+
 create .env file run: `cp .env.example .env`
 
 setup credentials in the .env file from postgres databse
-
-navigate to server directory: `cd server`
 
 install node dependencies: `npm install`
 

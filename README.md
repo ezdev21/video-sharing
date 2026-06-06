@@ -20,7 +20,7 @@ navigate to server directory: `cd server`
 
 create .env file run: `cp .env.example .env`
 
-setup credentials in the .env file from postgres databse
+setup credentials in the .env file from postgres database and JWT_SECRET
 
 install node dependencies: `npm install`
 

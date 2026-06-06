@@ -11,7 +11,7 @@ const Login = () => {
     mutationFn: login,
     onSuccess: () => {
 
-      const id = toast.success("Logged successfully", {
+      const id = toast.success("Logged in successfully", {
         position: "bottom-right",
         richColors: true,
         dismissible: true,
@@ -43,7 +43,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="mt-20 flex items-center justify-center">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Login

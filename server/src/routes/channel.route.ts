@@ -14,6 +14,7 @@ router.post('/',
 router.get('/follow',channelController.channelFollowing);
 router.post('/follow',channelController.channelFollow);  
 router.get('/:id', channelController.channelDetails);
+router.get('/user/:id', channelController.userChannel);
 router.put('/:id', channelController.channelUpdate);
 router.delete('/:id', channelController.channelDelete);
 router.get('/:id/videos', channelController.channelVideos);

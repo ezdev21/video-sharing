@@ -35,6 +35,21 @@ export const channelDetails = async (req: Request, res: Response) => {
   }
 }
 
+export const userChannel = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.id;
+    const channel = await prisma.channel.findFirst({
+      where: { userId: userId },
+    });
+    if (!channel) {
+      return res.status(404).json({ message: "Channel not found for this user" });
+    }
+    res.status(200).send(channel);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user channel" });
+  }
+}
+
 export const channelCreate = (req: Request, res: Response) => {
   const { userId, name, description } = req.body;
   const avatar = (req.files as any)?.avatar?.[0];

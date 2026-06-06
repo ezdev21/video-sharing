@@ -6,6 +6,7 @@ type ChannelState = {
   channelId: string,
   userId: string | null,
   channel: Channel | null,
+  userChannel: Channel | null,
   channelVideos: Video[],
   channelPosts: Post[],
   channelPlaylists: Playlist[],
@@ -17,7 +18,19 @@ type ChannelState = {
   fetchChannelVideos: () => Promise<Video[]>,
   fetchChannelPosts: () => Promise<Post[]>,
   fetchChannelPlaylists: () => Promise<Playlist[]>,
+  getUserChannel: (userId: string) => Promise<Channel>
 }
+
+const getStoredChannel = (): Channel | null => {
+  const stored = localStorage.getItem("userChannel");
+  if (!stored || stored === "undefined") return null;
+  try {
+    return JSON.parse(stored);
+  } catch {
+    console.log('parsing error');
+    return null;
+  }
+};
 
 export const useChannelStore = create<ChannelState>((set,get) => ({
   channelId: '',
@@ -27,6 +40,7 @@ export const useChannelStore = create<ChannelState>((set,get) => ({
   channelPosts: [],
   channelPlaylists: [],
   channel: null,
+  userChannel: getStoredChannel(),
   fetchChannel: async () => {
     try {
       const { data } = await api.get(`/channel/${get().channelId}`)
@@ -103,4 +117,17 @@ export const useChannelStore = create<ChannelState>((set,get) => ({
       throw error
     }
   },
+  
+  getUserChannel: async (userId: string) => {
+    try {
+      const { data } = await api.get(`/channel/user/${userId}`)
+      set({userChannel: data});
+      localStorage.setItem("userChannel", JSON.stringify(data));
+      return data;
+    } catch (error) {
+      console.error('Error fetching user channel', error);
+      throw error
+    }
+  }
+
 }))

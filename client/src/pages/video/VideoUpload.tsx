@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
@@ -15,12 +15,11 @@ const VideoUpload: React.FC = () => {
   const [status, setStatus] = useState<string>("");
   const uploadVideo = useVideoStore(state => state.uploadVideo);
   const user = useAuthStore(state => state.user);
-  const channel = useChannelStore(state => state.channel);
-  
+  const userChannel = useChannelStore(state => state.userChannel);
+
   const uploadVideoMutation = useMutation({
       mutationFn: (formData: FormData) => uploadVideo(formData),
       onSuccess: (video) => {
-        console.log("Video uploaded successfully:", video);
         setStatus("Video uploaded successfully!");
         navigate('/dashboard');
         const id = toast.success("New Video Uploaded successfully", {
@@ -58,13 +57,13 @@ const VideoUpload: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!thumbnail || !video || !user || !channel) {
+    if (!thumbnail || !video || !user || !userChannel) {
       setStatus("Please select both thumbnail and video files.");
       return;
     }
     const formData = new FormData();
     formData.append("userId", user.id);
-    formData.append("channelId", channel.id);
+    formData.append("channelId", userChannel.id);
     formData.append("title", title);
     formData.append("thumbnail", thumbnail);
     formData.append("video", video);

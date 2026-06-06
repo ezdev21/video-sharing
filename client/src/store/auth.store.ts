@@ -1,6 +1,7 @@
 import api from "@/lib/api";
 import type { User } from "@/types";
 import { create } from "zustand";
+import { useChannelStore } from "./channel.store";
 
 type LoginFormState = {
   email: string;
@@ -59,8 +60,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({ loading: true, error: "", success: false });
       const res = await api.post("/auth/login", get().loginForm);
       if (res.status === 200) {
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("token", JSON.stringify(res.data.token));
         localStorage.setItem("user", JSON.stringify(res.data.user));
+        useChannelStore.getState().getUserChannel(res.data.user.id);
         set({
           loggedIn: res.data.token,
           user: res.data.user, 

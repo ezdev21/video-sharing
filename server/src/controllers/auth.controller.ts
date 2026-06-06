@@ -27,6 +27,10 @@ export const login = async (req: Request, res: Response) => {
     { expiresIn: "1h" }
   );
 
+  if (!token) {
+    return res.status(500).json({ error: "Server error" });
+  }
+  
   res.json({ token: token, user: user });
 }
 

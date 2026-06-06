@@ -87,7 +87,6 @@ const Register = () => {
             </label>
             <input
               type="password"
-              name="password"
               value={registerForm.password}
               onChange={(e) => useAuthStore.setState({registerForm: {...registerForm, password: e.target.value}})}
               placeholder="Create a password"
@@ -103,7 +102,6 @@ const Register = () => {
             </label>
             <input
               type="password"
-              name="password"
               value={registerForm.confirmPassword}
               onChange={(e) => useAuthStore.setState({registerForm: {...registerForm, confirmPassword: e.target.value}})}
               placeholder="Confirm your password"

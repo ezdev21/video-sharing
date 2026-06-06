@@ -1,8 +1,10 @@
 # Streamly video sharing and streaming website
 
-<img width="1920" height="1080" alt="Screenshot (65)" src="https://github.com/user-attachments/assets/5e5e41a3-000b-4650-8c04-240e98504465" />
 
-<img width="1366" height="768" alt="182705961-462e6618-0c07-421b-8d58-4b9530a9a910" src="https://github.com/user-attachments/assets/589e4c9d-f356-436c-8c11-763075cbf50a" />
+<img width="1366" height="768" alt="Screenshot (40)" src="https://github.com/user-attachments/assets/e2aed554-635e-4bd8-96fd-97b0b249a9f3" />
+
+
+<img width="1366" height="768" alt="Screenshot (49)" src="https://github.com/user-attachments/assets/572b9c9b-6f73-485f-adbd-49671445feb1" />
 
 
 clone the project `git clone https://github.com/ezdev21/video-sharing`

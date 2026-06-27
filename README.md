@@ -33,7 +33,7 @@ run in development mode: `npm run dev`
 
 Generate the Prisma Client: `npx prisma generate`
 
-migrate the prisma database `npx prisma migrate dev --name <migration-name>`
+migrate the prisma database `npx prisma migrate dev`
 
 ## Contributing
 
@@ -56,3 +56,6 @@ Distributed under the MIT License.
 <!-- CONTACT -->
 ## Contact
 Contact me here or by email ezradev21@gmail.com
+
+## Support
+If this project helped you, please consider leaving a ⭐ on the repository. It helps others discover the project and motivates future development.

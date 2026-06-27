@@ -47,7 +47,7 @@ export const useChannelStore = create<ChannelState>((set,get) => ({
       set({channel: data});
       return data;
     } catch (error) {
-      console.error('Error fetching channel videos:', error);
+      console.error('Error fetching channel data:', error);
       throw error
     }
   },
@@ -57,7 +57,7 @@ export const useChannelStore = create<ChannelState>((set,get) => ({
       set({channel: data})
       return data;
     } catch (error) {
-      console.error('Error creating channel ', error);
+      console.error('Error creating channel:', error);
       throw error
     }
   },

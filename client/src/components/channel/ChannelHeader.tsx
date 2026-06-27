@@ -7,14 +7,14 @@ export default function ChannelHeader() {
   const { id } = useParams<{ id: string }>();
   const fetchChannel = useChannelStore((state) => state.fetchChannel)
 
+  useEffect(() => {
+    useChannelStore.setState({channelId: id});
+  }, [id])
+  
   const { error, isLoading, data:channel } = useQuery({
     queryKey: ['channel',id],
     queryFn: fetchChannel
   })
-  
-  useEffect(() => {
-    useChannelStore.setState({channelId: id});
-  }, [id])
 
   if(error){
     return (
@@ -27,10 +27,10 @@ export default function ChannelHeader() {
   }
   return (
     <>
-      <div className="h-40 bg-gray-200 mb-4">
+      <div className="h-48 bg-gray-200 mb-4 mx-4">
         <img 
           src={`${import.meta.env.VITE_API_URL}/uploads/channels/background/${channel?.background}`}
-          className="w-full h-full object-cover" alt="channel background"
+          className="w-full h-full object-cover rounded-lg" alt="channel background"
         />
       </div>
       <div className="flex items-center gap-4 p-4">
@@ -39,7 +39,7 @@ export default function ChannelHeader() {
           className="w-16 h-16 rounded-full" alt={channel?.name}
         />
         <div>
-          <h1 className="text-xl font-bold dark:text-gray-300">{channel?.name}</h1>
+          <h1 className="text-xl font-medium dark:text-gray-300">{channel?.name}</h1>
           <p className="text-md text-gray-500">{channel?.followers} followers • {channel?.totalVideos} videos</p>
         </div>
       </div>

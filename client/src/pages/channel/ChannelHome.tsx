@@ -8,8 +8,8 @@ export default function ChannelHome() {
   return (
     <div>
       <ChannelHeader/>
-      <ChannelTabs />
-      <Outlet /> {/* Render Videos, Playlists, or Posts here */}
+      <ChannelTabs/>
+      <Outlet />
     </div>
   )
 }

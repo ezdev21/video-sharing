@@ -7,6 +7,16 @@
 <img width="1366" height="768" alt="Screenshot (49)" src="https://github.com/user-attachments/assets/572b9c9b-6f73-485f-adbd-49671445feb1" />
 
 
+<img width="1366" height="768" alt="Screenshot (50)" src="https://github.com/user-attachments/assets/3856b63f-406a-4e07-8705-1abe92938d63" />
+
+
+<img width="1366" height="768" alt="Screenshot (51)" src="https://github.com/user-attachments/assets/3e93896d-56a1-477f-a9fa-f2915a66b963" />
+
+
+<img width="1366" height="768" alt="Screenshot (52)" src="https://github.com/user-attachments/assets/8de28255-34c2-46b1-8349-3f36c1f41b29" />
+
+
+
 clone the project `git clone https://github.com/ezdev21/video-sharing`
 
 ## Client Installation
